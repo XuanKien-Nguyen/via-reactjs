@@ -1,8 +1,8 @@
 import './App.css';
-import Example from "./components/Test";
+import {DatePicker} from "antd";
 function App() {
   return (
-      <Example></Example>
+      <DatePicker />
   );
 }
 
