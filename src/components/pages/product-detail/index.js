@@ -1,9 +1,9 @@
 import React from 'react';
 
-function ProductDetails() {
+function Index() {
   return (
     <div>ProductDetails page</div>
   );
 }
 
-export default ProductDetails;
+export default Index;

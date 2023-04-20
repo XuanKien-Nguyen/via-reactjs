@@ -8,7 +8,7 @@ import { useFetch } from '../../../hooks';
 import { setAuthorizationToken } from '../../../services/API';
 import { URLS } from '../../../utils/constants';
 
-function Login({ form }) {
+function Index({ form }) {
   const { getFieldDecorator, validateFields } = form;
   const authToken = !!store.get('authenticationToken');
   const {
@@ -67,4 +67,4 @@ function Login({ form }) {
   );
 }
 
-export default Form.create({ name: 'loginForm' })(Login);
+export default Form.create({ name: 'loginForm' })(Index);

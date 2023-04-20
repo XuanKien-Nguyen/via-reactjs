@@ -1,9 +1,9 @@
 import MainLayout from '../components/layout';
 // GeneralViews
-import Login from '../components/pages/Login';
-import Home from '../components/pages/Home';
-import CreateProduct from '../components/pages/CreateProduct';
-import ProductDetails from '../components/pages/ProductDetails';
+import Login from '../components/pages/login';
+import Home from '../components/pages/home';
+import CreateProduct from '../components/pages/create-product';
+import ProductDetails from '../components/pages/product-detail';
 
 export const dashboardRoutes = [
   {

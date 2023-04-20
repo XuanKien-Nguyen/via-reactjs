@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 
 import { LayoutContext } from '../../../contexts';
 
-function Home() {
+export default function Index() {
 
   const { setHeaderComponent } = useContext(LayoutContext);
 
@@ -12,10 +12,8 @@ function Home() {
       setHeaderComponent(null);
     };
   }, []);
-
+  
   return (
-    <div>Home page</div>
+    <div>CreateProduct page</div>
   );
 }
-
-export default Home;
