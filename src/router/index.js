@@ -1,6 +1,7 @@
 import MainLayout from '../components/layout/admin';
 // GeneralViews
 import Login from '../components/pages/login';
+import Register from '../components/pages/register'
 import Home from '../components/pages/home';
 import CreateProduct from '../components/pages/create-product';
 import ProductDetails from '../components/pages/product-detail';
@@ -36,6 +37,12 @@ export const baseRoutes = [
     path: '/login',
     component: Login,
     name: "Dashboard",
+    noAuth: true,
+  },
+  {
+    path: '/register',
+    component: Register,
+    name: "Register",
     noAuth: true,
   },
   {

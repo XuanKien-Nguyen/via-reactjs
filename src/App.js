@@ -8,8 +8,7 @@ import { setAuthorizationToken } from './services/API';
 
 function App() {
   const authToken = store.get('authenticationToken');
-
-  if (!!authToken) {
+    if (!!authToken) {
     setAuthorizationToken(authToken);
   }
 

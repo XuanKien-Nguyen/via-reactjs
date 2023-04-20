@@ -6,7 +6,6 @@ import '../../../assets/scss/login.scss';
 
 import { useFetch } from '../../../hooks';
 import { setAuthorizationToken } from '../../../services/API';
-import { URLS } from '../../../utils/constants';
 
 function Index({ form }) {
   const { getFieldDecorator, validateFields } = form;
