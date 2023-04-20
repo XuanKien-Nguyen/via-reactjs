@@ -4,7 +4,7 @@ import store from 'store';
 import { SET_CATEGORIES, INIT_CATEGORIES } from '../store/actions';
 import { categoryReducer } from '../store/reducers';
 import { useFetch } from '../hooks';
-import { URLS } from '../constants';
+import { URLS } from '../utils/constants';
 
 
 const StoreContext = createContext();

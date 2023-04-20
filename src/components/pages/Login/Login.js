@@ -2,11 +2,11 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import store from 'store';
 import { Form, Icon, Input, Button, Layout } from 'antd';
-import '../../assets/scss/login.scss';
+import '../../../assets/scss/login.scss';
 
-import { useFetch } from '../../hooks';
-import { setAuthorizationToken } from '../../utils/API';
-import { URLS } from '../../constants';
+import { useFetch } from '../../../hooks';
+import { setAuthorizationToken } from '../../../services/API';
+import { URLS } from '../../../utils/constants';
 
 function Login({ form }) {
   const { getFieldDecorator, validateFields } = form;
@@ -32,7 +32,7 @@ function Login({ form }) {
     <Redirect to="/" />
   ) : (
     <Layout className="login-layout">
-      <img src={require('../../assets/img/favicon.png')} alt="" />
+      <img src={require('../../../assets/img/favicon.png')} alt="" />
       <Form onSubmit={handleSubmit} className="login-form">
         <Form.Item>
           {getFieldDecorator('userName', {

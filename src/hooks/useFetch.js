@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { LayoutContext } from '../contexts';
 
-import { API, extractDataObject } from '../utils/API';
+import { API, extractDataObject } from '../services/API';
 
 function useFetch(fetchInitialObj) {
   const [data, setData] = useState(null);

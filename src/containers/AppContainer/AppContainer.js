@@ -10,9 +10,9 @@ import 'antd/dist/antd.css';
 import store from 'store';
 
 import { LayoutContext } from '../../contexts';
-import { handleRequestError } from '../../utils/API';
+import { handleRequestError } from '../../services/API';
 import { baseRoutes } from '../../router';
-import { URL_BASE_NAME } from '../../constants';
+import { URL_BASE_NAME } from '../../utils/constants';
 
 import '../../assets/scss/index.scss';
 

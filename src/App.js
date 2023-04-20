@@ -4,7 +4,7 @@ import store from 'store';
 import AppContainer from './containers/AppContainer';
 
 import { LayoutProvider, StoreProvider } from '../src/contexts';
-import { setAuthorizationToken } from '../src/utils/API';
+import { setAuthorizationToken } from './services/API';
 
 function App() {
   const authToken = store.get('authenticationToken');

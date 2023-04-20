@@ -6,8 +6,8 @@ import SideBarLayout from './SideBarLayout';
 import HeaderLayout from './HeaderLayout';
 import FooterLayout from './FooterLayout';
 
-import { dashboardRoutes } from '../router';
-import { LayoutContext } from '../contexts';
+import { dashboardRoutes } from '../../router';
+import { LayoutContext } from '../../contexts';
 
 const { Content } = Layout;
 

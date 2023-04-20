@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 
-import { LayoutContext } from '../../contexts';
+import { LayoutContext } from '../../../contexts';
 
-function CreateProduct() {
+function Home() {
 
   const { setHeaderComponent } = useContext(LayoutContext);
 
@@ -12,10 +12,10 @@ function CreateProduct() {
       setHeaderComponent(null);
     };
   }, []);
-  
+
   return (
-    <div>CreateProduct page</div>
+    <div>Home page</div>
   );
 }
 
-export default CreateProduct;
+export default Home;
