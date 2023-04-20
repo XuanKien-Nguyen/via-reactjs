@@ -13,7 +13,7 @@ const SlideLayout = () => {
     console.log(currentSlide);
   };
   return (
-    <Carousel afterChange={onChange}>
+    <Carousel afterChange={onChange} style={{marginBottom: '30px'}}>
       <div>
         <h3 style={contentStyle}>1</h3>
       </div>
