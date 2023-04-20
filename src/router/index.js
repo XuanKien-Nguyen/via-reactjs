@@ -1,4 +1,5 @@
 import MainLayout from '../components/layout/admin';
+
 // GeneralViews
 import Login from '../components/pages/login';
 import Home from '../components/pages/home';

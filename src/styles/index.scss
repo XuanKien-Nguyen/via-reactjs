@@ -1,0 +1,237 @@
+/*---DEFAULT---*/
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/*
+    2. Remove default margin
+  */
+* {
+    margin: 0;
+}
+
+/*
+    3. Allow percentage-based heights in the application
+  */
+html,
+body {
+    height: 100%;
+}
+
+/*
+    Typographic tweaks!
+    4. Add accessible line-height
+    5. Improve text rendering
+  */
+body {
+    line-height: 1.6;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: rgb(56, 88, 152);
+}
+
+/*
+    6. Improve media defaults
+  */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/*
+    7. Remove built-in form typography styles
+  */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/*
+    8. Avoid text overflows
+  */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+ul {
+    list-style-type:none;
+}
+
+/*
+    9. Create a root stacking context
+  */
+#root,
+#__next {
+    isolation: isolate;
+}
+
+.max-w-default {
+    max-width: 1170px !important;
+}
+
+.header-top_container, .header-main_container, .footer-session, .footer-copyright {
+    max-width: 1170px !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 15px;
+}
+
+/*--HEADER--*/
+
+.header-top_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.header-main_container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.header-top_left {
+    input[type=search]{
+        border-radius: 99px !important;
+    
+        background-color: hsla(0,0%,100%,.2)!important;
+        border-color: hsla(0,0%,100%,.09);
+    }
+    input[type=search]::placeholder {
+        color: white !important;
+        font-size: 12px;
+    }
+    .ant-input-search-icon {
+        color: white !important;
+    }
+    .ant-input-affix-wrapper {
+        font-size: 18px !important;
+    }
+}
+
+.header-top_right, .header-main_left, .header-main_right {
+    ul {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        height: 20px;
+        gap: 11px;
+        align-items: center;
+        li {
+            display: flex;
+            flex: 1 1 auto;
+            position: relative;
+            align-items: center;
+            padding-left: 11px;
+            a {
+                color: white;
+                line-height: 1;
+            }
+        }
+        li.item + li.item {
+            border-left: solid 1px white;
+        }
+    }
+}
+
+.header-main_left, .header-main_right  {
+    .header-devider {
+        border-left: 1px solid rgba(0,0,0,.1);
+        height: 30px;
+        margin-left: 11px;
+        padding: 0;
+        position: relative;
+        vertical-align: middle;
+    }
+    ul li a {
+        color: #333333;
+        font-weight: 700 !important;
+        font-size: 14px !important;
+    }
+}
+
+.header-main_right {
+    margin-left: auto;
+    li div {
+        height: 20px; line-height: 20px; 
+    }
+}
+
+li .item-button {
+    display: flex;
+    background-color: #333333;
+    padding: 16px;
+    border-radius: 99px;
+    a {
+        color: white !important;
+    }
+}
+
+/*--FOOTER--*/
+#footer_user {
+    .copyright-text {
+        padding: 15px 0;
+        color: hsla(0,0%,100%,.5);
+    }
+    
+    .footer-content {
+        color: white !important;
+        text-align: left !important;
+        position: relative;
+        & > div {
+            margin-top: 48px;
+            padding-bottom: 48px;
+        }
+        h2, h3 {
+            color: white;
+            font-weight: 700;       
+        }
+        a {
+            color: white;
+            font-weight: bolder;
+        }
+    }
+    
+    ul.dot {
+        padding: 0;
+        margin: 0;
+        list-style-type: disc;
+        li {
+            font-size: 16px;
+            list-style: inside;
+        }
+    }
+
+    ul.bullet-arrow {
+        padding: 0;
+        margin: 0;
+        li {
+            border-bottom: 1px solid #ececec;
+            list-style: none;
+            margin: 0;
+            padding: 7px 0 7px 0px;
+            position: relative;
+            i {
+                margin-right: 25px;
+                color: #7a9c59;
+            }
+        }
+    }
+}
+

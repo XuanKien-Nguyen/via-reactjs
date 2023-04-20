@@ -9,6 +9,7 @@ import FooterLayout from './admin/FooterLayout';
 import SideBarLayoutUser from './user/SideBarLayout';
 import HeaderLayoutUser from './user/HeaderLayout';
 import FooterLayoutUser from './user/FooterLayout';
+import SlideLayout from './user/SlideLayout';
 
 import { dashboardRoutes } from '../../router';
 import { LayoutContext } from '../../contexts';
@@ -40,11 +41,12 @@ function MainLayout() {
         </Content>
         <FooterLayout />
       </Layout>
-    </Layout> : <Layout style={{ marginLeft: sideBarCollapsed ? '80px' : '200px' }}>
-        <SideBarLayoutUser />
+    </Layout> : <Layout>
+        {/* <SideBarLayoutUser /> */}
         <Layout>
             <HeaderLayoutUser />
-            <Content>
+            <Content style={{padding: '0', margin: '0'}}>
+                <SlideLayout />
                 <Switch>
                     {dashboardRoutes.filter(el => el.layout !== 'admin').map(route => (
                         <Route

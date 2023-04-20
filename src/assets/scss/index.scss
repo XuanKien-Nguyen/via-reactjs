@@ -17,3 +17,7 @@ code {
 @import "layout.scss";
 @import "components/inputs.scss";
 @import "components/buttons.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
