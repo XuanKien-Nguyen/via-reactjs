@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Redirect } from 'react-router-dom';
 import store from 'store';
 import { Form, Icon, Input, Button, Layout } from 'antd';
@@ -16,16 +16,23 @@ function Index({ form }) {
     doFetch
   } = useFetch();
 
-  console.log('token', token);
-
   if (token) {
     store.set('authenticationToken', token);
     setAuthorizationToken(token);
   }
 
+  const [test, setTest] = useState();
+
   const handleSubmit = async e => {
     e.preventDefault();
-    store.set('authenticationToken', 'dadadadadasd');
+    const username = form.getFieldValue("userName");
+    if (username === 'admin') {
+      localStorage.setItem('role', 'admin')
+    } else {
+      localStorage.setItem('role', 'user')
+    }
+    store.set('authenticationToken', 'dadadadada');
+    setTest(!test)
   };
 
   return token || authToken ? (

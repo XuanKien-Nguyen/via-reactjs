@@ -3,7 +3,7 @@ import { Layout, Icon, Modal } from 'antd';
 import store from 'store';
 import { Redirect } from 'react-router-dom';
 
-import { LayoutContext } from '../../contexts';
+import { LayoutContext } from '../../../contexts';
 
 const { Header } = Layout;
 

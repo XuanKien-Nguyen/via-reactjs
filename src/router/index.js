@@ -1,4 +1,4 @@
-import MainLayout from '../components/layout';
+import MainLayout from '../components/layout/admin';
 // GeneralViews
 import Login from '../components/pages/login';
 import Home from '../components/pages/home';
@@ -12,6 +12,7 @@ export const dashboardRoutes = [
     name: "Home",
     icon: "shop",
     showAlways: true,
+    layout: "admin"
   },
   {
     path: '/create-product',
@@ -19,6 +20,7 @@ export const dashboardRoutes = [
     name: "Create Product",
     icon: "upload",
     showAlways: true,
+    layout: "admin"
   },
   {
     path: '/product/:productSlug',
@@ -26,6 +28,7 @@ export const dashboardRoutes = [
     name: "Product details",
     icon: "team",
     showAlways: false,
+    layout: "admin"
   },
 ];
 export const baseRoutes = [

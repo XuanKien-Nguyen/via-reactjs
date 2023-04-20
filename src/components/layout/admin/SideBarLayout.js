@@ -4,8 +4,8 @@ import { withRouter } from 'react-router';
 import { Layout, Menu, Icon } from 'antd';
 import pathToRegexp from 'path-to-regexp';
 
-import { dashboardRoutes } from '../../router';
-import { LayoutContext } from '../../contexts';
+import { dashboardRoutes } from '../../../router';
+import { LayoutContext } from '../../../contexts';
 
 const { Sider } = Layout;
 
@@ -28,7 +28,7 @@ function SideBarLayout(props) {
       onCollapse={() => setCollapsed(!sideBarCollapsed)}
     >
       <div className="logo">
-        <img src={require('../../assets/img/favicon.png')} alt="" />
+        <img src={require('../../../assets/img/favicon.png')} alt="" />
         {!sideBarCollapsed && <span>Admin Logo</span>}
       </div>
       <Menu
