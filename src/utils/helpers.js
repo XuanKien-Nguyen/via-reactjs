@@ -12,7 +12,9 @@ export const checkValue = (value, key) => {
 
 export const isEmail = email => /^[a-z0-9._%+-]+@.+\..+/.test(email);
 
-export const isName = name => /^(?=.{2,150}$).*/.test(name);
+export const isPhoneNumberVN = phone => /(84|0[3|5|7|8|9])+([0-9]{8})\b/.test(phone);
+
+export const isUsername = username => /^[a-z0-9_-]{3,15}$/.test(username);
 
 export const createHash = (arr, key) => {
   var Hash = function() {

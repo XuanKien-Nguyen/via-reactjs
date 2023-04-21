@@ -5,7 +5,7 @@ import SVG from 'react-inlinesvg';
 import {checkExistUsername, checkExistEmail, checkExistPhone, register} from "../../../services/user";
 import email from '../../../assets/svg/email.svg'
 import {useState} from "react";
-import {isEmail} from '../../../utils/helpers'
+import {isEmail, isPhoneNumberVN, isUsername} from '../../../utils/helpers'
 const debounce = {}
 
 const Register = (props) => {
@@ -35,6 +35,32 @@ const Register = (props) => {
         }
     })
 
+    const validEmail = [{
+        func: value => !!value,
+        message: 'Vui lòng nhập email'
+    },{
+        func: isEmail,
+        message: 'Vui lòng nhập đúng định dạng email'
+    }]
+
+    const validPhone = [
+        {
+            func: value => !!value,
+            message: 'Vui lòng nhập số điện thoại'
+        },{
+        func: isPhoneNumberVN,
+        message: 'Vui lòng nhập đúng định dạng số điện thoại'
+    }]
+    const validUsername = [{
+        func: value => !!value,
+        message: 'Vui lòng nhập tên tài khoản'
+        },
+        {
+            func: isUsername,
+            message: 'Tên tài khoản chỉ bao gồm chữ, số, gạch dưới và từ 3-15 ký tự'
+        }
+    ]
+
     const handleConfirmBlur = e => {
         const {value} = e.target;
         setConfirmDirty(confirmDirty || !!value);
@@ -57,8 +83,21 @@ const Register = (props) => {
         callback();
     };
 
-    const validateCheckExistServer = async (value, setValidateStatus, setMessage, api, fieldName, title) => {
+    const validateCheckExistServer = async (rule, value, callback, setValidateStatus, setMessage, api, fieldName, title, arrFunc) => {
         clearTimeout(debounce[fieldName])
+        if (arrFunc) {
+            arrFunc.forEach(el => {
+                const result = el.func(value)
+                if (!result) {
+                    ref.current[fieldName] = {
+                        isValid: false,
+                    }
+                    setValidateStatus('error')
+                    setMessage(el.message)
+                    throw Error('error')
+                }
+            })
+        }
         if (value) {
             setValidateStatus("validating")
             setMessage("")
@@ -72,6 +111,7 @@ const Register = (props) => {
                         isValid: true,
                         count: ref.current[fieldName].count + 1
                     }
+                    callback()
                 }).catch(() => {
                     setValidateStatus("error")
                     setMessage(`${title} đã tồn tại trên hệ thống`)
@@ -79,15 +119,9 @@ const Register = (props) => {
                         isValid: false,
                         count: ref.current[fieldName].count + 1
                     }
+                    callback(`${title} đã tồn tại trên hệ thống`)
                 })
             }, 500)
-        } else {
-            setValidateStatus("error")
-            setMessage(`Vui lòng nhập ${title}`)
-            ref.current[fieldName] = {
-                isValid: false,
-                count: ref.current[fieldName].count + 1
-            }
         }
     }
 
@@ -128,8 +162,11 @@ const Register = (props) => {
                                help={helpValidateUser}
                     >
                         {getFieldDecorator('username', {
-                            rules: [{
-                                validator: (rule, value) => validateCheckExistServer(value, setValidateUserStatus, setHelpValidateUser, checkExistUsername, 'username', 'Tên tài khoản'),
+                            rules: [
+                            {
+                                validator: (rule, value, callback) => validateCheckExistServer(rule, value, callback,
+                                    setValidateUserStatus, setHelpValidateUser, checkExistUsername,
+                                    'username', 'Tên tài khoản', validUsername),
                             }],
                         })(
                             <Input
@@ -150,11 +187,15 @@ const Register = (props) => {
                     </Form.Item>
                     <Form.Item hasFeedback
                                validateStatus={validateEmailStatus}
-                               help={helpValidateEmail}>
+                               help={helpValidateEmail}
+                               >
                         {getFieldDecorator('email', {
+                            validateFirst: true,
                             rules: [
                                 {
-                                    validator: (rule, value) => validateCheckExistServer(value, setValidateEmailStatus, setHelpValidateEmail, checkExistEmail, 'email', 'Email'),
+                                    validator: (rule, value, callback) => validateCheckExistServer(rule, value, callback,
+                                        setValidateEmailStatus, setHelpValidateEmail,
+                                        checkExistEmail, 'email', 'Email', validEmail),
                                 }
                             ],
                         })(
@@ -169,8 +210,11 @@ const Register = (props) => {
                                help={helpValidatePhone}>
                         {getFieldDecorator('phone', {
                             rules: [
+                                {  required: true, pattern: /(84|0[3|5|7|8|9])+([0-9]{8})\b/ },
                                 {
-                                    validator: (rule, value) => validateCheckExistServer(value, setValidatePhoneStatus, setHelpValidatePhone, checkExistPhone, 'phone', 'Số điện thoại'),
+                                    validator: (rule, value, callback) => validateCheckExistServer(rule, value, callback,
+                                        setValidatePhoneStatus, setHelpValidatePhone, checkExistPhone,
+                                        'phone', 'Số điện thoại', validPhone),
                                 }
                             ],
                         })(
