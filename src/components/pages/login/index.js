@@ -1,24 +1,17 @@
-import React, {useContext, useState} from 'react';
-import { Redirect } from 'react-router-dom';
-import store from 'index';
+import React, { useState } from 'react';
 import {Form, Icon, Input, Button, Layout, message} from 'antd';
 import '../../../assets/scss/login.scss';
-
-import { useFetch } from '../../../hooks';
-import { setAuthorizationToken } from '../../../services/API';
 import {login} from "../../../services/user";
+import {useSelector, useDispatch} from "react-redux";
 
 function Index({ form }) {
   const { getFieldDecorator } = form;
-  const authToken = !!store.get('authenticationToken');
-  const {data: { token }} = useFetch();
 
   const [loading, setLoading] = useState(false)
 
-  if (token) {
-    store.set('authenticationToken', token);
-    setAuthorizationToken(token);
-  }
+  const user = useSelector(store => store.user)
+
+  const dispatch = useDispatch()
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -27,8 +20,8 @@ function Index({ form }) {
         setLoading(true)
         login(values).then(resp => {
           if (resp.status === 200 && resp.data) {
-            store.set('authenticationToken', 'adadadad');
             message.success("Đăng nhập thành công")
+            dispatch({type: 'SET_USER_INFO', payload: resp.data})
           } else {
             message.error(resp.data.message)
           }
@@ -37,13 +30,7 @@ function Index({ form }) {
     })
   };
 
-
-
-
-  return token || authToken ? (
-    <Redirect to="/" />
-  ) : (
-    <Layout className="login-layout">
+  return <Layout className="login-layout">
       <div className='container'>
         <div align="center">
           <h2 className="via2fa-text">VIA2FA</h2>
@@ -81,12 +68,14 @@ function Index({ form }) {
             <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
               Đăng nhập
             </Button>
+            <Button type="primary" className="login-form-button" onClick={() => console.log('user', user)}>
+              Get store
+            </Button>
             Hoặc <a href="">đăng ký tài khoản</a>
           </Form.Item>
         </Form>
       </div>
     </Layout>
-  );
 }
 
 export default Form.create({ name: 'loginForm' })(Index);

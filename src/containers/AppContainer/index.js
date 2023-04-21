@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { Spin, notification } from 'antd';
 import 'antd/dist/antd.css';
-import store from 'index';
 
 import { LayoutContext } from '../../contexts';
 import { handleRequestError } from '../../services/API';
