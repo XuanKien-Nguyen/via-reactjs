@@ -1,4 +1,4 @@
-import { SET_CATEGORIES, INIT_CATEGORIES } from '../actions';
+import { SET_CATEGORIES, INIT_CATEGORIES } from '../../actions/category';
 
 export const categoryInitialState = [];
 

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Layout, Icon, Modal } from 'antd';
-import store from 'store';
+import store from 'index';
 import { Redirect } from 'react-router-dom';
 
 import { LayoutContext } from '../../../contexts';

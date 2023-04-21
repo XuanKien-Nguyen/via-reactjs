@@ -8,16 +8,14 @@ service.interceptors.request.use(request => {
     // Edit request config
     return request;
 }, error => {
-    console.log(error);
     return Promise.reject(error);
 });
 
-// service.interceptors.response.use(response => {
-//     // Edit response config
-//     return response;
-// }, error => {
-//     console.log(error);
-//     return res;
-// });
+service.interceptors.response.use(response => {
+    // Edit response config
+    return response;
+}, error => {
+    return error.response;
+});
 
 export default service

@@ -15,3 +15,7 @@ export const checkExistEmail = (body) => {
 export const checkExistPhone = (body) => {
     return service.post(`${ENDPOINT_USER}/check-exist-phone`, body)
 }
+
+export const login = (body) => {
+    return service.post(`${ENDPOINT_USER}/login`, body)
+}
