@@ -1,10 +1,6 @@
 import axios from 'axios';
 
-export const baseURL = `${
-  window.location.hostname === 'localhost'
-    ? 'http://localhost:1000'
-    : window.location.origin
-}`;
+export const baseURL = process.env.REACT_APP_API
 
 export const API = axios.create({
   baseURL: `${baseURL}/adminAPI/`,

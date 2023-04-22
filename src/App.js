@@ -1,23 +1,17 @@
 import React from 'react';
-import store from 'store';
-
 import AppContainer from './containers/AppContainer';
 
-import { LayoutProvider, StoreProvider } from '../src/contexts';
-import { setAuthorizationToken } from './services/API';
+import { LayoutProvider } from '../src/contexts';
+import { Provider } from 'react-redux'
+import store from './store'
 
 function App() {
-  const authToken = store.get('authenticationToken');
-
-  if (!!authToken) {
-    setAuthorizationToken(authToken);
-  }
 
   return (
     <LayoutProvider>
-      <StoreProvider>
+      <Provider store={store}>
         <AppContainer />
-      </StoreProvider>
+      </Provider>
     </LayoutProvider>
   );
 }

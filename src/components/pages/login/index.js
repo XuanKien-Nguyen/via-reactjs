@@ -1,77 +1,89 @@
-import React, {useState} from 'react';
-import { Redirect } from 'react-router-dom';
-import store from 'store';
-import { Form, Icon, Input, Button, Layout } from 'antd';
+import React, { useState } from 'react';
+import {Form, Icon, Input, Button, Layout, message} from 'antd';
 import '../../../assets/scss/login.scss';
+import {login} from "../../../services/user";
+import {useSelector, useDispatch} from "react-redux";
 
-import { useFetch } from '../../../hooks';
-import { setAuthorizationToken } from '../../../services/API';
-import { URLS } from '../../../utils/constants';
+import { useHistory } from "react-router-dom";
+
 
 function Index({ form }) {
-  const { getFieldDecorator, validateFields } = form;
-  const authToken = !!store.get('authenticationToken');
-  const {
-    data: { token },
-    doFetch
-  } = useFetch();
 
-  if (token) {
-    store.set('authenticationToken', token);
-    setAuthorizationToken(token);
+  const { getFieldDecorator } = form;
+
+  const history = useHistory();
+
+  const [loading, setLoading] = useState(false)
+
+  const user = useSelector(store => store.user)
+
+  const dispatch = useDispatch()
+
+  const gotoRegister = () => {
+    console.log('gotoRegister');
+    history.push("/login")
   }
-
-  const [test, setTest] = useState();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const username = form.getFieldValue("userName");
-    if (username === 'admin') {
-      localStorage.setItem('role', 'admin')
-    } else {
-      localStorage.setItem('role', 'user')
-    }
-    store.set('authenticationToken', 'dadadadada');
-    setTest(!test)
+    form.validateFields((errors, values) => {
+      if (!errors) {
+        setLoading(true)
+        login(values).then(resp => {
+          if (resp.status === 200 && resp.data) {
+            message.success("Đăng nhập thành công")
+            dispatch({type: 'SET_USER_INFO', payload: resp.data})
+          } else {
+            message.error(resp.data.message)
+          }
+        }).finally(() => setLoading(false))
+      }
+    })
   };
 
-  return token || authToken ? (
-    <Redirect to="/" />
-  ) : (
-    <Layout className="login-layout">
-      <img src={require('../../../assets/img/favicon.png')} alt="" />
-      <Form onSubmit={handleSubmit} className="login-form">
-        <Form.Item>
-          {getFieldDecorator('userName', {
-            rules: [{ required: true, message: 'Please enter your username!' }]
-          })(
-            <Input
-              prefix={<Icon type="user" className="input-icon" />}
-              placeholder="Username"
-              size="large"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please enter your Password!' }]
-          })(
-            <Input
-              prefix={<Icon type="lock" className="input-icon" />}
-              type="password"
-              placeholder="Password"
-              size="large"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" size="large">
-            Log in
-          </Button>
-        </Form.Item>
-      </Form>
+  return <Layout className="login-layout">
+      <div className='container'>
+        <div align="center">
+          <h2 className="via2fa-text">VIA2FA</h2>
+        </div>
+        <Form className="login-form" onSubmit={handleSubmit}>
+          <Form.Item>
+            {getFieldDecorator('username', {
+              rules: [{ required: true, message: 'Vui lòng nhập tên tài khoản' }],
+            })(
+                <Input
+                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="Tên tài khoản"
+                />,
+            )}
+          </Form.Item>
+          <Form.Item>
+            {getFieldDecorator('password', {
+              rules: [{ required: true, message: 'Vui lòng nhập mật khẩu' }],
+            })(
+                <Input
+                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    type="password"
+                    placeholder="Mật khẩu"
+                />,
+            )}
+          </Form.Item>
+          <Form.Item>
+            {/*{getFieldDecorator('remember', {*/}
+            {/*  valuePropName: 'checked',*/}
+            {/*  initialValue: true,*/}
+            {/*})(<Checkbox>Remember me</Checkbox>)}*/}
+            <span className="login-form-forgot" href="">
+              Quên mật khẩu
+            </span>
+            <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
+              Đăng nhập
+            </Button>
+            Hoặc <a onClick={gotoRegister}>đăng ký tài khoản</a>
+          </Form.Item>
+        </Form>
+      </div>
     </Layout>
-  );
 }
 
 export default Form.create({ name: 'loginForm' })(Index);
