@@ -8,8 +8,8 @@ const ProductCard = () => {
             <Row className='card-container'>
                 <Col className='card-image' span={12} ><img alt='product' src={require('../../../../assets/img/product-img.png')} /></Col>
                 <Col className='card-content' span={12} ><div className='product-content'>
-                    <p className='product-name'>Product Name</p>
-                    <p className='product-instock'>Có sẵn: 7 sản phẩm</p>
+                    <div className='product-name'><a>Product Name Very Longggggggggggggggggggggggggggggggggggggggggggggggggggggggg asssssssssssssssssssssssssssssssssssssssssssss assssssssss asssssssssss asssssssssssssssss assssssssss</a></div>
+                    <div className='product-quality instock'><p >Có sẵn: 7 sản phẩm</p></div>
                 </div>
                     <div className='product-price'>
                         <span className='basis-price discounted'>200,000 ₫</span>

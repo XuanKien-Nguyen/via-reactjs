@@ -17,12 +17,12 @@ function HeaderLayout() {
           /></div>
           <div className='header-top_right'>
             <ul>
-              <li className='item'><a href='#'>Item</a></li>
-              <li className='item'><a href='#'>Item</a></li>
-              <li className='item'><a href='#'>Item</a></li>
-              <li className='item'><a href='#'>Item</a></li>
-              <li className='item'><a href='#'>Item</a></li>
-              <li className='item'><a href='#'>Item</a></li>
+              <li className='item'><a href='#'>Tất cả sản phẩm</a></li>
+              <li className='item'><a href='#'>Hướng dẫn</a></li>
+              <li className='item'><a href='#'>Nạp tiền</a></li>
+              <li className='item'><a href='#'>Thủ thuật Facebook</a></li>
+              <li className='item'><a href='#'>Về chúng tôi</a></li>
+              <li className='item'><a href='#'>Liên hệ</a></li>
             </ul>
           </div>
         </div>
@@ -52,6 +52,7 @@ function HeaderLayout() {
             </div>
         </div>
       </div>
+      <div className='header-divider'><div className='top-divider'></div></div>
     </Header>
   );
 }

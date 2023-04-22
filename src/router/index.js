@@ -5,6 +5,7 @@ import Login from '../components/pages/login';
 import Home from '../components/pages/home';
 import CreateProduct from '../components/pages/create-product';
 import ProductDetails from '../components/pages/product-detail';
+import HomePage from '../components/pages/common/homepage/HomePage';
 
 export const dashboardRoutes = [
   {
@@ -31,6 +32,11 @@ export const dashboardRoutes = [
     showAlways: false,
     layout: "admin"
   },
+  {
+    path: '/',
+    component: HomePage,
+    name: "Home Page",
+  }
 ];
 export const baseRoutes = [
   {

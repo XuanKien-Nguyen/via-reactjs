@@ -9,8 +9,8 @@ import FooterLayout from './admin/FooterLayout';
 import SideBarLayoutUser from './user/SideBarLayout';
 import HeaderLayoutUser from './user/HeaderLayout';
 import FooterLayoutUser from './user/FooterLayout';
-import SlideLayout from './user/SlideLayout';
-import ProductHome from './user/products/ProductHome';
+import SlideLayout from '../pages/common/homepage/components/SlideLayout';
+import ProductHome from './user/products/ProductLayout';
 
 import { dashboardRoutes } from '../../router';
 import { LayoutContext } from '../../contexts';
@@ -47,8 +47,6 @@ function MainLayout() {
         <Layout>
             <HeaderLayoutUser />
             <Content style={{padding: '0', margin: '0'}}>
-                <SlideLayout />
-                <ProductHome />
                 <Switch>
                     {dashboardRoutes.filter(el => el.layout !== 'admin').map(route => (
                         <Route
