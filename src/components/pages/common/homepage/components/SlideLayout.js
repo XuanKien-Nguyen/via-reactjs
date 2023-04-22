@@ -15,7 +15,8 @@ const SlideLayout = () => {
           <h1>2</h1>
         </div>
         <div>
-          <h1>3</h1>        </div>
+          <h1>3</h1>
+        </div>
       </Carousel>
     </section>
   );

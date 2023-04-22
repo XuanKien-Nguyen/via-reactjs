@@ -30,7 +30,7 @@ body {
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: rgb(56, 88, 152);
+    // background-color: rgb(56, 88, 152);
 }
 
 /*
@@ -70,6 +70,7 @@ h6 {
 
 a {
     text-decoration: none;
+    white-space: nowrap;
 }
 
 ul {
@@ -143,7 +144,7 @@ ul {
         margin: 0;
         padding: 0;
         height: 20px;
-        gap: 11px;
+        gap: 8px;
         align-items: center;
 
         li {
@@ -151,7 +152,7 @@ ul {
             flex: 1 1 auto;
             position: relative;
             align-items: center;
-            padding-left: 11px;
+            padding-left: 8px;
 
             a {
                 font-size: 13px;
@@ -171,7 +172,7 @@ ul {
     .header-devider {
         border-left: 1px solid rgba(0, 0, 0, .1);
         height: 30px;
-        margin-left: 11px;
+        margin-left: 8px;
         padding: 0;
         position: relative;
         vertical-align: middle;
@@ -196,7 +197,9 @@ ul {
 li .item-button {
     display: flex;
     background-color: #333333;
-    padding: 16px;
+    padding: 0 16px;
+    height: 32px;
+    align-items: center;
     border-radius: 99px;
 
     a {
@@ -398,10 +401,14 @@ li .item-button {
             margin: 2px 0;
             max-height: 68px;
             overflow: hidden;
-            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3; 
+            white-space: pre-wrap;
 
             a {
                 color: #000000;
+                white-space: initial;
             }
         }
 
@@ -432,6 +439,16 @@ li .item-button {
                 text-decoration: line-through;
                 font-weight: 400 !important;
                 opacity: 0.6;
+            }
+        }
+
+        .add-to-card-button {
+            button:hover {
+                border-color: #1b74e4;
+                background-color: #1b74e4;
+                span {
+                    color: white;
+                }
             }
         }
 
@@ -541,9 +558,12 @@ li .item-button {
         }
     }
     .blog-text {
-        max-height: 64px;
+        height: 64px;
         overflow: hidden;
-        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        white-space: pre-wrap;
         color: #333333;
     }
     .is-divider {

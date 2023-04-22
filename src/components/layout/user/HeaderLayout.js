@@ -34,20 +34,19 @@ function HeaderLayout() {
           </div>
           <div className="header-main_left">
               <ul>
-                <li className='item'><a href='#'>ITEM</a></li>
-                <li className='item'><a href='#'>ITEM</a></li>
-                <li className='item'><a href='#'>ITEM</a></li>
-                <li className='item'><a href='#'>ITEM</a></li>
-                <li className='item'><a href='#'>ITEM</a></li>
+                <li className='item'><a href='#'>VIA FACEBOOK</a></li>
+                <li className='item'><a href='#'>CLONE FACEBOOK</a></li>
+                <li className='item'><a href='#'>BM & FANPAGE</a></li>
+                <li className='item'><a href='#'>KHÓA HỌC</a></li>
                 <li className='header-devider'></li>
-                <li className='item'><div className='item-button'><a href='#'>ITEM</a></div></li>
+                <li className='item'><div className='item-button'><a href='#'><span>APP TĂNG LIKE, CMT, SUB</span></a></div></li>
               </ul>
             </div>
             <div className="header-main_right">
               <ul>
                   <li className='item'><div className='signin-signup'><a>ĐĂNG NHẬP / ĐĂNG KÝ</a></div></li>
                   <li className='header-devider'></li>
-                  <li className='item'><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px'}} /></div></li>
+                  <li className='item'><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px'}} /></div></li>
                 </ul>
             </div>
         </div>
