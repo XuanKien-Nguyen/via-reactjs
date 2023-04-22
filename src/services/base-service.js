@@ -1,6 +1,8 @@
 import Axios from "axios";
 
-const service = Axios.create();
+const service = Axios.create({
+    withCredentials: true
+});
 
 service.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -13,6 +15,8 @@ service.interceptors.request.use(request => {
 
 service.interceptors.response.use(response => {
     // Edit response config
+    console.log(response.headers['set-cookie']);
+    console.log(response);
     return response;
 }, error => {
     return error.response;

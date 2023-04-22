@@ -2,19 +2,21 @@
   "name": "via2fa",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://via2favn-hotmail.tk",
   "dependencies": {
     "antd": "^3.24.3",
     "axios": "^0.19.0",
+    "http-proxy-middleware": "^2.0.6",
     "node-sass": "^4.13.0",
     "path-to-regexp": "^3.1.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-inlinesvg": "^3.0.2",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "redux": "^4.1.0",
-    "redux-thunk": "^2.3.0",
-    "react-redux": "^7.2.4"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

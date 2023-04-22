@@ -4,14 +4,25 @@ import '../../../assets/scss/login.scss';
 import {login} from "../../../services/user";
 import {useSelector, useDispatch} from "react-redux";
 
+import { useHistory } from "react-router-dom";
+
+
 function Index({ form }) {
+
   const { getFieldDecorator } = form;
+
+  const history = useHistory();
 
   const [loading, setLoading] = useState(false)
 
   const user = useSelector(store => store.user)
 
   const dispatch = useDispatch()
+
+  const gotoRegister = () => {
+    console.log('gotoRegister');
+    history.push("/login")
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -68,10 +79,7 @@ function Index({ form }) {
             <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
               Đăng nhập
             </Button>
-            <Button type="primary" className="login-form-button" onClick={() => console.log('user', user)}>
-              Get store
-            </Button>
-            Hoặc <a href="">đăng ký tài khoản</a>
+            Hoặc <a onClick={gotoRegister}>đăng ký tài khoản</a>
           </Form.Item>
         </Form>
       </div>
