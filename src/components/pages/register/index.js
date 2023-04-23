@@ -6,6 +6,8 @@ import {checkExistUsername, checkExistEmail, checkExistPhone, register} from "..
 import email from '../../../assets/svg/email.svg'
 import {useState} from "react";
 import {isEmail, isPhoneNumberVN, isUsername} from '../../../utils/helpers'
+import {useHistory} from "react-router-dom";
+
 const debounce = {}
 
 const Register = (props) => {
@@ -35,10 +37,12 @@ const Register = (props) => {
         }
     })
 
+    const history = useHistory()
+
     const validEmail = [{
         func: value => !!value,
         message: 'Vui lòng nhập email'
-    },{
+    }, {
         func: isEmail,
         message: 'Vui lòng nhập đúng định dạng email'
     }]
@@ -47,19 +51,23 @@ const Register = (props) => {
         {
             func: value => !!value,
             message: 'Vui lòng nhập số điện thoại'
-        },{
-        func: isPhoneNumberVN,
-        message: 'Vui lòng nhập đúng định dạng số điện thoại'
-    }]
+        }, {
+            func: isPhoneNumberVN,
+            message: 'Vui lòng nhập đúng định dạng số điện thoại'
+        }]
     const validUsername = [{
         func: value => !!value,
         message: 'Vui lòng nhập tên tài khoản'
-        },
+    },
         {
             func: isUsername,
             message: 'Tên tài khoản chỉ bao gồm chữ, số, gạch dưới và từ 3-15 ký tự'
         }
     ]
+
+    const gotoLogin = () => {
+        history.push("/login")
+    }
 
     const handleConfirmBlur = e => {
         const {value} = e.target;
@@ -83,7 +91,8 @@ const Register = (props) => {
         callback();
     };
 
-    const validateCheckExistServer = async (rule, value, callback, setValidateStatus, setMessage, api, fieldName, title, arrFunc) => {
+    const validateCheckExistServer = async (rule, value, callback, options) => {
+        const {setValidateStatus, setMessage, api, fieldName, title, arrFunc} = options
         clearTimeout(debounce[fieldName])
         if (arrFunc) {
             arrFunc.forEach(el => {
@@ -104,12 +113,21 @@ const Register = (props) => {
             debounce[fieldName] = setTimeout(async () => {
                 const body = {}
                 body[fieldName] = value
-                api(body).then(() => {
-                    setValidateStatus("success")
-                    setMessage("")
-                    ref.current[fieldName] = {
-                        isValid: true,
-                        count: ref.current[fieldName].count + 1
+                api(body).then(resp => {
+                    if (resp?.status === 409) {
+                        setValidateStatus("error")
+                        setMessage(`${title} đã tồn tại trên hệ thống`)
+                        ref.current[fieldName] = {
+                            isValid: false,
+                            count: ref.current[fieldName].count + 1
+                        }
+                    } else {
+                        setValidateStatus("success")
+                        setMessage("")
+                        ref.current[fieldName] = {
+                            isValid: true,
+                            count: ref.current[fieldName].count + 1
+                        }
                     }
                     callback()
                 }).catch(() => {
@@ -128,7 +146,7 @@ const Register = (props) => {
     const handleSubmit = () => {
         const arrInvalid = ['fullname', 'password', 'confirm']
         let validServerIsOk = true
-        for(const key in ref.current) {
+        for (const key in ref.current) {
             const element = ref.current[key]
             if (!element.isValid) {
                 if (element.count === 0) {
@@ -163,11 +181,17 @@ const Register = (props) => {
                     >
                         {getFieldDecorator('username', {
                             rules: [
-                            {
-                                validator: (rule, value, callback) => validateCheckExistServer(rule, value, callback,
-                                    setValidateUserStatus, setHelpValidateUser, checkExistUsername,
-                                    'username', 'Tên tài khoản', validUsername),
-                            }],
+                                {
+                                    validator: (rule, value, callback) => validateCheckExistServer(rule, value, callback,
+                                        {
+                                            setValidateStatus: setValidateUserStatus,
+                                            setMessage: setHelpValidateUser,
+                                            api: checkExistUsername,
+                                            fieldName: 'username',
+                                            title: 'Tên tài khoản',
+                                            arrFunc: validUsername
+                                        }),
+                                }],
                         })(
                             <Input
                                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
@@ -188,14 +212,20 @@ const Register = (props) => {
                     <Form.Item hasFeedback
                                validateStatus={validateEmailStatus}
                                help={helpValidateEmail}
-                               >
+                    >
                         {getFieldDecorator('email', {
                             validateFirst: true,
                             rules: [
                                 {
                                     validator: (rule, value, callback) => validateCheckExistServer(rule, value, callback,
-                                        setValidateEmailStatus, setHelpValidateEmail,
-                                        checkExistEmail, 'email', 'Email', validEmail),
+                                        {
+                                            setValidateStatus: setValidateEmailStatus,
+                                            setMessage: setHelpValidateEmail,
+                                            api: checkExistEmail,
+                                            fieldName: 'email',
+                                            title: 'Email',
+                                            arrFunc: validEmail
+                                        }),
                                 }
                             ],
                         })(
@@ -210,11 +240,17 @@ const Register = (props) => {
                                help={helpValidatePhone}>
                         {getFieldDecorator('phone', {
                             rules: [
-                                {  required: true, pattern: /(84|0[3|5|7|8|9])+([0-9]{8})\b/ },
+                                {required: true, pattern: /(84|0[3|5|7|8|9])+([0-9]{8})\b/},
                                 {
                                     validator: (rule, value, callback) => validateCheckExistServer(rule, value, callback,
-                                        setValidatePhoneStatus, setHelpValidatePhone, checkExistPhone,
-                                        'phone', 'Số điện thoại', validPhone),
+                                        {
+                                            setValidateStatus: setValidatePhoneStatus,
+                                            setMessage: setHelpValidatePhone,
+                                            api: checkExistPhone,
+                                            fieldName: 'phone',
+                                            title: 'Số điện thoại',
+                                            arrFunc: validPhone
+                                        }),
                                 }
                             ],
                         })(
@@ -258,7 +294,7 @@ const Register = (props) => {
                         <Button type="primary" onClick={handleSubmit} className="login-form-button">
                             Đăng ký
                         </Button>
-                        Đã có tài khoản <a href="">Đăng nhập</a> ngay
+                        Đã có tài khoản <a onClick={gotoLogin}>Đăng nhập</a> ngay
                     </Form.Item>
                 </Form>
             </div>
