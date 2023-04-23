@@ -9,8 +9,6 @@ import FooterLayout from './admin/FooterLayout';
 import SideBarLayoutUser from './user/SideBarLayout';
 import HeaderLayoutUser from './user/HeaderLayout';
 import FooterLayoutUser from './user/FooterLayout';
-import SlideLayout from '../pages/common/homepage/components/SlideLayout';
-import ProductHome from './user/products/ProductLayout';
 
 import { dashboardRoutes } from '../../router';
 import { LayoutContext } from '../../contexts';
