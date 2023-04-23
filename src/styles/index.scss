@@ -90,7 +90,7 @@ ul {
 .header-divider,
 .footer-session,
 .footer-copyright,
-.product-category,
+.category-container,
 .QandA-container,
 .feature-container {
     max-width: 1170px !important;
@@ -350,7 +350,14 @@ li .item-button {
     margin-bottom: 32px;
 }
 
-.product-category {
+.category-container {
+    .ant-row {
+        margin: -15px !important;
+    }
+
+    .ant-col {
+        padding: 15px !important;
+    }
     .category-title {
         .title-content {
             display: flex;
@@ -544,8 +551,9 @@ li .item-button {
 /*--Blog--*/
 
 .blog-card {
+    margin: 32px 0;
     .ant-card-body {
-        padding: 0 15px 30px  15px;
+        padding: 0;
     }
     .blog-title {
         height: 64px;
@@ -576,5 +584,26 @@ li .item-button {
         margin-right: auto;
         margin-top: 8px;
         margin-bottom: 8px;
+    }
+    .badge-post-time {
+        position: absolute;
+        top: 25px;
+        left: -8px;
+        z-index: 1;
+    
+        .badge-container {
+            background-color: rgb(27, 116, 228);
+            color: rgb(255, 255, 255);
+            border-radius: 0px;
+            padding: 8px 14px;
+            .post-date {
+                font-size: 16px;
+                font-weight: 700;
+            }
+            .post-month {
+                font-size: 11px;
+                font-weight: 700;
+            }
+        }
     }
 }

@@ -1,9 +1,20 @@
 import React from 'react';
-import { Input, Icon, Layout } from 'antd';
+import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
 const { Search } = Input;
 const { Header } = Layout;
 
 function HeaderLayout() {
+  const onClick = ({ key }) => {
+    console.log(`Click on item ${key}`);
+  };
+
+  const menu = (
+    <Menu onClick={onClick}>
+    <Menu.Item key="1">1st menu item</Menu.Item>
+    <Menu.Item key="2">2nd memu item</Menu.Item>
+    <Menu.Item key="3">3rd menu item</Menu.Item>
+  </Menu>
+  );
 
   return (
     <Header id='header_user' style={{ height: 'auto', padding: 0, margin: 0 }}>
@@ -34,7 +45,7 @@ function HeaderLayout() {
           </div>
           <div className="header-main_left">
               <ul>
-                <li className='item'><a href='#'>VIA FACEBOOK</a></li>
+                <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()}>VIA FACEBOOK<Icon type="down" style={{marginLeft: '4px'}}/></a></Dropdown></li>
                 <li className='item'><a href='#'>CLONE FACEBOOK</a></li>
                 <li className='item'><a href='#'>BM & FANPAGE</a></li>
                 <li className='item'><a href='#'>KHÓA HỌC</a></li>

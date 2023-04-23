@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button, Row, Col, Badge } from 'antd';
 
-const ProductCard = () => {
+const ProductCard = ({productDetail}) => {
     return (
         <Card className='product-card'>
             <Badge className='badge-discount' count={'-51%'}/>
