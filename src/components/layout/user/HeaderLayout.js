@@ -1,19 +1,33 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
 const { Search } = Input;
 const { Header } = Layout;
 
-function HeaderLayout() {
+function HeaderLayout({ categoryList }) {
   const onClick = ({ key }) => {
     console.log(`Click on item ${key}`);
   };
 
+  useEffect(() => {
+    window.addEventListener('scroll', isSticky);
+    return () => {
+      window.removeEventListener('scroll', isSticky);
+    };
+  });
+
+
+  const isSticky = (e) => {
+    const header = document.querySelector('#header_user');
+    console.log(header)
+    const scrollTop = window.scrollY;
+    scrollTop >= 250 ? header.classList.add('is-sticky') : header.classList.remove('is-sticky');
+  };
+
   const menu = (
     <Menu onClick={onClick}>
-    <Menu.Item key="1">1st menu item</Menu.Item>
-    <Menu.Item key="2">2nd memu item</Menu.Item>
-    <Menu.Item key="3">3rd menu item</Menu.Item>
-  </Menu>
+      {categoryList.map((category, i) => <Menu.Item key={category.id}>{category.name}</Menu.Item>)}
+    </Menu>
   );
 
   return (
@@ -40,26 +54,26 @@ function HeaderLayout() {
       </div>
       <div id="master-header" className="header-main" style={{ height: '63px' }}>
         <div className='header-main_container'>
-          <div className='header-logo' style={{marginRight: '30px'}}>
-            <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{width: '135px'}} />
+          <div className='header-logo' style={{ marginRight: '30px' }}>
+            <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{ width: '135px' }} />
           </div>
           <div className="header-main_left">
-              <ul>
-                <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()}>VIA FACEBOOK<Icon type="down" style={{marginLeft: '4px'}}/></a></Dropdown></li>
-                <li className='item'><a href='#'>CLONE FACEBOOK</a></li>
-                <li className='item'><a href='#'>BM & FANPAGE</a></li>
-                <li className='item'><a href='#'>KHÓA HỌC</a></li>
-                <li className='header-devider'></li>
-                <li className='item'><div className='item-button'><a href='#'><span>APP TĂNG LIKE, CMT, SUB</span></a></div></li>
-              </ul>
-            </div>
-            <div className="header-main_right">
-              <ul>
-                  <li className='item'><div className='signin-signup'><a>ĐĂNG NHẬP / ĐĂNG KÝ</a></div></li>
-                  <li className='header-devider'></li>
-                  <li className='item'><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px'}} /></div></li>
-                </ul>
-            </div>
+            <ul>
+              <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()}>VIA FACEBOOK<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>
+              <li className='item'><a href='#'>CLONE FACEBOOK</a></li>
+              <li className='item'><a href='#'>BM & FANPAGE</a></li>
+              <li className='item'><a href='#'>KHÓA HỌC</a></li>
+              <li className='header-devider'></li>
+              <li className='item'><div className='item-button'><a href='#'><span>APP TĂNG LIKE, CMT, SUB</span></a></div></li>
+            </ul>
+          </div>
+          <div className="header-main_right">
+            <ul>
+              <li className='item'><div className='signin-signup'><a href='/login'>ĐĂNG NHẬP / ĐĂNG KÝ</a></div></li>
+              <li className='header-devider'></li>
+              <li className='item'><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
+            </ul>
+          </div>
         </div>
       </div>
       <div className='header-divider'><div className='top-divider'></div></div>

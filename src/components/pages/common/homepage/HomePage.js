@@ -5,13 +5,7 @@ import ProductLayout from '../../../layout/user/products/ProductLayout';
 import BlogLayout from './components/BlogLayout';
 import QandALayout from './components/QandALayout';
 
-import { getCategoryList } from '../../../../services/category';
-
 const HomePage = () => { 
-    getCategoryList().then(res => {
-      console.log(res);
-    });
-
   return (
     <div>
         <SlideLayout />

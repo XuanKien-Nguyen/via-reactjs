@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 const service = Axios.create({
-    withCredentials: true
+    // withCredentials: true
 });
 
 service.defaults.baseURL = process.env.REACT_APP_API_URL;
