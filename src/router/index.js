@@ -8,8 +8,9 @@ import CreateProduct from '../components/pages/create-product';
 import ProductDetails from '../components/pages/product-detail';
 import HomePage from '../components/pages/common/homepage/HomePage';
 
-import ADMIN from "../components/layout/admin";
-import USER from "../components/layout/user";
+import admin from "../components/layout/admin";
+import user from "../components/layout/user";
+import {Fragment as blank} from 'react'
 
 export const dashboardRoutes = [
   {
@@ -17,8 +18,9 @@ export const dashboardRoutes = [
     component: Home,
     name: "Home Admin",
     icon: "shop",
+    exact: true,
     showAlways: true,
-    layout: ADMIN
+    layout: admin
   },
   {
     path: '/create-product',
@@ -26,36 +28,41 @@ export const dashboardRoutes = [
     name: "Create Product",
     icon: "upload",
     showAlways: true,
-    layout: ADMIN,
+    exact: true,
+    layout: admin,
   },
   {
     path: '/product/:productSlug',
     component: ProductDetails,
     name: "Product details",
     icon: "team",
+    exact: true,
     showAlways: false,
-    layout: ADMIN
+    layout: admin
   },
   {
     path: '/login',
     component: Login,
     name: "Login",
     noAuth: true,
-    layout: USER
+    exact: true,
+    layout: blank
   },
   {
     path: '/register',
     component: Register,
     name: "Register",
     noAuth: true,
-    layout: USER
+    exact: true,
+    layout: blank
   },
   {
     path: '/',
     component: HomePage,
     name: "Home",
+    exact: true,
     noAuth: true,
-    layout: USER
+    layout: user
   },
 
 ];
