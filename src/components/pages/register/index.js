@@ -1,18 +1,23 @@
 import {Form, Icon, Input, Button, notification, message} from 'antd';
-import React, {useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import './index.scss'
 import SVG from 'react-inlinesvg';
-import {checkExistUsername, checkExistEmail, checkExistPhone, register} from "../../../services/user";
+import {checkExistUsername, checkExistEmail, checkExistPhone, register, getUserInfo} from "../../../services/user";
 import email from '../../../assets/svg/email.svg'
 import {useState} from "react";
 import {isEmail, isPhoneNumberVN, isUsername} from '../../../utils/helpers'
 import {useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 const debounce = {}
 
 const Register = (props) => {
 
     const {getFieldDecorator} = props.form;
+
+    const history = useHistory()
+
+    const dispatch = useDispatch()
 
     const [confirmDirty, setConfirmDirty] = useState(false)
     const [validateUserStatus, setValidateUserStatus] = useState('')
@@ -21,6 +26,20 @@ const Register = (props) => {
     const [helpValidateUser, setHelpValidateUser] = useState('')
     const [helpValidateEmail, setHelpValidateEmail] = useState('')
     const [helpValidatePhone, setHelpValidatePhone] = useState('')
+
+    const userInfo = useSelector(store => store.user)
+
+    useEffect(() => {
+        if (!userInfo) {
+            getUserInfo().then(resp => {
+                if (resp.status === 200) {
+                    const userFound = resp?.data?.userFound || null
+                    dispatch({type: "SET_USER_INFO", payload: userFound})
+                    history.push("/")
+                }
+            })
+        }
+    }, [])
 
     const ref = useRef({
         "username": {
@@ -37,7 +56,6 @@ const Register = (props) => {
         }
     })
 
-    const history = useHistory()
 
     const validEmail = [{
         func: value => !!value,

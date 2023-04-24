@@ -1,5 +1,5 @@
 import React, {Fragment, useContext} from 'react';
-import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import {Spin} from 'antd';
 import 'antd/dist/antd.css';
 
@@ -18,6 +18,7 @@ export default function AppContainer() {
                 <Router>
                     <Switch>
                         <MainLayout/>
+                        <Redirect to="/404"/>
                     </Switch>
                 </Router>
             </Spin>

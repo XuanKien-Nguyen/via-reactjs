@@ -25,13 +25,7 @@ function MainLayout() {
     }, [])
 
     useEffect(() => {
-        const lstRoutes = [...baseRoutes]
-        if (user?.role !== 'admin') {
-            const result = dashboardRoutes.filter(el => el.role.some(r => r === user?.role))
-            lstRoutes.push(...result);
-        } else {
-            lstRoutes.push(...dashboardRoutes)
-        }
+        const lstRoutes = [...dashboardRoutes.filter(el => el.role.some(r => r === user?.role)), ...baseRoutes]
         setRoutes(lstRoutes)
     }, [user])
 
@@ -39,7 +33,8 @@ function MainLayout() {
         return <Layout><Component/></Layout>
     }
 
-    return <Fragment>{routes.map((el, idx) => <Route render={() => renderLayout(el.layout, el.component)} path={el.path}
+    return <Fragment>{routes.map((el, idx) => <Route key={idx} render={() => renderLayout(el.layout, el.component)}
+                                                     path={el.path}
                                                      exact={el.exact}/>)}</Fragment>
 }
 

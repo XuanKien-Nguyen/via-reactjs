@@ -1,20 +1,35 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Form, Icon, Input, Layout, message} from 'antd';
 import '../../../assets/scss/login.scss';
-import {login} from "../../../services/user";
+import {getUserInfo, login} from "../../../services/user";
 import {useDispatch, useSelector} from "react-redux";
 
 import {useHistory} from "react-router-dom";
 
 function Index({form}) {
 
+    const dispatch = useDispatch()
+
     const {getFieldDecorator} = form;
+
+    const userInfo = useSelector(store => store.user)
 
     const history = useHistory();
 
     const [loading, setLoading] = useState(false)
 
-    const dispatch = useDispatch()
+    useEffect(() => {
+        if (!userInfo) {
+            getUserInfo().then(resp => {
+                if (resp.status === 200) {
+                    const userFound = resp?.data?.userFound || null
+                    dispatch({type: "SET_USER_INFO", payload: userFound})
+                    history.push("/")
+                }
+            })
+        }
+    }, [])
+
 
     const gotoRegister = () => {
         history.push("/register")

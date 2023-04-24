@@ -11,6 +11,7 @@ import HomePage from '../components/pages/homepage/HomePage';
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
 import {Fragment as blank} from 'react'
+import NotFound from "../components/pages/404";
 
 export const dashboardRoutes = [
   {
@@ -65,6 +66,14 @@ export const baseRoutes = [
     path: '/',
     component: HomePage,
     name: "Home",
+    exact: true,
+    noAuth: true,
+    layout: user
+  },
+  {
+    path: '/404',
+    component: NotFound,
+    name: "NotFound",
     exact: true,
     noAuth: true,
     layout: user
