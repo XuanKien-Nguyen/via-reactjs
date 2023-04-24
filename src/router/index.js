@@ -34,7 +34,7 @@ export const dashboardRoutes = [
     layout: "admin"
   },
   {
-    path: '/admin',
+    path: '/',
     component: HomePage,
     name: "Home Page",
   }

@@ -1,4 +1,4 @@
-import service from "./client";
+import service from "../client";
 const ENDPOINT_CATEGORY = '/categories/common'
 
 export const getCategoryList = () => {

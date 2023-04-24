@@ -13,7 +13,7 @@ import FooterLayoutUser from './user/FooterLayout';
 import { dashboardRoutes } from '../../router';
 import { LayoutContext } from '../../contexts';
 
-import { getCategoryList } from '../../services/category';
+import { getCategoryList } from '../../services/category/category';
 import { useState, useEffect } from 'react';
 
 const { Content } = Layout;
