@@ -13,9 +13,9 @@ function FooterLayout() {
               <Col span={8}><h2>VỀ CHÚNG TÔI</h2><div><ul className='dot'><li>Item</li><li>Item</li><li>Item</li></ul></div></Col>
               <Col span={16}>
                 <Row gutter={[20, 0]}>
-                  <Col span={8}><h3>Item List</h3><div><ul className='bullet-arrow'><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li></ul></div></Col>
-                  <Col span={8}><h3>Item List</h3><div><ul className='bullet-arrow'><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li></ul></div></Col>
-                  <Col span={8}><h3>Item List</h3><div><ul className='bullet-arrow'><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li></ul></div></Col>
+                  <Col span={8}><h3>Hướng dẫn</h3><div><ul className='bullet-arrow'><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li></ul></div></Col>
+                  <Col span={8}><h3>Sản phẩm</h3><div><ul className='bullet-arrow'><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li></ul></div></Col>
+                  <Col span={8}><h3>Liên hệ</h3><div><ul className='bullet-arrow'><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li><li><Icon type="right" />Item</li></ul></div></Col>
                 </Row>
               </Col>
             </Row>
