@@ -13,9 +13,6 @@ import FooterLayoutUser from './user/FooterLayout';
 import { dashboardRoutes } from '../../router';
 import { LayoutContext } from '../../contexts';
 
-import { getCategoryList } from '../../services/category/category';
-import { useState, useEffect } from 'react';
-
 import {useHistory} from 'react-router-dom'
 
 const { Content } = Layout;
@@ -27,16 +24,6 @@ function MainLayout() {
   const { sideBarCollapsed } = useContext(LayoutContext);
 
   const isAdmin = localStorage.getItem('role');
-
-  const [categoryList, setCategoryList] = useState([]);
-
-  useEffect(() => {
-    getCategoryList().then(res => {
-      if(res.status === 200 && res.data) {
-        setCategoryList(res.data.categoryListFound);
-      }
-    });
-  }, []);
 
   return (
     isAdmin === 'admin' ? <Layout style={{ marginLeft: sideBarCollapsed ? '80px' : '200px' }}>
@@ -61,7 +48,7 @@ function MainLayout() {
     </Layout> : <Layout>
         {/* <SideBarLayoutUser /> */}
         <Layout>
-            <HeaderLayoutUser history={history} categoryList={categoryList}/>
+            <HeaderLayoutUser history={history}/>
             <Content style={{padding: '0', margin: '0'}}>
                 <Switch>
                     {dashboardRoutes.filter(el => el.layout !== 'admin').map(route => (

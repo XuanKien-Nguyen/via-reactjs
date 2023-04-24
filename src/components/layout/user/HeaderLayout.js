@@ -1,10 +1,12 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
+
+import {getCategoryList, getParentCategoryList} from '../../../services/category/category';
 const { Search } = Input;
 const { Header } = Layout;
 
-function HeaderLayout({ categoryList, history }) {
+function HeaderLayout({ history }) {
 
 
   const goto = url => history.push(url)
@@ -20,10 +22,18 @@ function HeaderLayout({ categoryList, history }) {
     };
   });
 
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(() => {
+    getParentCategoryList().then(res => {
+      if(res.status === 200 && res.data) {
+        setCategoryList(res.data.parentCategoryList);
+      }
+    });
+  }, []);
 
   const isSticky = (e) => {
     const header = document.querySelector('#header_user');
-    console.log(header)
     const scrollTop = window.scrollY;
     scrollTop >= 250 ? header.classList.add('is-sticky') : header.classList.remove('is-sticky');
   };

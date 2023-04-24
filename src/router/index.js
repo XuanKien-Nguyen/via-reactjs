@@ -6,7 +6,7 @@ import Register from '../components/pages/register'
 import Home from '../components/pages/home';
 import CreateProduct from '../components/pages/create-product';
 import ProductDetails from '../components/pages/product-detail';
-import HomePage from '../components/pages/common/homepage/HomePage';
+import HomePage from '../components/pages/homepage/HomePage';
 
 export const dashboardRoutes = [
   {
