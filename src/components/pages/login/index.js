@@ -21,7 +21,7 @@ function Index({ form }) {
 
   const gotoRegister = () => {
     console.log('gotoRegister');
-    history.push("/login")
+    history.push("/register")
   }
 
   const handleSubmit = async e => {
@@ -30,11 +30,12 @@ function Index({ form }) {
       if (!errors) {
         setLoading(true)
         login(values).then(resp => {
-          if (resp.status === 200 && resp.data) {
+          console.log(resp);
+          if (resp?.status === 200 && resp.data) {
             message.success("Đăng nhập thành công")
             dispatch({type: 'SET_USER_INFO', payload: resp.data})
           } else {
-            message.error(resp.data.message)
+            message.error(resp?.data?.message || "Error")
           }
         }).finally(() => setLoading(false))
       }

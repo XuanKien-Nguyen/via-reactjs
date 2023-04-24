@@ -9,7 +9,6 @@ import { Spin, notification } from 'antd';
 import 'antd/dist/antd.css';
 
 import { LayoutContext } from '../../contexts';
-import { handleRequestError } from '../../services/API';
 import { baseRoutes } from '../../router';
 import { URL_BASE_NAME } from '../../utils/constants';
 
