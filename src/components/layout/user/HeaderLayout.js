@@ -35,7 +35,7 @@ function HeaderLayout({ history }) {
   const isSticky = (e) => {
     const header = document.querySelector('#header_user');
     const scrollTop = window.scrollY;
-    scrollTop >= 250 ? header.classList.add('is-sticky') : header.classList.remove('is-sticky');
+    scrollTop >= 110 ? header.classList.add('is-sticky') : header.classList.remove('is-sticky');
   };
 
   const menu = (
