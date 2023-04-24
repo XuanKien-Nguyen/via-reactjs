@@ -16,9 +16,14 @@ import { LayoutContext } from '../../contexts';
 import { getCategoryList } from '../../services/category/category';
 import { useState, useEffect } from 'react';
 
+import {useHistory} from 'react-router-dom'
+
 const { Content } = Layout;
 
 function MainLayout() {
+
+    const history = useHistory()
+
   const { sideBarCollapsed } = useContext(LayoutContext);
 
   const isAdmin = localStorage.getItem('role');
@@ -56,7 +61,7 @@ function MainLayout() {
     </Layout> : <Layout>
         {/* <SideBarLayoutUser /> */}
         <Layout>
-            <HeaderLayoutUser categoryList={categoryList}/>
+            <HeaderLayoutUser history={history} categoryList={categoryList}/>
             <Content style={{padding: '0', margin: '0'}}>
                 <Switch>
                     {dashboardRoutes.filter(el => el.layout !== 'admin').map(route => (

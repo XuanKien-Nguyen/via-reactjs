@@ -4,7 +4,11 @@ import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
 const { Search } = Input;
 const { Header } = Layout;
 
-function HeaderLayout({ categoryList }) {
+function HeaderLayout({ categoryList, history }) {
+
+
+  const goto = url => history.push(url)
+
   const onClick = ({ key }) => {
     console.log(`Click on item ${key}`);
   };
@@ -69,7 +73,7 @@ function HeaderLayout({ categoryList }) {
           </div>
           <div className="header-main_right">
             <ul>
-              <li className='item'><div className='signin-signup'><a href='/login'>ĐĂNG NHẬP / ĐĂNG KÝ</a></div></li>
+              <li className='item'><div className='signin-signup'><a><span onClick={() => goto('/login')}>ĐĂNG NHẬP</span> / <span onClick={() => goto('/register')}>ĐĂNG KÝ</span></a></div></li>
               <li className='header-devider'></li>
               <li className='item'><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
             </ul>
