@@ -1,84 +1,43 @@
-import React, { useContext } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { Layout } from 'antd';
+import React, {Fragment, useEffect, useState} from 'react';
+import {dashboardRoutes} from '../../router';
+import {getUserInfo} from "../../services/user";
 
-import SideBarLayout from './admin/SideBarLayout';
-import HeaderLayout from './admin/HeaderLayout';
-import FooterLayout from './admin/FooterLayout';
-
-import SideBarLayoutUser from './user/SideBarLayout';
-import HeaderLayoutUser from './user/HeaderLayout';
-import FooterLayoutUser from './user/FooterLayout';
-
-import { dashboardRoutes } from '../../router';
-import { LayoutContext } from '../../contexts';
-
-import { getCategoryList } from '../../services/category/category';
-import { useState, useEffect } from 'react';
-
-import {useHistory} from 'react-router-dom'
-
-const { Content } = Layout;
+import {useDispatch, useSelector} from "react-redux";
+import {Route} from "react-router-dom";
 
 function MainLayout() {
 
-    const history = useHistory()
+    const dispatch = useDispatch()
 
-  const { sideBarCollapsed } = useContext(LayoutContext);
+    const user = useSelector(store => store.user)
 
-  const isAdmin = localStorage.getItem('role');
+    const [routes, setRoutes] = useState([])
 
-  const [categoryList, setCategoryList] = useState([]);
+    useEffect(() => {
+        if (!user) {
+            getUserInfo().then(resp => {
+                if (resp.status === 200) {
+                    dispatch({type: "SET_USER_INFO", payload: resp?.data?.userFound})
+                }
+            })
+        }
+    }, [])
 
-  useEffect(() => {
-    getCategoryList().then(res => {
-      if(res.status === 200 && res.data) {
-        setCategoryList(res.data.categoryListFound);
-      }
-    });
-  }, []);
+    useEffect(() => {
+        // if (user?.role !== 'admin') {
+        //     const result = dashboardRoutes.filter(el => el.layout !== 'admin');
+        //     setRoutes(result)
+        // }else {
+        console.log('dashboardRoutes', dashboardRoutes);
+        setRoutes(dashboardRoutes)
+        // }
+    }, [user])
 
-  return (
-    isAdmin === 'admin' ? <Layout style={{ marginLeft: sideBarCollapsed ? '80px' : '200px' }}>
-      <SideBarLayout />
-      <Layout>
-        <HeaderLayout />
-        <Content>
-          <Switch>
-            {dashboardRoutes.filter(el => el.layout === 'admin').map(route => (
-              <Route
-                exact={true}
-                key={route.path}
-                path={route.path}
-                component={route.component}
-              />
-            ))}
-            <Redirect to="/" />
-          </Switch>
-        </Content>
-        <FooterLayout />
-      </Layout>
-    </Layout> : <Layout>
-        {/* <SideBarLayoutUser /> */}
-        <Layout>
-            <HeaderLayoutUser history={history} categoryList={categoryList}/>
-            <Content style={{padding: '0', margin: '0'}}>
-                <Switch>
-                    {dashboardRoutes.filter(el => el.layout !== 'admin').map(route => (
-                        <Route
-                            exact={true}
-                            key={route.path}
-                            path={route.path}
-                            component={route.component}
-                        />
-                    ))}
-                    <Redirect to="/" />
-                </Switch>
-            </Content>
-            <FooterLayoutUser  />
-        </Layout>
-    </Layout>
-  );
+    const renderLayout = (Layout, Component) => {
+        return <Layout><Component /></Layout>
+    }
+
+    return <Fragment>{routes.map((el, idx) => <Route render={() => renderLayout(el.layout, el.component)} path={el.path} exact={el.exact} />)}</Fragment>
 }
 
 export default MainLayout;

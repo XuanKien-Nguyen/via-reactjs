@@ -1,41 +1,26 @@
-import React, { useContext, Fragment, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom';
-import { Spin, notification } from 'antd';
+import React, {Fragment, useContext} from 'react';
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {Spin} from 'antd';
 import 'antd/dist/antd.css';
 
-import { LayoutContext } from '../../contexts';
-import { baseRoutes } from '../../router';
-import { URL_BASE_NAME } from '../../utils/constants';
+import {LayoutContext} from '../../contexts';
 
 import '../../assets/scss/index.scss';
 
-export default function AppContainer({ history }) {
+import MainLayout from "../../components/layout/MainLayout";
 
-  console.log(history);
+export default function AppContainer() {
+    const {loading, error, successNotification} = useContext(LayoutContext);
 
-  const { loading, error, successNotification } = useContext(LayoutContext);
-
-  return (
-    <Fragment>
-      <Spin spinning={loading}>
-        <Router history={history} basename={URL_BASE_NAME}>
-          <Switch>
-            {baseRoutes.map(route => (
-              <Route
-                key={route.path}
-                path={route.path}
-                component={route.component}
-              />
-            ))}
-          </Switch>
-          {/*{!authToken && <Redirect to="/login" />}*/}
-        </Router>
-      </Spin>
-    </Fragment>
-  );
+    return (
+        <Fragment>
+            <Spin spinning={loading}>
+                <Router>
+                    <Switch>
+                        <MainLayout/>
+                    </Switch>
+                </Router>
+            </Spin>
+        </Fragment>
+    );
 }

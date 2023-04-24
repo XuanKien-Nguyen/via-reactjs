@@ -8,14 +8,17 @@ import CreateProduct from '../components/pages/create-product';
 import ProductDetails from '../components/pages/product-detail';
 import HomePage from '../components/pages/common/homepage/HomePage';
 
+import ADMIN from "../components/layout/admin";
+import USER from "../components/layout/user";
+
 export const dashboardRoutes = [
   {
-    path: '/',
+    path: '/admin',
     component: Home,
-    name: "Home",
+    name: "Home Admin",
     icon: "shop",
     showAlways: true,
-    layout: "admin"
+    layout: ADMIN
   },
   {
     path: '/create-product',
@@ -23,7 +26,7 @@ export const dashboardRoutes = [
     name: "Create Product",
     icon: "upload",
     showAlways: true,
-    layout: "admin"
+    layout: ADMIN,
   },
   {
     path: '/product/:productSlug',
@@ -31,30 +34,30 @@ export const dashboardRoutes = [
     name: "Product details",
     icon: "team",
     showAlways: false,
-    layout: "admin"
+    layout: ADMIN
   },
-  {
-    path: '/',
-    component: HomePage,
-    name: "Home Page",
-  }
-];
-export const baseRoutes = [
   {
     path: '/login',
     component: Login,
-    name: "Dashboard",
+    name: "Login",
     noAuth: true,
+    layout: USER
   },
   {
     path: '/register',
     component: Register,
     name: "Register",
     noAuth: true,
+    layout: USER
   },
   {
     path: '/',
-    component: MainLayout,
-    name: "Main Layout",
+    component: HomePage,
+    name: "Home",
+    noAuth: true,
+    layout: USER
   },
+
+];
+export const baseRoutes = [
 ];
