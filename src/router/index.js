@@ -12,6 +12,7 @@ import admin from "../components/layout/admin";
 import user from "../components/layout/user";
 import {Fragment as blank} from 'react'
 import NotFound from "../components/pages/404";
+import UserInfo from "../components/pages/user-info";
 
 export const dashboardRoutes = [
   {
@@ -43,6 +44,16 @@ export const dashboardRoutes = [
     showAlways: false,
     layout: admin,
     role: ['admin']
+  },
+  {
+    path: '/user-info',
+    component: UserInfo,
+    name: "User Info",
+    icon: "team",
+    exact: true,
+    showAlways: false,
+    layout: user,
+    role: ['admin', 'customer']
   },
 ];
 export const baseRoutes = [
