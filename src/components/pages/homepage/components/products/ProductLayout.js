@@ -1,5 +1,5 @@
 import React from 'react';
-import ListLayout from './ListLayout';
+import ListLayout from '../../../common/ListLayout';
 import ProductCard from './ProductCard';
 
 const ProductLayout = () => {
