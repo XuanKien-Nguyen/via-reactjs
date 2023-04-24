@@ -17,7 +17,6 @@ function Index({form}) {
     const dispatch = useDispatch()
 
     const gotoRegister = () => {
-        console.log('gotoRegister');
         history.push("/register")
     }
 

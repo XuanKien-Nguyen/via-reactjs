@@ -3,11 +3,13 @@ import { useState, useEffect } from 'react';
 import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
 
 import {getCategoryList, getParentCategoryList} from '../../../services/category/category';
+import {useSelector} from "react-redux";
 const { Search } = Input;
 const { Header } = Layout;
 
 function HeaderLayout({ history }) {
 
+  const userInfo = useSelector(store => store.user)
 
   const goto = url => history.push(url)
 
@@ -83,7 +85,7 @@ function HeaderLayout({ history }) {
           </div>
           <div className="header-main_right">
             <ul>
-              <li className='item'><div className='signin-signup'><a><span onClick={() => goto('/login')}>ĐĂNG NHẬP</span> / <span onClick={() => goto('/register')}>ĐĂNG KÝ</span></a></div></li>
+              <li className='item'><div className='signin-signup'>{userInfo ? <b>{userInfo.username?.toUpperCase()}</b> : <a><span onClick={() => goto('/login')}>ĐĂNG NHẬP</span> / <span onClick={() => goto('/register')}>ĐĂNG KÝ</span></a>}</div></li>
               <li className='header-devider'></li>
               <li className='item'><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
             </ul>

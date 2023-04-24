@@ -3,7 +3,6 @@ import { Carousel, Button, Icon } from 'antd';
 
 const SlideLayout = () => {
   const onChange = (currentSlide) => {
-    console.log(currentSlide);
   };
   return (
     <section id="slider-layout">

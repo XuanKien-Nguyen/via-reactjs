@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {dashboardRoutes} from '../../router';
+import {baseRoutes, dashboardRoutes} from '../../router';
 import {getUserInfo} from "../../services/user";
 
 import {useDispatch, useSelector} from "react-redux";
@@ -17,27 +17,30 @@ function MainLayout() {
         if (!user) {
             getUserInfo().then(resp => {
                 if (resp.status === 200) {
-                    dispatch({type: "SET_USER_INFO", payload: resp?.data?.userFound})
+                    const userFound = resp?.data?.userFound || null
+                    dispatch({type: "SET_USER_INFO", payload: userFound})
                 }
             })
         }
     }, [])
 
     useEffect(() => {
-        // if (user?.role !== 'admin') {
-        //     const result = dashboardRoutes.filter(el => el.layout !== 'admin');
-        //     setRoutes(result)
-        // }else {
-        console.log('dashboardRoutes', dashboardRoutes);
-        setRoutes(dashboardRoutes)
-        // }
+        const lstRoutes = [...baseRoutes]
+        if (user?.role !== 'admin') {
+            const result = dashboardRoutes.filter(el => el.role.some(r => r === user?.role))
+            lstRoutes.push(...result);
+        } else {
+            lstRoutes.push(...dashboardRoutes)
+        }
+        setRoutes(lstRoutes)
     }, [user])
 
     const renderLayout = (Layout, Component) => {
-        return <Layout><Component /></Layout>
+        return <Layout><Component/></Layout>
     }
 
-    return <Fragment>{routes.map((el, idx) => <Route render={() => renderLayout(el.layout, el.component)} path={el.path} exact={el.exact} />)}</Fragment>
+    return <Fragment>{routes.map((el, idx) => <Route render={() => renderLayout(el.layout, el.component)} path={el.path}
+                                                     exact={el.exact}/>)}</Fragment>
 }
 
 export default MainLayout;

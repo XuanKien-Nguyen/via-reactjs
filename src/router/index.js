@@ -20,7 +20,8 @@ export const dashboardRoutes = [
     icon: "shop",
     exact: true,
     showAlways: true,
-    layout: admin
+    layout: admin,
+    role: ['admin']
   },
   {
     path: '/create-product',
@@ -30,6 +31,7 @@ export const dashboardRoutes = [
     showAlways: true,
     exact: true,
     layout: admin,
+    role: ['admin']
   },
   {
     path: '/product/:productSlug',
@@ -38,8 +40,11 @@ export const dashboardRoutes = [
     icon: "team",
     exact: true,
     showAlways: false,
-    layout: admin
+    layout: admin,
+    role: ['admin']
   },
+];
+export const baseRoutes = [
   {
     path: '/login',
     component: Login,
@@ -64,7 +69,4 @@ export const dashboardRoutes = [
     noAuth: true,
     layout: user
   },
-
-];
-export const baseRoutes = [
 ];
