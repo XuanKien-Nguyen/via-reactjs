@@ -1,8 +1,14 @@
 import React from "react";
 
-import {Form, Input,} from 'antd';
+import {Form, Input, Button} from 'antd';
+import {getUserInfo} from "../../../../services/user";
 
 const UserDetail = ({form, user}) => {
+
+    const callapi = () => {
+        getUserInfo().then(resp => console.log(resp))
+    }
+
     const {getFieldDecorator} = form;
     return <Form>
         <Form.Item disabled label="Tên đầy đủ">
@@ -25,6 +31,7 @@ const UserDetail = ({form, user}) => {
                 initialValue: user?.created_time || ''
             })(<Input disabled/>)}
         </Form.Item>
+        <Button onClick={callapi}>Get me</Button>
     </Form>
 }
 

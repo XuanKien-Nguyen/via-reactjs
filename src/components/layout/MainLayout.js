@@ -14,19 +14,22 @@ function MainLayout() {
     const [routes, setRoutes] = useState([])
 
     useEffect(() => {
-        if (!user) {
-            getUserInfo().then(resp => {
+        const init = async () => {
+            if (!user) {
+                const resp = await getUserInfo();
                 if (resp.status === 200) {
                     const userFound = resp?.data?.userFound || null
                     dispatch({type: "SET_USER_INFO", payload: userFound})
                 }
-            })
+            }
+            const lstFiltered = dashboardRoutes.filter(el => el.role.some(r => r === user?.role))
+            const lstRoutes = [...lstFiltered, ...baseRoutes]
+            setRoutes(lstRoutes)
         }
-    }, [])
+        init()
+    })
 
     useEffect(() => {
-        const lstRoutes = [...dashboardRoutes.filter(el => el.role.some(r => r === user?.role)), ...baseRoutes]
-        setRoutes(lstRoutes)
     }, [user])
 
     const renderLayout = (Layout, Component) => {

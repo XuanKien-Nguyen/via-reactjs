@@ -1,4 +1,6 @@
-
+body, html {
+  font-family: 'Open Sans', 'sans-serif', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
 .moving-arrow {
   border-right: 17px solid #f4f3ef;
   border-top: 17px solid transparent;

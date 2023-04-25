@@ -11,7 +11,7 @@ import HomePage from '../components/pages/homepage/HomePage';
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
 import {Fragment as blank} from 'react'
-import NotFound from "../components/pages/404";
+import NotFound from "../components/pages/404/404";
 import UserInfo from "../components/pages/user-info";
 
 export const dashboardRoutes = [

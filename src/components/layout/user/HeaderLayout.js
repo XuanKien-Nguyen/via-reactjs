@@ -26,11 +26,10 @@ function HeaderLayout({history}) {
         };
     });
 
-    const handleLogout = () => {
-        logout().then(() => {
-            dispatch({type: "LOGOUT"})
-            history.push('/')
-        })
+    const handleLogout =async () => {
+        await logout();
+        dispatch({type: "LOGOUT"})
+        history.push('/')
     }
 
     const [categoryList, setCategoryList] = useState([]);

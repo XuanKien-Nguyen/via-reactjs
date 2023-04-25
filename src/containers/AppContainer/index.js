@@ -1,5 +1,5 @@
 import React, {Fragment, useContext} from 'react';
-import {BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Redirect, Route} from 'react-router-dom';
 import {Spin} from 'antd';
 import 'antd/dist/antd.css';
 
@@ -8,6 +8,7 @@ import {LayoutContext} from '../../contexts';
 import '../../assets/scss/index.scss';
 
 import MainLayout from "../../components/layout/MainLayout";
+import NotFound from "../../components/pages/404/404";
 
 export default function AppContainer() {
     const {loading, error, successNotification} = useContext(LayoutContext);
@@ -18,8 +19,8 @@ export default function AppContainer() {
                 <Router>
                     <Switch>
                         <MainLayout/>
-                        <Redirect to="/404"/>
                     </Switch>
+                    <Redirect path="*" to={'/404'} />
                 </Router>
             </Spin>
         </Fragment>
