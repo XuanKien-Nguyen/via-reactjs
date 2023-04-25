@@ -1,4 +1,5 @@
 import client from "../client";
+
 const ENDPOINT_USER = '/api/users/client'
 export const register = (body) => {
     return client.post(`${ENDPOINT_USER}/register`, body)
@@ -22,4 +23,8 @@ export const login = (body) => {
 
 export const getUserInfo = () => {
     return client.get(`${ENDPOINT_USER}/me`)
+}
+
+export const logout = () => {
+    return client.delete(`${ENDPOINT_USER}/logout`)
 }

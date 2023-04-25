@@ -1,9 +1,32 @@
 import React from "react";
 
-const UserDetail = () => {
-    return <div>
-        UserDetail
-    </div>
+import {Form, Input,} from 'antd';
+
+const UserDetail = ({form, user}) => {
+    const {getFieldDecorator} = form;
+    return <Form>
+        <Form.Item disabled label="Tên đầy đủ">
+            {getFieldDecorator('fullname', {
+                initialValue: user?.fullname || ''
+            })(<Input disabled/>)}
+        </Form.Item>
+        <Form.Item label="Email">
+            {getFieldDecorator('email', {
+                initialValue: user?.email || ''
+            })(<Input disabled/>)}
+        </Form.Item>
+        <Form.Item label="Số điện thoại">
+            {getFieldDecorator('phone', {
+                initialValue: user?.phone || ''
+            })(<Input style={{width: '100%'}} disabled/>)}
+        </Form.Item>
+        <Form.Item label="Ngày tạo">
+            {getFieldDecorator('password', {
+                initialValue: user?.created_time || ''
+            })(<Input disabled/>)}
+        </Form.Item>
+    </Form>
 }
 
-export default UserDetail
+
+export default Form.create()(UserDetail);

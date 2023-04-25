@@ -1,9 +1,8 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
-import {Input, Icon, Layout, Menu, Dropdown} from 'antd';
-
-import {getCategoryList, getParentCategoryList} from '../../../services/category/category';
-import {useSelector} from "react-redux";
+import React, {useEffect, useState} from 'react';
+import {Dropdown, Icon, Input, Layout, Menu} from 'antd';
+import {logout} from "../../../services/user";
+import {getParentCategoryList} from '../../../services/category/category';
+import {useDispatch, useSelector} from "react-redux";
 
 const {Search} = Input;
 const {Header} = Layout;
@@ -11,6 +10,8 @@ const {Header} = Layout;
 function HeaderLayout({history}) {
 
     const userInfo = useSelector(store => store.user)
+
+    const dispatch = useDispatch()
 
     const goto = url => history.push(url)
 
@@ -24,6 +25,13 @@ function HeaderLayout({history}) {
             window.removeEventListener('scroll', isSticky);
         };
     });
+
+    const handleLogout = () => {
+        logout().then(() => {
+            dispatch({type: "LOGOUT"})
+            history.push('/')
+        })
+    }
 
     const [categoryList, setCategoryList] = useState([]);
 
@@ -54,13 +62,13 @@ function HeaderLayout({history}) {
                     <a onClick={() => goto('/user-info')}>Thông tin cá nhân</a>
                 </Menu.Item>
                 <Menu.Item>
-                    <a>Thoát</a>
+                    <a onClick={handleLogout}>Thoát</a>
                 </Menu.Item>
             </Menu>
         )
         return <Dropdown overlay={menu}>
             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                {userInfo.username?.toUpperCase()} <Icon type="down" />
+                {userInfo.username?.toUpperCase()} <Icon type="down"/>
             </a>
         </Dropdown>
 

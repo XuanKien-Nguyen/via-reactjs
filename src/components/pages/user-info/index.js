@@ -4,9 +4,7 @@ import ChangePassword from "./components/ChangePassword";
 import Enable2Fa from "./components/Enable2Fa";
 import '../../../assets/scss/user-info.scss'
 import {useSelector} from "react-redux";
-import {Icon, Menu} from 'antd';
-
-const {SubMenu} = Menu;
+import {Icon, Menu, Tag} from 'antd';
 
 const UserInfo = () => {
 
@@ -16,11 +14,11 @@ const UserInfo = () => {
 
     const renderContent = () => {
         if (current === "2") {
-            return <ChangePassword />
+            return <ChangePassword user={user} />
         } else if (current === "3") {
             return <Enable2Fa />
         }
-        return <UserDetail />
+        return <UserDetail user={user} />
     }
 
     const changeMenu = e => {
@@ -28,13 +26,14 @@ const UserInfo = () => {
         console.log(e);
     }
 
-
     return <div id='user_id' className='header-main_container p-t-30'>
         <div className="sidebar">
             <div className="avatar">
                 <img src={require('../../../assets/img/avatar.png')} alt="" className="src"/>
-                <p>{`@${user.username}`}<i className="id_text">{`#${user.id}`}</i></p>
+                <p>{`@${user?.username}`}<i className="id_text">{`#${user?.id}`}</i></p>
+                <Tag color={user?.role === 'admin' ? 'red' : 'blue'}>{user?.role}</Tag>
             </div>
+
             <div className="information">
                 <Menu
                     onClick={changeMenu}
@@ -54,7 +53,7 @@ const UserInfo = () => {
                     </Menu.Item>
                     <Menu.Item key="3">
                         <Icon type="qrcode" />
-                        BẬT XẮC THỰC 2FA
+                        BẬT XÁC THỰC 2FA
                     </Menu.Item>
                 </Menu>
             </div>
