@@ -7,17 +7,17 @@ const ProductCard = ({ productDetail }) => {
                 <div className='product-image'><img alt="product" src={require('../../../../../assets/img/product-img.png')} /></div>
                 
                 <div className='product-container'>
-                    <div className='product-title'><span>Name Product So Longggggggggggggggggggggggggggggggggggggggg</span></div>
+                    <div className='product-title'><span>{productDetail.name}</span></div>
                     <div className='product-detail'>
-                        <div className='product-price'>19000 VNĐ</div>
-                        <div className='product-quantity'>Còn: <span>1999</span></div>
+                        <div className='product-price'>{productDetail.price} VNĐ</div>
+                        <div className='product-quantity'>Còn: <span>{productDetail.sum_via}</span></div>
                         <div className='product-more-info'>
-                            <div className='info location'><div className='field-title'><Icon type="check" />Title</div><div className='field-value'>Việt Nam</div></div>
-                            <div className='info create-time'><div className='field-title'><Icon type="check" />Title</div><div className='field-value'>Việt Nam</div></div>
-                            <div className='info 2fa'><div className='field-title'><Icon type="check" />Title</div><div className='field-value'>Việt Nam</div></div>
-                            <div className='info friend-number'><div className='field-title'><Icon type="check" />Title</div><div className='field-value'>Việt Nam</div></div>
-                            <div className='info change-info'><div className='field-title'><Icon type="check" />Title</div><div className='field-value'>Việt Nam</div></div>
-                            <div className='info back-up'><div className='field-title'><Icon type="check" />Title</div><div className='field-value'>Việt Nam</div></div>
+                            <div className='info location'><div className='field-title'><Icon type="check" />Quốc gia</div><div className='field-value'>{productDetail.location}</div></div>
+                            <div className='info create-time'><div className='field-title'><Icon type="check" />Ngày lập</div><div className='field-value'>{productDetail.time}</div></div>
+                            <div className='info 2fa'><div className='field-title'><Icon type="check" />Xác thực 2FA</div><div className='field-value'>{productDetail.has_2fa === true ? 'Có' : 'Không'}</div></div>
+                            <div className='info friend-number'><div className='field-title'><Icon type="check" />Bạn bè</div><div className='field-value'>{productDetail.number_friend}</div></div>
+                            <div className='info change-info'><div className='field-title'><Icon type="check" />Change thông tin</div><div className='field-value'>{productDetail.has_change === true ? 'Có' : 'Không'}</div></div>
+                            <div className='info back-up'><div className='field-title'><Icon type="check" />Hỗ trợ backup</div><div className='field-value'>{productDetail.has_backup === true ? 'Có' : 'Không'}</div></div>
                         </div>
                     </div>
                     <Button type="primary" style={{fontSize: '13px'}} className='shopping-button'>

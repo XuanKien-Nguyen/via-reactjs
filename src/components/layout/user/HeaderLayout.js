@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
 
-import {getCategoryList, getParentCategoryList} from '../../../services/category/category';
+import {getParentCategoryList} from '../../../services/category/category';
 const { Search } = Input;
 const { Header } = Layout;
 

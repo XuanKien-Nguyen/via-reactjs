@@ -8,3 +8,7 @@ export const getCategoryList = () => {
 export const getParentCategoryList = () => {
     return service.get(`${ENDPOINT_CATEGORY}/parent-category`)
 }
+
+export const getChildCategoryList = () => {
+    return service.get(`${ENDPOINT_CATEGORY}/child-category`)
+}

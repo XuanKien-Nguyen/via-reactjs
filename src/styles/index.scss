@@ -458,9 +458,15 @@ li .item-button {
         box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 4px 0px;
         text-align: center;
         &:hover {
-            .product-more-info {
-                display: block !important;
-                transition: height 1s;
+            & .product-more-info {
+                // display: block;
+                visibility: visible !important;
+                height: 180px !important;
+                transition: height .5s;
+                .info {
+                    opacity: 1 !important;
+                    transition-duration: 1.5s;
+                }
             }
         }
         .ant-card-body {
@@ -497,8 +503,11 @@ li .item-button {
                     }
                 }
                 .product-more-info {
-                    display: none;
+                    // display: none;
+                    height: 0px;
+                    visibility: hidden;
                     .info {
+                        opacity: 0;
                         display: flex;
                         justify-content: space-between;
                         align-items: center;

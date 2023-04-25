@@ -2,11 +2,12 @@ import React from 'react';
 import ListLayout from '../../../common/ListLayout';
 import ProductCard from './ProductCard';
 
-const ProductLayout = () => {
-
+const ProductLayout = ({categoryParent}) => {
   return (
     <section id='product-layout'>
-      <ListLayout titleCatagory={'SẢN PHẨM BÁN CHẠY NHẤT'} contentSeeMore={'Xem thêm !'} cardComponent={<ProductCard />}></ListLayout>
+      <ListLayout titleCategory={categoryParent.name} contentSeeMore={'Xem thêm !'} cardComponent={<ProductCard />}>
+        {categoryParent.childCategoryList.map(product => <ProductCard key={product.id} productDetail={product}/>)}
+      </ListLayout>
     </section>
   );
 };
