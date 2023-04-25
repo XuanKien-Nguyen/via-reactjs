@@ -112,9 +112,9 @@ ul {
     animation: 2000ms ease-in-out 2s normal none 1 running fadeInDown;
     padding-top: 0px;
     padding-bottom: 0px;
-    #top-bar {
-        display: none;
-    }
+    // #top-bar {
+    //     display: none;
+    // }
 }
 
 .header-top_container {
@@ -448,89 +448,81 @@ li .item-button {
         }
     }
 
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+    }
     .product-card {
-        border: none;
-
+        border-radius: 12px;
+        box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 4px 0px;
+        text-align: center;
+        &:hover {
+            .product-more-info {
+                display: block !important;
+                transition: height 1s;
+            }
+        }
         .ant-card-body {
-            padding: 4px;
-        }
-
-        .card-image {
-            &:hover {
-                border: 1px solid rgb(27, 116, 228);
-                border-radius: 5px;
+            padding: 0;
+            .product-container {
+                padding: 0 12px 16px;
             }
-        }
-
-        .card-content {
-            padding: 10px 10px 20px;
-        }
-
-        .product-name {
-            min-height: 48px;
-            margin: 2px 0;
-            max-height: 68px;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 3; 
-            white-space: pre-wrap;
-
-            a {
-                color: #000000;
-                white-space: initial;
-            }
-        }
-
-        .product-quality {
-            font-weight: bold;
-            font-size: 13px;
-            margin: 2px 0;
-            &.instock {
-                color: green;
-            }
-            &.outstock {
-                color: red;
-            }
-            & p {
-                margin-bottom: 0px;
-            }
-        }
-
-        .product-price {
-            display: flex;
-            flex-direction: column;
-            color: #111;
-            font-weight: 700;
-            margin-top: 2px;
-            margin-bottom: 12px;
-
-            .discounted {
-                text-decoration: line-through;
-                font-weight: 400 !important;
-                opacity: 0.6;
-            }
-        }
-
-        .add-to-card-button {
-            button:hover {
-                border-color: #1b74e4;
-                background-color: #1b74e4;
+            .product-title {
+                overflow: hidden;
+                text-overflow: ellipsis;
                 span {
-                    color: white;
+                    font-size: 16px;
+                    font-weight: 700;
                 }
             }
-        }
-
-        .badge-discount {
-            transform: translateX(-65%) translateY(44px);
-            z-index: 1;
-            sup {
-                background-color: rgb(27, 116, 228);
-                border: 1px solid rgb(27, 116, 228);
-                color: rgb(255, 255, 255);
-                border-radius: 5px;
-                padding: 0px 4px;
+            .product-detail {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                margin-top: 12px;
+                .product-price {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: red;
+                }
+                .product-quantity {
+                    font-size: 13px;
+                    span {
+                        color: #2290FF;
+                        background: rgba(34, 144, 255, 0.1);
+                        font-weight: bolder;
+                        border-radius: 16px;
+                        padding: 4px 8px
+                    }
+                }
+                .product-more-info {
+                    display: none;
+                    .info {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        border-bottom: 1px solid #dedede;
+                        padding: 4px 0;
+                        &:last-child {
+                            border: none;
+                        }
+                        i {
+                            margin-right: 4px;
+                        }
+                    }
+                }      
+            }
+            .shopping-button {
+                padding-top: 8px;
+                padding-bottom: 8px;
+                border-radius: 10px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: auto;
+                margin-top: 12px;
             }
         }
     }

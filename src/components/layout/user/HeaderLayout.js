@@ -35,7 +35,7 @@ function HeaderLayout({ history }) {
   const isSticky = (e) => {
     const header = document.querySelector('#header_user');
     const scrollTop = window.scrollY;
-    scrollTop >= 110 ? header.classList.add('is-sticky') : header.classList.remove('is-sticky');
+    scrollTop >= 150 ? header.classList.add('is-sticky') : header.classList.remove('is-sticky');
   };
 
   const menu = (
@@ -73,12 +73,12 @@ function HeaderLayout({ history }) {
           </div>
           <div className="header-main_left">
             <ul>
-              <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()}>VIA FACEBOOK<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>
-              <li className='item'><a href='#'>CLONE FACEBOOK</a></li>
-              <li className='item'><a href='#'>BM & FANPAGE</a></li>
+              <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()}>DANH MỤC<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>
+              <li className='item'><a href='#'>BÀI VIẾT</a></li>
+              {/* <li className='item'><a href='#'>BM & FANPAGE</a></li>
               <li className='item'><a href='#'>KHÓA HỌC</a></li>
               <li className='header-devider'></li>
-              <li className='item'><div className='item-button'><a href='#'><span>APP TĂNG LIKE, CMT, SUB</span></a></div></li>
+              <li className='item'><div className='item-button'><a href='#'><span>APP TĂNG LIKE, CMT, SUB</span></a></div></li> */}
             </ul>
           </div>
           <div className="header-main_right">
