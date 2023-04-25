@@ -3,6 +3,7 @@
 }
 
 #user_id {
+  height: 550px;
   margin-top: 50px;
   margin-bottom: 50px;
 
@@ -41,6 +42,12 @@
   .content {
     width: 75%;
     padding: 40px;
+
+    #change-password {
+      .ant-form {
+        width: 100% !important;
+      }
+    }
   }
 
 }

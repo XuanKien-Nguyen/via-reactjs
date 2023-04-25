@@ -29,8 +29,11 @@ const Register = (props) => {
 
     const userInfo = useSelector(store => store.user)
 
+    const isLogged = localStorage.getItem("is_logged")
+
+
     useEffect(() => {
-        if (!userInfo) {
+        if (!userInfo && isLogged) {
             getUserInfo().then(resp => {
                 if (resp.status === 200) {
                     const userFound = resp?.data?.userFound || null
@@ -312,7 +315,7 @@ const Register = (props) => {
                         <Button type="primary" onClick={handleSubmit} className="login-form-button">
                             Đăng ký
                         </Button>
-                        Đã có tài khoản <a onClick={gotoLogin}>Đăng nhập</a> ngay
+                        Đã có tài khoản <a onClick={gotoLogin}>đăng nhập</a> ngay
                     </Form.Item>
                 </Form>
             </div>

@@ -28,3 +28,7 @@ export const getUserInfo = () => {
 export const logout = () => {
     return client.delete(`${ENDPOINT_USER}/logout`)
 }
+
+export const changePassword = (body) => {
+    return client.patch(`${ENDPOINT_USER}/change-password/`, body)
+}

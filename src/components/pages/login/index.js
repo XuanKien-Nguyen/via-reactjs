@@ -18,8 +18,11 @@ function Index({form}) {
 
     const [loading, setLoading] = useState(false)
 
+    const isLogged = localStorage.getItem("is_logged")
+
+
     useEffect(() => {
-        if (!userInfo) {
+        if (!userInfo && isLogged) {
             getUserInfo().then(resp => {
                 if (resp.status === 200) {
                     const userFound = resp?.data?.userFound || null
@@ -41,14 +44,17 @@ function Index({form}) {
             if (!errors) {
                 setLoading(true)
                 login(values).then(resp => {
-                    console.log(resp);
                     if (resp?.status === 200 && resp.data) {
                         message.success("Đăng nhập thành công")
                         dispatch({type: 'SET_USER_INFO', payload: resp.data?.userFound})
+                        localStorage.setItem("is_logged", 'true')
+                        localStorage.setItem('user_info', JSON.stringify(resp.data?.userFound || {}))
                         history.push("/")
                     } else {
                         message.error(resp?.data?.message || "Error")
                     }
+                }).catch(err => {
+                    message.error(err?.response?.data?.message || "Error")
                 }).finally(() => setLoading(false))
             }
         })

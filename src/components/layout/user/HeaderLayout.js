@@ -9,7 +9,7 @@ const {Header} = Layout;
 
 function HeaderLayout({history}) {
 
-    const userInfo = useSelector(store => store.user)
+    const [userInfo, setUserInfo] = useState()
 
     const dispatch = useDispatch()
 
@@ -26,10 +26,12 @@ function HeaderLayout({history}) {
         };
     });
 
-    const handleLogout =async () => {
+    const handleLogout = async () => {
         await logout();
         dispatch({type: "LOGOUT"})
-        history.push('/')
+        localStorage.removeItem("is_logged")
+        localStorage.removeItem('user_info')
+        window.location.href = '/'
     }
 
     const [categoryList, setCategoryList] = useState([]);
@@ -40,6 +42,11 @@ function HeaderLayout({history}) {
                 setCategoryList(res.data.parentCategoryList);
             }
         });
+        const u = localStorage.getItem('user_info')
+        if (u) {
+            setUserInfo(JSON.parse(u))
+        }
+
     }, []);
 
     const isSticky = (e) => {
@@ -98,7 +105,8 @@ function HeaderLayout({history}) {
             </div>
             <div id="master-header" className="header-main" style={{height: '63px'}}>
                 <div className='header-main_container'>
-                    <div className='header-logo' style={{marginRight: '30px'}}>
+                    <div className='header-logo' onClick={() => goto('/')}
+                         style={{marginRight: '30px', cursor: 'pointer'}}>
                         <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{width: '135px'}}/>
                     </div>
                     <div className="header-main_left">

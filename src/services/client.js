@@ -5,23 +5,64 @@ const client = Axios.create({
     withCredentials: true
 });
 
-client.interceptors.request.use(async request => {
-    if (request.url !== '/api/users/client/reset-token' && !API_WHITE_LIST.some(el => el === request.url)) {
-        await client.patch("/api/users/client/reset-token").catch(() => {
-            // if (window.location.pathname !== '/') {
-            //     window.location.href = '/'
-            // }
-        });
-    }
-    return request;
-}, error => {
-    return Promise.reject(error);
-});
+let isRefreshing = false;
+let failedQueue = [];
 
-client.interceptors.response.use(response => {
-    return response;
-}, async error => {
-    return Promise.reject(error);
-});
+const processQueue = (error) => {
+    failedQueue.forEach(prom => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve();
+        }
+    });
+
+    failedQueue = [];
+};
+
+client.interceptors.response.use(
+    response => {
+        return response;
+    },
+    err => {
+        const originalRequest = err.config;
+
+        if (err.response.status === 401 && !originalRequest._retry && !API_WHITE_LIST.some(el => el === err.config.url)) {
+            if (isRefreshing) {
+                return new Promise((resolve, reject) => {
+                    failedQueue.push({ resolve, reject });
+                })
+                    .then(() => {
+                        return client(originalRequest);
+                    })
+                    .catch(err => {
+                        return Promise.reject(err);
+                    });
+            }
+
+            originalRequest._retry = true;
+            isRefreshing = true;
+
+            return new Promise((resolve, reject) => {
+                client
+                    .patch('/api/users/client/reset-token')
+                    .then(() => {
+                        processQueue(null);
+                        resolve(client(originalRequest));
+                    })
+                    .catch(err => {
+                        processQueue(err, null);
+                        window.location.href = '/'
+                        reject(err);
+                    })
+                    .then(() => {
+                        isRefreshing = false;
+                    });
+            });
+        }
+
+        return Promise.reject(err);
+    }
+);
 
 export default client

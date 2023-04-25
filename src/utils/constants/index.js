@@ -9,6 +9,5 @@ export const API_WHITE_LIST = ['/api/categories/common/category-list',
     '/api/users/client/check-exist-username',
     '/api/users/client/check-exist-phone',
     '/api/users/client/forgot-password',
-    '/api/users/client/forgot-password',
-    '/api/users/client/login',
-    '/api/users/client/logout']
+    '/api/users/client/login'
+]
