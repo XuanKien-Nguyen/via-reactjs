@@ -20,14 +20,13 @@ function Index({form}) {
 
     const isLogged = localStorage.getItem("is_logged")
 
-
     useEffect(() => {
         if (!userInfo && isLogged) {
             getUserInfo().then(resp => {
                 if (resp.status === 200) {
                     const userFound = resp?.data?.userFound || null
                     dispatch({type: "SET_USER_INFO", payload: userFound})
-                    history.push("/")
+                    window.location.href = '/'
                 }
             })
         }
@@ -49,7 +48,7 @@ function Index({form}) {
                         dispatch({type: 'SET_USER_INFO', payload: resp.data?.userFound})
                         localStorage.setItem("is_logged", 'true')
                         localStorage.setItem('user_info', JSON.stringify(resp.data?.userFound || {}))
-                        history.push("/")
+                        window.location.href = '/'
                     } else {
                         message.error(resp?.data?.message || "Error")
                     }

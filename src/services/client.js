@@ -26,11 +26,11 @@ client.interceptors.response.use(
     },
     err => {
         const originalRequest = err.config;
-
         if (err.response.status === 401 && !originalRequest._retry && !API_WHITE_LIST.some(el => el === err.config.url)) {
+
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {
-                    failedQueue.push({ resolve, reject });
+                    failedQueue.push({resolve, reject});
                 })
                     .then(() => {
                         return client(originalRequest);
@@ -44,15 +44,18 @@ client.interceptors.response.use(
             isRefreshing = true;
 
             return new Promise((resolve, reject) => {
-                client
-                    .patch('/api/users/client/reset-token')
+
+                Axios('/api/users/client/reset-token', {
+                    method: 'patch',
+                    withCredentials: true
+                })
                     .then(() => {
                         processQueue(null);
                         resolve(client(originalRequest));
                     })
                     .catch(err => {
-                        processQueue(err, null);
-                        window.location.href = '/'
+                        // message.error('refresh token error')
+                        processQueue(err);
                         reject(err);
                     })
                     .then(() => {

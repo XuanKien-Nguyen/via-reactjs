@@ -1,13 +1,16 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useContext, useEffect, useState} from 'react';
 import {baseRoutes, dashboardRoutes} from '../../router';
 import {getUserInfo} from "../../services/user";
 
 import {useDispatch, useSelector} from "react-redux";
 import {Route, useLocation, useHistory} from "react-router-dom";
+import {LayoutContext} from "../../contexts";
 
 let accessRoutes = [...dashboardRoutes, ...baseRoutes]
 
 function MainLayout() {
+
+    const {setLoading} = useContext(LayoutContext);
 
     const history = useHistory()
 
@@ -23,10 +26,12 @@ function MainLayout() {
 
     const isLogged = localStorage.getItem("is_logged")
 
+
     useEffect(() => {
-        const init = async () => {
-            if (!user && isLogged === 'true') {
-                const resp = await getUserInfo();
+        if (!user && isLogged === 'true') {
+            setLoading(true)
+            getUserInfo().then(resp => {
+                console.log('resp')
                 if (resp.status === 200) {
                     const userFound = resp?.data?.userFound || null
                     dispatch({type: "SET_USER_INFO", payload: userFound})
@@ -34,11 +39,14 @@ function MainLayout() {
                     accessRoutes = [...dashboardRoutes.filter(el => el.role.some(r => r === userFound?.role)), ...baseRoutes]
                     setForceRender(forceRender + 1)
                 }
-            } else {
+            }).catch(err => {
                 accessRoutes = baseRoutes
-            }
+                setForceRender(forceRender + 1)
+                localStorage.removeItem('user_info')
+            }).finally(() => setLoading(false));
+        } else {
+            accessRoutes = baseRoutes
         }
-        init()
     }, [])
 
     useEffect(() => {
