@@ -32,3 +32,19 @@ export const logout = () => {
 export const changePassword = (body) => {
     return client.patch(`${ENDPOINT_USER}/change-password/`, body)
 }
+
+export const getQrImage = () => {
+    return client.get(`${ENDPOINT_USER}/qr-image`)
+}
+
+export const verify2fa = (body) => {
+    return client.post(`${ENDPOINT_USER}/verify2fa`, body)
+}
+
+export const auth2fa = (body) => {
+    return client.post(`${ENDPOINT_USER}/auth2fa`, body)
+}
+
+export const resetToken = () => {
+    return client.patch(`${ENDPOINT_USER}/reset-token`)
+}

@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Form, Icon, Input, Layout, message} from 'antd';
 import '../../../assets/scss/login.scss';
-import {getUserInfo, login} from "../../../services/user";
+import {getUserInfo, login, auth2fa, resetToken} from "../../../services/user";
 import {useDispatch, useSelector} from "react-redux";
-
 import {useHistory} from "react-router-dom";
+import Modal from "antd/es/modal";
+
+let timeout_lst = []
 
 function Index({form}) {
 
@@ -19,6 +21,17 @@ function Index({form}) {
     const [loading, setLoading] = useState(false)
 
     const isLogged = localStorage.getItem("is_logged")
+
+    const [visible, setVisible] = useState(false)
+
+    const [errorText, setErrorText] = useState('')
+
+    const [verifying, setVerifying] = useState(false)
+
+    const [verifyExpire, setVerifyExpire] = useState(0)
+
+    const [otp, setOtp] = useState('')
+
 
     useEffect(() => {
         if (!userInfo && isLogged) {
@@ -54,10 +67,54 @@ function Index({form}) {
                     }
                 }).catch(err => {
                     message.error(err?.response?.data?.message || "Error")
+                    if (err?.response?.status === 301) {
+                        timeout_lst.forEach(el => clearTimeout(el))
+                        timeout_lst = []
+                        setVisible(true)
+                        setVerifyExpire(60);
+                    }
                 }).finally(() => setLoading(false))
             }
         })
     };
+
+    const onChangeOtp = (e) => {
+        setOtp(e.target.value)
+        if (!e.target.value) {
+            setErrorText('Vui lòng nhập mã OTP')
+        } else {
+            setErrorText('')
+        }
+    }
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (verifyExpire !== 0) {
+                setVerifyExpire(verifyExpire - 1)
+            } else {
+                setVisible(false)
+                setErrorText('')
+                setOtp('')
+            }
+        }, 1000)
+
+        timeout_lst.push(timeout)
+    }, [verifyExpire])
+
+    const handleAuth2fa = async () => {
+        if (otp) {
+            setVerifying(true)
+            auth2fa({otpToken: otp}).then(resp => {
+                localStorage.setItem("is_logged", 'true')
+                localStorage.setItem('user_info', JSON.stringify(resp.data?.userFound || {}))
+                window.location.href = '/'
+            }).catch(err => {
+                setErrorText(err?.response?.data?.message || 'Lỗi: ' + err)
+            }).finally(() => setVerifying(false))
+        } else {
+            setErrorText('Vui lòng nhập mã OTP')
+        }
+    }
 
     return <Layout className="login-layout">
         <div className='container'>
@@ -87,10 +144,6 @@ function Index({form}) {
                     )}
                 </Form.Item>
                 <Form.Item>
-                    {/*{getFieldDecorator('remember', {*/}
-                    {/*  valuePropName: 'checked',*/}
-                    {/*  initialValue: true,*/}
-                    {/*})(<Checkbox>Remember me</Checkbox>)}*/}
                     <span className="login-form-forgot" href="">
               Quên mật khẩu
             </span>
@@ -101,6 +154,35 @@ function Index({form}) {
                 </Form.Item>
             </Form>
         </div>
+        <Modal
+            centered
+            closable={false}
+            visible={visible}
+            maskClosable={false}
+            title="Xác thực 2FA"
+            onOk={handleAuth2fa}
+            onCancel={() => () => {
+                setVisible(false)
+                setErrorText('')
+                setOtp('')
+            }}
+            footer={[
+                <Button key="back" disabled={verifying} onClick={() => {
+                    setVisible(false)
+                    setErrorText('')
+                    setOtp('')
+                }}>
+                    Hủy
+                </Button>,
+                <Button key="submit" type="primary" loading={verifying} onClick={handleAuth2fa}>
+                    Xác thực
+                </Button>
+            ]}
+        >
+            <Input addonBefore="Mã OTP" value={otp} onChange={onChangeOtp}/>
+            <p style={{margin: '5px', color: 'red'}}>{errorText}</p>
+            <p>Thời gian xác thực hết hạn sau {verifyExpire}</p>
+        </Modal>
     </Layout>
 }
 

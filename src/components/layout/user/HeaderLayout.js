@@ -10,6 +10,8 @@ const {Header} = Layout;
 
 function HeaderLayout({history}) {
 
+    const user = useSelector(store => store.user)
+
     const [userInfo, setUserInfo] = useState()
 
     const {setLoading} = useContext(LayoutContext);
@@ -70,8 +72,11 @@ function HeaderLayout({history}) {
         const menu = (
             <Menu>
                 <Menu.Item>
-                    <a onClick={() => goto('/user-info')}>Thông tin cá nhân</a>
+                    <a onClick={() => goto('/user-info')}>Cá nhân</a>
                 </Menu.Item>
+                {(user?.role === 'admin' || user?.role === 'staff') && <Menu.Item >
+                    <a onClick={() => goto('/admin')}>Quản trị dành cho admin</a>
+                </Menu.Item>}
                 <Menu.Item>
                     <a onClick={handleLogout}>Thoát</a>
                 </Menu.Item>
@@ -109,7 +114,7 @@ function HeaderLayout({history}) {
       </div>
       <div id="master-header" className="header-main" style={{ height: '63px' }}>
         <div className='header-main_container'>
-          <div className='header-logo' style={{ marginRight: '30px' }}>
+          <div className='header-logo' style={{ marginRight: '30px', cursor: 'pointer' }} onClick={() => history.push('/')}>
             <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{ width: '135px' }} />
           </div>
           <div className="header-main_left">

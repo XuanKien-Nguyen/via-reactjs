@@ -12,6 +12,7 @@ import {Fragment as blank} from 'react'
 import NotFound from "../components/pages/not-found/404";
 import UserInfo from "../components/pages/user-info";
 import AccessDenied from "../components/pages/access-denied/403";
+import Auth2fa from '../components/pages/auth2fa'
 
 export const dashboardRoutes = [
     {
@@ -93,5 +94,13 @@ export const baseRoutes = [
         name: "AccessDenied",
         noAuth: true,
         layout: user
+    },
+
+    {
+        path: '/auth-2fa',
+        component: Auth2fa,
+        name: "auth2fa",
+        noAuth: true,
+        layout: blank
     },
 ];

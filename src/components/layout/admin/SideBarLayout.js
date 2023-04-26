@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { Layout, Menu, Icon } from 'antd';
 import pathToRegexp from 'path-to-regexp';
@@ -9,10 +9,13 @@ import { LayoutContext } from '../../../contexts';
 
 const { Sider } = Layout;
 
+
 function SideBarLayout(props) {
   const {
     location: { pathname }
   } = props;
+
+  const history = useHistory()
 
   const isPathMatchRequestedUrl = path => !!pathToRegexp(path).exec(pathname);
   const {
@@ -27,7 +30,7 @@ function SideBarLayout(props) {
       collapsed={sideBarCollapsed}
       onCollapse={() => setCollapsed(!sideBarCollapsed)}
     >
-      <div className="logo">
+      <div className="logo" onClick={() => history.push('/')} style={{cursor: 'pointer'}}>
         <img src={require('../../../assets/img/favicon.png')} alt="" />
         {!sideBarCollapsed && <span>VIA2FA</span>}
       </div>
