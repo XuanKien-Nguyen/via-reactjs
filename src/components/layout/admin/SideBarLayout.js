@@ -29,7 +29,7 @@ function SideBarLayout(props) {
     >
       <div className="logo">
         <img src={require('../../../assets/img/favicon.png')} alt="" />
-        {!sideBarCollapsed && <span>Admin Logo</span>}
+        {!sideBarCollapsed && <span>VIA2FA</span>}
       </div>
       <Menu
         theme={theme}

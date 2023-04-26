@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Dropdown, Icon, Input, Layout, Menu} from 'antd';
 import {logout} from "../../../services/user";
 import {getParentCategoryList} from '../../../services/category/category';
 import {useDispatch, useSelector} from "react-redux";
+import {LayoutContext} from "../../../contexts";
 
 const {Search} = Input;
 const {Header} = Layout;
@@ -10,6 +11,8 @@ const {Header} = Layout;
 function HeaderLayout({history}) {
 
     const [userInfo, setUserInfo] = useState()
+
+    const {setLoading} = useContext(LayoutContext);
 
     const dispatch = useDispatch()
 
@@ -27,11 +30,13 @@ function HeaderLayout({history}) {
     });
 
     const handleLogout = async () => {
+        setLoading(true)
         await logout();
         dispatch({type: "LOGOUT"})
         localStorage.removeItem("is_logged")
         localStorage.removeItem('user_info')
         window.location.href = '/'
+        setLoading(false)
     }
 
     const [categoryList, setCategoryList] = useState([]);

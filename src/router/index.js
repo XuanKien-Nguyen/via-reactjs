@@ -52,7 +52,7 @@ export const dashboardRoutes = [
         exact: true,
         showAlways: false,
         layout: user,
-        role: ['admin', 'customer']
+        role: ['admin', 'customer', 'staff']
     },
 ];
 export const baseRoutes = [

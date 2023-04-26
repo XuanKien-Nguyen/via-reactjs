@@ -26,6 +26,7 @@ const Register = (props) => {
     const [helpValidateUser, setHelpValidateUser] = useState('')
     const [helpValidateEmail, setHelpValidateEmail] = useState('')
     const [helpValidatePhone, setHelpValidatePhone] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const userInfo = useSelector(store => store.user)
 
@@ -178,13 +179,16 @@ const Register = (props) => {
         }
         props.form.validateFields(arrInvalid, (err) => {
             if (!err && validServerIsOk) {
+                setLoading(true)
                 const body = props.form.getFieldsValue();
                 delete body.confirm
                 register(body).then(() => {
                     message.success("Đăng ký thành công!")
+                    history.push('/login')
                 }).catch(err => {
                     message.success("Đăng ký thất bại, " + err)
                 })
+                setLoading(false)
             }
         });
     };
@@ -312,7 +316,7 @@ const Register = (props) => {
                                            prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}/>)}
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" onClick={handleSubmit} className="login-form-button">
+                        <Button type="primary" onClick={handleSubmit} className="login-form-button" loading={loading}>
                             Đăng ký
                         </Button>
                         Đã có tài khoản <a onClick={gotoLogin}>đăng nhập</a> ngay
