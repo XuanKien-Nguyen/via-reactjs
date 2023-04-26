@@ -1,36 +1,51 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { Input, Icon, Layout, Menu, Dropdown } from 'antd';
-
+import React, {useEffect, useState} from 'react';
+import {Dropdown, Icon, Input, Layout, Menu} from 'antd';
+import {logout} from "../../../services/user";
 import {getParentCategoryList} from '../../../services/category/category';
+import {useDispatch, useSelector} from "react-redux";
 const { Search } = Input;
 const { Header } = Layout;
+function HeaderLayout({history}) {
 
-function HeaderLayout({ history }) {
+    const [userInfo, setUserInfo] = useState()
 
+    const dispatch = useDispatch()
 
-  const goto = url => history.push(url)
+    const goto = url => history.push(url)
 
-  const onClick = ({ key }) => {
-    console.log(`Click on item ${key}`);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', isSticky);
-    return () => {
-      window.removeEventListener('scroll', isSticky);
+    const onClick = ({key}) => {
+        console.log(`Click on item ${key}`);
     };
-  });
 
-  const [categoryList, setCategoryList] = useState([]);
-
-  useEffect(() => {
-    getParentCategoryList().then(res => {
-      if(res.status === 200 && res.data) {
-        setCategoryList(res.data.parentCategoryList);
-      }
+    useEffect(() => {
+        window.addEventListener('scroll', isSticky);
+        return () => {
+            window.removeEventListener('scroll', isSticky);
+        };
     });
-  }, []);
+
+    const handleLogout = async () => {
+        await logout();
+        dispatch({type: "LOGOUT"})
+        localStorage.removeItem("is_logged")
+        localStorage.removeItem('user_info')
+        window.location.href = '/'
+    }
+
+    const [categoryList, setCategoryList] = useState([]);
+
+    useEffect(() => {
+        getParentCategoryList().then(res => {
+            if (res.status === 200 && res.data) {
+                setCategoryList(res.data.parentCategoryList);
+            }
+        });
+        const u = localStorage.getItem('user_info')
+        if (u) {
+            setUserInfo(JSON.parse(u))
+        }
+
+    }, []);
 
   const isSticky = (e) => {
     const header = document.querySelector('#header_user');
@@ -38,11 +53,30 @@ function HeaderLayout({ history }) {
     scrollTop >= 150 ? header.classList.add('is-sticky') : header.classList.remove('is-sticky');
   };
 
-  const menu = (
-    <Menu onClick={onClick}>
-      {categoryList.map((category, i) => <Menu.Item key={category.id}>{category.name}</Menu.Item>)}
-    </Menu>
-  );
+    const menu = (
+        <Menu onClick={onClick}>
+            {categoryList.map((category, i) => <Menu.Item key={category.id}>{category.name}</Menu.Item>)}
+        </Menu>
+    );
+
+    const dropDownUser = () => {
+        const menu = (
+            <Menu>
+                <Menu.Item>
+                    <a onClick={() => goto('/user-info')}>Thông tin cá nhân</a>
+                </Menu.Item>
+                <Menu.Item>
+                    <a onClick={handleLogout}>Thoát</a>
+                </Menu.Item>
+            </Menu>
+        )
+        return <Dropdown overlay={menu}>
+            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                {userInfo.username?.toUpperCase()} <Icon type="down"/>
+            </a>
+        </Dropdown>
+
+    }
 
   return (
     <Header id='header_user' style={{ height: 'auto', padding: 0, margin: 0 }}>
@@ -75,15 +109,11 @@ function HeaderLayout({ history }) {
             <ul>
               <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()}>DANH MỤC<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>
               <li className='item'><a href='#'>BÀI VIẾT</a></li>
-              {/* <li className='item'><a href='#'>BM & FANPAGE</a></li>
-              <li className='item'><a href='#'>KHÓA HỌC</a></li>
-              <li className='header-devider'></li>
-              <li className='item'><div className='item-button'><a href='#'><span>APP TĂNG LIKE, CMT, SUB</span></a></div></li> */}
             </ul>
           </div>
           <div className="header-main_right">
             <ul>
-              <li className='item'><div className='signin-signup'><a><span onClick={() => goto('/login')}>ĐĂNG NHẬP</span> / <span onClick={() => goto('/register')}>ĐĂNG KÝ</span></a></div></li>
+              <li className='item'><div className='signin-signup'>{userInfo ? dropDownUser() : <a><span onClick={() => goto('/login')}>ĐĂNG NHẬP</span> / <span onClick={() => goto('/register')}>ĐĂNG KÝ</span></a>}</div></li>
               <li className='header-devider'></li>
               <li className='item'><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
             </ul>

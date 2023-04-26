@@ -1,5 +1,6 @@
 import client from "../client";
-const ENDPOINT_USER = '/users/client'
+
+const ENDPOINT_USER = '/api/users/client'
 export const register = (body) => {
     return client.post(`${ENDPOINT_USER}/register`, body)
 }
@@ -18,4 +19,16 @@ export const checkExistPhone = (body) => {
 
 export const login = (body) => {
     return client.post(`${ENDPOINT_USER}/login`, body)
+}
+
+export const getUserInfo = () => {
+    return client.get(`${ENDPOINT_USER}/me`)
+}
+
+export const logout = () => {
+    return client.delete(`${ENDPOINT_USER}/logout`)
+}
+
+export const changePassword = (body) => {
+    return client.patch(`${ENDPOINT_USER}/change-password/`, body)
 }

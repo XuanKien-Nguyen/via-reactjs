@@ -1,0 +1,53 @@
+#user_id .ant-tabs {
+  width: 100%
+}
+
+#user_id {
+  height: 550px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+
+  .ant-tabs-tab {
+    font-weight: bold;
+  }
+
+  .sidebar {
+    flex-direction: column;
+    align-items: start;
+    .avatar {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid #eaeaea;
+      margin-right: 40px;
+      padding: 40px;
+      img {
+        width: 150px;
+      }
+      .id_text {
+        color: #cbcbcb;
+      }
+    }
+
+    .information {
+      width: 100%;
+      .ant-menu {
+        width: 100% !important;
+      }
+    }
+  }
+
+  .content {
+    width: 75%;
+    padding: 40px;
+
+    #change-password {
+      .ant-form {
+        width: 100% !important;
+      }
+    }
+  }
+
+}

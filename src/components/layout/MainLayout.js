@@ -1,71 +1,74 @@
-import React, { useContext } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { Layout } from 'antd';
+import React, {Fragment, useContext, useEffect, useState} from 'react';
+import {baseRoutes, dashboardRoutes} from '../../router';
+import {getUserInfo} from "../../services/user";
 
-import SideBarLayout from './admin/SideBarLayout';
-import HeaderLayout from './admin/HeaderLayout';
-import FooterLayout from './admin/FooterLayout';
+import {useDispatch, useSelector} from "react-redux";
+import {Route, useLocation, useHistory} from "react-router-dom";
+import {LayoutContext} from "../../contexts";
 
-import SideBarLayoutUser from './user/SideBarLayout';
-import HeaderLayoutUser from './user/HeaderLayout';
-import FooterLayoutUser from './user/FooterLayout';
-
-import { dashboardRoutes } from '../../router';
-import { LayoutContext } from '../../contexts';
-
-import {useHistory} from 'react-router-dom'
-
-const { Content } = Layout;
+let accessRoutes = [...dashboardRoutes, ...baseRoutes]
 
 function MainLayout() {
 
+    const {setLoading} = useContext(LayoutContext);
+
     const history = useHistory()
 
-  const { sideBarCollapsed } = useContext(LayoutContext);
+    const location = useLocation()
 
-  const isAdmin = localStorage.getItem('role');
+    const dispatch = useDispatch()
 
-  return (
-    isAdmin === 'admin' ? <Layout style={{ marginLeft: sideBarCollapsed ? '80px' : '200px' }}>
-      <SideBarLayout />
-      <Layout>
-        <HeaderLayout />
-        <Content>
-          <Switch>
-            {dashboardRoutes.filter(el => el.layout === 'admin').map(route => (
-              <Route
-                exact={true}
-                key={route.path}
-                path={route.path}
-                component={route.component}
-              />
-            ))}
-            <Redirect to="/" />
-          </Switch>
-        </Content>
-        <FooterLayout />
-      </Layout>
-    </Layout> : <Layout>
-        {/* <SideBarLayoutUser /> */}
-        <Layout>
-            <HeaderLayoutUser history={history}/>
-            <Content style={{padding: '0', margin: '0'}}>
-                <Switch>
-                    {dashboardRoutes.filter(el => el.layout !== 'admin').map(route => (
-                        <Route
-                            exact={true}
-                            key={route.path}
-                            path={route.path}
-                            component={route.component}
-                        />
-                    ))}
-                    <Redirect to="/" />
-                </Switch>
-            </Content>
-            <FooterLayoutUser  />
-        </Layout>
-    </Layout>
-  );
+    const user = useSelector(store => store.user)
+
+    const [routes] = useState([...dashboardRoutes, ...baseRoutes])
+
+    const [forceRender, setForceRender] = useState(0)
+
+    const isLogged = localStorage.getItem("is_logged")
+
+
+    useEffect(() => {
+        if (!user && isLogged === 'true') {
+            setLoading(true)
+            getUserInfo().then(resp => {
+                console.log('resp')
+                if (resp.status === 200) {
+                    const userFound = resp?.data?.userFound || null
+                    dispatch({type: "SET_USER_INFO", payload: userFound})
+                    localStorage.setItem('user_info', JSON.stringify(userFound))
+                    accessRoutes = [...dashboardRoutes.filter(el => el.role.some(r => r === userFound?.role)), ...baseRoutes]
+                    setForceRender(forceRender + 1)
+                }
+            }).catch(err => {
+                accessRoutes = baseRoutes
+                setForceRender(forceRender + 1)
+                localStorage.removeItem('user_info')
+            }).finally(() => setLoading(false));
+        } else {
+            accessRoutes = baseRoutes
+        }
+    }, [])
+
+    useEffect(() => {
+        const {pathname} = location
+        if (!routes.some(el => el.path === pathname)) {
+            history.push('/not-found')
+            return
+        }
+        const isAccess = accessRoutes.some(el => el.path === pathname)
+        if (!isAccess && window.location.href !== pathname) {
+            history.push('/access-denied')
+        }
+    }, [location, forceRender])
+
+
+    const renderLayout = (Layout, Component) => {
+        return <Layout><Component/></Layout>
+    }
+
+    return <Fragment>{routes.map((el, idx) => <Route key={idx} render={() => renderLayout(el.layout, el.component)}
+                                                     path={el.path}
+                                                     exact={el.exact}/>)}</Fragment>
 }
 
 export default MainLayout;
