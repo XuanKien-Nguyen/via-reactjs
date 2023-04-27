@@ -50,6 +50,7 @@ function MainLayout() {
 
     useEffect(() => {
         const {pathname} = location
+
         if (!routes.some(el => el.path === pathname)) {
             history.push('/not-found')
             return
@@ -57,7 +58,10 @@ function MainLayout() {
         const isAccess = accessRoutes.some(el => el.path === pathname.split('?')[0])
         if (!isAccess && window.location.href !== pathname) {
             history.push('/access-denied')
+            return
         }
+        const currentRoute = routes.find(el => el.path === pathname)
+        document.title = `${currentRoute.name}`
     }, [location, forceRender])
 
 

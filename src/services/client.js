@@ -56,6 +56,8 @@ client.interceptors.response.use(
                     })
                     .catch(err => {
                         // message.error('refresh token error')
+                        localStorage.removeItem('is_logged')
+                        localStorage.removeItem('user_info')
                         processQueue(err);
                         reject(err);
                     })
