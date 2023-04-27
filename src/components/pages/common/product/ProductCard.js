@@ -9,7 +9,7 @@ const ProductCard = ({ productDetail }) => {
                 <div className='product-container'>
                     <div className='product-title'><span>{productDetail.name}</span></div>
                     <div className='product-detail'>
-                        <div className='product-price'>{productDetail.price} VNĐ</div>
+                        <div className='product-price'>{productDetail?.price?.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})} </div>
                         <div className='product-quantity'>Còn: <span>{productDetail.sum_via}</span></div>
                         <div className='product-more-info'>
                             <div className='info location'><div className='field-title'><Icon type="check" />Quốc gia</div><div className='field-value'>
