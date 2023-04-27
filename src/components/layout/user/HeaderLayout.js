@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState, Fragment} from 'react';
 import {Dropdown, Icon, Input, Layout, Menu} from 'antd';
 import {logout} from "../../../services/user";
 import {getParentCategoryList} from '../../../services/category/category';
@@ -111,7 +111,10 @@ function HeaderLayout({history}) {
                     </div>
                     <div className="header-main_right">
                         <ul>
-                            <li className='item'><div className='signin-signup'>{userInfo ? dropDownUser() : <a><span onClick={() => goto('/login')}>ĐĂNG NHẬP</span> / <span onClick={() => goto('/register')}>ĐĂNG KÝ</span></a>}</div></li>
+                            <li style={{
+                                height: '64px',
+                                display: 'flex',
+                            }} className='item'><div className='signin-signup d-flex justify-content-center align-items-center' style={{height: '100%'}}>{userInfo ? dropDownUser() : <Fragment><div className={'login-home'} onClick={() => goto('/login')}>ĐĂNG NHẬP</div><div className={'register-home'} onClick={() => goto('/register')}>ĐĂNG KÝ</div></Fragment>}</div></li>
                             <li className='header-devider' style={userInfo?.role !== 'admin' ? {display: 'none'} : {}}></li>
                             <li className='item' style={userInfo?.role !== 'admin' ? {display: 'none'} : {}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                         </ul>
