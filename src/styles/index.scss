@@ -29,16 +29,16 @@ body {
   */
 body {
     line-height: 1.6;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'SVN-Poppin', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     
     display: block;
 
-    //-webkit-animation: fadeInFromNone 3s ease-out;
-    //-moz-animation: fadeInFromNone 3s ease-out;
-    //-o-animation: fadeInFromNone 3s ease-out;
-    //animation: fadeInFromNone 3s ease-out;
+    -webkit-animation: fadeInFromNone 1.5s ease-out;
+    -moz-animation: fadeInFromNone 1.5s ease-out;
+    -o-animation: fadeInFromNone 1.5s ease-out;
+    animation: fadeInFromNone 1.5s ease-out;
 }
 
 @-webkit-keyframes fadeInFromNone {
