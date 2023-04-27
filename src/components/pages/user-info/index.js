@@ -1,12 +1,15 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import UserDetail from "./components/UserDetail";
 import ChangePassword from "./components/ChangePassword";
 import Enable2Fa from "./components/Enable2Fa";
 import '../../../assets/scss/user-info.scss'
 import {useSelector} from "react-redux";
 import {Icon, Menu, Tag} from 'antd';
+import {LayoutContext} from "../../../contexts";
 
 const UserInfo = () => {
+
+    const {setLoading} = useContext(LayoutContext)
 
     const user = useSelector(store => store.user)
 
@@ -15,15 +18,14 @@ const UserInfo = () => {
     const renderContent = () => {
         if (current === "2") {
             return <ChangePassword user={user} />
-        } else if (current === "3") {
-            return <Enable2Fa />
+        } else if (current === "3" && (user?.role === 'admin' || user?.role === 'staff')) {
+            return <Enable2Fa loading={setLoading} />
         }
         return <UserDetail user={user} />
     }
 
     const changeMenu = e => {
         setCurrent(e.key)
-        console.log(e);
     }
 
     return <div id='user_id' className='header-main_container p-t-30'>
@@ -51,10 +53,10 @@ const UserInfo = () => {
                         <Icon type="lock" />
                         ĐỔI MẬT KHẨU
                     </Menu.Item>
-                    <Menu.Item key="3">
+                    { (user?.role === 'admin' || user?.role === 'staff') &&<Menu.Item key="3">
                         <Icon type="qrcode" />
                         BẬT XÁC THỰC 2FA
-                    </Menu.Item>
+                    </Menu.Item>}
                 </Menu>
             </div>
         </div>

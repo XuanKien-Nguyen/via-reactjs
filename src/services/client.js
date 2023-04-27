@@ -20,6 +20,7 @@ const processQueue = (error) => {
     failedQueue = [];
 };
 
+
 client.interceptors.response.use(
     response => {
         return response;
@@ -63,7 +64,6 @@ client.interceptors.response.use(
                     });
             });
         }
-
         return Promise.reject(err);
     }
 );

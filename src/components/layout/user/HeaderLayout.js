@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Dropdown, Icon, Input, Layout, Menu } from 'antd';
-import { logout } from "../../../services/user";
-import { getParentCategoryList } from '../../../services/category/category';
-import { useDispatch, useSelector } from "react-redux";
-const { Search } = Input;
-const { Header } = Layout;
-function HeaderLayout({ history }) {
+import React, {useContext, useEffect, useState} from 'react';
+import {Dropdown, Icon, Input, Layout, Menu} from 'antd';
+import {logout} from "../../../services/user";
+import {getParentCategoryList} from '../../../services/category/category';
+import {useDispatch, useSelector} from "react-redux";
+import {LayoutContext} from "../../../contexts";
+
+const {Search} = Input;
+const {Header} = Layout;
+
+function HeaderLayout({history}) {
+
+    const user = useSelector(store => store.user)
 
     const [userInfo, setUserInfo] = useState()
+
+    const {setLoading} = useContext(LayoutContext);
 
     const dispatch = useDispatch()
 
@@ -18,11 +25,13 @@ function HeaderLayout({ history }) {
     };
 
     const handleLogout = async () => {
+        setLoading(true)
         await logout();
         dispatch({ type: "LOGOUT" })
         localStorage.removeItem("is_logged")
         localStorage.removeItem('user_info')
         window.location.href = '/'
+        setLoading(false)
     }
 
     const [categoryList, setCategoryList] = useState([]);
@@ -49,8 +58,11 @@ function HeaderLayout({ history }) {
         const menu = (
             <Menu>
                 <Menu.Item>
-                    <a onClick={() => goto('/user-info')}>Thông tin cá nhân</a>
+                    <a onClick={() => goto('/user-info')}>Cá nhân</a>
                 </Menu.Item>
+                {(user?.role === 'admin' || user?.role === 'staff') && <Menu.Item >
+                    <a onClick={() => goto('/admin')}>Quản trị dành cho admin</a>
+                </Menu.Item>}
                 <Menu.Item>
                     <a onClick={handleLogout}>Thoát</a>
                 </Menu.Item>
@@ -88,7 +100,7 @@ function HeaderLayout({ history }) {
             </div>
             <div id="master-header" className="header-main" style={{ height: '63px' }}>
                 <div className='header-main_container'>
-                    <div className='header-logo' style={{ marginRight: '30px' }}>
+                <div className='header-logo' style={{ marginRight: '30px', cursor: 'pointer' }} onClick={() => history.push('/')}>
                         <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{ width: '135px' }} />
                     </div>
                     <div className="header-main_left">

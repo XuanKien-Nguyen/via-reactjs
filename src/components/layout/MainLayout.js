@@ -31,7 +31,6 @@ function MainLayout() {
         if (!user && isLogged === 'true') {
             setLoading(true)
             getUserInfo().then(resp => {
-                console.log('resp')
                 if (resp.status === 200) {
                     const userFound = resp?.data?.userFound || null
                     dispatch({type: "SET_USER_INFO", payload: userFound})

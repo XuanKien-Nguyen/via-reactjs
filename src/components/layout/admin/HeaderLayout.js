@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Layout, Icon, Modal } from 'antd';
-import { Redirect } from 'react-router-dom';
 
 import { LayoutContext } from '../../../contexts';
+import {logout} from "../../../services/user";
+import {useDispatch} from "react-redux";
 
 const { Header } = Layout;
 
@@ -10,26 +11,34 @@ function HeaderLayout() {
   const { headerComponent } = useContext(LayoutContext);
 
   const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
-  const [isLogedOut, setLogedOut] = useState(false);
 
-  const handleLogout = () => {
-    setLogedOut(true);
-  }
+    const {setLoading} = useContext(LayoutContext);
+
+    const dispatch = useDispatch()
+
+    const handleLogout = async () => {
+        setLoading(true)
+        await logout();
+        dispatch({type: "LOGOUT"})
+        localStorage.removeItem("is_logged")
+        localStorage.removeItem('user_info')
+        window.location.href = '/'
+        setLoading(false)
+    }
 
   return (
     <Header>
-      {isLogedOut && <Redirect to="/login" />}
       <div className="header-wrapper">
         <div className="page-header">{headerComponent}</div>
         <Icon type="logout" onClick={() => setLogoutModalOpen(true)} className="logout-icon" />  
       </div>
       <Modal
-        title="Log out from dashboard"
+        title="Đăng xuất"
         visible={isLogoutModalOpen}
         onOk={handleLogout}
         onCancel={() => setLogoutModalOpen(false)}
       >
-        would you really like to log out?
+        Bạn có thực sự muốn thoát?
       </Modal>
     </Header>
   );
