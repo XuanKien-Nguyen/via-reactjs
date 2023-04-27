@@ -1,7 +1,7 @@
 import React from 'react';
 import {useHistory} from "react-router-dom";
 
-const ListLayout = ({categoryId, children, titleCategory, contentSeeMore}) => {
+const ListLayout = ({categoryId, children, titleCategory, hiddenShowMore, contentSeeMore}) => {
 
     const history = useHistory()
 
@@ -12,7 +12,7 @@ const ListLayout = ({categoryId, children, titleCategory, contentSeeMore}) => {
                 <b>
                     <div>{titleCategory}</div>
                 </b>
-                <a onClick={() => history.push(`/categories?id=${categoryId}`)}>{contentSeeMore}</a>
+                {!hiddenShowMore && <a onClick={() => history.push(`/categories?id=${categoryId}`)}>{contentSeeMore}</a>}
             </h3>
         </div>
         <div className='category-grid'>

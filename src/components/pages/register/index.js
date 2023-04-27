@@ -195,7 +195,7 @@ const Register = (props) => {
 
     return (<div id="container">
             <div align="center">
-                <h2 className="via2fa-text">VIA2FA</h2>
+                <h2 className="via2fa-text" onClick={() => history.push('/')}>VIA2FA</h2>
                 <h3>Đăng ký thành viên</h3>
             </div>
             <div>

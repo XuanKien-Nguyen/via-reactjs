@@ -119,14 +119,15 @@ function Index({form}) {
     return <Layout className="login-layout">
         <div className='container'>
             <div align="center">
-                <h2 className="via2fa-text">VIA2FA</h2>
+                <h2 className="via2fa-text" onClick={() => history.push('/')}>VIA2FA</h2>
             </div>
             <Form className="login-form" onSubmit={handleSubmit}>
                 <Form.Item>
                     {getFieldDecorator('username', {
                         rules: [{required: true, message: 'Vui lòng nhập tên tài khoản'}],
                     })(
-                        <Input
+                        <Input autoFocus
+                               onPressEnter={handleSubmit}
                             prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                             placeholder="Tên tài khoản"
                         />,
@@ -137,6 +138,7 @@ function Index({form}) {
                         rules: [{required: true, message: 'Vui lòng nhập mật khẩu'}],
                     })(
                         <Input
+                            onPressEnter={handleSubmit}
                             prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                             type="password"
                             placeholder="Mật khẩu"
@@ -159,7 +161,7 @@ function Index({form}) {
             closable={false}
             visible={visible}
             maskClosable={false}
-            title="Xác thực 2FA"
+            title="Yêu cầu xác thực 2FA"
             onOk={handleAuth2fa}
             onCancel={() => () => {
                 setVisible(false)
@@ -179,9 +181,9 @@ function Index({form}) {
                 </Button>
             ]}
         >
-            <Input addonBefore="Mã OTP" value={otp} onChange={onChangeOtp}/>
+            <Input autoFocus addonBefore="Mã OTP" value={otp} onChange={onChangeOtp} onPressEnter={handleAuth2fa}/>
             <p style={{margin: '5px', color: 'red'}}>{errorText}</p>
-            <p>Thời gian xác thực hết hạn sau {verifyExpire}</p>
+            <p style={{color: 'blue'}}>Thời gian xác thực hết hạn sau {verifyExpire}</p>
         </Modal>
     </Layout>
 }

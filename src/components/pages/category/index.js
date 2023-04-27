@@ -21,7 +21,7 @@ export default () => {
     <div className='product-page'>
         {/*<BreadCrumb />*/}
         <FilterLayout setResultSearch={setResultSearch} parentId={parentId} />
-            {resultSearch.length === 0 ? <h1 align={'center'}>Không tìm thấy sản phẩm</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} categoryParent={el} />)}
+            {resultSearch.length === 0 ? <h1 align={'center'}>Không tìm thấy sản phẩm</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} hiddenShowMore={true} categoryParent={el} />)}
     </div>
   );
 };
