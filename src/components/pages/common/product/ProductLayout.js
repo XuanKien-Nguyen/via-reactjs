@@ -1,5 +1,5 @@
 import React from 'react';
-import ListLayout from '../../../common/ListLayout';
+import ListLayout from '../list-layout/ListLayout';
 import ProductCard from './ProductCard';
 
 const ProductLayout = ({categoryParent}) => {

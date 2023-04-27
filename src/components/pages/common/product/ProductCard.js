@@ -4,7 +4,7 @@ import { Card, Button, Icon} from 'antd';
 const ProductCard = ({ productDetail }) => {
     return (
         <Card className='product-card' style={{ width: 'auto' }}>
-                <div className='product-image'><img alt="product" src={require('../../../../../assets/img/product-img.png')} /></div>
+                <div className='product-image'><img alt="product" src={require('../../../../assets/img/product-img.png')} /></div>
                 
                 <div className='product-container'>
                     <div className='product-title'><span>{productDetail.name}</span></div>

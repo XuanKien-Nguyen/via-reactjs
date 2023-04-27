@@ -3,6 +3,7 @@
     /*---FILTER---*/
     .filter {
         position: relative;
+        margin-bottom: 32px;
         .filter-layout {
             .ant-collapse-header {
                 padding: 12px 16px;
@@ -44,7 +45,7 @@
             min-height: 26px;
             padding: 2px 10px;
             position: absolute;
-            right: 40px;
+            right: 56px;
             top: 12px;
         }
     }

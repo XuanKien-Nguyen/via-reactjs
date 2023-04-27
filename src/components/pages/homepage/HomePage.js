@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SlideLayout from './components/slider/SlideLayout';
 import FeatureLayout from './components/feature/FeatureLayout';
-import ProductLayout from './components/products/ProductLayout';
+import ProductLayout from '../common/product/ProductLayout';
 import BlogLayout from './components/blog/BlogLayout';
 import QandALayout from './components/QandA/QandALayout';
 

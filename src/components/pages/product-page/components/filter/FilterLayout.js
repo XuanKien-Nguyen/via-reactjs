@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import FilterItem from './FilterItem';
 import {LayoutContext} from "../../../../../contexts";
-import ProductLayout from "../../../homepage/components/products/ProductLayout";
 import { getParentCategoryList, getLocationList, getTypeList, getCategoryList } from '../../../../../services/category/category';
 import { Collapse, Icon, Button } from 'antd';
 const { Panel } = Collapse
@@ -10,12 +9,12 @@ const { Panel } = Collapse
 const DEFAULT_VALUE = {
     category: '',
     productStatus: 'stock',
-    location: 'Việt Nam - Vietnam'
+    location: ''
 }
 
 const SELECT_ALL = {value: '', label: 'Xem tất cả'}
 
-const FilterLayout = () => {
+const FilterLayout = ({setResultSearch}) => {
 
     const {setLoading} = useContext(LayoutContext)
 
@@ -23,7 +22,7 @@ const FilterLayout = () => {
   const [locationFilterList, setLocationFilterList] = useState([]);
   const [typeFilterList, setTypeFilterList] = useState([]);
 
-  const [resultSearch, setResultSearch] = useState([])
+  // const [resultSearch, setResultSearch] = useState([])
 
   const [category, setCategory] = useState()
   const [productStatus, setProductStatus] = useState()
@@ -92,17 +91,11 @@ const FilterLayout = () => {
       <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
             <Panel key={1} className='filter-container' header={<div className='filter-header'><div><Icon type="filter" theme="filled" />&nbsp;Bộ lọc</div></div>}>
               <FilterItem key={1} id={'category'} title={'Chọn danh mục'} options={categoryFilterList} setValue={setCategory} defaultValue={category}/>
-              <FilterItem key={2} title={'Chọn quốc gia'} options={locationFilterList} setValue={setLocation} defaultValue={location}/>
-              <FilterItem key={3} title={'Còn hàng'} options={typeFilterList} setValue={setProductStatus} defaultValue={productStatus}/>
+              <FilterItem key={2} id={'location'} title={'Chọn quốc gia'} options={locationFilterList} setValue={setLocation} defaultValue={location}/>
+              <FilterItem key={3} id={'type'} title={'Còn hàng'} options={typeFilterList} setValue={setProductStatus} defaultValue={productStatus}/>
             </Panel>
           </Collapse>
           <Button className='reset-filter-btn' type="primary" size='small' icon="reload" onClick={resetValue}>Reset</Button>
-
-        <div style={{marginTop: '20px'}}>
-
-            {/*<ProductLayout categoryParent={resultSearch} />*/}
-            {resultSearch.length === 0 ? <h1>Không tìm thấy sản phẩm</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} categoryParent={el} />)}
-        </div>
     </div>
   );
 };
