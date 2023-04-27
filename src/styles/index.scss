@@ -1,3 +1,5 @@
+@import '../styles/product-page.scss';
+
 /*---DEFAULT---*/
 *,
 *::before,
@@ -30,7 +32,81 @@ body {
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    // background-color: rgb(56, 88, 152);
+    
+    display: block;
+
+    -webkit-animation: fadeInFromNone 1.7s ease-out;
+    -moz-animation: fadeInFromNone 1.7s ease-out;
+    -o-animation: fadeInFromNone 1.7s ease-out;
+    animation: fadeInFromNone 1.7s ease-out;
+}
+
+@-webkit-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
 }
 
 /*
@@ -665,5 +741,3 @@ li .item-button {
         }
     }
 }
-
-@import '../styles/product-page.scss';
