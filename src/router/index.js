@@ -5,7 +5,7 @@ import Home from '../components/pages/home';
 import CreateProduct from '../components/pages/create-product';
 import ProductDetails from '../components/pages/product-detail';
 import HomePage from '../components/pages/homepage/HomePage';
-import ProductPage from '../components/pages/product-page';
+import Category from '../components/pages/category';
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
@@ -13,8 +13,6 @@ import {Fragment as blank} from 'react'
 import NotFound from "../components/pages/not-found/404";
 import UserInfo from "../components/pages/user-info";
 import AccessDenied from "../components/pages/access-denied/403";
-
-import Category from '../components/pages/category'
 
 export const dashboardRoutes = [
     {
@@ -98,17 +96,9 @@ export const baseRoutes = [
         layout: user
     },
     {
-        path: '/product-category',
-        component: ProductPage,
-        name: "Product Page",
-        exact: true,
-        noAuth: true,
-        layout: user,
-    },
-    {
-        path: '/category',
+        path: '/categories',
         component: Category,
-        name: "Product Page",
+        name: "Category",
         noAuth: true,
         layout: user,
     },

@@ -11,6 +11,7 @@ const {Header} = Layout;
 function HeaderLayout({history}) {
 
     const user = useSelector(store => store.user)
+    const categories = useSelector(store => store.categories)
 
     const [userInfo, setUserInfo] = useState()
 
@@ -21,7 +22,7 @@ function HeaderLayout({history}) {
     const goto = url => history.push(url)
 
     const onClick = ({ key }) => {
-        console.log(`Click on item ${key}`);
+        window.location.href = `/categories?id=${key}`
     };
 
     const handleLogout = async () => {
@@ -34,14 +35,16 @@ function HeaderLayout({history}) {
         setLoading(false)
     }
 
-    const [categoryList, setCategoryList] = useState([]);
-
     useEffect(() => {
-        getParentCategoryList().then(res => {
-            if (res.status === 200 && res.data) {
-                setCategoryList(res.data.parentCategoryList);
-            }
-        });
+        if (!categories.called) {
+            getParentCategoryList().then(res => {
+                if (res.status === 200 && res.data) {
+                    const lst = res.data?.parentCategoryList?.map(el => ({value: el.id, label: el.name})) || []
+                    dispatch({type: 'SET_CATEGORIES', payload: lst})
+                }
+            });
+        }
+
         const u = localStorage.getItem('user_info')
         if (u) {
             setUserInfo(JSON.parse(u))
@@ -50,7 +53,7 @@ function HeaderLayout({history}) {
 
     const menu = (
         <Menu onClick={onClick}>
-            {categoryList.map((category, i) => <Menu.Item key={category.id}>{category.name}</Menu.Item>)}
+            {categories?.list?.map((category) => <Menu.Item key={category.value}>{category.label}</Menu.Item>)}
         </Menu>
     );
 

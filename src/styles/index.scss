@@ -424,6 +424,11 @@ li .item-button {
             }
 
             a {
+                &:hover {
+                    background-color: #2290FF;
+                    transition: 0.5s;
+                    color: white;
+                }
                 background: #eee;
                 border-radius: 15px;
                 padding: 4px 10px;

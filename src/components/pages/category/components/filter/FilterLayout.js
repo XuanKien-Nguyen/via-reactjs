@@ -3,6 +3,7 @@ import FilterItem from './FilterItem';
 import {LayoutContext} from "../../../../../contexts";
 import { getParentCategoryList, getLocationList, getTypeList, getCategoryList } from '../../../../../services/category/category';
 import { Collapse, Icon, Button } from 'antd';
+import {useDispatch, useSelector} from "react-redux";
 const { Panel } = Collapse
 
 
@@ -14,31 +15,37 @@ const DEFAULT_VALUE = {
 
 const SELECT_ALL = {value: '', label: 'Xem tất cả'}
 
-const FilterLayout = ({setResultSearch}) => {
+let debounce = null
+
+const FilterLayout = ({setResultSearch, parentId}) => {
+
+    const categories = useSelector(store => store.categories)
+
+    const dispatch = useDispatch()
 
     const {setLoading} = useContext(LayoutContext)
 
-  const [categoryFilterList, setCategoryFilterList] = useState([]);
   const [locationFilterList, setLocationFilterList] = useState([]);
   const [typeFilterList, setTypeFilterList] = useState([]);
-
-  // const [resultSearch, setResultSearch] = useState([])
 
   const [category, setCategory] = useState()
   const [productStatus, setProductStatus] = useState()
   const [location, setLocation] = useState()
 
   useEffect(() => {
+      setLoading(true)
       const init = async () => {
-          const respCategory = await getParentCategoryList();
-          if (respCategory.status === 200 && respCategory.data) {
-              const list = [SELECT_ALL]
-              const parentCategoryList = respCategory.data.parentCategoryList;
-              parentCategoryList.map(parentCategory => {
-                  const name = parentCategory.name
-                  list.push({value: parentCategory.id, label: name})
-              })
-              setCategoryFilterList(list);
+          if (!categories.called) {
+              const respCategory = await getParentCategoryList();
+              if (respCategory.status === 200 && respCategory.data) {
+                  const list = []
+                  const parentCategoryList = respCategory.data.parentCategoryList;
+                  parentCategoryList.map(parentCategory => {
+                      const name = parentCategory.name
+                      list.push({value: parentCategory.id, label: name})
+                  })
+                  dispatch({type: 'SET_CATEGORIES', payload: list});
+              }
           }
 
           const respLocation = await getLocationList()
@@ -61,11 +68,15 @@ const FilterLayout = ({setResultSearch}) => {
               setTypeFilterList(list);
           }
       }
-      setLoading(true)
       init()
       resetValue()
-      setLoading(false)
   }, []);
+
+  useEffect(() => {
+      if (parentId) {
+          setCategory(Number.parseInt(parentId))
+      }
+  }, [parentId])
 
   const resetValue = () => {
       setCategory(DEFAULT_VALUE.category)
@@ -75,22 +86,26 @@ const FilterLayout = ({setResultSearch}) => {
 
   useEffect(() => {
       setLoading(true)
-      getCategoryList({
-          parent_id: category || null,
-          type: productStatus || null,
-          location
-      }).then(resp => {
-          if (resp.status === 200) {
-              setResultSearch(resp.data?.categoryListFound || [])
-          }
-      }).finally(() => setLoading(false))
+      clearTimeout(debounce)
+      debounce = setTimeout(() => {
+          getCategoryList({
+              parent_id: category || null,
+              type: productStatus || null,
+              location
+          }).then(resp => {
+              if (resp.status === 200) {
+                  setResultSearch(resp.data?.categoryListFound || [])
+              }
+              setLoading(false)
+          })
+      }, 500)
   }, [category, productStatus, location])
 
   return (
     <div className='filter'>
       <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
             <Panel key={1} className='filter-container' header={<div className='filter-header'><div><Icon type="filter" theme="filled" />&nbsp;Bộ lọc</div></div>}>
-              <FilterItem key={1} id={'category'} title={'Chọn danh mục'} options={categoryFilterList} setValue={setCategory} defaultValue={category}/>
+              <FilterItem key={1} id={'category'} title={'Chọn danh mục'} options={[SELECT_ALL, ...categories?.list] || [SELECT_ALL]} setValue={setCategory} defaultValue={category}/>
               <FilterItem key={2} id={'location'} title={'Chọn quốc gia'} options={locationFilterList} setValue={setLocation} defaultValue={location}/>
               <FilterItem key={3} id={'type'} title={'Còn hàng'} options={typeFilterList} setValue={setProductStatus} defaultValue={productStatus}/>
             </Panel>

@@ -1,7 +1,7 @@
 const URLS = {
   login: '/login',
   dashboardRetrive: '/dashboard-retrive',
-  categoryList: '/category',
+  categoryList: '/category1',
   sizeList: '/size',
   colorList: '/color',
 }
