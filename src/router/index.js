@@ -48,7 +48,7 @@ export const dashboardRoutes = [
     {
         path: '/user-info',
         component: UserInfo,
-        name: "User Info",
+        name: "Thông tin người dùng",
         icon: "team",
         exact: true,
         showAlways: false,
@@ -60,7 +60,7 @@ export const baseRoutes = [
     {
         path: '/login',
         component: Login,
-        name: "Login",
+        name: "Đăng nhập",
         noAuth: true,
         exact: true,
         layout: blank
@@ -68,7 +68,7 @@ export const baseRoutes = [
     {
         path: '/register',
         component: Register,
-        name: "Register",
+        name: "Đăng ký",
         noAuth: true,
         exact: true,
         layout: blank
@@ -76,7 +76,7 @@ export const baseRoutes = [
     {
         path: '/',
         component: HomePage,
-        name: "Home",
+        name: "Trang chủ",
         exact: true,
         noAuth: true,
         layout: user
@@ -84,21 +84,21 @@ export const baseRoutes = [
     {
         path: '/not-found',
         component: NotFound,
-        name: "NotFound",
+        name: "Không tìm thấy trang",
         noAuth: true,
         layout: user
     },
     {
         path: '/access-denied',
         component: AccessDenied,
-        name: "AccessDenied",
+        name: "Từ chối truy cập",
         noAuth: true,
         layout: user
     },
     {
         path: '/categories',
         component: Category,
-        name: "Category",
+        name: "Sản phẩm",
         noAuth: true,
         layout: user,
     },
