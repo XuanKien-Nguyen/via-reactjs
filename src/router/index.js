@@ -14,6 +14,8 @@ import NotFound from "../components/pages/not-found/404";
 import UserInfo from "../components/pages/user-info";
 import AccessDenied from "../components/pages/access-denied/403";
 
+import Category from '../components/pages/category'
+
 export const dashboardRoutes = [
     {
         path: '/admin',
@@ -100,6 +102,13 @@ export const baseRoutes = [
         component: ProductPage,
         name: "Product Page",
         exact: true,
+        noAuth: true,
+        layout: user,
+    },
+    {
+        path: '/category',
+        component: Category,
+        name: "Product Page",
         noAuth: true,
         layout: user,
     },

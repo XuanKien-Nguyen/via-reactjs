@@ -54,7 +54,7 @@ function MainLayout() {
             history.push('/not-found')
             return
         }
-        const isAccess = accessRoutes.some(el => el.path === pathname)
+        const isAccess = accessRoutes.some(el => el.path === pathname.split('?')[0])
         if (!isAccess && window.location.href !== pathname) {
             history.push('/access-denied')
         }

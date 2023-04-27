@@ -16,3 +16,45 @@ body, html {
     display: none;
   }
 }
+
+.d-flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.login-home {
+  border: 1px solid rgb(81,143,233);
+  transition: 1s;
+  padding: 0px 20px;
+  color: rgb(81,143,233);
+  cursor: pointer;
+  width: 140px;
+  text-align: center;
+}
+.login-home:hover {
+  color: white;
+  background-color: rgb(81,143,233);
+  transition: 1s;
+}
+
+.register-home {
+  border: 1px solid #a3a3a3;
+  transition: .5s;
+  padding: 0px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  width: 140px;
+  text-align: center;
+}
+.register-home:hover {
+  color: white;
+  background-color: #a3a3a3;
+  transition: .5s;
+}
