@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import BreadCrumb from './components/breadcrumb/BreadCrumb';
 import FilterLayout from './components/filter/FilterLayout';
 
-const ProductPage = () => { 
+const ProductPage = () => {
 
   return (
     <div className='product-page'>
-        <BreadCrumb />
+        {/*<BreadCrumb />*/}
         <FilterLayout />
-        Product Page
     </div>
   );
 };

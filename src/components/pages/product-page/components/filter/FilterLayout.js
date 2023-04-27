@@ -1,74 +1,108 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import FilterItem from './FilterItem';
-import { getParentCategoryList, getLocationList, getTypeList } from '../../../../../services/category/category';
+import {LayoutContext} from "../../../../../contexts";
+import ProductLayout from "../../../homepage/components/products/ProductLayout";
+import { getParentCategoryList, getLocationList, getTypeList, getCategoryList } from '../../../../../services/category/category';
 import { Collapse, Icon, Button } from 'antd';
 const { Panel } = Collapse
 
+
+const DEFAULT_VALUE = {
+    category: '',
+    productStatus: 'stock',
+    location: 'Việt Nam - Vietnam'
+}
+
+const SELECT_ALL = {value: '', label: 'Xem tất cả'}
+
 const FilterLayout = () => {
+
+    const {setLoading} = useContext(LayoutContext)
 
   const [categoryFilterList, setCategoryFilterList] = useState([]);
   const [locationFilterList, setLocationFilterList] = useState([]);
   const [typeFilterList, setTypeFilterList] = useState([]);
 
-  const resetCategory = useRef(null);
-  const resetLocation = useRef(null);
-  const resetType = useRef(null);
+  const [resultSearch, setResultSearch] = useState([])
+
+  const [category, setCategory] = useState()
+  const [productStatus, setProductStatus] = useState()
+  const [location, setLocation] = useState()
 
   useEffect(() => {
-    getParentCategoryList().then(res => {
-        const tmp = [{value: 'Chọn tất cả', label: 'Chọn tất cả'}];
-        if (res.status === 200 && res.data) {
-          const parentCategoryList = res.data.parentCategoryList;
-          parentCategoryList.map(parentCategory => {
-            tmp.push({value: parentCategory.name, label: parentCategory.name})
-          })
-          setCategoryFilterList(tmp);
-        }
-    });
+      const init = async () => {
+          const respCategory = await getParentCategoryList();
+          if (respCategory.status === 200 && respCategory.data) {
+              const list = [SELECT_ALL]
+              const parentCategoryList = respCategory.data.parentCategoryList;
+              parentCategoryList.map(parentCategory => {
+                  const name = parentCategory.name
+                  list.push({value: parentCategory.id, label: name})
+              })
+              setCategoryFilterList(list);
+          }
+
+          const respLocation = await getLocationList()
+          if (respLocation.status === 200 && respLocation.data) {
+              const list = [SELECT_ALL]
+              const locationList = respLocation.data.nationalFlagList;
+              locationList.map(location => {
+                  list.push({value: location.name, label: location.name})
+              })
+              setLocationFilterList(list);
+          }
+
+          const respProductStatus = await getTypeList()
+          if (respProductStatus.status === 200 && respProductStatus.data) {
+              const list = [SELECT_ALL]
+              const typeList = respProductStatus.data.CATEGORY_TYPE_LIST;
+              typeList.map(type => {
+                  list.push({label: type === 'stock' ? 'Còn hàng' : 'Hết hàng', value: type})
+              })
+              setTypeFilterList(list);
+          }
+      }
+      setLoading(true)
+      init()
+      resetValue()
+      setLoading(false)
   }, []);
 
-  useEffect(() => {
-    getLocationList().then(res => {
-        const tmp = [{value: 'Chọn tất cả', label: 'Chọn tất cả'}];
-        if (res.status === 200 && res.data) {
-          const locationList = res.data.nationalFlagList;
-          locationList.map(location => {
-            tmp.push({value: location.name, label: location.name})
-          })
-          setLocationFilterList(tmp);
-        }
-    });
-  }, []);
-
-  useEffect(() => {
-    getTypeList().then(res => {
-        const tmp = [{value: 'Xem tất cả', label: 'Xem tất cả'}];
-        if (res.status === 200 && res.data) {
-          const typeList = res.data.CATEGORY_TYPE_LIST;
-          typeList.map(type => {
-            tmp.push({value: type === 'stock' ? 'Còn hàng' : 'Hết hàng', label: type === 'stock' ? 'Còn hàng' : 'Hết hàng'})
-          })
-          setTypeFilterList(tmp);
-        }
-    });
-  }, []);
-
-  const resetFilter = () => {
-    resetCategory.current();
-    // resetLocation.current();
-    // resetType.current();
+  const resetValue = () => {
+      setCategory(DEFAULT_VALUE.category)
+      setProductStatus(DEFAULT_VALUE.productStatus)
+      setLocation(DEFAULT_VALUE.location)
   }
+
+  useEffect(() => {
+      setLoading(true)
+      getCategoryList({
+          parent_id: category || null,
+          type: productStatus || null,
+          location
+      }).then(resp => {
+          if (resp.status === 200) {
+              setResultSearch(resp.data?.categoryListFound || [])
+          }
+      }).finally(() => setLoading(false))
+  }, [category, productStatus, location])
 
   return (
     <div className='filter'>
-      <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}}>
-            <Panel className='filter-container' header={<div className='filter-header'><div><Icon type="filter" theme="filled" />&nbsp;Bộ lọc</div></div>}>
-              <FilterItem filterType={'category'} filterTitle={'Chọn danh mục'}  filterList={categoryFilterList} resetValue={resetCategory}/>
-              {/* <FilterItem filterType={'location'} filterTitle={'Chọn quốc gia'} defaultValue={['Chọn tất cả']} filterList={locationFilterList} resetValue={resetLocation}/>
-              <FilterItem filterType={'type'} filterTitle={'Còn hàng'} defaultValue={['Còn hàng']} filterList={typeFilterList} resetValue={resetType}/> */}
+      <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
+            <Panel key={1} className='filter-container' header={<div className='filter-header'><div><Icon type="filter" theme="filled" />&nbsp;Bộ lọc</div></div>}>
+              <FilterItem key={1} id={'category'} title={'Chọn danh mục'} options={categoryFilterList} setValue={setCategory} defaultValue={category}/>
+              <FilterItem key={2} title={'Chọn quốc gia'} options={locationFilterList} setValue={setLocation} defaultValue={location}/>
+              <FilterItem key={3} title={'Còn hàng'} options={typeFilterList} setValue={setProductStatus} defaultValue={productStatus}/>
             </Panel>
           </Collapse>
-          <Button className='reset-filter-btn' type="primary" size='small' icon="reload" onClick={resetFilter}>Reset</Button>
+          <Button className='reset-filter-btn' type="primary" size='small' icon="reload" onClick={resetValue}>Reset</Button>
+
+        <div style={{marginTop: '20px'}}>
+
+            {/*<ProductLayout categoryParent={resultSearch} />*/}
+            {resultSearch.length === 0 ? <h1>Không tìm thấy sản phẩm</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} categoryParent={el} />)}
+        </div>
     </div>
   );
 };

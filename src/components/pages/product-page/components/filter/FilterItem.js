@@ -1,30 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Cascader } from 'antd';
+import React from 'react';
+import { Select } from 'antd';
 
-const FilterItem = ({filterType, filterTitle, filterList, resetValue}) => {
+const { Option } = Select;
+const FilterItem = ({id, title, options, setValue, defaultValue}) => {
 
-    const inputRef = useRef(null); 
-
-    const filterCategory = (inputValue, path) => {
-        return path.some(filterList => filterList.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+    const onChange = (value) => {
+        setValue(value)
     }
-
-    const onChangeFilter = (value, selectedOptions) => {
-        console.log('onchange',value);
-    }
-
-    const resetfilterValue = () => {
-        
-    }
-
-    useEffect(() => {
-        resetValue.current = resetfilterValue
-    }, []);
 
     return (
-        <div className={`filter-${filterType} filter-item`}>
-            <span>{filterTitle}</span>
-            <Cascader className={`filter-${filterType}-box`} ref={inputRef} options={filterList} onChange={onChangeFilter} showSearch={{ filterCategory }} value={filterList}/>
+        <div className={`filter-${id} filter-item`}>
+            <span>{title}</span>
+            <Select
+                showSearch
+                style={{ width: 200 }}
+                placeholder={title}
+                defaultValue={defaultValue}
+                optionFilterProp="children"
+                onChange={onChange}
+                value={defaultValue}
+            >
+                {options.map((el, idx) => <Option key={idx} value={el.value}>{el.label}</Option>)}
+            </Select>
         </div>
     );
 };
