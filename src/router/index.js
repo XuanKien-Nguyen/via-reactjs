@@ -5,6 +5,7 @@ import Home from '../components/pages/home';
 import CreateProduct from '../components/pages/create-product';
 import ProductDetails from '../components/pages/product-detail';
 import HomePage from '../components/pages/homepage/HomePage';
+import ProductPage from '../components/pages/product-page';
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
@@ -93,5 +94,13 @@ export const baseRoutes = [
         name: "AccessDenied",
         noAuth: true,
         layout: user
+    },
+    {
+        path: '/product-category',
+        component: ProductPage,
+        name: "Product Page",
+        exact: true,
+        noAuth: true,
+        layout: user,
     },
 ];

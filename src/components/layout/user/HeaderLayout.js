@@ -17,13 +17,6 @@ function HeaderLayout({ history }) {
         console.log(`Click on item ${key}`);
     };
 
-    useEffect(() => {
-        window.addEventListener('scroll', isSticky);
-        return () => {
-            window.removeEventListener('scroll', isSticky);
-        };
-    });
-
     const handleLogout = async () => {
         await logout();
         dispatch({ type: "LOGOUT" })
@@ -44,14 +37,7 @@ function HeaderLayout({ history }) {
         if (u) {
             setUserInfo(JSON.parse(u))
         }
-
     }, []);
-
-    const isSticky = (e) => {
-        const header = document.querySelector('#header_user');
-        const scrollTop = window.scrollY;
-        scrollTop >= 150 ? header.classList.add('is-sticky') : header.classList.remove('is-sticky');
-    };
 
     const menu = (
         <Menu onClick={onClick}>
@@ -114,8 +100,8 @@ function HeaderLayout({ history }) {
                     <div className="header-main_right">
                         <ul>
                             <li className='item'><div className='signin-signup'>{userInfo ? dropDownUser() : <a><span onClick={() => goto('/login')}>ĐĂNG NHẬP</span> / <span onClick={() => goto('/register')}>ĐĂNG KÝ</span></a>}</div></li>
-                            <li className='header-devider'></li>
-                            <li className='item'><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
+                            <li className='header-devider' style={userInfo?.role !== 'admin' ? {display: 'none'} : {}}></li>
+                            <li className='item' style={userInfo?.role !== 'admin' ? {display: 'none'} : {}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                         </ul>
                     </div>
                 </div>
