@@ -47,7 +47,7 @@ body {
         opacity: 0;
     }
 
-    1% {
+    40% {
         display: block;
         opacity: 0;
     }
@@ -64,7 +64,7 @@ body {
         opacity: 0;
     }
 
-    1% {
+    40% {
         display: block;
         opacity: 0;
     }
@@ -81,7 +81,7 @@ body {
         opacity: 0;
     }
 
-    1% {
+    40% {
         display: block;
         opacity: 0;
     }
@@ -98,7 +98,7 @@ body {
         opacity: 0;
     }
 
-    1% {
+    40% {
         display: block;
         opacity: 0;
     }
@@ -366,7 +366,10 @@ li .item-button {
 
 /*--Slider--*/
 #slider-layout {
-
+    -webkit-animation: fadeInFromNone 1.5s ease-out;
+    -moz-animation: fadeInFromNone 1.5s ease-out;
+    -o-animation: fadeInFromNone 1.5s ease-out;
+    animation: fadeInFromNone 1.5s ease-out;
     .ant-carousel .slick-slide {
         // text-align: center;
         height: 500px;
