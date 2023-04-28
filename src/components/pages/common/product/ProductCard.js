@@ -67,6 +67,7 @@ const ProductCard = ({ productDetail }) => {
                     <div className='product-image'><Icon type="picture" style={{fontSize: '32px', color: 'white'}} onClick={() => {console.log('click');}}/></div>
                         <div className='product-price'>{productDetail?.price?.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})} </div>
                         <div className='product-quantity'>Còn: <span>{productDetail.sum_via}</span></div>
+                        <div className='product-sold'>Đã bán: <span>{productDetail.sold_via}</span></div>
                         <div className='product-more-info'>
                             <div className='info location'><div className='field-title'><Icon type="check" />Quốc gia</div><div className='field-value'>
                                 <img width={'25px'} src={productDetail.location_img_url} alt="" className="src"/></div></div>
