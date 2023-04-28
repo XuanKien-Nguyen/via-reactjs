@@ -21,9 +21,9 @@ const Enable2Fa = ({loading}) => {
     const user = useSelector(store => store.user)
 
     useEffect(() => {
-        if (!user?.is_enable_2fa) {
+        // if (!user?.is_enable_2fa) {
             _getQrImage()
-        }
+        // }
     }, [])
 
     const _getQrImage = () => {
@@ -47,11 +47,21 @@ const Enable2Fa = ({loading}) => {
         if (otp) {
             setVerifying(true)
             verify2fa({otpToken: otp}).then(resp => {
-                const payload = {...user, is_enable_2fa: true}
-                dispatch({type: 'SET_USER_INFO', payload})
-                message.success(resp?.data?.message || 'Bật xác thực 2Fa thành công')
+                // const payload = {...user, is_enable_2fa: true}
+                // dispatch({type: 'SET_USER_INFO', payload})
+                // message.success(resp?.data?.message || 'Thao tác thành công')
                 setVisible(false)
                 // }
+                if (user?.is_enable_2fa === false) {
+                    Modal.success({
+                        content: `Bật xác thực 2fa thành công, vui lòng đăng nhập lại`,
+                        onOk: () => window.location.href = '/login'
+                    });
+                } else {
+                    message.success(resp?.data?.message || 'Thao tác thành công')
+                    const payload = {...user, is_enable_2fa: false}
+                    dispatch({type: 'SET_USER_INFO', payload})
+                }
             }).catch(err => {
                 const response = err.response
                 setErrorText(response?.data?.message || ' Có lỗi xảy ra khi xác thực 2fa: ' + err)
@@ -73,16 +83,18 @@ const Enable2Fa = ({loading}) => {
     return <Fragment>
         <div align={'center'}>
             <div dangerouslySetInnerHTML={{__html: imgSrc}}/>
-            {(imgSrc && user?.is_enable_2fa === false) && <Fragment>
+            {/*{(imgSrc && user?.is_enable_2fa === false) && */}
+            <Fragment>
                     <div>
                         <Button onClick={_getQrImage}>{imgSrc ? 'Refresh' : 'Get QR'}</Button>
                     </div>
                     <Button style={{marginTop: '10px'}} type={'primary'} onClick={() => setVisible(true)}>
-                        Bật xác thực 2FA
+                        {user?.is_enable_2fa === false ? 'Bật xác thực 2fa' : 'Tắt xác thực 2fa'}
                     </Button>
-                </Fragment>}
-            {user?.is_enable_2fa &&
-            <Alert message="Tài khoản này đã được bật xác thực 2fa" type="success" style={{marginTop: '20px'}}/>}
+                </Fragment>
+            {/*}*/}
+            {/*{user?.is_enable_2fa &&*/}
+            {/*<Alert message="Tài khoản này đã được bật xác thực 2fa" type="success" style={{marginTop: '20px'}}/>}*/}
             <Modal
                 closable={false}
                 visible={visible}
@@ -95,7 +107,7 @@ const Enable2Fa = ({loading}) => {
                         Hủy
                     </Button>,
                     <Button key="submit" type="primary" loading={verifying} onClick={handleVerify2Fa}>
-                        Bật xác thực 2fa
+                        {user?.is_enable_2fa === false ? 'Bật xác thực 2fa' : 'Tắt xác thực 2fa'}
                     </Button>
                 ]}
             >

@@ -10,6 +10,12 @@ function LayoutProvider({ children }) {
   const [successNotification, setSuccessNotification] = useState(false);
   const [headerComponent, setHeaderComponent] = useState(null);
 
+  const [update, setForceRender] = useState(0);
+
+  const forceRender = () => {
+    setForceRender(update + 1)
+  }
+
   const initialState = {
     sideBarCollapsed,
     setCollapsed,
@@ -23,6 +29,7 @@ function LayoutProvider({ children }) {
     setSuccessNotification,
     setHeaderComponent,
     headerComponent,
+    forceRender
   };
 
   return (
