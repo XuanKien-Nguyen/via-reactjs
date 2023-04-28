@@ -14,7 +14,7 @@ const UserInfo = () => {
 
     const user = useSelector(store => store.user)
 
-    const [current, setCurrent] = useState("purchase")
+    const [current, setCurrent] = useState("info")
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
