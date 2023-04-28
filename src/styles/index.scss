@@ -438,6 +438,11 @@ li .item-button {
     }
 }
 
+.ant-spin {
+    position: fixed !important;
+    max-height: none !important;
+}
+
 .slick-prev,
 .slick-next {
     height: 30px !important;
