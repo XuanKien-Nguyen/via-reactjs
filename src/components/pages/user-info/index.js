@@ -1,7 +1,8 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import UserDetail from "./components/UserDetail";
 import ChangePassword from "./components/ChangePassword";
 import Enable2Fa from "./components/Enable2Fa";
+import PurchaseList from './components/PurchaseList'
 import '../../../assets/scss/user-info.scss'
 import {useSelector} from "react-redux";
 import {Icon, Menu, Tag} from 'antd';
@@ -13,13 +14,19 @@ const UserInfo = () => {
 
     const user = useSelector(store => store.user)
 
-    const [current, setCurrent] = useState("1")
+    const [current, setCurrent] = useState("purchase")
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [current])
 
     const renderContent = () => {
-        if (current === "2") {
+        if (current === "c-pwd") {
             return <ChangePassword user={user} />
-        } else if (current === "3" && (user?.role === 'admin' || user?.role === 'staff')) {
+        } else if (current === "auth-2fa" && (user?.role === 'admin' || user?.role === 'staff')) {
             return <Enable2Fa loading={setLoading} />
+        } else if (current === 'purchase') {
+            return <PurchaseList loading={setLoading}/>
         }
         return <UserDetail user={user} />
     }
@@ -45,15 +52,19 @@ const UserInfo = () => {
                     mode={'inline'}
                     theme={'light'}
                 >
-                    <Menu.Item key="1">
+                    <Menu.Item key="info">
                         <Icon type="solution" />
                         THÔNG TIN CÁ NHÂN
                     </Menu.Item>
-                    <Menu.Item key="2">
+                    <Menu.Item key="purchase">
+                        <Icon type="shop" />
+                        ĐƠN HÀNG
+                    </Menu.Item>
+                    <Menu.Item key="c-pwd">
                         <Icon type="lock" />
                         ĐỔI MẬT KHẨU
                     </Menu.Item>
-                    { (user?.role === 'admin' || user?.role === 'staff') &&<Menu.Item key="3">
+                    { (user?.role === 'admin' || user?.role === 'staff') &&<Menu.Item key="auth-2fa">
                         <Icon type="qrcode" />
                         BẬT XÁC THỰC 2FA
                     </Menu.Item>}
