@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import FilterItem from './FilterItem';
 import {LayoutContext} from "../../../../../contexts";
-import { getParentCategoryList, getLocationList, getTypeList, getCategoryList } from '../../../../../services/category/category';
+import { getParentCategoryList, getLocationList, getTypeList, getCategoryList, getLocationListStocking } from '../../../../../services/category/category';
 import { Collapse, Icon, Button } from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 const { Panel } = Collapse
@@ -48,12 +48,12 @@ const FilterLayout = ({setResultSearch, parentId}) => {
               }
           }
 
-          const respLocation = await getLocationList()
+          const respLocation = await getLocationListStocking()
           if (respLocation.status === 200 && respLocation.data) {
               const list = [SELECT_ALL]
               const locationList = respLocation.data.nationalFlagList;
               locationList.map(location => {
-                  list.push({value: location.name, label: location.name})
+                  list.push({value: location.name, label: <div style={{display: 'flex', alignItems: 'center'}}><img style={{width: '20px', marginRight: '8px'}} src={location.path} alt="" className="src"/>{location.name}</div>})
               })
               setLocationFilterList(list);
           }

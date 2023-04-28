@@ -13,7 +13,7 @@ const FilterItem = ({id, title, options, setValue, defaultValue}) => {
             <span>{title}</span>
             <Select
                 showSearch
-                style={{ width: 200 }}
+                style={{ width: 300 }}
                 placeholder={title}
                 defaultValue={defaultValue}
                 optionFilterProp="children"

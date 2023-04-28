@@ -26,7 +26,9 @@
                     .ant-collapse-content-box {
                         display: flex;
                         justify-content: space-between;
+                        flex-wrap: wrap;
                         // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                        // gap: 16px;
                         .filter-item {
                             display: flex;
                             flex-direction: column;
@@ -48,5 +50,19 @@
             right: 56px;
             top: 12px;
         }
+    }
+}
+
+.product-image__modal {
+    .ant-modal-close-x {
+        width: 32px !important;
+        height: 32px !important;
+        line-height: 32px !important;
+    }
+
+    .ant-modal-body {
+        img {
+            margin-top: 8px !important;
+        }  
     }
 }

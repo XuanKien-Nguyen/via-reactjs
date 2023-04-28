@@ -10,6 +10,8 @@ const ProductCard = ({ productDetail }) => {
 
     const [visible, setVisible] = useState(false)
 
+    const [showImgProduct, setShowImgProduct] = useState(false)
+
     const [pending, setPending] = useState(false)
 
     const [quantity, setQuantity] = useState(1)
@@ -19,7 +21,7 @@ const ProductCard = ({ productDetail }) => {
     const onChangeQuantity = (e) => {
         const value = e.target.value
         if (value < 1) {
-                setQuantity(1)
+            setQuantity(1)
         }else if (value > productDetail.sum_via) {
             setQuantity(productDetail.sum_via)
         } else {
@@ -59,13 +61,13 @@ const ProductCard = ({ productDetail }) => {
     return (
         <Fragment>
             <Card className='product-card' style={{ width: 'auto' }}>
-            <div className='product-header'>
-                <div className='product-title'><span>{productDetail.name}</span></div>
-            </div>
-            <div className='product-container'>
-                <div className='product-detail'>
-                    <div className='product-image'><Icon type="picture" style={{fontSize: '32px', color: 'white'}} onClick={() => {console.log('click');}}/></div>
-                        <div className='product-price'>{productDetail?.price?.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})} </div>
+                <div className='product-header'>
+                    <div className='product-title'><span>{productDetail.name}</span></div>
+                </div>
+                <div className='product-container'>
+                    <div className='product-detail'>
+                        <div className={`product-image ${!productDetail.image_url ? 'disable' : ''}`}><Icon type="picture" style={{ fontSize: '32px', color: 'white' }} onClick={() => setShowImgProduct(true)} /></div>
+                        <div className='product-price'>{productDetail?.price?.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} </div>
                         <div className='product-quantity'>Còn: <span>{productDetail.sum_via}</span></div>
                         <div className='product-sold'>Đã bán: <span>{productDetail.sold_via}</span></div>
                         <div className='product-more-info'>
@@ -85,7 +87,7 @@ const ProductCard = ({ productDetail }) => {
                         Mua ngay
                     </Button>
                 </div>
-        </Card>
+            </Card>
             <Modal
                 centered
                 closable={false}
@@ -102,26 +104,37 @@ const ProductCard = ({ productDetail }) => {
                     }}>
                         Hủy
                     </Button>,
-                     <Button disabled={productDetail.sum_via === 0} key="submit" type="primary" loading={pending} onClick={handlePurchase}>
+                    <Button disabled={productDetail.sum_via === 0} key="submit" type="primary" loading={pending} onClick={handlePurchase}>
                         Mua ngay
                     </Button>
                 ]}
             >
                 {productDetail.sum_via ?
                 <div style={{fontSize: '15px'}}>
-                <p>Số lượng còn: <span style={{
-                    backgroundColor: 'rgb(82, 196, 26)',
-                    color: 'white',
-                    padding: '6px',
-                    fontWeight: 'bold',
-                    fontSize: '15px',
-                    borderRadius: '25px'
-                }}>{productDetail.sum_via - quantity}</span></p>
-                <Input autoFocus addonBefore="Nhập số lượng mua" max={productDetail.sum_via} min={1} addonAfter={`x${productDetail?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => {}}/>
-                <p style={{marginTop: '10px'}}>Thành tiền: <b style={{color: 'red'}}>{(productDetail?.price * quantity).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</b></p>
-            </div> : <b style={{color: 'red'}}>Sản phẩm đã hết hàng</b>}
-                <b style={{color: 'red'}}>{errorText}</b>
-                </Modal>
+                        <p>Số lượng còn: <span style={{
+                            backgroundColor: 'rgb(82, 196, 26)',
+                            color: 'white',
+                            padding: '6px',
+                            fontWeight: 'bold',
+                            fontSize: '15px',
+                            borderRadius: '25px'
+                        }}>{productDetail.sum_via - quantity}</span></p>
+                        <Input autoFocus addonBefore="Nhập số lượng mua" max={productDetail.sum_via} min={1} addonAfter={`x${productDetail?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
+                        <p style={{ marginTop: '10px' }}>Thành tiền: <b style={{ color: 'red' }}>{(productDetail?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
+                    </div> : <b style={{ color: 'red' }}>Sản phẩm đã hết hàng</b>}
+                <b style={{ color: 'red' }}>{errorText}</b>
+            </Modal>
+            <Modal
+                className='product-image__modal'
+                width={800}
+                centered
+                onOk={() => setShowImgProduct(false)}
+                onCancel={() => setShowImgProduct(false)}
+                visible={showImgProduct}
+                footer={null}
+            >
+                <div><img alt={productDetail.id} src={productDetail.image_url}/></div>
+            </Modal>
         </Fragment>
     );
 };

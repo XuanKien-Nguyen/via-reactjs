@@ -24,3 +24,7 @@ export const getTypeList = () => {
 export const getLocationList = () => {
     return service.get(`${ENDPOINT_CATEGORY}/locaion-list`)
 }
+
+export const getLocationListStocking = () => {
+    return service.get(`${ENDPOINT_CATEGORY}/locaion-list-stocking`)
+}
