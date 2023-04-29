@@ -66,7 +66,6 @@ const ProductCard = ({ productDetail }) => {
                 </div>
                 <div className='product-container'>
                     <div className='product-detail'>
-                        <div className={`product-image ${!productDetail.image_url ? 'disable' : ''}`}><Icon type="picture" style={{ fontSize: '32px', color: 'white' }} onClick={() => setShowImgProduct(true)} /></div>
                         <div className='product-price'>{productDetail?.price?.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} </div>
                         <div className='product-quantity'>Còn: <span>{productDetail.sum_via}</span></div>
                         <div className='product-sold'>Đã bán: <span>{productDetail.sold_via}</span></div>
@@ -82,10 +81,16 @@ const ProductCard = ({ productDetail }) => {
                             <div className='info back-up'><div className='field-title'><Icon type="check" />Hỗ trợ backup</div><div className='field-value'>{productDetail.has_backup === true ? 'Có' : 'Không'}</div></div>
                         </div>
                     </div>
-                    <Button type="primary" style={{fontSize: '13px'}} className='shopping-button' onClick={() => setVisible(true)}>
-                    <Icon type="shopping-cart" style={{fontSize: '16px'}} />
-                        Mua ngay
-                    </Button>
+                    <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
+                        <Button type="primary" style={{fontSize: '13px'}} className='shopping-button' onClick={() => setVisible(true)}>
+                        <Icon type="shopping-cart" style={{fontSize: '16px'}} />
+                            Mua ngay
+                        </Button>
+                        <Button type="primary" style={{fontSize: '13px'}} className='show-image-button' onClick={() => setShowImgProduct(true)} disabled={!productDetail.image_url}>
+                        <Icon type="picture" style={{fontSize: '16px', color: 'white'}} />
+                            Xem ảnh
+                        </Button>
+                    </div>
                 </div>
             </Card>
             <Modal
