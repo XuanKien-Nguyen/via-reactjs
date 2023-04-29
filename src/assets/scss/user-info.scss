@@ -6,6 +6,7 @@
   height: 550px;
   margin-top: 50px;
   margin-bottom: 50px;
+  align-items: inherit;
 
   .ant-tabs-tab {
     font-weight: bold;
@@ -41,7 +42,7 @@
 
   .content {
     width: 75%;
-    padding: 40px;
+    padding: 20px;
 
     #change-password {
       .ant-form {
