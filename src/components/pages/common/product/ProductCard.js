@@ -1,4 +1,6 @@
 import React, {Fragment, useContext, useEffect, useState} from 'react';
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {Card, Button, Icon, Input, Badge, message} from 'antd';
 import Modal from "antd/es/modal";
 import {createPurchase} from "../../../../services/purchases";
@@ -18,6 +20,10 @@ const ProductCard = ({ productDetail }) => {
 
     const [errorText, setErrorText] = useState('')
 
+    const history = useHistory()
+
+    const user = useSelector(store => store.user)
+
     const onChangeQuantity = (e) => {
         const value = e.target.value
         if (value < 1) {
@@ -33,6 +39,16 @@ const ProductCard = ({ productDetail }) => {
         setQuantity(1)
         setErrorText('')
     }, [visible])
+
+    const goto = url => history.push(url)
+
+    const showPurchaseModal = () => {
+        if (!user) {
+            goto('/login');
+            return
+        }
+        setVisible(true)
+    }
 
     const handlePurchase = () => {
         setErrorText('')
@@ -82,7 +98,7 @@ const ProductCard = ({ productDetail }) => {
                         </div>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
-                        <Button type="primary" style={{fontSize: '13px'}} className='shopping-button' onClick={() => setVisible(true)}>
+                        <Button type="primary" style={{fontSize: '13px'}} className='shopping-button' onClick={showPurchaseModal}>
                         <Icon type="shopping-cart" style={{fontSize: '16px'}} />
                             Mua ngay
                         </Button>

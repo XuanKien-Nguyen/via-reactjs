@@ -6,7 +6,7 @@ const SlideLayout = () => {
   };
   return (
     <section id="slider-layout">
-      <Carousel afterChange={onChange} style={{ marginBottom: '30px' }} dots arrows>
+      <Carousel afterChange={onChange} style={{ marginBottom: '30px' }} dots arrows autoplay>
         <div className='slide-item'>
           <div className='slide-text'>
               <div>
