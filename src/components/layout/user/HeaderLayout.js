@@ -1,16 +1,22 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
-import { Dropdown, Icon, Input, Layout, Menu, Tabs } from 'antd';
+import { Dropdown, Icon, Input, Layout, Menu, Tabs, Select } from 'antd';
 import { logout } from "../../../services/user";
 import { getParentCategoryList } from '../../../services/category/category';
 import { useDispatch, useSelector } from "react-redux";
 import { LayoutContext } from "../../../contexts";
 
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../translation/i18n';
+
 const { Search } = Input;
 const { Header } = Layout;
 const { TabPane } = Tabs;
 const { SubMenu } = Menu;
+const { Option } = Select;
 
 function HeaderLayout({ history }) {
+
+    const { t } = useTranslation()
 
     const user = useSelector(store => store.user)
     const categories = useSelector(store => store.categories)
@@ -78,12 +84,15 @@ function HeaderLayout({ history }) {
                 {userInfo.username?.toUpperCase()} <Icon type="down" />
             </a>
         </Dropdown>
-
     }
 
     const toggleMenu = () => {
         const menu = document.getElementById('header__mobile');
         menu.classList.toggle("opened");
+    }
+
+    const changeLanguage = (value) => {
+        i18n.changeLanguage(value);
     }
 
     return (
@@ -92,18 +101,18 @@ function HeaderLayout({ history }) {
                 <div className='header-top_container'>
                     <div className="header-top_left"><Search
                         type='search'
-                        placeholder="Bạn đang tìm gì?"
+                        placeholder={t('common.placeholder-search')}
                         onSearch={value => console.log(value)}
                         style={{ width: 156, color: 'white' }}
                     /></div>
                     <div className='header-top_right'>
                         <ul>
-                            <li className='item'><a href='#'>Tất cả sản phẩm</a></li>
-                            <li className='item'><a href='#'>Hướng dẫn</a></li>
-                            <li className='item'><a href='#'>Nạp tiền</a></li>
-                            <li className='item'><a href='#'>Thủ thuật Facebook</a></li>
-                            <li className='item'><a href='#'>Về chúng tôi</a></li>
-                            <li className='item'><a href='#'>Liên hệ</a></li>
+                            <li className='item'><a href='#'>{t('common.all-product')}</a></li>
+                            <li className='item'><a href='#'>{t('common.guide')}</a></li>
+                            <li className='item'><a href='#'>{t('common.recharge')}</a></li>
+                            <li className='item'><a href='#'>{t('common.tricks')}</a></li>
+                            <li className='item'><a href='#'>{t('common.about-us')}</a></li>
+                            <li className='item'><a href='#'>{t('common.contact')}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -118,16 +127,22 @@ function HeaderLayout({ history }) {
                     </div>
                     <div className="header-main_left">
                         <ul>
-                            <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()}>DANH MỤC<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>
-                            <li className='item'><a href='#'>BÀI VIẾT</a></li>
+                            <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()} className='uppercase'>{t('common.category')}<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>
+                            <li className='item'><a href='#' className='uppercase'>{t('common.blog')}</a></li>
                         </ul>
                     </div>
                     <div className="header-main_right">
                         <ul>
+                            <li className='item'>
+                                <Select defaultValue="vi" style={{ width: 110 }} onChange={changeLanguage}>
+                                    <Option value="vi">Việt Nam</Option>
+                                    <Option value="en">English</Option>
+                                </Select>
+                            </li>
                             <li style={{
                                 height: '64px',
                                 display: 'flex',
-                            }} className='item'><div className='signin-signup d-flex justify-content-center align-items-center' style={{ height: '100%' }}>{userInfo ? dropDownUser() : <Fragment><div className={'login-home'} onClick={() => goto('/login')}>ĐĂNG NHẬP</div><div className={'register-home'} onClick={() => goto('/register')}>ĐĂNG KÝ</div></Fragment>}</div></li>
+                            }} className='item'><div className='signin-signup d-flex justify-content-center align-items-center' style={{ height: '100%' }}>{userInfo ? dropDownUser() : <Fragment><div className={'login-home'} onClick={() => goto('/login')}>{t('common.sign-in')}</div><div className={'register-home'} onClick={() => goto('/register')}>{t('common.sign-up')}</div></Fragment>}</div></li>
                             <li className='header-devider' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}}></li>
                             <li className='item' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                         </ul>
@@ -144,22 +159,22 @@ function HeaderLayout({ history }) {
                                 mode="inline"
                             >
                                 <Menu.Item key="all-category" className='sub-menu__item'>
-                                    <span>Tất cả sản phẩm</span>
+                                    <span className='uppercase'>{t('common.all-product')}</span>
                                 </Menu.Item>
                                 <Menu.Item key="guide" className='sub-menu__item'>
-                                    <span>Hướng dẫn</span>
+                                    <span className='uppercase'>{t('common.guide')}</span>
                                 </Menu.Item>
                                 <Menu.Item key="recharge" className='sub-menu__item'>
-                                    <span>Nạp tiền</span>
+                                    <span className='uppercase'>{t('common.recharge')}</span>
                                 </Menu.Item>
                                 <Menu.Item key="facebook" className='sub-menu__item'>
-                                    <span>Thủ thuật Facebook</span>
+                                    <span className='uppercase'>{t('common.tricks')}</span>
                                 </Menu.Item>
                                 <Menu.Item key="about-us" className='sub-menu__item'>
-                                    <span>Về chúng tôi</span>
+                                    <span className='uppercase'>{t('common.about-us')}</span>
                                 </Menu.Item>
                                 <Menu.Item key="contact" className='sub-menu__item'>
-                                    <span>Liên hệ</span>
+                                    <span className='uppercase'>{t('common.contact')}</span>
                                 </Menu.Item>
                             </Menu>
                         </TabPane>
@@ -171,8 +186,8 @@ function HeaderLayout({ history }) {
                                 <SubMenu
                                     key="category"
                                     title={
-                                        <span>
-                                            DANH MỤC
+                                        <span className='uppercase'>
+                                            {t('common.category')}
                                         </span>
                                     }
                                     className='sub-menu-category'
@@ -181,7 +196,7 @@ function HeaderLayout({ history }) {
                                     {categories?.list?.map((category) => <Menu.Item key={category.value}>{category.label}</Menu.Item>)}
                                 </SubMenu>
                                 <Menu.Item key="blog" className='sub-menu-blog'>
-                                    <span>BÀI VIẾT</span>
+                                    <span className='uppercase'>{t('common.blog')}</span>
                                 </Menu.Item>
                             </Menu>
                         </TabPane>

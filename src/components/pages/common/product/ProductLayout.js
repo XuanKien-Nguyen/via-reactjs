@@ -5,7 +5,7 @@ import ProductCard from './ProductCard';
 const ProductLayout = ({categoryParent, hiddenShowMore = false}) => {
     return (
     <section id='product-layout'>
-      <ListLayout titleCategory={categoryParent.name} hiddenShowMore={hiddenShowMore} contentSeeMore={'Xem thêm'} categoryId={categoryParent.id} cardComponent={<ProductCard />}>
+      <ListLayout titleCategory={categoryParent.name} hiddenShowMore={hiddenShowMore} contentSeeMore={'Xem thêm'} categoryId={categoryParent.id}>
         {categoryParent.childCategoryList.map(product => <ProductCard key={product.id} productDetail={product}/>)}
       </ListLayout>
     </section>

@@ -1,0 +1,28 @@
+{
+    "common" : {
+        "placeholder-search": "Bạn đang tìm gì?",
+        "all-product": "Tất cả sản phẩm",
+        "guide": "Hướng dẫn ",
+        "recharge": "Nạp tiền",
+        "tricks": "Thủ thuật Facebook",
+        "about-us": "Về chúng tôi",
+        "contact": "Liên hệ",
+        "category": "Danh mục",
+        "blog": "Bài viết",
+        "sign-in": "Đăng nhập",
+        "sign-up": "Đăng ký" 
+    },
+    "category": {
+        "button-view-more": "Xem thêm"
+    },
+    "product": {
+        "button-buy": "Mua ngay",
+        "button-image": "Xem ảnh"
+    },
+    "filter": {
+        "title": "Bộ lọc",
+        "category": "Chọn danh mục",
+        "location": "Chọn khu vực",
+        "status": "Còn hàng"
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "common" : {
+        "placeholder-search": "What are you finding?",
+        "all-product": "All product",
+        "guide": "Guide",
+        "recharge": "Recharge",
+        "tricks": "Facebook tricks",
+        "about-us": "About Us",
+        "contact": "Contact",
+        "category": "Category",
+        "blog": "Blog",
+        "sign-in": "Sign In",
+        "sign-up": "Sign Up" 
+    },
+    "category": {
+        "button-view-more": "View more"
+    },
+    "product": {
+        "button-buy": "Buy Now",
+        "button-image": "View Image"
+    },
+    "filter": {
+        "title": "Filter",
+        "category": "Category",
+        "location": "Location",
+        "status": "Status"
+    }
+}

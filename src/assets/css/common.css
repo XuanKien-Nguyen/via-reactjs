@@ -29,6 +29,18 @@ body, html {
   align-items: center;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
 .login-home {
   border: 1px solid rgb(81,143,233);
   transition: 1s;
