@@ -69,13 +69,13 @@ function HeaderLayout({ history }) {
         const menu = (
             <Menu>
                 <Menu.Item>
-                    <a onClick={() => goto('/user-info')}>Cá nhân</a>
+                    <a onClick={() => goto('/user-info')}>{t('common.profile')}</a>
                 </Menu.Item>
                 {(user?.role === 'admin' || user?.role === 'staff') && <Menu.Item >
-                    <a onClick={() => goto('/admin')}>Quản trị dành cho admin</a>
+                    <a onClick={() => goto('/admin')}>{t('common.admin')}</a>
                 </Menu.Item>}
                 <Menu.Item>
-                    <a onClick={handleLogout}>Thoát</a>
+                    <a onClick={handleLogout}>{t('common.sign-out')}</a>
                 </Menu.Item>
             </Menu>
         )
@@ -142,7 +142,7 @@ function HeaderLayout({ history }) {
                             <li style={{
                                 height: '64px',
                                 display: 'flex',
-                            }} className='item'><div className='signin-signup d-flex justify-content-center align-items-center' style={{ height: '100%' }}>{userInfo ? dropDownUser() : <Fragment><div className={'login-home'} onClick={() => goto('/login')}>{t('common.sign-in')}</div><div className={'register-home'} onClick={() => goto('/register')}>{t('common.sign-up')}</div></Fragment>}</div></li>
+                            }} className='item'><div className='signin-signup d-flex justify-content-center align-items-center' style={{ height: '100%' }}>{userInfo ? dropDownUser() : <Fragment><div className={'login-home uppercase'} onClick={() => goto('/login')}>{t('common.sign-in')}</div><div className={'register-home uppercase'} onClick={() => goto('/register')}>{t('common.sign-up')}</div></Fragment>}</div></li>
                             <li className='header-devider' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}}></li>
                             <li className='item' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                         </ul>

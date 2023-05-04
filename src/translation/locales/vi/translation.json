@@ -10,19 +10,41 @@
         "category": "Danh mục",
         "blog": "Bài viết",
         "sign-in": "Đăng nhập",
-        "sign-up": "Đăng ký" 
+        "sign-up": "Đăng ký",
+        "profile": "Cá nhân",
+        "admin": "Quản trị dành cho Admin",
+        "sign-out": "Thoát",
+        "yes": "Có",
+        "no": "Không"
     },
     "category": {
-        "button-view-more": "Xem thêm"
+        "view-more": "Xem thêm"
     },
     "product": {
+        "remain": "Còn",
+        "sold": "Đã bán",
         "button-buy": "Mua ngay",
-        "button-image": "Xem ảnh"
+        "button-image": "Xem ảnh",
+        "location": "Quốc gia",
+        "create-time": "Ngày lập",
+        "2fa" : "Xác thực 2FA",
+        "friend": "Bạn bè",
+        "checkpoint-email": "Checkpoint Email",
+        "email": "Email",
+        "change": "Đổi thông tin",
+        "back-up": "Hỗ trợ Backup"
     },
     "filter": {
         "title": "Bộ lọc",
         "category": "Chọn danh mục",
         "location": "Chọn khu vực",
         "status": "Còn hàng"
+    },
+    "access-denied": {
+        "title": "TRUY CẬP BỊ TỪ CHỐI",
+        "content": "Bạn không có quyền truy cập trang này"
+    },
+    "not-found": {
+        "title": "TRANG NÀY KHÔNG TỒN TẠI"
     }
 }

@@ -10,19 +10,41 @@
         "category": "Category",
         "blog": "Blog",
         "sign-in": "Sign In",
-        "sign-up": "Sign Up" 
+        "sign-up": "Sign Up",
+        "profile": "Profile",
+        "admin": "Administration",
+        "sign-out": "Sign Out",
+        "yes": "Yes",
+        "no": "No"
     },
     "category": {
-        "button-view-more": "View more"
+        "view-more": "More"
     },
     "product": {
+        "remain": "Remain",
+        "sold": "Sold",
         "button-buy": "Buy Now",
-        "button-image": "View Image"
+        "button-image": "View Image",
+        "location": "Location",
+        "create-time": "Date created",
+        "2fa" : "2FA authentication",
+        "friend": "Friend",
+        "checkpoint-email": "Checkpoint Email",
+        "email": "Email",
+        "change": "Change",
+        "back-up": "Support Backup"
     },
     "filter": {
         "title": "Filter",
         "category": "Category",
         "location": "Location",
         "status": "Status"
+    },
+    "access-denied": {
+        "title": "ACCESS DENIED",
+        "content": "You don't have permission to access"
+    },
+    "not-found": {
+        "title": "PAGE NOT FOUND"
     }
 }
