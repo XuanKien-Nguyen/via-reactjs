@@ -55,9 +55,11 @@ client.interceptors.response.use(
                         resolve(client(originalRequest));
                     })
                     .catch(err => {
-                        // message.error('refresh token error')
                         localStorage.removeItem('is_logged')
                         localStorage.removeItem('user_info')
+                        if (err.response?.data?.error === 'refresh_token must be provide') {
+                            window.location.href = '/login'
+                        }
                         processQueue(err);
                         reject(err);
                     })
@@ -65,6 +67,8 @@ client.interceptors.response.use(
                         isRefreshing = false;
                     });
             });
+        } else if (err.response?.data?.error === 'refresh_token must be provide') {
+            window.location.href = '/login'
         }
         return Promise.reject(err);
     }

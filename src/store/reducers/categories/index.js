@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
                 called: true
             }
         case "LOGOUT":
-            return null
+            return initialState
         default:
             return state
     }

@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import {Button, Icon, Menu, Tag} from 'antd';
 import {LayoutContext} from "../../../contexts";
 import {useHistory, useLocation} from "react-router-dom";
+import {convertCurrencyVN} from "../../../utils/helpers";
 
 const UserInfo = () => {
 
@@ -70,6 +71,7 @@ const UserInfo = () => {
                 <img src={require('../../../assets/img/avatar.png')} alt="" className="src"/>
                 <p>{`@${user?.username}`}<i className="id_text">{`#${user?.id}`}</i></p>
                 <Tag color={user?.role === 'admin' ? 'red' : 'blue'}>{user?.role}</Tag>
+                <span style={{marginTop: '10px'}}>Số dư: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available + user?.bonus || 0)}</span></span>
             </div>
 
             <div className="information">

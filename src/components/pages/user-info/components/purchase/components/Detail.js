@@ -57,12 +57,14 @@ export default ({id, loading}) => {
         {
             title: 'SẢN PHẨM',
             dataIndex: 'name',
-            width: '30%'
+            width: '30%',
+            key: 'name'
         },
         {
             title: 'TÀI KHOẢN - MÃ',
             dataIndex: 'account',
-            width: '70%'
+            width: '70%',
+            key: 'account'
         }
     ]
 
@@ -147,12 +149,10 @@ export default ({id, loading}) => {
     useEffect(() => {
         loading(true)
         purchaseList({id}).then(resp => {
-            console.log('purchaseList', resp);
             if (resp.status === 200) {
                 const data = resp.data
                 if (data && data.newPurchaseList) {
                     setProductDetail(data.newPurchaseList[0])
-                    console.log(data.newPurchaseList[0]);
                 }
             }
         }).catch(err => message.error(err)).finally(() => loading(false))
@@ -161,7 +161,6 @@ export default ({id, loading}) => {
     const beforeOpenModal = () => {
         loading(true)
         getChildCategoryList({id: productDetail.category_id}).then(resp => {
-            console.log(resp);
             const data = resp.data?.childCategoryList || []
             if (resp.status === 200 && data.length > 0) {
                 setProduct(resp.data.childCategoryList[0])
@@ -232,7 +231,7 @@ export default ({id, loading}) => {
             <b>Đơn hàng <span style={{color: 'red'}}>#{productDetail.id}</span> đã được đặt lúc {productDetail.created_time} và hiện tại là
                 <Tag color={productDetail.status === 'valid' ? '#87d068' : '#f50'}>{productDetail.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'}</Tag>
             </b>
-            <Table dataSource={dataSource} columns={columns} rowKey="title" pagination={false} />
+            <Table rowKey="title" dataSource={dataSource} columns={columns} pagination={false} />
             <p align={'center'} style={{marginTop: '10px'}}>
                 <Button type='primary' className={'m-r-5'} onClick={beforeOpenModal}>Đặt lại hàng</Button>
                 <Button type='danger' onClick={() => handleDownload(productDetail.id, productDetail.category_name)}>Tải xuống</Button>
@@ -241,7 +240,7 @@ export default ({id, loading}) => {
             <br/>
             <Tag color="geekblue" style={{margin: '10px 0px'}}>Định dạng: <span style={{color: 'red'}}>{productDetail.category_format}</span></Tag>
             {/*<b>Định dạng: </b>*/}
-            <Table bordered dataSource={getDsSP()} columns={columnSP} pagination={false}/>
+            <Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} />
             {product && buy()}
         </Fragment> : <p>Không tìm thấy chi tiết đơn hàng</p>}
     </div>
