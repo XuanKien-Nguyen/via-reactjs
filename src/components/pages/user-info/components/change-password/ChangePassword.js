@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from "react";
 import {Button, Form, Icon, Input, notification} from "antd";
 import Modal from "antd/es/modal";
-import {changePassword} from "../../../../services/user";
+import {changePassword} from "../../../../../services/user";
 
 const ChangePassword = (props) => {
 

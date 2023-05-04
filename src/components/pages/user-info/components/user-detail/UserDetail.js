@@ -1,7 +1,7 @@
 import React from "react";
 
 import {Form, Input, Button} from 'antd';
-import {getUserInfo} from "../../../../services/user";
+import {getUserInfo} from "../../../../../services/user";
 
 const UserDetail = ({form, user}) => {
 
