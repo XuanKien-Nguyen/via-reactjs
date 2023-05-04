@@ -134,7 +134,7 @@ function HeaderLayout({ history }) {
                     <div className="header-main_right">
                         <ul>
                             <li className='item'>
-                                <Select defaultValue="vi" style={{ width: 110 }} onChange={changeLanguage}>
+                                <Select defaultValue={i18n?.language || 'vi'} style={{ width: 110 }} onChange={changeLanguage}>
                                     <Option value="vi">Việt Nam</Option>
                                     <Option value="en">English</Option>
                                 </Select>
@@ -153,7 +153,22 @@ function HeaderLayout({ history }) {
             <div id="header__mobile" className='nav-bar__moblie'>
                 <div className='nav-bar-container'>
                     <Tabs defaultActiveKey="1">
-                        <TabPane tab="MENU" key="1">
+                        {(userInfo && window.location.pathname === '/user-info') ? <TabPane tab={userInfo.username?.toUpperCase()} key="1">
+                            <Menu
+                                style={{ width: '100%' }}
+                                mode="inline"
+                            >
+                                <Menu.Item key="profile" className='sub-menu__item'>
+                                    <span className='uppercase' onClick={() => goto('/user-info')}>{t('common.profile')}</span>
+                                </Menu.Item >
+                                {(user?.role === 'admin' || user?.role === 'staff') && <Menu.Item key="admin" className='sub-menu__item'>
+                                    <span className='uppercase' onClick={() => goto('/admin')}>{t('common.admin')}</span>
+                                </Menu.Item>}
+                                <Menu.Item key="signout" className='sub-menu__item'>
+                                    <span className='uppercase' onClick={handleLogout}>{t('common.sign-out')}</span>
+                                </Menu.Item>
+                            </Menu>
+                        </TabPane> : <TabPane tab="MENU" key="1">
                             <Menu
                                 style={{ width: '100%' }}
                                 mode="inline"
@@ -177,8 +192,8 @@ function HeaderLayout({ history }) {
                                     <span className='uppercase'>{t('common.contact')}</span>
                                 </Menu.Item>
                             </Menu>
-                        </TabPane>
-                        <TabPane tab="SẢN PHẨM" key="2">
+                        </TabPane>}      
+                        <TabPane tab="VIA" key="2">
                             <Menu
                                 style={{ width: '100%' }}
                                 mode="inline"
