@@ -2,26 +2,36 @@ import React, {useContext, useEffect, useState} from "react";
 import UserDetail from "./components/UserDetail";
 import ChangePassword from "./components/ChangePassword";
 import Enable2Fa from "./components/Enable2Fa";
-import PurchaseList from './components/PurchaseList'
+import PurchaseList from './components/Purchase'
 import '../../../assets/scss/user-info.scss'
 import {useSelector} from "react-redux";
 import {Icon, Menu, Tag} from 'antd';
 import {LayoutContext} from "../../../contexts";
+import {useHistory} from "react-router-dom";
+
+const query = new URLSearchParams(window.location.search);
+let current_menu = query.get('menu') || 'info'
 
 const UserInfo = () => {
+
+    const history = useHistory()
 
     const {setLoading} = useContext(LayoutContext)
 
     const user = useSelector(store => store.user)
 
-    const [current, setCurrent] = useState("info")
+    const [current, setCurrent] = useState(current_menu)
+
+    useEffect(() => {
+        history.push({search: `?menu=${current}`})
+    }, [])
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [current])
 
     const renderContent = () => {
-        if (current === "c-pwd") {
+        if (current === "change-password") {
             return <ChangePassword user={user} />
         } else if (current === "auth-2fa" && (user?.role === 'admin' || user?.role === 'staff')) {
             return <Enable2Fa loading={setLoading} />
@@ -32,6 +42,7 @@ const UserInfo = () => {
     }
 
     const changeMenu = e => {
+        history.push({search: `?menu=${e.key}`})
         setCurrent(e.key)
     }
 
