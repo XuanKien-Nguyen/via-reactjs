@@ -1,18 +1,18 @@
 import React, {useContext, useEffect, useState} from "react";
-import UserDetail from "./components/UserDetail";
-import ChangePassword from "./components/ChangePassword";
-import Enable2Fa from "./components/Enable2Fa";
-import PurchaseList from './components/Purchase'
+import UserDetail from "./components/user-detail/UserDetail";
+import ChangePassword from "./components/change-password/ChangePassword";
+import Enable2Fa from "./components/enable2fa/Enable2Fa";
+import PurchaseList from './components/purchase/Purchase'
+import PurchaseDetail from './components/purchase/components/Detail'
 import '../../../assets/scss/user-info.scss'
 import {useSelector} from "react-redux";
-import {Icon, Menu, Tag} from 'antd';
+import {Button, Icon, Menu, Tag} from 'antd';
 import {LayoutContext} from "../../../contexts";
-import {useHistory} from "react-router-dom";
-
-const query = new URLSearchParams(window.location.search);
-let current_menu = query.get('menu') || 'info'
+import {useHistory, useLocation} from "react-router-dom";
 
 const UserInfo = () => {
+
+    const query = new URLSearchParams(window.location.search);
 
     const history = useHistory()
 
@@ -20,15 +20,29 @@ const UserInfo = () => {
 
     const user = useSelector(store => store.user)
 
-    const [current, setCurrent] = useState(current_menu)
+    const [current, setCurrent] = useState(query.get('menu') || 'info')
 
-    useEffect(() => {
-        history.push({search: `?menu=${current}`})
-    }, [])
+    const location = useLocation()
+
+    const [purchaseDetailId, setPurchaseDetailId] = useState(null)
+
+    // useEffect(() => {
+    //     history.push({search: `?menu=${current}`})
+    // }, [])
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [current])
+
+    useEffect(() => {
+        const menu = query.get('menu')
+        const id = query.get('id')
+        if (menu === 'purchase' && id) {
+            setPurchaseDetailId(id)
+        } else {
+            setPurchaseDetailId(null)
+        }
+    }, [location])
 
     const renderContent = () => {
         if (current === "change-password") {
@@ -36,6 +50,9 @@ const UserInfo = () => {
         } else if (current === "auth-2fa" && (user?.role === 'admin' || user?.role === 'staff')) {
             return <Enable2Fa loading={setLoading} />
         } else if (current === 'purchase') {
+            if (purchaseDetailId) {
+                return <PurchaseDetail id={purchaseDetailId} loading={setLoading}/>
+            }
             return <PurchaseList loading={setLoading}/>
         }
         return <UserDetail user={user} />
@@ -71,7 +88,7 @@ const UserInfo = () => {
                         <Icon type="shop" />
                         ĐƠN HÀNG
                     </Menu.Item>
-                    <Menu.Item key="c-pwd">
+                    <Menu.Item key="change-password">
                         <Icon type="lock" />
                         ĐỔI MẬT KHẨU
                     </Menu.Item>
@@ -85,7 +102,6 @@ const UserInfo = () => {
         <div className="content">
             {renderContent()}
         </div>
-
     </div>
 }
 

@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {getQrImage, verify2fa} from "../../../../services/user";
+import {getQrImage, verify2fa} from "../../../../../services/user";
 import {Button, message} from "antd";
 import Modal from "antd/es/modal";
 import Input from "antd/es/input";
