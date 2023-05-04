@@ -82,7 +82,7 @@ export default ({loading}) => {
         downloadPurchase(id).then(resp => {
             const {data} = resp
             message.success(data.message)
-            const content = data.purchaseDownloadList.join('\n');
+            const content = data.purchaseDownloadList.join('\r\n');
             textToFile(categoryName, content)
         }).catch(err => {
             message.error(err.response?.data?.message || 'Có lỗi xảy ra khi tải xuống')

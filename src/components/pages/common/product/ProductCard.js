@@ -50,6 +50,20 @@ const ProductCard = ({ productDetail }) => {
         setVisible(true)
     }
 
+    const buySuccess = (purchaseId) => {
+        return Modal.confirm({
+            title: 'Mua hàng thành công',
+            okText: 'Xem chi tiết',
+            cancelText: 'Đóng',
+            icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
+            centered: true,
+            onOk() {
+                window.location.href = '/user-info?menu=purchase&id=' + purchaseId
+            },
+            onCancel() {},
+        });
+    }
+
     const handlePurchase = () => {
         setErrorText('')
         if (quantity < 1 && quantity > productDetail.sum_via) {
@@ -64,6 +78,7 @@ const ProductCard = ({ productDetail }) => {
             if (resp.status === 200) {
                 message.success(resp?.data?.message || 'Mua hàng thành công')
                 productDetail.sum_via-=quantity
+                buySuccess(resp.data.purchaseId)
                 forceRender()
             }
             setVisible(false)
@@ -139,7 +154,7 @@ const ProductCard = ({ productDetail }) => {
                             fontWeight: 'bold',
                             fontSize: '15px',
                             borderRadius: '25px'
-                        }}>{productDetail.sum_via - quantity}</span></p>
+                        }}>{productDetail.sum_via}</span></p>
                         <Input autoFocus addonBefore="Nhập số lượng mua" max={productDetail.sum_via} min={1} addonAfter={`x${productDetail?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
                         <p style={{ marginTop: '10px' }}>Thành tiền: <b style={{ color: 'red' }}>{(productDetail?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
                     </div> : <b style={{ color: 'red' }}>Sản phẩm đã hết hàng</b>}

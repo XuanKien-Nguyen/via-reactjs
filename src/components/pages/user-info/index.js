@@ -4,6 +4,7 @@ import ChangePassword from "./components/change-password/ChangePassword";
 import Enable2Fa from "./components/enable2fa/Enable2Fa";
 import PurchaseList from './components/purchase/Purchase'
 import PurchaseDetail from './components/purchase/components/Detail'
+import Footer from './components/footer'
 import '../../../assets/scss/user-info.scss'
 import {useSelector} from "react-redux";
 import {Button, Icon, Menu, Tag} from 'antd';
@@ -101,6 +102,7 @@ const UserInfo = () => {
         </div>
         <div className="content">
             {renderContent()}
+            <Footer />
         </div>
     </div>
 }

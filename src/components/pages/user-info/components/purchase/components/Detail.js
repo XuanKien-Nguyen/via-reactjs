@@ -1,11 +1,16 @@
 import React, {useEffect, useState, Fragment, useContext} from "react";
 import {createPurchase, downloadPurchase, purchaseDetail, purchaseList} from "../../../../../../services/purchases";
-import {message, Badge, Table, Button, Tag, Input} from "antd";
+import {getChildCategoryList} from "../../../../../../services/category/category";
+import {message, Badge, Table, Button, Tag, Input, Icon} from "antd";
 
 import {convertCurrencyVN, textToFile} from "../../../../../../utils/helpers";
 import {useHistory} from "react-router-dom";
 import Modal from "antd/es/modal";
+
 import {LayoutContext} from "../../../../../../contexts";
+
+const { confirm } = Modal;
+
 
 export default ({id, loading}) => {
 
@@ -22,6 +27,8 @@ export default ({id, loading}) => {
     const [quantity, setQuantity] = useState(1)
 
     const [errorText, setErrorText] = useState('')
+
+    const [product, setProduct] = useState(null)
 
     const columns = [
         {
@@ -104,35 +111,33 @@ export default ({id, loading}) => {
 
     const handlePurchase = () => {
         setErrorText('')
-        if (quantity < 1 && quantity > productDetail.sum_via) {
+        if (quantity < 1 && quantity > product.sum_via) {
             message.error("Số lượng mua không hợp lệ")
             return
         }
         setPending(true)
         createPurchase({
-            category_id: productDetail.id,
+            category_id: product.id,
             amount: quantity
         }).then(resp => {
             if (resp.status === 200) {
                 message.success(resp?.data?.message || 'Mua hàng thành công')
-                productDetail.sum_via-=quantity
+                product.sum_via-=quantity
                 forceRender()
+                buySuccess(resp.data.purchaseId)
             }
             setVisible(false)
         }).catch(err => {
-            // console.log(err.response)
-            // message.error( err?.response?.data?.message)
             setErrorText(err?.response?.data?.message)
         }).finally(() => setPending(false))
     }
-
 
     const handleDownload = (id, categoryName) => {
         loading(true)
         downloadPurchase(id).then(resp => {
             const {data} = resp
             message.success(data.message)
-            const content = data.purchaseDownloadList.join('\n');
+            const content = data.purchaseDownloadList.join('\r\n');
             textToFile(categoryName, content)
         }).catch(err => {
             message.error(err.response?.data?.message || 'Có lỗi xảy ra khi tải xuống')
@@ -142,6 +147,7 @@ export default ({id, loading}) => {
     useEffect(() => {
         loading(true)
         purchaseList({id}).then(resp => {
+            console.log('purchaseList', resp);
             if (resp.status === 200) {
                 const data = resp.data
                 if (data && data.newPurchaseList) {
@@ -152,13 +158,27 @@ export default ({id, loading}) => {
         }).catch(err => message.error(err)).finally(() => loading(false))
     }, [])
 
+    const beforeOpenModal = () => {
+        loading(true)
+        getChildCategoryList({id: productDetail.category_id}).then(resp => {
+            console.log(resp);
+            const data = resp.data?.childCategoryList || []
+            if (resp.status === 200 && data.length > 0) {
+                setProduct(resp.data.childCategoryList[0])
+                setVisible(true)
+            } else if (data.sum_via === 0) {
+                message.error('Sản phẩm đã hết hàng')
+            }
+        }).catch(err => message.error(err)).finally(() => loading(false))
+    }
+
     const buy = () => {
         return <Modal
             centered
             closable={false}
             visible={visible}
             maskClosable={false}
-            title={[<div key={13131} className={'d-flex'}><img width={'25px'} src={productDetail.location_img_url} alt="" className="src"/><b style={{marginLeft: '10px', fontSize: '20px'}}>{productDetail.name}</b></div>]}
+            title={[<div key={13131} className={'d-flex'}><img width={'25px'} src={product.location_img_url} alt="" className="src"/><b style={{marginLeft: '10px', fontSize: '20px'}}>{product.name}</b></div>]}
             onOk={() => {}}
             onCancel={() => () => {
                 setVisible(false)
@@ -169,12 +189,12 @@ export default ({id, loading}) => {
                 }}>
                     Hủy
                 </Button>,
-                <Button disabled={productDetail.sum_via === 0} key="submit" type="primary" loading={pending} onClick={handlePurchase}>
+                <Button disabled={product.sum_via === 0} key="submit" type="primary" loading={pending} onClick={handlePurchase}>
                     Mua ngay
                 </Button>
             ]}
         >
-            {productDetail.sum_via ?
+            {product.sum_via ?
                 <div style={{fontSize: '15px'}}>
                     <p>Số lượng còn: <span style={{
                         backgroundColor: 'rgb(82, 196, 26)',
@@ -183,12 +203,26 @@ export default ({id, loading}) => {
                         fontWeight: 'bold',
                         fontSize: '15px',
                         borderRadius: '25px'
-                    }}>{productDetail.sum_via - quantity}</span></p>
-                    <Input autoFocus addonBefore="Nhập số lượng mua" max={productDetail.sum_via} min={1} addonAfter={`x${productDetail?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
-                    <p style={{ marginTop: '10px' }}>Thành tiền: <b style={{ color: 'red' }}>{(productDetail?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
+                    }}>{product.sum_via}</span></p>
+                    <Input autoFocus addonBefore="Nhập số lượng mua" max={product.sum_via} min={1} addonAfter={`x${product?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
+                    <p style={{ marginTop: '10px' }}>Thành tiền: <b style={{ color: 'red' }}>{(product?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
                 </div> : <b style={{ color: 'red' }}>Sản phẩm đã hết hàng</b>}
             <b style={{ color: 'red' }}>{errorText}</b>
         </Modal>
+    }
+
+    const buySuccess = (purchaseId) => {
+        return confirm({
+            title: 'Mua hàng thành công',
+            okText: 'Xem chi tiết',
+            cancelText: 'Đóng',
+            icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
+            centered: true,
+            onOk() {
+                window.location.href = '/user-info?menu=purchase&id=' + purchaseId
+            },
+            onCancel() {},
+        });
     }
 
     return <div>
@@ -200,7 +234,7 @@ export default ({id, loading}) => {
             </b>
             <Table dataSource={dataSource} columns={columns} rowKey="title" pagination={false} />
             <p align={'center'} style={{marginTop: '10px'}}>
-                <Button type='primary' className={'m-r-5'} onClick={() => setVisible(true)}>Đặt lại hàng</Button>
+                <Button type='primary' className={'m-r-5'} onClick={beforeOpenModal}>Đặt lại hàng</Button>
                 <Button type='danger' onClick={() => handleDownload(productDetail.id, productDetail.category_name)}>Tải xuống</Button>
             </p>
             <b>SẢN PHẨM</b>
@@ -208,7 +242,7 @@ export default ({id, loading}) => {
             <Tag color="geekblue" style={{margin: '10px 0px'}}>Định dạng: <span style={{color: 'red'}}>{productDetail.category_format}</span></Tag>
             {/*<b>Định dạng: </b>*/}
             <Table bordered dataSource={getDsSP()} columns={columnSP} pagination={false}/>
-            {buy()}
+            {product && buy()}
         </Fragment> : <p>Không tìm thấy chi tiết đơn hàng</p>}
     </div>
 }
