@@ -4,11 +4,13 @@ import ChangePassword from "./components/change-password/ChangePassword";
 import Enable2Fa from "./components/enable2fa/Enable2Fa";
 import PurchaseList from './components/purchase/Purchase'
 import PurchaseDetail from './components/purchase/components/Detail'
+import Footer from './components/footer'
 import '../../../assets/scss/user-info.scss'
 import {useSelector} from "react-redux";
 import {Button, Icon, Menu, Tag} from 'antd';
 import {LayoutContext} from "../../../contexts";
 import {useHistory, useLocation} from "react-router-dom";
+import {convertCurrencyVN} from "../../../utils/helpers";
 
 const UserInfo = () => {
 
@@ -69,6 +71,7 @@ const UserInfo = () => {
                 <img src={require('../../../assets/img/avatar.png')} alt="" className="src"/>
                 <p>{`@${user?.username}`}<i className="id_text">{`#${user?.id}`}</i></p>
                 <Tag color={user?.role === 'admin' ? 'red' : 'blue'}>{user?.role}</Tag>
+                <span style={{marginTop: '10px'}}>Số dư: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available + user?.bonus || 0)}</span></span>
             </div>
 
             <div className="information">
@@ -101,6 +104,7 @@ const UserInfo = () => {
         </div>
         <div className="content">
             {renderContent()}
+            <Footer />
         </div>
     </div>
 }
