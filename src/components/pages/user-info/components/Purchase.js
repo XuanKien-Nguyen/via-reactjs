@@ -1,8 +1,10 @@
 import React, {useEffect, useState, Fragment} from "react";
-import {Badge, message, Table, Button, Input} from "antd";
+import {Badge, message, Table, Button, Input, Collapse, Icon} from "antd";
 import {purchaseList, downloadPurchase} from "../../../../services/purchases";
 import Modal from "antd/es/modal";
 import {convertCurrencyVN, textToFile} from '../../../../utils/helpers'
+import FilterItem from "../../category/components/filter/FilterItem";
+const { Panel } = Collapse
 
 export default ({loading}) => {
 
@@ -138,7 +140,27 @@ export default ({loading}) => {
         </div>
     }
 
+    const searchContainer = () => {
+        return  <div className='filter'>
+            <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
+                <Panel key={1} className='filter-container' header={<div className='filter-header'><div><Icon type="filter" theme="filled" />&nbsp;Bộ lọc</div></div>}>
+                    <div className='filter-item'>
+                        <Input placeholder={'UID'} />
+                    </div>
+                    <div className='filter-item'>
+                        <Input placeholder={'UID'} />
+                    </div>
+                    <div className='filter-item'>
+                        <Input placeholder={'UID'} />
+                    </div>
+                </Panel>
+            </Collapse>
+            <Button className='reset-filter-btn' type="primary" size='small' icon="reload" onClick={() => {}}>Reset</Button>
+        </div>
+    }
+
     return <Fragment>
+        {searchContainer()}
         <Table dataSource={ds} columns={columns} rowKey="id" />
         {productDetail && <Modal
             width={'60vw'}
