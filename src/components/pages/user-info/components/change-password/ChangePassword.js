@@ -3,7 +3,11 @@ import {Button, Form, Icon, Input, notification} from "antd";
 import Modal from "antd/es/modal";
 import {changePassword} from "../../../../../services/user";
 
+import { useTranslation } from "react-i18next";
+
 const ChangePassword = (props) => {
+
+    const { t } = useTranslation()
 
     const [confirmDirty, setConfirmDirty] = useState(false)
     const {getFieldDecorator} = props.form;
@@ -20,7 +24,7 @@ const ChangePassword = (props) => {
     const compareToFirstPassword = (rule, value, callback) => {
         const {form} = props;
         if (value && value !== form.getFieldValue('password')) {
-            callback('Mật khẩu nhập lại không trùng');
+            callback(t('password.error-renew'));
         } else {
             callback();
         }
@@ -52,12 +56,12 @@ const ChangePassword = (props) => {
         }
         changePassword(body).then(resp => {
             Modal.success({
-                content: 'Thay đổi mật khẩu thành công, vui lòng đăng nhập lại',
+                content: t('password.successful'),
                 onOk: () => window.location.href = '/login'
             });
         }).catch(err => {
 
-            const message = err?.response?.data?.message || 'Thay đổi mật khẩu thất bại, có lỗi xảy ra'
+            const message = err?.response?.data?.message || t('password.fail')
             Modal.error({
                 content: message,
                 onOk: () => setLoading(false)
@@ -68,24 +72,24 @@ const ChangePassword = (props) => {
 
     const confirm = () => {
         return <Modal
-            title="Đổi mật khẩu"
+            title={t('password.title')}
             style={{top: 400}}
             visible={openConfirm}
             onOk={executeChangePassword}
             onCancel={() => setOpenConfirm(false)}
-        >Bạn có chắc chắn muốn đổi mật khẩu?
+        >{t('password.content')}
         </Modal>
     }
 
     return <Fragment>
         {confirm()}
         <Form className="login-form">
-            <Form.Item label="Nhập mật khẩu cũ">
+            <Form.Item label={t('password.current')}>
                 {getFieldDecorator('old_password', {
                     rules: [
                         {
                             required: true,
-                            message: 'Vui lòng nhập mật khẩu cũ',
+                            message: t('password.required-current'),
                         }
                     ],
                 })(<Input.Password
@@ -93,12 +97,12 @@ const ChangePassword = (props) => {
                     // placeholder="Nhập lại mật khẩu mới"
                 />)}
             </Form.Item>
-            <Form.Item label="Nhập mật khẩu mới" hasFeedback>
+            <Form.Item label={t('password.new')} hasFeedback>
                 {getFieldDecorator('password', {
                     rules: [
                         {
                             required: true,
-                            message: 'Vui lòng nhập mật khẩu',
+                            message: t('password.required-new'),
                         },
                         {
                             validator: validateToNextPassword,
@@ -109,12 +113,12 @@ const ChangePassword = (props) => {
                     // placeholder="Nhập lại mật khẩu mới"
                 />)}
             </Form.Item>
-            <Form.Item label="Nhập lại mật khẩu mới" hasFeedback>
+            <Form.Item label={t('password.renew')} hasFeedback>
                 {getFieldDecorator('confirm', {
                     rules: [
                         {
                             required: true,
-                            message: 'Vui lòng nhập lại mật khẩu mới',
+                            message: t('password.required-renew'),
                         },
                         {
                             validator: compareToFirstPassword,
@@ -126,7 +130,7 @@ const ChangePassword = (props) => {
             </Form.Item>
             <Form.Item>
                 <Button type="primary" onClick={openModal} className="login-form-button" loading={loading}>
-                    Đổi mật khẩu
+                    {t('password.button')}
                 </Button>
             </Form.Item>
         </Form>

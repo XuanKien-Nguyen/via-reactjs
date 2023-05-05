@@ -38,7 +38,14 @@
         "title": "Bộ lọc",
         "category": "Chọn danh mục",
         "location": "Chọn khu vực",
-        "status": "Còn hàng"
+        "stock": "Còn hàng",
+        "uid": "UID",
+        "date": "Chọn ngày",
+        "payment-method": "Phương thức thanh toán",
+        "status": "Tình trạng",
+        "all": "Xem tất cả",
+        "stocking": "Còn hàng",
+        "out-stock": "Hết hàng"
     },
     "access-denied": {
         "title": "TRUY CẬP BỊ TỪ CHỐI",
@@ -46,5 +53,35 @@
     },
     "not-found": {
         "title": "TRANG NÀY KHÔNG TỒN TẠI"
+    },
+    "profile": {
+        "balance" : "Số dư",
+        "information": "THÔNG TIN CÁ NHÂN",
+        "order": "ĐƠN HÀNG",
+        "change-password": "ĐỔI MẬT KHẨU",
+        "2fa": "BẬT XÁC THỰC 2FA"
+    },
+    "info": {
+        "fullname": "Tên đầy đủ",
+        "email": "Email",
+        "phone": "Số điện thoại",
+        "create": "Ngày tạo"
+    },
+    "password": {
+        "button": "Đổi mật khẩu",
+        "current": "Nhập mật khẩu hiện tại của bạn",
+        "new": "Nhập mật khẩu mới",
+        "renew": "Nhập lại mật khẩu hiện mới",
+        "title": "Đổi mật khẩu",
+        "content": "Bạn có chắc chắn muốn đổi mật khẩu?",
+        "required-current" : "Vui lòng nhập mật khẩu hiện tại",
+        "required-new": "Vui lòng nhập mật khẩu mới",
+        "required-renew": "Vui lòng nhập lại mật khẩu mới",
+        "error-renew": "Mật khẩu nhập lại không khớp",
+        "successful": "Thay đổi mật khẩu thành công, vui lòng đăng nhập lại",
+        "fail": "Thay đổi mật khẩu thất bại, đã có lỗi xảy ra"
+    },
+    "2fa-authen": {
+        "turn-on": "Bật xác thực 2FA"
     }
 }
