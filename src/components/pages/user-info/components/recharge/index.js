@@ -43,7 +43,7 @@ export default ({loading}) => {
                 </div>
                 {rechargeInfo && <Fragment><h1 className={'m-t-10 m-b-10'}>Nạp tiền tự động</h1>
                     <p className={'m-t-10 m-b-10'}><i style={{color: 'blue'}}>Vui lòng chuyển khoản vào tài khoản với nội dung bên dưới</i></p>
-                    <div dangerouslySetInnerHTML={{__html: rechargeInfo.Qrcode}}/>
+                    <div id='qr-code-recharge' dangerouslySetInnerHTML={{__html: rechargeInfo.Qrcode}}/>
                 </Fragment>}
             </TabPane>
             <TabPane

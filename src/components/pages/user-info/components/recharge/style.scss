@@ -3,3 +3,12 @@
   //border-left: 1px solid #eaeaea;
   //border-right: 1px solid #eaeaea;
 }
+
+#qr-code-recharge {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  img {
+    width: 50%
+  }
+}
