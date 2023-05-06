@@ -17,6 +17,13 @@
         "yes": "Có",
         "no": "Không"
     },
+    "access-denied": {
+        "title": "TRUY CẬP BỊ TỪ CHỐI",
+        "content": "Bạn không có quyền truy cập trang này"
+    },
+    "not-found": {
+        "title": "TRANG NÀY KHÔNG TỒN TẠI"
+    },
     "category": {
         "view-more": "Xem thêm"
     },
@@ -24,7 +31,12 @@
         "remain": "Còn",
         "sold": "Đã bán",
         "button-buy": "Mua ngay",
+        "button-cancel": "Hủy",
         "button-image": "Xem ảnh",
+        "enter-value": "Nhập số lượng",
+        "remain-modal": "Số lượng còn",
+        "out-of-stock": "Sản phẩm đã hết hàng",
+        "total": "Thành tiền",
         "location": "Quốc gia",
         "create-time": "Ngày lập",
         "2fa" : "Xác thực 2FA",
@@ -46,13 +58,6 @@
         "all": "Xem tất cả",
         "stocking": "Còn hàng",
         "out-stock": "Hết hàng"
-    },
-    "access-denied": {
-        "title": "TRUY CẬP BỊ TỪ CHỐI",
-        "content": "Bạn không có quyền truy cập trang này"
-    },
-    "not-found": {
-        "title": "TRANG NÀY KHÔNG TỒN TẠI"
     },
     "profile": {
         "balance" : "Số dư",

@@ -17,6 +17,13 @@
         "yes": "Yes",
         "no": "No"
     },
+    "access-denied": {
+        "title": "ACCESS DENIED",
+        "content": "You don't have permission to access"
+    },
+    "not-found": {
+        "title": "PAGE NOT FOUND"
+    },
     "category": {
         "view-more": "More"
     },
@@ -24,7 +31,12 @@
         "remain": "Remain",
         "sold": "Sold",
         "button-buy": "Buy Now",
+        "button-cancel": "Cancel",
         "button-image": "View Image",
+        "enter-value": "Enter quantity",
+        "remain-modal": "Quantity remaining",
+        "out-of-stock": "Product is out of stock",
+        "total": "Total amount",
         "location": "Location",
         "create-time": "Date created",
         "2fa" : "2FA authentication",
@@ -46,13 +58,6 @@
         "all": "All",
         "stocking": "Stocking",
         "out-stock": "Out of stock"
-    },
-    "access-denied": {
-        "title": "ACCESS DENIED",
-        "content": "You don't have permission to access"
-    },
-    "not-found": {
-        "title": "PAGE NOT FOUND"
     },
     "profile": {
         "balance" : "Balance",
