@@ -1,5 +1,6 @@
 import Axios from "axios";
 import {API_WHITE_LIST} from "../utils/constants";
+import {message} from "antd";
 
 const client = Axios.create({
     withCredentials: true
@@ -27,8 +28,8 @@ client.interceptors.response.use(
     },
     err => {
         const originalRequest = err.config;
+        console.log('err', err.response);
         if (err.response.status === 401 && !originalRequest._retry && !API_WHITE_LIST.some(el => el === err.config.url)) {
-
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {
                     failedQueue.push({resolve, reject});
@@ -40,10 +41,8 @@ client.interceptors.response.use(
                         return Promise.reject(err);
                     });
             }
-
             originalRequest._retry = true;
             isRefreshing = true;
-
             return new Promise((resolve, reject) => {
 
                 Axios('/api/users/client/reset-token', {
@@ -67,7 +66,8 @@ client.interceptors.response.use(
                         isRefreshing = false;
                     });
             });
-        } else if (err.response?.data?.error === 'refresh_token must be provide') {
+        } else if (err.response?.data?.error === 'refresh_token is invalid' && err.config.url !== '/api/users/client/me') {
+            message.error('Phiên đăng nhập đã hết hạn')
             window.location.href = '/login'
         }
         return Promise.reject(err);

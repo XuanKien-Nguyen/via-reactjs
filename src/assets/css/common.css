@@ -70,3 +70,11 @@ body, html {
   background-color: #a3a3a3;
   transition: .5s;
 }
+
+.m-t-10 {
+  margin-top: 10px
+}
+
+.m-b-10 {
+  margin-bottom: 10px
+}
