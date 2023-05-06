@@ -14,7 +14,7 @@ const FilterItem = ({id, title, options, setValue, defaultValue, type = 'select'
     const onChangeNumberText = e => setValue(e.target.value)
 
     function onChangeDate(date, dateString) {
-        setValue(dateString)
+        setValue(date)
     }
 
     const renderType = () => {
@@ -22,7 +22,7 @@ const FilterItem = ({id, title, options, setValue, defaultValue, type = 'select'
 
             return <Input type={type} placeholder={title} onChange={onChangeNumberText} defaultValue={defaultValue} style={{ width }} />
         } else if (type === 'date') {
-            return <RangePicker onChange={onChangeDate} placeholder={placeholder || title} defaultValue={defaultValue} style={{ width }} />
+            return <RangePicker onChange={onChangeDate} placeholder={placeholder || title} defaultValue={defaultValue} value={defaultValue} style={{ width }} />
         } else {
             return <Select
                 showSearch
