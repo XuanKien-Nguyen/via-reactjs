@@ -4,6 +4,7 @@ import ChangePassword from "./components/change-password/ChangePassword";
 import Enable2Fa from "./components/enable2fa/Enable2Fa";
 import PurchaseList from './components/purchase/Purchase'
 import PurchaseDetail from './components/purchase/components/Detail'
+import Recharge from './components/recharge'
 import Footer from './components/footer'
 import '../../../assets/scss/user-info.scss'
 import {useSelector} from "react-redux";
@@ -60,6 +61,8 @@ const UserInfo = () => {
                 return <PurchaseDetail id={purchaseDetailId} loading={setLoading}/>
             }
             return <PurchaseList loading={setLoading}/>
+        } else if (current === 'recharge') {
+            return <Recharge loading={setLoading}/>
         }
         return <UserDetail user={user} />
     }
@@ -94,6 +97,10 @@ const UserInfo = () => {
                     <Menu.Item key="purchase">
                         <Icon type="shop" />
                         {t('profile.order')}
+                    </Menu.Item>
+                    <Menu.Item key="recharge">
+                        <Icon type="bank" />
+                        NẠP TIỀN
                     </Menu.Item>
                     <Menu.Item key="change-password">
                         <Icon type="lock" />

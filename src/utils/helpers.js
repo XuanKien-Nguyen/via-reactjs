@@ -99,7 +99,7 @@ export const convertCurrencyVN = value => {
   if (value) {
     return value.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})
   }
-  return value
+  return '0 VND'
 }
 
 export const textToFile = (filename, text) => {
