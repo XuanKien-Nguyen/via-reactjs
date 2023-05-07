@@ -1,6 +1,7 @@
 import {Button, Collapse, Icon, message} from "antd";
 import FilterItem from "../../../../category/components/filter/FilterItem";
 import React, {useEffect, useState} from "react";
+import { useTranslation } from 'react-i18next';
 const { Panel } = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
@@ -8,6 +9,8 @@ const PURCHASE_TYPE = [{label: 'Tất cả', value: ''}, {label: 'Trực tiếp'
 const STATUS_LIST = [{label: 'Tất cả', value: ''}, {label: 'Bảo hành', value: 'valid'}, {label: 'Hết bảo hành', value: 'invalid'}]
 
 export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
+
+    const { t } = useTranslation()
 
     const [uid, setUid] = useState('')
     const [date, setDate] = useState([])
@@ -68,19 +71,19 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
         <div className='filter' style={{padding: '0px'}}>
             <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
                 <Panel key={1} className='filter-container' header={<div className='filter-header'>
-                    <div><Icon type="filter" theme="filled"/>&nbsp;Bộ lọc</div>
+                    <div><Icon type="filter" theme="filled"/>&nbsp;{t('filter.title')}</div>
                 </div>}>
-                    <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={'UID'}/>
+                    <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={t('filter.uid')}/>
                     <FilterItem defaultValue={date} setValue={setDate} type={'date'}
-                                placeholder={['Từ ngày', 'Đến ngày']} title={'Chọn ngày'}/>
+                                placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
                     <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={PURCHASE_TYPE}
-                                type={'select'} title={'Phương thức thanh toán'}/>
+                                type={'select'} title={t('filter.payment-method')}/>
                     <FilterItem defaultValue={status} setValue={setStatus} options={STATUS_LIST} type={'select'}
-                                title={'Tình trạng'}/>
+                                title={t('filter.status')}/>
                 </Panel>
             </Collapse>
             <Button className='reset-filter-btn' type="primary" size='small' icon="reload"
-                    onClick={onReset}>Reset</Button>
+                    onClick={onReset}>{t('common.reset')}</Button>
         </div>
     </div>
 }

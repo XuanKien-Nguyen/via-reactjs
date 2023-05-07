@@ -15,7 +15,9 @@
         "admin": "Administration",
         "sign-out": "Sign Out",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "reset": "Reset",
+        "close": "Close"
     },
     "access-denied": {
         "title": "ACCESS DENIED",
@@ -25,7 +27,8 @@
         "title": "PAGE NOT FOUND"
     },
     "category": {
-        "view-more": "More"
+        "view-more": "More",
+        "no-product": "No products found"
     },
     "product": {
         "remain": "Remain",
@@ -36,6 +39,11 @@
         "enter-value": "Enter quantity",
         "remain-modal": "Quantity remaining",
         "out-of-stock": "Product is out of stock",
+        "msg-invalid": "Invalid purchase quantity",
+        "msg-success": "Purchase successfully",
+        "modal-title": "Purchase successfully",
+        "modal-button-detail": "View detail",
+        "modal-button-close": "Close",
         "total": "Total amount",
         "location": "Location",
         "create-time": "Date created",
@@ -53,6 +61,8 @@
         "stock": "Stock",
         "uid": "UID",
         "date": "Select date",
+        "from": "From",
+        "to": "To",
         "payment-method": "Payment Method",
         "status": "Status",
         "all": "All",
@@ -63,6 +73,7 @@
         "balance" : "Balance",
         "information": "PERSONAL INFORMATION",
         "order": "ORDER",
+        "recharge": "RECHARGE",
         "change-password": "CHANGE PASSWORD",
         "2fa": "2FA AUTHENTICATION"
     },
@@ -71,6 +82,26 @@
         "email": "Email",
         "phone": "Phone Number",
         "create": "Create date"
+    },
+    "order": {
+        "id": "ID",
+        "date": "Purchase time",
+        "status": "Status",
+        "total": "Total amount",
+        "action": "Action",
+        "detail": "Detail",
+        "download": "Download",
+        "valid": "Valid",
+        "invalid": "Invalid",
+        "download-error": "Something wrong when downloading",
+        "detail-title": "Order detail"
+    },
+    "recharge": {
+        "placeholder": "Enter top-up amount",
+        "top-up": "Top-up",
+        "auto-top-up": "Top-up Automatically",
+        "content": "Please transfer to the account with the content below",
+        "msg-error": "Something wrong when retrieving the code"
     },
     "password": {
         "button": "Change Password",

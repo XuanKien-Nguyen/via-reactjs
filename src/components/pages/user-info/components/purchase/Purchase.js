@@ -6,8 +6,11 @@ import {convertCurrencyVN, textToFile} from '../../../../../utils/helpers'
 import Search from './components/Search'
 import TableCommon from '../../../../common/table'
 import {useHistory} from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 export default ({loading}) => {
+
+    const { t } = useTranslation()
 
     const query = new URLSearchParams(window.location.search);
 
@@ -27,34 +30,34 @@ export default ({loading}) => {
 
     const columns = [
         {
-            title: 'ID',
+            title: t('order.id'),
             dataIndex: 'id',
             render: id => `#${id}`,
             align: 'center'
         },
         {
-            title: 'Ngày',
+            title: t('order.date'),
             dataIndex: 'created_time',
             align: 'center'
         },
         {
-            title: 'Tình trạng',
+            title: t('order.status'),
             dataIndex: 'status',
             align: 'center',
             render: status => {
                 const r = {
                     color: '#f50',
-                    text: 'Hết bảo hành'
+                    text: t('order.valid')
                 }
                 if (status === 'valid') {
                     r.color = '#87d068'
-                    r.text = 'Bảo hành'
+                    r.text = t('order.invalid')
                 }
                 return <Tag color={r.color}>{r.text}</Tag>
             }
         },
         {
-            title: 'Tổng',
+            title: t('order.total'),
             render: row => {
                 return <div>
                     <b>{convertCurrencyVN(row.total_amount)}</b>
@@ -62,14 +65,14 @@ export default ({loading}) => {
             }
         },
         {
-            title: 'Thao tác',
+            title: t('order.action'),
             align: 'center',
             render: row => {
                 return <div>
-                    <Tooltip title={'Chi tiết'}>
+                    <Tooltip title={t('order.detail')}>
                         <Button type='primary' onClick={() => history.push({search: `?menu=${query.get('menu')}&id=${row.id}`})}><Icon type="file-search" /></Button>
                     </Tooltip>
-                    <Tooltip title={'Tải xuống'}>
+                    <Tooltip title={t('order.download')}>
                         <Button type={'danger'} style={{marginLeft: '10px'}} onClick={() => handleDownload(row.id, row.category_name)}><Icon type="download" /></Button>
                     </Tooltip>
                 </div>
@@ -85,7 +88,7 @@ export default ({loading}) => {
             const content = data.purchaseDownloadList.join('\r\n');
             textToFile(categoryName, content)
         }).catch(err => {
-            message.error(err.response?.data?.message || 'Có lỗi xảy ra khi tải xuống')
+            message.error(err.response?.data?.message || t('order.download-error'))
         }).finally(() => loading(false))
     }
 
@@ -112,14 +115,14 @@ export default ({loading}) => {
             closable={false}
             visible={visible}
             maskClosable={false}
-            title={'Chi tiết đơn hàng'}
+            title={t('order.detail-title')}
             onOk={() => {}}
             onCancel={() => () => {
                 setVisible(false)
             }}
             footer={[
                 <Button key="submit" type="primary" onClick={() => setVisible(false)}>
-                    Đóng
+                    {t('common.close')}
                 </Button>
             ]}
         >

@@ -100,7 +100,7 @@ const UserInfo = () => {
                     </Menu.Item>
                     <Menu.Item key="recharge">
                         <Icon type="bank" />
-                        NẠP TIỀN
+                        {t('profile.recharge')}
                     </Menu.Item>
                     <Menu.Item key="change-password">
                         <Icon type="lock" />

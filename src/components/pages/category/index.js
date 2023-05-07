@@ -3,7 +3,12 @@ import BreadCrumb from './components/breadcrumb/BreadCrumb';
 import FilterLayout from './components/filter/FilterLayout';
 import ProductLayout from '../common/product/ProductLayout';
 
+import { useTranslation } from 'react-i18next';
+
 export default () => {
+
+  const { t } = useTranslation()
+
   const [resultSearch, setResultSearch] = useState([]);
 
   const query = new URLSearchParams(window.location.search);
@@ -21,7 +26,7 @@ export default () => {
     <div className='product-page'>
         {/*<BreadCrumb />*/}
         <FilterLayout setResultSearch={setResultSearch} parentId={parentId} />
-            {resultSearch.length === 0 ? <h1 align={'center'}>Không tìm thấy sản phẩm</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} hiddenShowMore={true} categoryParent={el} />)}
+            {resultSearch.length === 0 ? <h1 align={'center'}>{t('category.no-product')}</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} hiddenShowMore={true} categoryParent={el} />)}
     </div>
   );
 };

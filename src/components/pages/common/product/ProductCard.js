@@ -56,9 +56,9 @@ const ProductCard = ({ productDetail }) => {
 
     const buySuccess = (purchaseId) => {
         return Modal.confirm({
-            title: 'Mua hàng thành công',
-            okText: 'Xem chi tiết',
-            cancelText: 'Đóng',
+            title: t('product.modal-title'),
+            okText: t('product.modal-button-detail'),
+            cancelText: t('product.modal-button-close'),
             icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
             centered: true,
             onOk() {
@@ -71,7 +71,7 @@ const ProductCard = ({ productDetail }) => {
     const handlePurchase = () => {
         setErrorText('')
         if (quantity < 1 && quantity > productDetail.sum_via) {
-            message.error("Số lượng mua không hợp lệ")
+            message.error(t('product.msg-invalid'))
             return
         }
         setPending(true)
@@ -80,7 +80,7 @@ const ProductCard = ({ productDetail }) => {
             amount: quantity
         }).then(resp => {
             if (resp.status === 200) {
-                message.success(resp?.data?.message || 'Mua hàng thành công')
+                message.success(resp?.data?.message || t('product.msg-success'))
                 productDetail.sum_via-=quantity
                 buySuccess(resp.data.purchaseId)
                 forceRender()

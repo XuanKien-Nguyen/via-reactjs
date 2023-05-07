@@ -1,5 +1,6 @@
 import React, {useState, Fragment} from 'react'
 import {Tabs, Button, message} from 'antd';
+import { useTranslation } from 'react-i18next';
 import Input from "antd/es/input";
 import './style.scss'
 import {getSyntaxToTopupBanking} from "../../../../../services/recharge";
@@ -8,6 +9,8 @@ const {TabPane} = Tabs;
 const {Search} = Input;
 
 export default ({loading}) => {
+
+    const { t } = useTranslation()
 
     const [currentTab, setCurrentTab] = useState('bank')
 
@@ -21,7 +24,7 @@ export default ({loading}) => {
             if (resp.status === 200) {
                 setRechargeInfo(resp.data)
             }
-        }).catch(err => message.error(err.response?.data?.message || 'Có lỗi xảy ra khi lấy mã nạp: ' + err))
+        }).catch(err => message.error(err.response?.data?.message || t('recharge.msg-error') + err))
             .finally(() => loading(false))
     }
 
@@ -34,15 +37,15 @@ export default ({loading}) => {
             }} width={'50px'} alt="ACB"/>} key="bank">
                 <div>
                     <Search
-                        placeholder="Nhập số tiền muốn nạp"
-                        enterButton="Nạp"
+                        placeholder={t('recharge.placeholder')}
+                        enterButton={t('recharge.top-up')}
                         type={'number'}
                         size="default"
                         onSearch={handleRecharge}
                     />
                 </div>
-                {rechargeInfo && <Fragment><h1 className={'m-t-10 m-b-10'}>Nạp tiền tự động</h1>
-                    <p className={'m-t-10 m-b-10'}><i style={{color: 'blue'}}>Vui lòng chuyển khoản vào tài khoản với nội dung bên dưới</i></p>
+                {rechargeInfo && <Fragment><h1 className={'m-t-10 m-b-10'}>{t('recharge.auto-top-up')}</h1>
+                    <p className={'m-t-10 m-b-10'}><i style={{color: 'blue'}}>{t('recharge.content')}</i></p>
                     <div id='qr-code-recharge' dangerouslySetInnerHTML={{__html: rechargeInfo.Qrcode}}/>
                 </Fragment>}
             </TabPane>

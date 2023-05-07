@@ -4,6 +4,7 @@ import {LayoutContext} from "../../../../../contexts";
 import { getParentCategoryList, getLocationList, getTypeList, getCategoryList, getLocationListStocking } from '../../../../../services/category/category';
 import { Collapse, Icon, Button } from 'antd';
 import {useDispatch, useSelector} from "react-redux";
+import { useTranslation } from 'react-i18next';
 const { Panel } = Collapse
 
 
@@ -18,6 +19,8 @@ const SELECT_ALL = {value: '', label: 'Xem tất cả'}
 let debounce = null
 
 const FilterLayout = ({setResultSearch, parentId}) => {
+
+    const { t } = useTranslation()
 
     const categories = useSelector(store => store.categories)
 
@@ -104,13 +107,13 @@ const FilterLayout = ({setResultSearch, parentId}) => {
   return (
     <div className='filter'>
       <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
-            <Panel key={1} className='filter-container' header={<div className='filter-header'><div><Icon type="filter" theme="filled" />&nbsp;Bộ lọc</div></div>}>
-              <FilterItem key={1} id={'category'} title={'Chọn danh mục'} options={[SELECT_ALL, ...categories?.list] || [SELECT_ALL]} setValue={setCategory} defaultValue={category}/>
-              <FilterItem key={2} id={'location'} title={'Chọn quốc gia'} options={locationFilterList} setValue={setLocation} defaultValue={location}/>
-              <FilterItem key={3} id={'type'} title={'Còn hàng'} options={typeFilterList} setValue={setProductStatus} defaultValue={productStatus}/>
+            <Panel key={1} className='filter-container' header={<div className='filter-header'><div><Icon type="filter" theme="filled" />&nbsp;{t('filter.title')}</div></div>}>
+              <FilterItem key={1} id={'category'} title={t('filter.category')} options={[SELECT_ALL, ...categories?.list] || [SELECT_ALL]} setValue={setCategory} defaultValue={category}/>
+              <FilterItem key={2} id={'location'} title={t('filter.location')} options={locationFilterList} setValue={setLocation} defaultValue={location}/>
+              <FilterItem key={3} id={'type'} title={t('filter.stock')} options={typeFilterList} setValue={setProductStatus} defaultValue={productStatus}/>
             </Panel>
           </Collapse>
-          <Button className='reset-filter-btn' type="primary" size='small' icon="reload" onClick={resetValue}>Reset</Button>
+          <Button className='reset-filter-btn' type="primary" size='small' icon="reload" onClick={resetValue}>{t('common.reset')}</Button>
     </div>
   );
 };

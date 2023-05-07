@@ -15,7 +15,9 @@
         "admin": "Quản trị dành cho Admin",
         "sign-out": "Thoát",
         "yes": "Có",
-        "no": "Không"
+        "no": "Không",
+        "reset": "Làm mới",
+        "close": "Đóng"
     },
     "access-denied": {
         "title": "TRUY CẬP BỊ TỪ CHỐI",
@@ -25,7 +27,8 @@
         "title": "TRANG NÀY KHÔNG TỒN TẠI"
     },
     "category": {
-        "view-more": "Xem thêm"
+        "view-more": "Xem thêm",
+        "no-product": "Không tìm thấy sản phẩm"
     },
     "product": {
         "remain": "Còn",
@@ -36,6 +39,11 @@
         "enter-value": "Nhập số lượng",
         "remain-modal": "Số lượng còn",
         "out-of-stock": "Sản phẩm đã hết hàng",
+        "msg-invalid": "Số lượng mua không hợp lệ",
+        "msg-success": "Mua thành công",
+        "modal-title": "Mua thành công",
+        "modal-button-detail": "Xem chi tiết",
+        "modal-button-close": "Đóng",
         "total": "Thành tiền",
         "location": "Quốc gia",
         "create-time": "Ngày lập",
@@ -53,6 +61,8 @@
         "stock": "Còn hàng",
         "uid": "UID",
         "date": "Chọn ngày",
+        "from": "Từ ngày",
+        "to": "Đến ngày",
         "payment-method": "Phương thức thanh toán",
         "status": "Tình trạng",
         "all": "Xem tất cả",
@@ -63,6 +73,7 @@
         "balance" : "Số dư",
         "information": "THÔNG TIN CÁ NHÂN",
         "order": "ĐƠN HÀNG",
+        "recharge": "NẠP TIỀN",
         "change-password": "ĐỔI MẬT KHẨU",
         "2fa": "BẬT XÁC THỰC 2FA"
     },
@@ -71,6 +82,26 @@
         "email": "Email",
         "phone": "Số điện thoại",
         "create": "Ngày tạo"
+    },
+    "order": {
+        "id": "ID",
+        "date": "Thời gian mua hàng",
+        "status": "Tình trạng",
+        "total": "Tổng",
+        "action": "Thao tác",
+        "detail": "Chi tiết",
+        "download": "Tải xuống",
+        "valid": "Bảo hành",
+        "invalid": "Hết bảo hành",
+        "download-error": "Có lỗi xảy ra khi tải xuống",
+        "detail-title": "Chi tiết đơn hàng"
+    },
+    "recharge": {
+        "placeholder": "Nhập số tiền muốn nạp",
+        "top-up": "Nạp",
+        "auto-top-up": "Nạp tiền tự động",
+        "content": "Vui lòng chuyển khoản vào tài khoản với nội dung bên dưới",
+        "msg-error": "Có lỗi xảy ra khi lấy mã nạp"
     },
     "password": {
         "button": "Đổi mật khẩu",
