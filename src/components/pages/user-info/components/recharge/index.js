@@ -38,11 +38,13 @@ export default ({loading}) => {
                 width: '50px'
             }} width={'50px'} alt="ACB"/>} key="bank">
                 <div>
+                    <h1>Nhập số tiền muốn nạp: </h1>
                     <Search
                         placeholder="Nhập số tiền muốn nạp"
                         enterButton="Nạp"
                         type={'number'}
                         size="default"
+                        step={1000}
                         onSearch={handleRecharge}
                     />
                 </div>
@@ -51,7 +53,7 @@ export default ({loading}) => {
 
                     <div style={{display: "flex"}}>
 
-                        <div style={{width: "50%", padding: "10px", borderRight: '1px dashed #000'}}>
+                        <div style={{width: "50%", padding: "10px", borderRight: '1px solid #eaeaea'}}>
                             <div style={{height: '40px',
                                 backgroundColor: '#EFF8FF',
                                 textAlign: 'center',
@@ -88,7 +90,7 @@ export default ({loading}) => {
                                 padding: '5px',
                                 fontWeight: '900'}}>
                                 <h1 style={{fontWeight: 'bold'}}>Nạp tiền qua quét mã QR</h1></div>
-                            <div style={{width: "100%", justifyContent: "center", display: 'flex', paddingBottom: '30px', borderBottom: '1px solid #eaeaea'}}>
+                            <div style={{width: "100%", justifyContent: "center", display: 'flex', paddingBottom: '30px', borderBottom: '1px solid #eaeaea', marginTop: '10px'}}>
                                 <div style={{width: "300px"}} dangerouslySetInnerHTML={{__html: rechargeInfo.Qrcode}}/>
                             </div>
 
