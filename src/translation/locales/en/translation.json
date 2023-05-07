@@ -17,6 +17,7 @@
         "yes": "Yes",
         "no": "No",
         "reset": "Reset",
+        "refresh": "Refresh",
         "close": "Close",
         "copy": "Copy",
         "ok": "Okay",
@@ -146,6 +147,16 @@
         "fail": "Password change failed, an error occurred"
     },
     "2fa-authen": {
-        "turn-on": "Turn on 2FA Authentication"
+        "title": "2FA Authentication",
+        "enable-2fa": "Enabled 2FA Authentication",
+        "disable-2fa": "Disable 2FA Authentication",
+        "get-success": "Get QR code successfully",
+        "get-error": "Something wrong when retrieving the QR code",
+        "msg-success": "Successfully enabled 2fa authentication, please login again",
+        "action-success": "Successful operation",
+        "msg-error": "An error occurred while authenticating 2fa",
+        "enter-otp": "Please enter OTP code",
+        "otp": "OPT code",
+        "get-qr": "Get QR code"
     }
 }

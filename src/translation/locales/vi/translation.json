@@ -17,6 +17,7 @@
         "yes": "Có",
         "no": "Không",
         "reset": "Làm mới",
+        "refresh": "Làm mới",
         "close": "Đóng",
         "copy": "Sao chép",
         "ok": "OK",
@@ -146,6 +147,16 @@
         "fail": "Thay đổi mật khẩu thất bại, đã có lỗi xảy ra"
     },
     "2fa-authen": {
-        "turn-on": "Bật xác thực 2FA"
+        "title": "Xác thực 2FA",
+        "enable-2fa": "Bật xác thực 2FA",
+        "disable-2fa": "Tắt xác thực 2FA",
+        "get-success": "Lấy mã QR thành công",
+        "get-error": "Có lỗi xảy ra khi lấy mã QR",
+        "msg-success": "Bật xác thực 2fa thành công, vui lòng đăng nhập lại",
+        "action-success": "Thao tác thành công",
+        "msg-error": "Có lỗi xảy ra khi xác thực 2fa",
+        "enter-otp": "Vui lòng nhập mã OTP",
+        "otp": "Mã OTP",
+        "get-qr": "Lấy mã QR"
     }
 }
