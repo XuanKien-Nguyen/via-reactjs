@@ -48,3 +48,8 @@ export const auth2fa = (body) => {
 export const resetToken = () => {
     return client.patch(`${ENDPOINT_USER}/reset-token`)
 }
+export const changeBinanceWallet = (body) => {
+    return client.patch(`${ENDPOINT_USER}/change-binance-wallet`, body)
+}
+
+

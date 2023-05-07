@@ -4,11 +4,34 @@
   //border-right: 1px solid #eaeaea;
 }
 
-#qr-code-recharge {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  img {
-    width: 50%
+#payQRTutorial{
+  .pay-item{
+    padding: 0 0 10px 0;
   }
+}
+
+.recharge-bank-information {
+  padding: 25px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.recharge-bank-information-copy{
+  background-color: #7239EA;
+  text-align: center;
+  color: #fff;
+  height: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 3px
+}
+
+.ustd-address {
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 25px;
+  color: blue;
+  border: 1px solid #eaeaea;
+  margin-top: 10px;
 }

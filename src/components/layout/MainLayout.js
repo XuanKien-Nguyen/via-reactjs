@@ -39,9 +39,12 @@ function MainLayout() {
                     setForceRender(forceRender + 1)
                 }
             }).catch(err => {
+                console.log('MainLayout', err);
                 accessRoutes = baseRoutes
                 setForceRender(forceRender + 1)
                 localStorage.removeItem('user_info')
+                localStorage.removeItem('is_logged')
+                dispatch({type: "LOGOUT"})
             }).finally(() => setLoading(false));
         } else {
             accessRoutes = baseRoutes
