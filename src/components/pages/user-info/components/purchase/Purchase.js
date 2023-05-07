@@ -41,16 +41,16 @@ export default ({loading}) => {
             align: 'center'
         },
         {
-            title: 'Nội dung',
+            title: t('order.content'),
             dataIndex: 'content',
             align: 'center'
         },
         {
-            title: 'Phương thức thanh toán',
+            title: t('order.payment-method'),
             dataIndex: 'purchase_type',
             align: 'center',
             width: '120px',
-            render: val => val === 'direct' ? 'Trực tiếp' : 'Cộng tác viên'
+            render: val => val === 'direct' ? t('order.direct') : t('order.api')
         },
         {
             title: t('order.status'),

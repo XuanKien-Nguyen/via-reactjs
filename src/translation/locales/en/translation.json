@@ -86,6 +86,11 @@
     "order": {
         "id": "ID",
         "date": "Purchase time",
+        "content": "Content",
+        "payment-method": "Payment method",
+        "direct": "Direct",
+        "api": "API",
+        "api": "Cộng tác viên",
         "status": "Status",
         "total": "Total amount",
         "action": "Action",
@@ -94,7 +99,9 @@
         "valid": "Valid",
         "invalid": "Invalid",
         "download-error": "Something wrong when downloading",
-        "detail-title": "Order detail"
+        "detail-title": "Order detail",
+        "records": "records",
+        "total-records": "Total"
     },
     "recharge": {
         "placeholder": "Enter top-up amount",

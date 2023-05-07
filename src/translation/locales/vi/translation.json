@@ -86,6 +86,10 @@
     "order": {
         "id": "ID",
         "date": "Thời gian mua hàng",
+        "content": "Nội dung",
+        "payment-method": "Phương thức thanh toán",
+        "direct": "Trực tiếp",
+        "api": "Cộng tác viên",
         "status": "Tình trạng",
         "total": "Tổng",
         "action": "Thao tác",
@@ -94,7 +98,9 @@
         "valid": "Bảo hành",
         "invalid": "Hết bảo hành",
         "download-error": "Có lỗi xảy ra khi tải xuống",
-        "detail-title": "Chi tiết đơn hàng"
+        "detail-title": "Chi tiết đơn hàng",
+        "records": "bản ghi",
+        "total-records": "Tổng số"
     },
     "recharge": {
         "placeholder": "Nhập số tiền muốn nạp",
