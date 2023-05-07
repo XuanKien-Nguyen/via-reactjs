@@ -10,12 +10,12 @@ const STATUS_LIST = [{label: 'Tất cả', value: ''}, {label: 'Bảo hành', va
 export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
 
     const [uid, setUid] = useState('')
-    const [date, setDate] = useState(['', ''])
+    const [date, setDate] = useState([])
     const [purchaseType, setPurchaseType] = useState('')
     const [status, setStatus] = useState('')
 
     const onReset = () => {
-        setDate(['', ''])
+        setDate([])
         setUid('')
         setStatus('')
         setPurchaseType('')
@@ -31,10 +31,8 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
 
     const getList = () => {
         let created_time = ''
-        if ( typeof date[0] !== 'string') {
+        if (date.length > 0) {
             created_time = JSON.stringify(date?.map(el => el?.format(dateFormat)))
-        } else {
-            created_time = JSON.stringify(date)
         }
         const body = {
             uid,
@@ -66,17 +64,23 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
             .finally(() => loading(false))
     }
 
-    return  <div className='product-page'>
-        <div className='filter'>
+    return <div className='product-page'>
+        <div className='filter' style={{padding: '0px'}}>
             <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
-                <Panel key={1} className='filter-container' header={<div className='filter-header'><div><Icon type="filter" theme="filled" />&nbsp;Bộ lọc</div></div>}>
+                <Panel key={1} className='filter-container' header={<div className='filter-header'>
+                    <div><Icon type="filter" theme="filled"/>&nbsp;Bộ lọc</div>
+                </div>}>
                     <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={'UID'}/>
-                    <FilterItem defaultValue={date} setValue={setDate} type={'date'} placeholder={['Từ ngày', 'Đến ngày']} title={'Chọn ngày'}/>
-                    <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={PURCHASE_TYPE} type={'select'} title={'Phương thức thanh toán'}/>
-                    <FilterItem defaultValue={status} setValue={setStatus} options={STATUS_LIST} type={'select'} title={'Tình trạng'}/>
+                    <FilterItem defaultValue={date} setValue={setDate} type={'date'}
+                                placeholder={['Từ ngày', 'Đến ngày']} title={'Chọn ngày'}/>
+                    <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={PURCHASE_TYPE}
+                                type={'select'} title={'Phương thức thanh toán'}/>
+                    <FilterItem defaultValue={status} setValue={setStatus} options={STATUS_LIST} type={'select'}
+                                title={'Tình trạng'}/>
                 </Panel>
             </Collapse>
-            <Button className='reset-filter-btn' type="primary" size='small' icon="reload" onClick={onReset}>Reset</Button>
+            <Button className='reset-filter-btn' type="primary" size='small' icon="reload"
+                    onClick={onReset}>Reset</Button>
         </div>
     </div>
 }

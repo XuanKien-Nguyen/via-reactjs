@@ -142,16 +142,16 @@ const ProductCard = ({ productDetail }) => {
                     <Button key="back" disabled={pending} onClick={() => {
                         setVisible(false)
                     }}>
-                        Hủy
+                        {t('product.button-cancel')}
                     </Button>,
                     <Button disabled={productDetail.sum_via === 0} key="submit" type="primary" loading={pending} onClick={handlePurchase}>
-                        Mua ngay
+                        {t('product.button-buy')}
                     </Button>
                 ]}
             >
                 {productDetail.sum_via ?
                 <div style={{fontSize: '15px'}}>
-                        <p>Số lượng còn: <span style={{
+                        <p>{t('product.remain-modal')}: <span style={{
                             backgroundColor: 'rgb(82, 196, 26)',
                             color: 'white',
                             padding: '6px',
@@ -159,9 +159,9 @@ const ProductCard = ({ productDetail }) => {
                             fontSize: '15px',
                             borderRadius: '25px'
                         }}>{productDetail.sum_via}</span></p>
-                        <Input autoFocus addonBefore="Nhập số lượng mua" max={productDetail.sum_via} min={1} addonAfter={`x${productDetail?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
-                        <p style={{ marginTop: '10px' }}>Thành tiền: <b style={{ color: 'red' }}>{(productDetail?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
-                    </div> : <b style={{ color: 'red' }}>Sản phẩm đã hết hàng</b>}
+                        <Input autoFocus addonBefore={t('product.enter-value')} max={productDetail.sum_via} min={1} addonAfter={`x${productDetail?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
+                        <p style={{ marginTop: '10px' }}>{t('product.total')}: <b style={{ color: 'red' }}>{(productDetail?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
+                    </div> : <b style={{ color: 'red' }}>{t('product.out-of-stock')}</b>}
                 <b style={{ color: 'red' }}>{errorText}</b>
             </Modal>
             <Modal

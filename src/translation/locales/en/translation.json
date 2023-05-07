@@ -17,6 +17,13 @@
         "yes": "Yes",
         "no": "No"
     },
+    "access-denied": {
+        "title": "ACCESS DENIED",
+        "content": "You don't have permission to access"
+    },
+    "not-found": {
+        "title": "PAGE NOT FOUND"
+    },
     "category": {
         "view-more": "More"
     },
@@ -24,27 +31,62 @@
         "remain": "Remain",
         "sold": "Sold",
         "button-buy": "Buy Now",
+        "button-cancel": "Cancel",
         "button-image": "View Image",
+        "enter-value": "Enter quantity",
+        "remain-modal": "Quantity remaining",
+        "out-of-stock": "Product is out of stock",
+        "total": "Total amount",
         "location": "Location",
         "create-time": "Date created",
         "2fa" : "2FA authentication",
         "friend": "Friend",
         "checkpoint-email": "Checkpoint Email",
         "email": "Email",
-        "change": "Change",
+        "change": "Change Information",
         "back-up": "Support Backup"
     },
     "filter": {
         "title": "Filter",
         "category": "Category",
         "location": "Location",
-        "status": "Status"
+        "stock": "Stock",
+        "uid": "UID",
+        "date": "Select date",
+        "payment-method": "Payment Method",
+        "status": "Status",
+        "all": "All",
+        "stocking": "Stocking",
+        "out-stock": "Out of stock"
     },
-    "access-denied": {
-        "title": "ACCESS DENIED",
-        "content": "You don't have permission to access"
+    "profile": {
+        "balance" : "Balance",
+        "information": "PERSONAL INFORMATION",
+        "order": "ORDER",
+        "change-password": "CHANGE PASSWORD",
+        "2fa": "2FA AUTHENTICATION"
     },
-    "not-found": {
-        "title": "PAGE NOT FOUND"
+    "info": {
+        "fullname": "Full name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "create": "Create date"
+    },
+    "password": {
+        "button": "Change Password",
+        "current": "Enter your current password",
+        "new": "Enter new password",
+        "renew": "Re-enter new password",
+        "title": "Change Password",
+        "content": "Are you sure you want to change your password?",
+        "required-current" : "Please enter your current password",
+        "required-new": "Please enter new password",
+        "required-renew": "Please re-enter new password",
+        "error-renew": "New password doesn't match",
+        "successful": "Changed password successfully, please login again",
+        "fail": "Password change failed, an error occurred"
+    },
+    "2fa-authen": {
+        "turn-on": "Turn on 2FA Authentication"
     }
 }

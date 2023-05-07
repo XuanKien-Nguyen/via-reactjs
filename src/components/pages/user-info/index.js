@@ -13,7 +13,11 @@ import {LayoutContext} from "../../../contexts";
 import {useHistory, useLocation} from "react-router-dom";
 import {convertCurrencyVN} from "../../../utils/helpers";
 
+import { useTranslation } from 'react-i18next';
+
 const UserInfo = () => {
+
+    const { t } = useTranslation()
 
     const query = new URLSearchParams(window.location.search);
 
@@ -74,7 +78,7 @@ const UserInfo = () => {
                 <img src={require('../../../assets/img/avatar.png')} alt="" className="src"/>
                 <p>{`@${user?.username}`}<i className="id_text">{`#${user?.id}`}</i></p>
                 <Tag color={user?.role === 'admin' ? 'red' : 'blue'}>{user?.role}</Tag>
-                <span style={{marginTop: '10px'}}>Số dư: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available + user?.bonus || 0)}</span></span>
+                <span style={{marginTop: '10px'}}>{t('profile.balance')}: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available + user?.bonus || 0)}</span></span>
             </div>
 
             <div className="information">
@@ -88,11 +92,11 @@ const UserInfo = () => {
                 >
                     <Menu.Item key="info">
                         <Icon type="solution" />
-                        THÔNG TIN CÁ NHÂN
+                        {t('profile.information')}
                     </Menu.Item>
                     <Menu.Item key="purchase">
                         <Icon type="shop" />
-                        ĐƠN HÀNG
+                        {t('profile.order')}
                     </Menu.Item>
                     <Menu.Item key="recharge">
                         <Icon type="bank" />
@@ -100,11 +104,11 @@ const UserInfo = () => {
                     </Menu.Item>
                     <Menu.Item key="change-password">
                         <Icon type="lock" />
-                        ĐỔI MẬT KHẨU
+                        {t('profile.change-password')}
                     </Menu.Item>
                     { (user?.role === 'admin' || user?.role === 'staff') &&<Menu.Item key="auth-2fa">
                         <Icon type="qrcode" />
-                        BẬT XÁC THỰC 2FA
+                        {t('profile.2fa')}
                     </Menu.Item>}
                 </Menu>
             </div>
