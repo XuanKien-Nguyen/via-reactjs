@@ -6,8 +6,11 @@ import Input from "antd/es/input";
 import {changeBinanceWallet} from "../../../../../../services/user";
 import {getSyntaxToTopupUSDT} from "../../../../../../services/recharge";
 import Tag from "antd/es/tag";
+import { useTranslation } from 'react-i18next';
 
 export default ({loading, copy, changTab}) => {
+
+    const { t } = useTranslation()
 
     const [pending, setPending] = useState(false)
     const user = useSelector(store => store.user)
@@ -37,7 +40,7 @@ export default ({loading, copy, changTab}) => {
 
     const handleUpdateBinanceWallet = () => {
         if (!binanceWallet) {
-            setErrorMessage('Vui lòng nhập địa chỉ ví')
+            setErrorMessage(t('recharge.wallet-error'))
             return
         }
         setPending(true)
@@ -61,35 +64,35 @@ export default ({loading, copy, changTab}) => {
                 }
             }}
             maskClosable={false}
-            title="Cập nhật địa chỉ ví"
+            title={t('recharge.wallet-title')}
             visible={visible}
             footer={[
                 <Fragment>
                     {isHaveWalletAddress() &&
                     <Button loading={pending} type={'danger'} onClick={() => setVisible(false)}>
-                        Hủy bỏ
+                        {t('common.cancel')}
                     </Button>}
                     <Button loading={pending} type={'primary'} onClick={handleUpdateBinanceWallet}>
-                        OK
+                        {t('common.ok')}
                     </Button>
                 </Fragment>
             ]}
         >
             {!isHaveWalletAddress() &&
-            <b style={{color: 'blue'}}>Bạn chưa có địa chỉ ví, vui lòng cập nhật địa chỉ ví</b>}
-            <p className={`m-t-10`}>Nhập địa chỉ ví: </p>
-            <Input placeholder={'Nhập địa chỉ ví'} value={binanceWallet}
+            <b style={{color: 'blue'}}>{t('recharge.wallet-empty')}</b>}
+            <p className={`m-t-10`}>{t('recharge.wallet-placeholder')}: </p>
+            <Input placeholder={t('recharge.wallet-placeholder')} value={binanceWallet}
                    onChange={e => setBinanceWallet(e.target.value)}/>
             <b style={{color: 'red'}}>{errorMessage}</b>
         </Modal>
-        <p>Địa chỉ ví hiện tại của bạn: <Tag color="#2db7f5"
+        <p>{t('recharge.wallet-current')}: <Tag color="#2db7f5"
                                              style={{color: 'white'}}>{user?.usdttrc20_wallet_address}</Tag> <a
-            onClick={() => setVisible(true)}>bấm vào đây</a> để cập nhật địa chỉ</p>
-        Vui lòng chuyển tiền đến địa chỉ ví bên dưới:
+            onClick={() => setVisible(true)}>{t('recharge.wallet-click')}</a> {t('recharge.wallet-text')}</p>
+        {t('recharge.wallet-content')}:
         <Row>
             <Col className={'ustd-address'}>{ustdAddress}</Col>
             <p className={'m-t-10'} style={{textAlign: 'center'}}>
-                <Button onClick={() => copy(ustdAddress)} type='danger'>Sao chép</Button>
+                <Button onClick={() => copy(ustdAddress)} type='danger'>{t('common.copy')}</Button>
             </p>
         </Row>
     </Fragment>

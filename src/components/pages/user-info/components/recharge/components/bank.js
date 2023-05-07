@@ -1,10 +1,13 @@
 import React, {Fragment, useState} from "react";
 import {Col, message, Row} from "antd";
 import {getSyntaxToTopupBanking} from "../../../../../../services/recharge";
+import { useTranslation } from 'react-i18next';
 import Input from "antd/es/input";
 const {Search} = Input;
 
 export default ({loading, copy}) => {
+
+    const { t } = useTranslation()
 
     const [rechargeInfo, setRechargeInfo] = useState(null)
 
@@ -15,16 +18,16 @@ export default ({loading, copy}) => {
             if (resp.status === 200) {
                 setRechargeInfo(resp.data)
             }
-        }).catch(err => message.error(err.response?.data?.message || 'Có lỗi xảy ra khi lấy mã nạp: ' + err))
+        }).catch(err => message.error(err.response?.data?.message || `${t('recharge.msg-error')}: ` + err))
             .finally(() => loading(false))
     }
 
     return <Fragment>
         <div>
-            <h1>Nhập số tiền muốn nạp: </h1>
+            <h1>{t('recharge.placeholder')}: </h1>
             <Search
-                placeholder="Nhập số tiền muốn nạp"
-                enterButton="Nạp"
+                placeholder={t('recharge.placeholder')}
+                enterButton={t('recharge.top-up')}
                 type={'number'}
                 size="default"
                 step={1000}
@@ -32,10 +35,8 @@ export default ({loading, copy}) => {
             />
         </div>
         {
-            rechargeInfo && <Fragment><h1 className={'m-t-10 m-b-10'}>Nạp tiền tự động</h1>
-                <p className={'m-t-10 m-b-10'}><i style={{color: 'blue'}}>Vui lòng chuyển khoản vào tài khoản với nội
-                    dung
-                    bên dưới</i></p>
+            rechargeInfo && <Fragment><h1 className={'m-t-10 m-b-10'}>{t('recharge.auto-top-up')}</h1>
+                <p className={'m-t-10 m-b-10'}><i style={{color: 'blue'}}>{t('recharge.content')}</i></p>
 
                 <div style={{display: "flex"}}>
 
@@ -47,30 +48,30 @@ export default ({loading, copy}) => {
                             padding: '5px',
                             fontWeight: '900'
                         }}>
-                            <h1 style={{fontWeight: 'bold'}}>Nạp tiền qua chuyển khoản</h1></div>
+                            <h1 style={{fontWeight: 'bold'}}>{t('recharge.wire-transfer')}</h1></div>
                         <Row className={'recharge-bank-information'}>
-                            <Col span={8}>Ngân Hàng</Col>
+                            <Col span={8}>{t('recharge.bank')}</Col>
                             <Col span={10}><span style={{color: "red"}}>ACB</span></Col>
                             <Col className={'recharge-bank-information-copy'} onClick={() => copy('ACB')}
-                                 span={6}>Sao chép</Col>
+                                 span={6}>{t('common.copy')}</Col>
                         </Row>
                         <Row className={'recharge-bank-information'}>
-                            <Col span={8}>Tên chủ tài khoản</Col>
+                            <Col span={8}>{t('recharge.owner')}</Col>
                             <Col span={10}><span style={{color: "red"}}>{rechargeInfo.accountNameBanking}</span></Col>
                             <Col span={6} className={'recharge-bank-information-copy'}
-                                 onClick={() => copy(rechargeInfo.accountNameBanking)}>Sao chép</Col>
+                                 onClick={() => copy(rechargeInfo.accountNameBanking)}>{t('common.copy')}</Col>
                         </Row>
                         <Row className={'recharge-bank-information'}>
-                            <Col span={8}>Số tài khoản</Col>
+                            <Col span={8}>{t('recharge.account-number')}</Col>
                             <Col span={10}><span style={{color: "red"}}>{rechargeInfo.accountNumberBanking}</span></Col>
                             <Col span={6} className={'recharge-bank-information-copy'}
-                                 onClick={() => copy(rechargeInfo.accountNumberBanking)}>Sao chép</Col>
+                                 onClick={() => copy(rechargeInfo.accountNumberBanking)}>{t('common.copy')}</Col>
                         </Row>
                         <Row className={'recharge-bank-information'}>
-                            <Col span={8}>Nội dung chuyển khoản</Col>
+                            <Col span={8}>{t('recharge.transfer-content')}</Col>
                             <Col span={10}><span style={{color: "red"}}>{rechargeInfo.systax}</span></Col>
                             <Col span={6} className={'recharge-bank-information-copy'}
-                                 onClick={() => copy(rechargeInfo.systax)}>Sao chép</Col>
+                                 onClick={() => copy(rechargeInfo.systax)}>{t('common.copy')}</Col>
                         </Row>
 
                     </div>
@@ -83,7 +84,7 @@ export default ({loading, copy}) => {
                             padding: '5px',
                             fontWeight: '900'
                         }}>
-                            <h1 style={{fontWeight: 'bold'}}>Nạp tiền qua quét mã QR</h1></div>
+                            <h1 style={{fontWeight: 'bold'}}>{t('recharge.qr-scan')}</h1></div>
                         <div style={{
                             width: "100%",
                             justifyContent: "center",
@@ -97,19 +98,19 @@ export default ({loading, copy}) => {
 
                         <div id="payQRTutorial">
                             <div className={'pay-item'}>
-                                <h1 style={{fontSize: '20px', fontWeight: "bold"}}>Hướng dẫn nạp tiền qua mã QR</h1>
+                                <h1 style={{fontSize: '20px', fontWeight: "bold"}}>{t('recharge.guide-qr')}</h1>
                             </div>
                             <div className={'pay-item'}>
-                                <span>1. Đăng nhập ứng dụng Mobile Banking, chọn chức năng Scan QR và quét mã QR trên đây.</span>
+                                <span>{t('recharge.guide-1')}</span>
                             </div>
                             <div className={'pay-item'}>
-                                <span>2. Nhập số tiền muốn nạp, kiểm tra thông tin đơn hàng (NH, chủ TK, số TK, Nội dung CK) trùng khớp với thông tin CK bên trái</span>
+                                <span>{t('recharge.guide-2')}</span>
                             </div>
                             <div className={'pay-item'}>
-                                <span>3. Xác nhận thanh toán và hoàn tất giao dịch</span>
+                                <span>{t('recharge.guide-3')}</span>
                             </div>
                             <div className={'pay-item'}>
-                                <span style={{color: 'red'}}>*Chú ý: mỗi mã QR chỉ dùng cho 1 giao dịch nạp tiền, không sử dụng lại</span>
+                                <span style={{color: 'red'}}>{t('recharge.caution')}</span>
                             </div>
                         </div>
                     </div>

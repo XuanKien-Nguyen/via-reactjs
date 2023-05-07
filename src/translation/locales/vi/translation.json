@@ -17,7 +17,10 @@
         "yes": "Có",
         "no": "Không",
         "reset": "Làm mới",
-        "close": "Đóng"
+        "close": "Đóng",
+        "copy": "Sao chép",
+        "ok": "OK",
+        "cancel": "Hủy bỏ"
     },
     "access-denied": {
         "title": "TRUY CẬP BỊ TỪ CHỐI",
@@ -107,7 +110,26 @@
         "top-up": "Nạp",
         "auto-top-up": "Nạp tiền tự động",
         "content": "Vui lòng chuyển khoản vào tài khoản với nội dung bên dưới",
-        "msg-error": "Có lỗi xảy ra khi lấy mã nạp"
+        "msg-error": "Có lỗi xảy ra khi lấy mã nạp",
+        "wire-transfer": "Nạp tiền qua chuyển khoản",
+        "bank": "Ngân hàng",
+        "owner": "Tên chủ tài khoản",
+        "account-number": "Số tài khoản",
+        "transfer-content": "Nội dung chuyển khoản",
+        "qr-scan": "Nạp tiền qua quét mã QR",
+        "guide-qr": "Hướng dẫn nạp tiền qua mã QR",
+        "guide-1": "1. Đăng nhập ứng dụng Mobile Banking, chọn chức năng Scan QR và quét mã QR trên đây.",
+        "guide-2": "2. Nhập số tiền muốn nạp, kiểm tra thông tin đơn hàng (Ngân hàng, Chủ tài khoản, Số tài khoản, Nội dung chuyển khoản) trùng khớp với thông tin chuyển khoản bên trái",
+        "guide-3": "3. Xác nhận thanh toán và hoàn tất giao dịch",
+        "caution": "*CHÚ Ý: mỗi mã QR chỉ dùng cho một giao dịch nạp tiền, không sử dụng lại",
+        "wallet-error": "Vui lòng nhập địa chỉ ví",
+        "wallet-title": "Cập nhật địa chỉ ví",
+        "wallet-empty": "Bạn chưa có địa chỉ ví, vui lòng cập nhật địa chỉ ví",
+        "wallet-placeholder": "Nhập địa chỉ ví",
+        "wallet-current": "Địa chỉ ví hiện tại của bạn",
+        "wallet-click": "bấm vào đây",
+        "wallet-text": "để cập nhật địa chỉ",
+        "wallet-content": "Vui lòng chuyển tiền đến địa chỉ ví bên dưới"
     },
     "password": {
         "button": "Đổi mật khẩu",
