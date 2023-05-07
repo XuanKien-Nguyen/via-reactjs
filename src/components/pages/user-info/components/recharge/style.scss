@@ -3,3 +3,24 @@
   //border-left: 1px solid #eaeaea;
   //border-right: 1px solid #eaeaea;
 }
+
+#payQRTutorial{
+  .pay-item{
+    padding: 0 0 10px 0;
+  }
+}
+
+.recharge-bank-information {
+  padding: 25px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.recharge-bank-information-copy{
+  background-color: #7239EA;
+  text-align: center;
+  color: #fff;
+  height: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 3px
+}
