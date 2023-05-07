@@ -72,13 +72,13 @@ const UserInfo = () => {
         setCurrent(e.key)
     }
 
-    return <div id='user_id' className='header-main_container p-t-30'>
+    return <div id='user_id' className='user-profile_container p-t-30'>
         <div className="sidebar">
             <div className="avatar">
                 <img src={require('../../../assets/img/avatar.png')} alt="" className="src"/>
                 <p>{`@${user?.username}`}<i className="id_text">{`#${user?.id}`}</i></p>
                 <Tag color={user?.role === 'admin' ? 'red' : 'blue'}>{user?.role}</Tag>
-                <span style={{marginTop: '10px'}}>{t('profile.balance')}: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available + user?.bonus || 0)}</span></span>
+                <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.balance')}: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available + user?.bonus || 0)}</span></span>
             </div>
 
             <div className="information">

@@ -49,7 +49,6 @@ export default ({loading}) => {
             title: t('order.payment-method'),
             dataIndex: 'purchase_type',
             align: 'center',
-            width: '120px',
             render: val => val === 'direct' ? t('order.direct') : t('order.api')
         },
         {
@@ -120,7 +119,7 @@ export default ({loading}) => {
 
     return <Fragment>
         <Search setPurchaseList={setDs} api={purchaseList} loading={loading} setPageInfo={setPage} page={page}/>
-        <TableCommon bordered={true} page={page} datasource={ds} columns={columns} rowKey="id" onChangePage={onChangePage} onChangeSize={onChangeSize}/>
+        <TableCommon className='table-order' bordered={true} page={page} datasource={ds} columns={columns} rowKey="id" onChangePage={onChangePage} onChangeSize={onChangeSize}/>
         {productDetail && <Modal
             width={'60vw'}
             centered
