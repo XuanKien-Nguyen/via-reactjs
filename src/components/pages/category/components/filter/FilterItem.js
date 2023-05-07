@@ -26,7 +26,7 @@ const FilterItem = ({id, title, options, setValue, defaultValue, type = 'select'
         } else {
             return <Select
                 showSearch
-                style={{ width: 300 }}
+                style={{ width }}
                 placeholder={placeholder || title}
                 defaultValue={defaultValue}
                 optionFilterProp="children"
