@@ -10,11 +10,11 @@ export const checkValue = (value, key) => {
   return (!value && value !== false) || /^\s*$/.test(value) ? false : true;
 };
 
-export const isEmail = email => /^[a-z0-9._%+-]+@.+\..+/.test(email);
+export const isEmail = email => /^[a-zA-Z0-9._%+-]+@.+\..+/.test(email);
 
 export const isPhoneNumberVN = phone => /(84|0[3|5|7|8|9])+([0-9]{8})\b/.test(phone);
 
-export const isUsername = username => /^[a-z0-9_]{3,15}$/.test(username);
+export const isUsername = username => /^[a-zA-Z0-9_]{3,15}$/.test(username);
 
 export const createHash = (arr, key) => {
   var Hash = function() {
