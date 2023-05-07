@@ -7,7 +7,7 @@ const {TabPane} = Tabs;
 
 export default ({loading}) => {
 
-    const [currentTab, setCurrentTab] = useState('ustd')
+    const [currentTab, setCurrentTab] = useState('bank')
 
     const copy = val => {
         message.success('Sao chép thành công')
@@ -24,7 +24,10 @@ export default ({loading}) => {
                 {currentTab === 'bank' && <Bank loading={loading} copy={copy} />}
             </TabPane>
             <TabPane
-                tab={<img src={require('../../../../../assets/img/ustd.png')} width={'37px'} alt="USTD"/>}
+                tab={<img src={require('../../../../../assets/img/ustd.png')} style={{
+                    width: '50px',
+                    padding: '4px 10px'
+                }} alt="USTD"/>}
                 key="ustd">
                 {currentTab === 'ustd' && <USTD loading={loading} copy={copy} changTab={setCurrentTab} />}
             </TabPane>
