@@ -107,7 +107,7 @@ function HeaderLayout({ history }) {
                     /></div>
                     <div className='header-top_right'>
                         <ul>
-                            <li className='item'><a href='#'>{t('common.all-product')}</a></li>
+                            <li className='item'><a href='#' onClick={() => history.push('/categories')}>{t('common.all-product')}</a></li>
                             <li className='item'><a href='#'>{t('common.guide')}</a></li>
                             <li className='item'><a href='#'>{t('common.recharge')}</a></li>
                             <li className='item'><a href='#'>{t('common.tricks')}</a></li>

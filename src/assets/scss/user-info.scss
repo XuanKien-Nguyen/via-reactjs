@@ -6,6 +6,8 @@
   margin-top: 32px;
   margin-bottom: 32px;
   align-items: inherit;
+  display: flex;
+  height: 100%;
 
   // .user-profile_container {
   //   display: flex;
@@ -80,6 +82,7 @@
       margin-top: 0 !important;
       .sidebar {
         display: flex;
+        width: 100%;
         padding: 0 15px !important;
         .avatar {
           max-width: 250px !important;
