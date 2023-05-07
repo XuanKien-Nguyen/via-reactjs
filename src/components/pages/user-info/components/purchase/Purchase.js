@@ -38,6 +38,18 @@ export default ({loading}) => {
             align: 'center'
         },
         {
+            title: 'Nội dung',
+            dataIndex: 'content',
+            align: 'center'
+        },
+        {
+            title: 'Phương thức thanh toán',
+            dataIndex: 'purchase_type',
+            align: 'center',
+            width: '120px',
+            render: val => val === 'direct' ? 'Trực tiếp' : 'Cộng tác viên'
+        },
+        {
             title: 'Tình trạng',
             dataIndex: 'status',
             align: 'center',
@@ -70,7 +82,7 @@ export default ({loading}) => {
                         <Button type='primary' onClick={() => history.push({search: `?menu=${query.get('menu')}&id=${row.id}`})}><Icon type="file-search" /></Button>
                     </Tooltip>
                     <Tooltip title={'Tải xuống'}>
-                        <Button type={'danger'} style={{marginLeft: '10px'}} onClick={() => handleDownload(row.id, row.category_name)}><Icon type="download" /></Button>
+                        <Button type={'danger'} style={{margin: '5px 0px'}} onClick={() => handleDownload(row.id, row.category_name)}><Icon type="download" /></Button>
                     </Tooltip>
                 </div>
             }
