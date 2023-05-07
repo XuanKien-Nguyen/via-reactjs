@@ -44,7 +44,7 @@ function MainLayout() {
                 setForceRender(forceRender + 1)
                 localStorage.removeItem('user_info')
                 localStorage.removeItem('is_logged')
-                dispatch({type: "LOGOUT"})
+                // dispatch({type: "LOGOUT"})
             }).finally(() => setLoading(false));
         } else {
             accessRoutes = baseRoutes
