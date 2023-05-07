@@ -5,7 +5,7 @@ import { DatePicker } from 'antd';
 const { RangePicker } = DatePicker;
 
 const { Option } = Select;
-const FilterItem = ({id, title, options, setValue, defaultValue, type = 'select', width = 300, placeholder}) => {
+const FilterItem = ({id, title, options, setValue, defaultValue, type = 'select', width = '100%', placeholder}) => {
 
     const onChange = (value) => {
         setValue(value)
@@ -26,7 +26,7 @@ const FilterItem = ({id, title, options, setValue, defaultValue, type = 'select'
         } else {
             return <Select
                 showSearch
-                style={{ width: 300 }}
+                style={{ width: '100%' }}
                 placeholder={placeholder || title}
                 defaultValue={defaultValue}
                 optionFilterProp="children"
