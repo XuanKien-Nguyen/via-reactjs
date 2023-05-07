@@ -170,7 +170,7 @@ ul {
 .QandA-container,
 .feature-container,
 .filter {
-    max-width: 1170px !important;
+    max-width: 1400px !important;
     margin-left: auto;
     margin-right: auto;
     padding: 0 15px;
@@ -386,7 +386,7 @@ li .item-button {
         background-color: rgba(243, 243, 243, 0.7);
     }
     .slick-list {
-        max-width: 1170px !important;
+        max-width: 1400px !important;
         margin: auto !important;
 
         .slick-slide {
@@ -686,7 +686,7 @@ li .item-button {
 
     .feature-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
 
         .feature-item {
             display: flex;
