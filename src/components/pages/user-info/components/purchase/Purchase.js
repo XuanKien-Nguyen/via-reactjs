@@ -58,11 +58,11 @@ export default ({loading}) => {
             render: status => {
                 const r = {
                     color: '#f50',
-                    text: t('order.valid')
+                    text: t('order.invalid')
                 }
                 if (status === 'valid') {
                     r.color = '#87d068'
-                    r.text = t('order.invalid')
+                    r.text = t('order.valid')
                 }
                 return <Tag color={r.color}>{r.text}</Tag>
             }
@@ -80,7 +80,7 @@ export default ({loading}) => {
             align: 'center',
             render: row => {
                 return <div>
-                    <Tooltip title={t('order.detail')}>
+                    <Tooltip title={t('order.detail')} className={'m-r-10'}>
                         <Button type='primary' onClick={() => history.push({search: `?menu=${query.get('menu')}&id=${row.id}`})}><Icon type="file-search" /></Button>
                     </Tooltip>
                     <Tooltip title={t('order.download')}>
