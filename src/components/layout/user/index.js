@@ -1,8 +1,10 @@
-import {Layout} from "antd";
-import HeaderLayoutUser from "./HeaderLayout";
-import {useHistory} from "react-router-dom";
-import FooterLayoutUser from "./FooterLayout";
 import React from "react";
+import {Layout} from "antd";
+import {useHistory} from "react-router-dom";
+import HeaderLayoutUser from "./HeaderLayout";
+import FooterLayoutUser from "./FooterLayout";
+import BreadCrumbUser from "../../pages/common/breadcrumb/BreadCrumb";
+
 
 const {Content} = Layout;
 
@@ -15,6 +17,7 @@ const LayoutUser = ({children}) => {
         <Layout>
             <HeaderLayoutUser history={history}/>
             <Content style={{padding: '0', margin: '0'}}>
+                {history.location.pathname !== '/' ? <BreadCrumbUser history={history} /> : ''}
                 {children}
             </Content>
             <FooterLayoutUser/>

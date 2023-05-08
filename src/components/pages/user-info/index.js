@@ -7,7 +7,7 @@ import PurchaseDetail from './components/purchase/components/Detail'
 import Recharge from './components/recharge'
 import Footer from './components/footer'
 import '../../../assets/scss/user-info.scss'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Button, Icon, Menu, Tag} from 'antd';
 import {LayoutContext} from "../../../contexts";
 import {useHistory, useLocation} from "react-router-dom";
@@ -32,6 +32,8 @@ const UserInfo = () => {
     const location = useLocation()
 
     const [purchaseDetailId, setPurchaseDetailId] = useState(null)
+
+    const dispatch = useDispatch()
 
     // useEffect(() => {
     //     history.push({search: `?menu=${current}`})
@@ -70,6 +72,9 @@ const UserInfo = () => {
     const changeMenu = e => {
         history.push({search: `?menu=${e.key}`})
         setCurrent(e.key)
+        setTimeout(() => {
+            dispatch({type: 'SET_CHILDREN_BREADSCRUMB', payload: e.item.props.children[1]})
+        }, 100)
     }
 
     return <div id='user_id' className='user-profile_container p-t-30'>

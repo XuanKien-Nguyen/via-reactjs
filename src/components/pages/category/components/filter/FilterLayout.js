@@ -105,7 +105,7 @@ const FilterLayout = ({setResultSearch, parentId}) => {
   }, [category, productStatus, location])
 
   return (
-    <div className='filter'>
+    <div className='filter-product'>
       <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
             <Panel key={1} className='filter-container' header={<div className='filter-header'><div><Icon type="filter" theme="filled" />&nbsp;{t('filter.title')}</div></div>}>
               <FilterItem key={1} id={'category'} title={t('filter.category')} options={[SELECT_ALL, ...categories?.list] || [SELECT_ALL]} setValue={setCategory} defaultValue={category}/>

@@ -67,7 +67,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
             .finally(() => loading(false))
     }
 
-    return <div className='product-page filter-order'>
+    return <div className='filter-order'>
         <div className='filter' style={{padding: '0px'}}>
             <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
                 <Panel key={1} className='filter-container' header={<div className='filter-header'>

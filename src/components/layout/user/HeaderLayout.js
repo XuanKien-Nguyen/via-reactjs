@@ -95,6 +95,11 @@ function HeaderLayout({ history }) {
         i18n.changeLanguage(value);
     }
 
+    const searchProduct = (value) => {
+        console.log(value);
+        history.push('/categories')
+    }
+
     return (
         <Header id='header_user' style={{ height: 'auto', padding: 0, margin: 0 }}>
             <div id="top-bar" className="header-top" style={{ backgroundColor: '#1b74e4', height: '40px', lineHeight: '40px' }}>
@@ -102,12 +107,12 @@ function HeaderLayout({ history }) {
                     <div className="header-top_left"><Search
                         type='search'
                         placeholder={t('common.placeholder-search')}
-                        onSearch={value => console.log(value)}
+                        onSearch={searchProduct}
                         style={{ width: 156, color: 'white' }}
                     /></div>
                     <div className='header-top_right'>
                         <ul>
-                            <li className='item'><a href='#' onClick={() => history.push('/categories')}>{t('common.all-product')}</a></li>
+                            <li className='item'><a href='#' onClick={searchProduct}>{t('common.all-product')}</a></li>
                             <li className='item'><a href='#'>{t('common.guide')}</a></li>
                             <li className='item'><a href='#'>{t('common.recharge')}</a></li>
                             <li className='item'><a href='#'>{t('common.tricks')}</a></li>
@@ -152,6 +157,9 @@ function HeaderLayout({ history }) {
             <div className='header-divider'><div className='top-divider'></div></div>
             <div id="header__mobile" className='nav-bar__moblie'>
                 <div className='nav-bar-container'>
+                    <div className='header-logo' style={{ marginBottom: '8px', cursor: 'pointer' }} onClick={() => history.push('/')}>
+                        <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{ width: '150px' }} />
+                    </div>
                     <Tabs defaultActiveKey="1">
                         <TabPane tab="MENU" key="1">
                             <Menu

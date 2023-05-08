@@ -65,6 +65,8 @@ function MainLayout() {
         }
         const currentRoute = routes.find(el => el.path === pathname)
         document.title = `${currentRoute.name}`
+        dispatch({type: "SET_BREADSCRUMB", payload: {name: currentRoute.name, path: currentRoute.path}
+        })
     }, [location, forceRender])
 
 
