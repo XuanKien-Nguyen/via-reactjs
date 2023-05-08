@@ -75,11 +75,14 @@
     },
     "profile": {
         "balance" : "Balance",
+        "bonus" : "Bonus",
         "information": "PERSONAL INFORMATION",
         "order": "ORDER",
         "recharge": "RECHARGE",
         "change-password": "CHANGE PASSWORD",
-        "2fa": "2FA AUTHENTICATION"
+        "2fa": "2FA AUTHENTICATION",
+        "recharge-history": "RECHARGE HISTORY",
+        "balance-history": "BALANCE HISTORY"
     },
     "info": {
         "fullname": "Full name",
@@ -125,7 +128,7 @@
         "caution": "*CAUTION: each QR code is only used for one recharge transaction, can not be reused",
         "wallet-error": "Please enter wallet address",
         "wallet-title": "Update wallet address",
-        "wallet-empty": "You do not have a wallet address, please update your wallet address",
+        "wallet-empty": "You do not have a wallet address USTD-TRC20, please update the wallet address used to transfer money",
         "wallet-placeholder": "Enter wallet adress",
         "wallet-current": "Your current wallet address",
         "wallet-click": "click here",
@@ -158,5 +161,15 @@
         "enter-otp": "Please enter OTP code",
         "otp": "OPT code",
         "get-qr": "Get QR code"
+    },
+    "user-balance-type": {
+        "MANAGER_UPDATE_BONUS": "ADMIN add money",
+        "MANAGER_RESOLVED_RECHARGE": "Handling error recharge",
+        "MANAGER_RESTORE_RECHARGE": "Refund of error recharge",
+        "SYSTEM_UPDATE_PURCHASE_DIRECT": "Direct purchase",
+        "SYSTEM_UPDATE_PURCHASE_API": "Purchasing collaborator",
+        "SYSTEM_BANKING": "Bank recharge",
+        "SYSTEM_TRC20": "Top up virtual money",
+        "MANAGER_REFUND": "Warranty refund"
     }
 }

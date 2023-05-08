@@ -75,11 +75,14 @@
     },
     "profile": {
         "balance" : "Số dư",
+        "bonus" : "Khuyến mãi",
         "information": "THÔNG TIN CÁ NHÂN",
         "order": "ĐƠN HÀNG",
         "recharge": "NẠP TIỀN",
         "change-password": "ĐỔI MẬT KHẨU",
-        "2fa": "BẬT XÁC THỰC 2FA"
+        "2fa": "BẬT XÁC THỰC 2FA",
+        "recharge-history": "LỊCH SỬ NẠP TIỀN",
+        "balance-history": "LỊCH SỬ THAY ĐỔI SỐ DƯ"
     },
     "info": {
         "fullname": "Tên đầy đủ",
@@ -125,7 +128,7 @@
         "caution": "*CHÚ Ý: mỗi mã QR chỉ dùng cho một giao dịch nạp tiền, không sử dụng lại",
         "wallet-error": "Vui lòng nhập địa chỉ ví",
         "wallet-title": "Cập nhật địa chỉ ví",
-        "wallet-empty": "Bạn chưa có địa chỉ ví, vui lòng cập nhật địa chỉ ví",
+        "wallet-empty": "Bạn chưa có địa chỉ ví USTD-TRC20, vui lòng cập nhật địa chỉ ví dùng để chuyển tiền",
         "wallet-placeholder": "Nhập địa chỉ ví",
         "wallet-current": "Địa chỉ ví hiện tại của bạn",
         "wallet-click": "bấm vào đây",
@@ -158,5 +161,15 @@
         "enter-otp": "Vui lòng nhập mã OTP",
         "otp": "Mã OTP",
         "get-qr": "Lấy mã QR"
+    },
+    "user-balance-type": {
+        "MANAGER_UPDATE_BONUS": "QTV cộng tiền",
+        "MANAGER_RESOLVED_RECHARGE": "Xử lý nạp lỗi",
+        "MANAGER_RESTORE_RECHARGE": "Hoàn tiền nạp lỗi",
+        "SYSTEM_UPDATE_PURCHASE_DIRECT": "Mua trực tiếp",
+        "SYSTEM_UPDATE_PURCHASE_API": "CTV mua hàng",
+        "SYSTEM_BANKING": "Nạp tiền ngân hàng",
+        "SYSTEM_TRC20": "Nạp tiền ảo",
+        "MANAGER_REFUND": "Hoàn tiền bảo hành"
     }
 }

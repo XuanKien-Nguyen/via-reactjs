@@ -94,3 +94,9 @@ body, html {
   margin-right: auto;
   padding: 0 15px;
 }
+
+/*--------------------*/
+
+.ant-table-wrapper {
+  overflow-y: auto;
+}

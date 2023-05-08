@@ -24,9 +24,9 @@ export default ({loading}) => {
                 {currentTab === 'bank' && <Bank loading={loading} copy={copy} />}
             </TabPane>
             <TabPane
-                tab={<img src={require('../../../../../assets/img/ustd.png')} style={{
+                tab={<img src={require('../../../../../assets/svg/ustd-tron.svg')} style={{
                     width: '50px',
-                    padding: '4px 10px'
+                    padding: '2px 12px'
                 }} alt="USTD"/>}
                 key="ustd">
                 {currentTab === 'ustd' && <USTD loading={loading} copy={copy} changTab={setCurrentTab} />}

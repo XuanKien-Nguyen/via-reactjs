@@ -5,14 +5,24 @@ import './style.scss'
 
 const PAGE_SIZE_OPTION = ['5', '10', '20', '30', '50']
 
-export default ({datasource, columns, page, onChangePage, onChangeSize, bordered, className = ''}) => {
+export default (props) => {
+
+    const {datasource, columns, page, onChangePage, onChangeSize, bordered, className = '', expandedRowRender} = props
 
     const { t } = useTranslation()
 
     const {perpage, currentPage, total} = page
 
     return <Fragment >
-        <Table className={className} bordered={bordered} dataSource={datasource} columns={columns} rowKey="id" pagination={false} />
+        <Table className={className}
+               bordered={bordered}
+               dataSource={datasource}
+               columns={columns}
+               rowKey="id"
+               expandedRowRender={expandedRowRender ? expandedRowRender : null}
+               pagination={false}
+               {...props}
+        />
         <div id={'common_table'}>
             <Pagination defaultCurrent={1}
                         current={currentPage}
