@@ -161,5 +161,15 @@
         "enter-otp": "Please enter OTP code",
         "otp": "OPT code",
         "get-qr": "Get QR code"
+    },
+    "user-balance-type": {
+        "MANAGER_UPDATE_BONUS": "ADMIN add money",
+        "MANAGER_RESOLVED_RECHARGE": "Handling error recharge",
+        "MANAGER_RESTORE_RECHARGE": "Refund of error recharge",
+        "SYSTEM_UPDATE_PURCHASE_DIRECT": "Direct purchase",
+        "SYSTEM_UPDATE_PURCHASE_API": "Purchasing collaborator",
+        "SYSTEM_BANKING": "Bank recharge",
+        "SYSTEM_TRC20": "Top up virtual money",
+        "MANAGER_REFUND": "Warranty refund"
     }
 }

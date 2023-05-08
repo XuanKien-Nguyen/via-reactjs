@@ -55,3 +55,12 @@ export const changeBinanceWallet = (body) => {
 export const getLogUserLogin = () => {
     return client.get(`/api/log-user-login/client/`)
 }
+
+export const getLogUserBalance = (params) => {
+    return client.get(`/api/log-user-balance/client/`, {params})
+}
+
+export const getLogUserBalanceType = () => {
+    return client.get(`/api/log-user-balance/common/log-user-balance-type`)
+}
+

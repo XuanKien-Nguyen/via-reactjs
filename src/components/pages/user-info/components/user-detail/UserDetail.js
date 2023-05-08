@@ -24,11 +24,6 @@ const UserDetail = ({form, user, loading}) => {
             dataIndex: 'ip'
         },
         {
-            title: 'Trình duyệt',
-            dataIndex: 'browser',
-            key: Math.random()
-        },
-        {
             title: 'Khu vực',
             dataIndex: 'location',
             align: 'center',
@@ -59,7 +54,6 @@ const UserDetail = ({form, user, loading}) => {
     useEffect(() =>{
         loading(true)
         getLogUserLogin().then(resp => {
-            console.log(resp);
             if (resp.status === 200) {
                 setLoginList(resp.data?.logUserLoginList || [])
             }

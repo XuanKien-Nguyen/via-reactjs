@@ -161,5 +161,15 @@
         "enter-otp": "Vui lòng nhập mã OTP",
         "otp": "Mã OTP",
         "get-qr": "Lấy mã QR"
+    },
+    "user-balance-type": {
+        "MANAGER_UPDATE_BONUS": "QTV cộng tiền",
+        "MANAGER_RESOLVED_RECHARGE": "Xử lý nạp lỗi",
+        "MANAGER_RESTORE_RECHARGE": "Hoàn tiền nạp lỗi",
+        "SYSTEM_UPDATE_PURCHASE_DIRECT": "Mua trực tiếp",
+        "SYSTEM_UPDATE_PURCHASE_API": "CTV mua hàng",
+        "SYSTEM_BANKING": "Nạp tiền ngân hàng",
+        "SYSTEM_TRC20": "Nạp tiền ảo",
+        "MANAGER_REFUND": "Hoàn tiền bảo hành"
     }
 }
