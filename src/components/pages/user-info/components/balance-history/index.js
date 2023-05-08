@@ -106,36 +106,36 @@ export default ({loading}) => {
             render: type => <b>{t(MAP_TYPE[type])}</b>
         },
         {
-            title: 'Tiền khuyến mãi',
+            title: 'Nội dung',
+            dataIndex: 'content',
+            width: '350px',
+        },
+        {
+            title: 'Tiền khuyến mãi đã sử dụng',
             dataIndex: 'add_bonus',
             align: 'center',
             width: '150px',
             render: el => {
                 if (el && (el + '').startsWith('-')) {
                     return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
+                } else if (el === 0) {
+                    return <b>0 VND</b>
                 }
                 return <b style={{color: 'green'}}>{el === 0 ? '0' : `+${convertCurrencyVN(el)}`}</b>
             }
         },
         {
-            title: 'Tiền tài khoản',
+            title: 'Tiền tài khoản đã sử dụng',
             dataIndex: 'add_amount',
             width: '150px',
             align: 'center',
             render: el => {
                 if (el && (el + '').startsWith('-')) {
                     return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
+                } else if (el === 0) {
+                    return <b>0 VND</b>
                 }
-                return <b style={{color: 'green'}}>{el === 0 ? '0' : `+${convertCurrencyVN(el)}`}</b>
-            }
-        },
-        {
-            title: 'Số dư tài khoản',
-            dataIndex: 'amount_remain',
-            width: '150px',
-            align: 'center',
-            render: el => {
-                return <b style={{color: 'green'}}>{convertCurrencyVN(el)}</b>
+                return <b style={{color: 'green'}}>{`+${convertCurrencyVN(el)}`}</b>
             }
         },
         {
@@ -144,13 +144,17 @@ export default ({loading}) => {
             width: '150px',
             align: 'center',
             render: el => {
-                return <b style={{color: 'green'}}>{convertCurrencyVN(el)}</b>
+                return <b style={{color: 'blue'}}>{convertCurrencyVN(el)}</b>
             }
         },
         {
-            title: 'Nội dung',
-            dataIndex: 'content',
-            width: '350px',
+            title: 'Số dư tài khoản',
+            dataIndex: 'amount_remain',
+            width: '150px',
+            align: 'center',
+            render: el => {
+                return <b style={{color: 'blue'}}>{convertCurrencyVN(el)}</b>
+            }
         },
         {
             title: 'Tạo bởi',

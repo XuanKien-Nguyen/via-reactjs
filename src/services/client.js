@@ -28,7 +28,6 @@ client.interceptors.response.use(
     },
     err => {
         const originalRequest = err.config;
-        console.log('err', err.response);
         if (err.response.status === 401 && !originalRequest._retry && !API_WHITE_LIST.some(el => el === err.config.url)) {
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {
