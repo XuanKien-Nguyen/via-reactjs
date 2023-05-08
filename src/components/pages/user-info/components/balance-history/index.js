@@ -112,26 +112,25 @@ export default ({loading}) => {
                 return <b style={{color: 'green'}}>{el === 0 ? '0' : `+${convertCurrencyVN(el)}`}</b>
             }
         },
-        // {
-        //     title: 'Số dư tài khoản',
-        //     dataIndex: 'amount_remain',
-        //     align: 'center',
-        //     render: el => {
-        //         return <b style={{color: 'green'}}>{convertCurrencyVN(el)}</b>
-        //     }
-        // },
-        // {
-        //     title: 'Số dư khuyến mãi',
-        //     dataIndex: 'bonus_remain',
-        //     align: 'center',
-        //     render: el => {
-        //         return <b style={{color: 'green'}}>{convertCurrencyVN(el)}</b>
-        //     }
-        // },
+        {
+            title: 'Số dư tài khoản',
+            dataIndex: 'amount_remain',
+            align: 'center',
+            render: el => {
+                return <b style={{color: 'green'}}>{convertCurrencyVN(el)}</b>
+            }
+        },
+        {
+            title: 'Số dư khuyến mãi',
+            dataIndex: 'bonus_remain',
+            align: 'center',
+            render: el => {
+                return <b style={{color: 'green'}}>{convertCurrencyVN(el)}</b>
+            }
+        },
         {
             title: 'Nội dung',
-            dataIndex: 'content',
-            width: '150px'
+            dataIndex: 'content'
         },
         {
             title: 'Tạo bởi',
@@ -146,7 +145,8 @@ export default ({loading}) => {
         {
             title: 'Thao tác',
             align: 'center',
-            width: '90px',
+            width: '80px',
+            fixed: 'right',
             render: row => {
                 return <div>
                     <Tooltip title={t('order.detail')}>
@@ -167,6 +167,7 @@ export default ({loading}) => {
                 getTypeList={getTypeList}
         />
         <TableCommon className='table-order'
+                     scroll={{ x: 1500 }}
                      bordered={true}
                      page={page}
                      datasource={datasource}

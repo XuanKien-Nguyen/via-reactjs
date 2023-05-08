@@ -65,6 +65,7 @@ export default ({setList, api, loading, setPageInfo, page, t, getTypeList}) => {
                     <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                 placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
                     <FilterItem defaultValue={type} setValue={setType} options={getTypeList()} type={'select'}
+                                allowClear={true}
                                 title={t('filter.status')}/>
                 </Panel>
             </Collapse>

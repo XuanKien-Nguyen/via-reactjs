@@ -78,3 +78,7 @@ body, html {
 .m-b-10 {
   margin-bottom: 10px
 }
+
+.ant-table-wrapper {
+  overflow-y: auto;
+}
