@@ -505,6 +505,8 @@ li .item-button {
 }
 
 .product-image__modal {
+    max-width: 800px;
+    min-width: 300px;
     .ant-modal-close-x {
         width: 32px !important;
         height: 32px !important;
@@ -513,8 +515,19 @@ li .item-button {
 
     .ant-modal-body {
         img {
+            margin: auto;
             margin-top: 8px !important;
         }  
+    }
+}
+
+.product-desc__modal {
+    max-width: 500px;
+    min-width: 300px;
+    .ant-modal-close-x {
+        width: 32px !important;
+        height: 32px !important;
+        line-height: 32px !important;
     }
 }
 
@@ -687,14 +700,14 @@ li .item-button {
             }
 
             .shopping-button,
-            .show-image-button {
+            .show-image-button,
+            .show-desc-button {
                 padding: 6px 8px;
-                border-radius: 8px;
+                border-radius: 6px;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-top: 12px;
             }
         }
     }
