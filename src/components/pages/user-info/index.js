@@ -85,8 +85,10 @@ const UserInfo = () => {
                 <img src={require('../../../assets/img/avatar.png')} alt="" className="src"/>
                 <p>{`@${user?.username}`}<i className="id_text">{`#${user?.id}`}</i></p>
                 <Tag color={user?.role === 'admin' ? 'red' : 'blue'}>{user?.role}</Tag>
-                <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.balance')}: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available || 0)}</span></span>
-                <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.bonus')}: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.bonus || 0)}</span></span>
+                <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.balance')}: </span>
+                <p style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available || 0)}</p>
+                <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.bonus')}: </span>
+                <p style={{color: 'blue'}}>{convertCurrencyVN(user?.bonus || 0)}</p>
             </div>
 
             <div className="information">

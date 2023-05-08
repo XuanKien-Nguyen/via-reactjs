@@ -31,6 +31,7 @@ const UserDetail = ({form, user, loading}) => {
         {
             title: 'Khu vực',
             dataIndex: 'location',
+            align: 'center',
             render: l => {
                 if (l) {
                     return l
