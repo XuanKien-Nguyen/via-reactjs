@@ -82,18 +82,21 @@ export default ({loading}) => {
             title: 'ID',
             dataIndex: 'id',
             align: 'center',
+            width: '100px',
             render: id => <b>#{id}</b>
         },
         {
             title: 'Loại',
             dataIndex: 'type',
             align: 'center',
+            width: '150px',
             render: type => <b>{t(MAP_TYPE[type])}</b>
         },
         {
             title: 'Tiền khuyến mãi',
             dataIndex: 'add_bonus',
             align: 'center',
+            width: '150px',
             render: el => {
                 if (el && (el + '').startsWith('-')) {
                     return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
@@ -104,6 +107,7 @@ export default ({loading}) => {
         {
             title: 'Tiền tài khoản',
             dataIndex: 'add_amount',
+            width: '150px',
             align: 'center',
             render: el => {
                 if (el && (el + '').startsWith('-')) {
@@ -115,6 +119,7 @@ export default ({loading}) => {
         {
             title: 'Số dư tài khoản',
             dataIndex: 'amount_remain',
+            width: '150px',
             align: 'center',
             render: el => {
                 return <b style={{color: 'green'}}>{convertCurrencyVN(el)}</b>
@@ -123,6 +128,7 @@ export default ({loading}) => {
         {
             title: 'Số dư khuyến mãi',
             dataIndex: 'bonus_remain',
+            width: '150px',
             align: 'center',
             render: el => {
                 return <b style={{color: 'green'}}>{convertCurrencyVN(el)}</b>
@@ -130,7 +136,8 @@ export default ({loading}) => {
         },
         {
             title: 'Nội dung',
-            dataIndex: 'content'
+            dataIndex: 'content',
+            width: '350px',
         },
         {
             title: 'Tạo bởi',
@@ -167,7 +174,7 @@ export default ({loading}) => {
                 getTypeList={getTypeList}
         />
         <TableCommon className='table-order'
-                     scroll={{ x: 1500 }}
+                     scroll={{ x: true }}
                      bordered={true}
                      page={page}
                      datasource={datasource}
