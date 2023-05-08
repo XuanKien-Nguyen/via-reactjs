@@ -184,7 +184,7 @@ export default ({loading}) => {
     ];
 
     return <Fragment>
-        <div className={'hehe'} style={{width: withTable}}>
+        {/* <div className={'hehe'} style={{width: withTable}}> */}
             <Search setList={setDatasource}
                     api={getLogUserBalance}
                     loading={loading}
@@ -205,6 +205,6 @@ export default ({loading}) => {
                          onChangeSize={onChangeSize}/>
 
             <Detail detail={detail} visible={visible} setVisible={setVisible} mapType={MAP_TYPE} t={t}/>
-        </div>
+        {/* </div> */}
     </Fragment>
 }
