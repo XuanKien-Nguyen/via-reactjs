@@ -114,3 +114,11 @@ export const textToFile = (filename, text) => {
 
   document.body.removeChild(element);
 }
+
+export const getWindowDimensions = () => {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
