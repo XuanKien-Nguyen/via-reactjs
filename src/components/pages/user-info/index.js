@@ -5,6 +5,8 @@ import Enable2Fa from "./components/enable2fa/Enable2Fa";
 import PurchaseList from './components/purchase/Purchase'
 import PurchaseDetail from './components/purchase/components/Detail'
 import Recharge from './components/recharge'
+import RechargeHistory from './components/recharge-history'
+import BalanceHistory from './components/balance-history'
 import Footer from './components/footer'
 import '../../../assets/scss/user-info.scss'
 import {useSelector} from "react-redux";
@@ -12,6 +14,7 @@ import {Button, Icon, Menu, Tag} from 'antd';
 import {LayoutContext} from "../../../contexts";
 import {useHistory, useLocation} from "react-router-dom";
 import {convertCurrencyVN} from "../../../utils/helpers";
+
 
 import { useTranslation } from 'react-i18next';
 
@@ -63,8 +66,12 @@ const UserInfo = () => {
             return <PurchaseList loading={setLoading}/>
         } else if (current === 'recharge') {
             return <Recharge loading={setLoading}/>
+        } else if (current === 'recharge-history') {
+            return <RechargeHistory loading={setLoading}/>
+        } else if (current === 'balance-history') {
+            return <BalanceHistory loading={setLoading}/>
         }
-        return <UserDetail user={user} />
+        return <UserDetail user={user} loading={setLoading} />
     }
 
     const changeMenu = e => {
@@ -78,7 +85,8 @@ const UserInfo = () => {
                 <img src={require('../../../assets/img/avatar.png')} alt="" className="src"/>
                 <p>{`@${user?.username}`}<i className="id_text">{`#${user?.id}`}</i></p>
                 <Tag color={user?.role === 'admin' ? 'red' : 'blue'}>{user?.role}</Tag>
-                <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.balance')}: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available + user?.bonus || 0)}</span></span>
+                <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.balance')}: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available || 0)}</span></span>
+                <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.bonus')}: <span style={{color: 'blue'}}>{convertCurrencyVN(user?.bonus || 0)}</span></span>
             </div>
 
             <div className="information">
@@ -105,6 +113,14 @@ const UserInfo = () => {
                     <Menu.Item key="change-password">
                         <Icon type="lock" />
                         {t('profile.change-password')}
+                    </Menu.Item>
+                    <Menu.Item key="recharge-history">
+                        <Icon type="dollar" />
+                        {t('profile.recharge-history')}
+                    </Menu.Item>
+                    <Menu.Item key="balance-history">
+                        <Icon type="file-sync" />
+                        {t('profile.balance-history')}
                     </Menu.Item>
                     { (user?.role === 'admin' || user?.role === 'staff') &&<Menu.Item key="auth-2fa">
                         <Icon type="qrcode" />

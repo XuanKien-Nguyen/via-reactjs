@@ -52,4 +52,6 @@ export const changeBinanceWallet = (body) => {
     return client.patch(`${ENDPOINT_USER}/change-binance-wallet`, body)
 }
 
-
+export const getLogUserLogin = () => {
+    return client.get(`/api/log-user-login/client/`)
+}
