@@ -64,3 +64,12 @@ export const getLogUserBalanceType = () => {
     return client.get(`/api/log-user-balance/common/log-user-balance-type`)
 }
 
+export const forgotPassword = (body) => {
+    return client.post(`${ENDPOINT_USER}/forgot-password`, body)
+}
+
+export const resetPassword = (email, token, body) => {
+    return client.post(`${ENDPOINT_USER}/forgot-password/${email}/${token}`, body)
+}
+
+

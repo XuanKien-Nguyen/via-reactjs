@@ -1,5 +1,5 @@
 const initialState = {
-    breadscrumb: {
+    breadcrumb: {
         name: '',
         path: '/',
         children: null
@@ -8,20 +8,20 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case "SET_BREADSCRUMB":
+        case "SET_BREADCRUMB":
             return {
                 ...state,
-                breadscrumb: {
+                breadcrumb: {
                     name: action.payload.name,
                     path: action.payload.path,
                     children: null
                 }
             }
-        case "SET_CHILDREN_BREADSCRUMB":
+        case "SET_CHILDREN_BREADCRUMB":
             return {
                 ...state,
-                breadscrumb: {
-                    ...state.breadscrumb,
+                breadcrumb: {
+                    ...state.breadcrumb,
                     children: action.payload
                 }
             }

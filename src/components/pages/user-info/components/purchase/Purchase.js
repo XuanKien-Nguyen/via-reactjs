@@ -32,16 +32,19 @@ export default ({loading}) => {
         {
             title: t('order.id'),
             dataIndex: 'id',
+            width: '150px',
             render: id => `#${id}`,
             align: 'center'
         },
         {
             title: t('order.date'),
+            width: '200px',
             dataIndex: 'created_time',
             align: 'center'
         },
         {
             title: t('order.content'),
+            width: '300px',
             dataIndex: 'content',
             align: 'center'
         },
@@ -49,12 +52,14 @@ export default ({loading}) => {
             title: t('order.payment-method'),
             dataIndex: 'purchase_type',
             align: 'center',
+            width: '150px',
             render: val => val === 'direct' ? t('order.direct') : t('order.api')
         },
         {
             title: t('order.status'),
             dataIndex: 'status',
             align: 'center',
+            width: '150px',
             render: status => {
                 const r = {
                     color: '#f50',
@@ -69,6 +74,7 @@ export default ({loading}) => {
         },
         {
             title: t('order.total'),
+            width: '200px',
             render: row => {
                 return <div>
                     <b>{convertCurrencyVN(row.total_amount)}</b>
@@ -78,11 +84,13 @@ export default ({loading}) => {
         {
             title: t('order.action'),
             align: 'center',
+            fixed: 'right',
             render: row => {
                 return <div>
-                    <Tooltip title={t('order.detail')} className={'m-r-10'}>
+                    <Tooltip title={t('order.detail')}>
                         <Button type='primary' onClick={() => history.push({search: `?menu=${query.get('menu')}&id=${row.id}`})}><Icon type="file-search" /></Button>
                     </Tooltip>
+                    <br/>
                     <Tooltip title={t('order.download')}>
                         <Button type={'danger'} style={{margin: '5px 0px'}} onClick={() => handleDownload(row.id, row.category_name)}><Icon type="download" /></Button>
                     </Tooltip>
@@ -119,7 +127,17 @@ export default ({loading}) => {
 
     return <Fragment>
         <Search setPurchaseList={setDs} api={purchaseList} loading={loading} setPageInfo={setPage} page={page}/>
-        <TableCommon className='table-order' bordered={true} page={page} datasource={ds} columns={columns} rowKey="id" onChangePage={onChangePage} onChangeSize={onChangeSize}/>
+        <TableCommon
+            className='table-order'
+            bordered={true}
+            page={page}
+            datasource={ds}
+            columns={columns}
+            rowKey="id"
+            onChangePage={onChangePage}
+            onChangeSize={onChangeSize}
+            scroll={{x: true}}
+        />
         {productDetail && <Modal
             width={'60vw'}
             centered

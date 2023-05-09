@@ -5,6 +5,7 @@ import {getUserInfo, login, auth2fa, resetToken} from "../../../services/user";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import Modal from "antd/es/modal";
+import ForgotPassword from './components/forgot-password'
 
 let timeout_lst = []
 
@@ -31,6 +32,8 @@ function Index({form}) {
     const [verifyExpire, setVerifyExpire] = useState(0)
 
     const [otp, setOtp] = useState('')
+
+    const [showForgotPassword, setShowForgotPassword] = useState(false)
 
 
     useEffect(() => {
@@ -146,9 +149,9 @@ function Index({form}) {
                     )}
                 </Form.Item>
                 <Form.Item>
-                    <span className="login-form-forgot" href="">
+                    <a className="login-form-forgot" onClick={() => setShowForgotPassword(true)}>
               Quên mật khẩu
-            </span>
+            </a>
                     <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
                         Đăng nhập
                     </Button>
@@ -185,6 +188,7 @@ function Index({form}) {
             <p style={{margin: '5px', color: 'red'}}>{errorText}</p>
             <p style={{color: 'blue'}}>Thời gian xác thực hết hạn sau {verifyExpire}</p>
         </Modal>
+        <ForgotPassword visible={showForgotPassword} setVisible={setShowForgotPassword}/>
     </Layout>
 }
 
