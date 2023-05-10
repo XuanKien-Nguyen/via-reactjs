@@ -97,7 +97,8 @@ function HeaderLayout({ history }) {
 
     const searchProduct = (value) => {
         const query = new URLSearchParams(window.location.search)
-        if (query.get('name')) {
+        const name = query.get('name')
+        if (name || name === '') {
             query.delete('name')
         }
 
@@ -121,12 +122,12 @@ function HeaderLayout({ history }) {
                     /></div>
                     <div className='header-top_right'>
                         <ul>
-                            <li className='item'><a href='#' onClick={searchProduct}>{t('common.all-product')}</a></li>
-                            <li className='item'><a href='#'>{t('common.guide')}</a></li>
-                            <li className='item'><a href='#'>{t('common.recharge')}</a></li>
-                            <li className='item'><a href='#'>{t('common.tricks')}</a></li>
-                            <li className='item'><a href='#'>{t('common.about-us')}</a></li>
-                            <li className='item'><a href='#'>{t('common.contact')}</a></li>
+                            <li className='item'><a href='' onClick={() => {searchProduct('')}}>{t('common.all-product')}</a></li>
+                            <li className='item'><a href=''>{t('common.guide')}</a></li>
+                            <li className='item'><a href=''>{t('common.recharge')}</a></li>
+                            <li className='item'><a href=''>{t('common.tricks')}</a></li>
+                            <li className='item'><a href=''>{t('common.about-us')}</a></li>
+                            <li className='item'><a href=''>{t('common.contact')}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -175,7 +176,7 @@ function HeaderLayout({ history }) {
                                 style={{ width: '100%' }}
                                 mode="inline"
                             >
-                                <Menu.Item key="all-category" className='sub-menu__item'>
+                                <Menu.Item key="all-category" className='sub-menu__item'  onClick={() => {searchProduct('')}}>
                                     <span className='uppercase'>{t('common.all-product')}</span>
                                 </Menu.Item>
                                 <Menu.Item key="guide" className='sub-menu__item'>
