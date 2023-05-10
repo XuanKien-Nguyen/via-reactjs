@@ -118,13 +118,15 @@ const ProductCard = ({ productDetail }) => {
                             <div className='info back-up'><div className='field-title'><Icon type="check" />{t('product.back-up')}</div><div className='field-value'>{productDetail.has_backup === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
                         </div>
                     </div>
-                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginTop: '12px'}}>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px'}}>
+                        <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                            <Button className='show-image-button' type='primary' onClick={() => setShowImgProduct(true)}><Icon type="picture" style={{fontSize: '16px', color: 'white'}}/></Button>
+                            <Button className='show-desc-button' type='primary' onClick={() => setShowDescProduct(true)}><Icon type="search" style={{fontSize: '16px', color: 'white'}}/></Button>
+                        </div>
                         <Button type="primary" style={{fontSize: '13px'}} className='shopping-button' onClick={showPurchaseModal}>
                         <Icon type="shopping-cart" style={{fontSize: '16px'}} />
                             {t('product.button-buy')}
                         </Button>
-                        <Button className='show-image-button' type='primary' onClick={() => setShowImgProduct(true)}><Icon type="picture" style={{fontSize: '16px', color: 'white'}}/></Button>
-                        <Button className='show-desc-button' type='primary' onClick={() => setShowDescProduct(true)}><Icon type="file-text" style={{fontSize: '16px', color: 'white'}}/></Button>
                     </div>
                 </div>
             </Card>

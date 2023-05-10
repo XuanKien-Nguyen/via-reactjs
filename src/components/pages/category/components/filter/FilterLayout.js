@@ -5,13 +5,15 @@ import { getParentCategoryList, getLocationList, getTypeList, getCategoryList, g
 import { Collapse, Icon, Button } from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const { Panel } = Collapse
 
 
 const DEFAULT_VALUE = {
     category: '',
     productStatus: 'stock',
-    location: ''
+    location: '',
+    name: ''
 }
 
 const SELECT_ALL = {value: '', label: 'Xem tất cả'}
@@ -22,6 +24,10 @@ const FilterLayout = ({setResultSearch, parentId}) => {
 
     const { t } = useTranslation()
 
+    const history = useHistory()
+
+    const query = new URLSearchParams(window.location.search);
+
     const categories = useSelector(store => store.categories)
 
     const dispatch = useDispatch()
@@ -31,6 +37,7 @@ const FilterLayout = ({setResultSearch, parentId}) => {
   const [locationFilterList, setLocationFilterList] = useState([]);
   const [typeFilterList, setTypeFilterList] = useState([]);
 
+  const [name, setName] = useState('')
   const [category, setCategory] = useState()
   const [productStatus, setProductStatus] = useState()
   const [location, setLocation] = useState()
@@ -79,30 +86,36 @@ const FilterLayout = ({setResultSearch, parentId}) => {
       if (parentId) {
           setCategory(Number.parseInt(parentId))
       }
-  }, [parentId])
+      if (query.get('name')) {
+        setName(query.get('name'))
+      }
+  }, [parentId, query.get('name')])
 
   const resetValue = () => {
       setCategory(DEFAULT_VALUE.category)
       setProductStatus(DEFAULT_VALUE.productStatus)
       setLocation(DEFAULT_VALUE.location)
+      setName(DEFAULT_VALUE.name)
   }
 
   useEffect(() => {
-      setLoading(true)
-      clearTimeout(debounce)
-      debounce = setTimeout(() => {
-          getCategoryList({
-              parent_id: category || null,
-              type: productStatus || null,
-              location
-          }).then(resp => {
-              if (resp.status === 200) {
-                  setResultSearch(resp.data?.categoryListFound || [])
-              }
-              setLoading(false)
-          })
-      }, 500)
-  }, [category, productStatus, location])
+        history.push({search: `?id=${category}&type=${productStatus}&location=${location}&name=${name}`})
+        setLoading(true)
+        clearTimeout(debounce)
+        debounce = setTimeout(() => {
+            getCategoryList({
+                parent_id: category || null,
+                type: productStatus || null,
+                location,
+                name
+            }).then(resp => {
+                if (resp.status === 200) {
+                    setResultSearch(resp.data?.categoryListFound || [])
+                }
+                setLoading(false)
+            })
+        }, 500)
+  }, [category, productStatus, location, name])
 
   return (
     <div className='filter-product'>

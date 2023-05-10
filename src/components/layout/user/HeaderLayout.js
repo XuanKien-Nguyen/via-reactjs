@@ -96,8 +96,17 @@ function HeaderLayout({ history }) {
     }
 
     const searchProduct = (value) => {
-        console.log(value);
-        history.push('/categories')
+        const query = new URLSearchParams(window.location.search)
+        if (query.get('name')) {
+            query.delete('name')
+        }
+
+        query.append('name', value)
+
+        history.push({
+            pathname: '/categories',
+            search: query.toString()
+        })
     }
 
     return (
@@ -185,7 +194,7 @@ function HeaderLayout({ history }) {
                                     <span className='uppercase'>{t('common.contact')}</span>
                                 </Menu.Item>
                             </Menu>
-                        </TabPane>     
+                        </TabPane>
                         <TabPane tab="VIA" key="2">
                             <Menu
                                 style={{ width: '100%' }}
