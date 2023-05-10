@@ -14,6 +14,8 @@ import NotFound from "../components/pages/not-found/404";
 import UserInfo from "../components/pages/user-info";
 import AccessDenied from "../components/pages/access-denied/403";
 
+import ResetPassword from '../components/pages/reset-password'
+
 export const dashboardRoutes = [
     {
         path: '/admin',
@@ -99,6 +101,13 @@ export const baseRoutes = [
         path: '/categories',
         component: Category,
         name: "Sản phẩm",
+        noAuth: true,
+        layout: user,
+    },
+    {
+        path: '/reset-password',
+        component: ResetPassword,
+        name: 'Thiết lập lại mật khẩu',
         noAuth: true,
         layout: user,
     },

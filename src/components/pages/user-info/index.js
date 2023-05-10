@@ -18,6 +18,15 @@ import {convertCurrencyVN} from "../../../utils/helpers";
 
 import { useTranslation } from 'react-i18next';
 
+const BREAD_CRUMB = {
+    'info': 'profile.information',
+    'purchase': 'profile.order',
+    'change-password': 'profile.change-password',
+    recharge: 'profile.recharge',
+    'recharge-history': 'profile.recharge-history',
+    'balance-history': 'profile.balance-history'
+}
+
 const UserInfo = () => {
 
     const { t } = useTranslation()
@@ -38,9 +47,15 @@ const UserInfo = () => {
 
     const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     history.push({search: `?menu=${current}`})
-    // }, [])
+    const getBreadCrumb = () => {
+        return BREAD_CRUMB[query.get('menu') || 'info']
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch({type: 'SET_CHILDREN_BREADCRUMB', payload: t(getBreadCrumb())})
+        }, 500)
+    }, [])
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -80,7 +95,7 @@ const UserInfo = () => {
         history.push({search: `?menu=${e.key}`})
         setCurrent(e.key)
         setTimeout(() => {
-            dispatch({type: 'SET_CHILDREN_BREADSCRUMB', payload: e.item.props.children[1]})
+            dispatch({type: 'SET_CHILDREN_BREADCRUMB', payload: e.item.props.children[1]})
         }, 100)
     }
 

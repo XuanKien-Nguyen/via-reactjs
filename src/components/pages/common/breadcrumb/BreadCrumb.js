@@ -4,7 +4,7 @@ import { Breadcrumb } from 'antd';
 
 const BreadCrumbUser = ({history}) => {
 
-  const breadcrumb = useSelector(store => store.system.breadscrumb);
+  const breadcrumb = useSelector(store => store.system.breadcrumb);
 
   return (
     <div className='breadcrumb-layout layout-lg'>
