@@ -64,3 +64,7 @@ export const getLogUserBalanceType = () => {
     return client.get(`/api/log-user-balance/common/log-user-balance-type`)
 }
 
+export const getAllRechargeSuccess = (params) =>{
+    return client.get(`/api/recharge-success/client/`, {params});
+}
+
