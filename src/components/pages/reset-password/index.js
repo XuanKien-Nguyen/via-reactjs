@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Row, Col, Input, Icon, Button, message, Modal} from 'antd'
+import {Row, Input, Icon, Button, message} from 'antd'
 import {isEmail} from "../../../utils/helpers";
 import {resetPassword} from "../../../services/user";
 import {LayoutContext} from "../../../contexts";
@@ -27,18 +27,21 @@ export default () => {
             window.location.href = '/404'
             return
         }
-        setLoading(true)
         setEmail(email)
         setResetPasswordToken(resetPasswordToken)
     }, [])
 
     const handleBlurCheck = () => {
         if ((pass || rpass) && pass !== rpass) {
-            setErr('2 Mật khẩu không khớp')
+            setErr('Mật khẩu không khớp')
         } else {
             setErr('')
         }
     }
+
+    useEffect(() => {
+        handleBlurCheck()
+    }, [pass, rpass])
 
     const handleResetPassword = () => {
         if (!err) {
@@ -47,9 +50,10 @@ export default () => {
                 return
             }
             const body = {password: pass}
+            setLoading(true)
             resetPassword(email, resetPasswordToken, body).then(resp => {
                 if (resp.status === 200) {
-                    message.success(resp?.data?.message)
+                    message.success('Đặt lại mật khẩu thành công')
                     // Modal.success({
                     //     content: 'some messages...some messages...',
                     // });

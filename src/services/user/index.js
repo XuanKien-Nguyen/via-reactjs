@@ -74,7 +74,7 @@ export const forgotPassword = (body) => {
 }
 
 export const resetPassword = (email, token, body) => {
-    return client.post(`${ENDPOINT_USER}/forgot-password/${email}/${token}`, body)
+    return client.post(`${ENDPOINT_USER}/reset-password?email=${email}&resetPasswordToken=${token}`, body)
 }
 
 
