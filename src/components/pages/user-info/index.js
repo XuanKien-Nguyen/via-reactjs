@@ -56,8 +56,8 @@ const UserInfo = () => {
     useEffect(() => {
         setTimeout(() => {
             dispatch({type: 'SET_CHILDREN_BREADCRUMB', payload: t(getBreadCrumb())})
-        }, 500)
-    }, [])
+        }, 100)
+    }, [query])
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
