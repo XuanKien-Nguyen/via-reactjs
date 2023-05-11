@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import BreadCrumb from './components/breadcrumb/BreadCrumb';
 import FilterLayout from './components/filter/FilterLayout';
 import ProductLayout from '../common/product/ProductLayout';
+import '../../../assets/scss/category.scss';
 
 import { useTranslation } from 'react-i18next';
 
@@ -23,10 +23,11 @@ export default () => {
     }, [])
 
   return (
-    <div className='product-page'>
-        {/*<BreadCrumb />*/}
+    <div className='product-page layout-lg'>
         <FilterLayout setResultSearch={setResultSearch} parentId={parentId} />
-            {resultSearch.length === 0 ? <h1 align={'center'}>{t('category.no-product')}</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} hiddenShowMore={true} categoryParent={el} />)}
+        <div className='product-page_category'>
+          {resultSearch.length === 0 ? <h1 style={{marginTop: '40px'}} align={'center'}>{t('category.no-product')}</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} hiddenShowMore={true} categoryParent={el} />)}
+        </div>
     </div>
   );
 };

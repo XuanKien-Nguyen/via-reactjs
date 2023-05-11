@@ -1,27 +1,17 @@
 import {Button, Collapse, Icon, message} from "antd";
 import FilterItem from "../../../../category/components/filter/FilterItem";
 import React, {useEffect, useState} from "react";
-import { useTranslation } from 'react-i18next';
+
 const { Panel } = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
-const PURCHASE_TYPE = [{label: 'Tất cả', value: ''}, {label: 'Trực tiếp', value: 'direct'}, {label: 'Cộng tác viên', value: 'api'}]
-const STATUS_LIST = [{label: 'Tất cả', value: ''}, {label: 'Bảo hành', value: 'valid'}, {label: 'Hết bảo hành', value: 'invalid'}]
 
-export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
+export default ({setList, api, loading, setPageInfo, page, t}) => {
 
-    const { t } = useTranslation()
-
-    const [uid, setUid] = useState('')
     const [date, setDate] = useState([])
-    const [purchaseType, setPurchaseType] = useState('')
-    const [status, setStatus] = useState('')
 
     const onReset = () => {
         setDate([])
-        setUid('')
-        setStatus('')
-        setPurchaseType('')
     }
 
     useEffect(() => {
@@ -30,7 +20,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
 
     useEffect(() => {
         getList()
-    }, [uid, date, purchaseType, status, JSON.stringify(page)])
+    }, [date, JSON.stringify(page)])
 
     const getList = () => {
         let created_time = ''
@@ -38,9 +28,6 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
             created_time = JSON.stringify(date?.map(el => el?.format(dateFormat)))
         }
         const body = {
-            uid,
-            purchase_type: purchaseType,
-            status,
             created_time,
             perpage: page.perpage,
             page: page.currentPage
@@ -55,15 +42,15 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
             if (resp.status === 200) {
                 const data = resp.data
                 const pageInfo = {
-                    total: data.totalPurchases,
+                    total: data.totalLogDownloadProducts,
                     perpage: data.perPage,
                     totalPages: data.totalPages,
                     currentPage: data.currentPage,
                 }
                 setPageInfo(pageInfo)
-                setPurchaseList(resp?.data?.newPurchaseList || [])
+                setList(resp?.data?.logDownloadPurchaseList || [])
             }
-        }).catch(() => message.error('Có lỗi xảy ra khi lấy thông tin đơn hàng'))
+        }).catch(() => message.error('Có lỗi xảy ra khi lấy lịch sử tải xuống'))
             .finally(() => loading(false))
     }
 
@@ -73,13 +60,8 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
                 <Panel key={1} className='filter-container' header={<div className='filter-header'>
                     <div><Icon type="filter" theme="filled"/>&nbsp;{t('filter.title')}</div>
                 </div>}>
-                    <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={t('filter.uid')}/>
                     <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                 placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
-                    <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={PURCHASE_TYPE}
-                                type={'select'} title={t('filter.payment-method')}/>
-                    <FilterItem defaultValue={status} setValue={setStatus} options={STATUS_LIST} type={'select'}
-                                title={t('filter.status')}/>
                 </Panel>
             </Collapse>
             <Button className='reset-filter-btn' type="primary" size='small' icon="reload"

@@ -5,7 +5,9 @@ import { DatePicker } from 'antd';
 const { RangePicker } = DatePicker;
 
 const { Option } = Select;
-const FilterItem = ({id, title, options, setValue, defaultValue, type = 'select', width = '100%', placeholder}) => {
+const FilterItem = (props) => {
+
+    const {id, title, options, setValue, defaultValue, type = 'select', width = '100%', placeholder} = props
 
     const onChange = (value) => {
         setValue(value)
@@ -32,6 +34,7 @@ const FilterItem = ({id, title, options, setValue, defaultValue, type = 'select'
                 optionFilterProp="children"
                 onChange={onChange}
                 value={defaultValue}
+                {...props}
             >
                 {options.map((el, idx) => <Option key={idx} value={el.value}>{el.label}</Option>)}
             </Select>

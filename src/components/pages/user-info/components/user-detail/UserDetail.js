@@ -21,7 +21,7 @@ const UserDetail = ({form, user, loading}) => {
         },
         {
             title: 'Địa chỉ IP',
-            dataIndex: 'ip'
+            dataIndex: 'ip_address'
         },
         {
             title: 'Khu vực',

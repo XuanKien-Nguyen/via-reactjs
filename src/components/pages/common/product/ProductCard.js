@@ -1,7 +1,7 @@
 import React, {Fragment, useContext, useEffect, useState} from 'react';
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {Card, Button, Icon, Input, Badge, message} from 'antd';
+import {Card, Button, Icon, Input, Badge, message, Tooltip} from 'antd';
 import Modal from "antd/es/modal";
 import {createPurchase} from "../../../../services/purchases";
 import {LayoutContext} from "../../../../contexts";
@@ -17,6 +17,8 @@ const ProductCard = ({ productDetail }) => {
     const [visible, setVisible] = useState(false)
 
     const [showImgProduct, setShowImgProduct] = useState(false)
+
+    const [showDescProduct, setShowDescProduct] = useState(false)
 
     const [pending, setPending] = useState(false)
 
@@ -116,14 +118,14 @@ const ProductCard = ({ productDetail }) => {
                             <div className='info back-up'><div className='field-title'><Icon type="check" />{t('product.back-up')}</div><div className='field-value'>{productDetail.has_backup === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
                         </div>
                     </div>
-                    <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px'}}>
+                        <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                            <Button className='show-image-button' type='primary' onClick={() => setShowImgProduct(true)}><Icon type="picture" style={{fontSize: '16px', color: 'white'}}/></Button>
+                            <Button className='show-desc-button' type='primary' onClick={() => setShowDescProduct(true)}><Icon type="search" style={{fontSize: '16px', color: 'white'}}/></Button>
+                        </div>
                         <Button type="primary" style={{fontSize: '13px'}} className='shopping-button' onClick={showPurchaseModal}>
                         <Icon type="shopping-cart" style={{fontSize: '16px'}} />
                             {t('product.button-buy')}
-                        </Button>
-                        <Button type="primary" style={{fontSize: '13px'}} className='show-image-button' onClick={() => setShowImgProduct(true)} disabled={!productDetail.image_url}>
-                        <Icon type="picture" style={{fontSize: '16px', color: 'white'}} />
-                            {t('product.button-image')}
                         </Button>
                     </div>
                 </div>
@@ -166,14 +168,25 @@ const ProductCard = ({ productDetail }) => {
             </Modal>
             <Modal
                 className='product-image__modal'
-                width={800}
+                width={'auto'}
                 centered
                 onOk={() => setShowImgProduct(false)}
                 onCancel={() => setShowImgProduct(false)}
                 visible={showImgProduct}
                 footer={null}
             >
-                <div><img alt={productDetail.id} src={productDetail.image_url}/></div>
+                <div style={{textAlign: 'center'}}>{productDetail.image_url ? <img alt={productDetail.id} src={productDetail.image_url}/> : <Icon type="picture" style={{fontSize: '64px', opacity: '0.4'}}/>}</div>
+            </Modal>
+            <Modal
+                className='product-desc__modal'
+                width={'auto'}
+                centered
+                onOk={() => setShowDescProduct(false)}
+                onCancel={() => setShowDescProduct(false)}
+                visible={showDescProduct}
+                footer={null}
+            >
+                <div><span>{productDetail.description}</span></div>
             </Modal>
         </Fragment>
     );

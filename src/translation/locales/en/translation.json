@@ -82,7 +82,8 @@
         "change-password": "CHANGE PASSWORD",
         "2fa": "2FA AUTHENTICATION",
         "recharge-history": "RECHARGE HISTORY",
-        "balance-history": "BALANCE HISTORY"
+        "balance-history": "BALANCE HISTORY",
+        "download-history": "DOWNLOAD HISTORY"
     },
     "info": {
         "fullname": "Full name",

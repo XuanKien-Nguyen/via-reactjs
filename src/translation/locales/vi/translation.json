@@ -82,7 +82,8 @@
         "change-password": "ĐỔI MẬT KHẨU",
         "2fa": "BẬT XÁC THỰC 2FA",
         "recharge-history": "LỊCH SỬ NẠP TIỀN",
-        "balance-history": "LỊCH SỬ THAY ĐỔI SỐ DƯ"
+        "balance-history": "LỊCH SỬ THAY ĐỔI SỐ DƯ",
+        "download-history": "LỊCH SỬ TẢI XUỐNG"
     },
     "info": {
         "fullname": "Tên đầy đủ",

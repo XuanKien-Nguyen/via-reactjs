@@ -22,7 +22,7 @@
 
   .sidebar {
     padding-top: 20px;
-
+    width: 250px;
     // flex-direction: column;
     // align-items: start;
     .avatar {
@@ -54,7 +54,7 @@
   }
 
   .content {
-    width: 100%;
+    width: calc(100% - 266px);
     padding: 20px 0;
 
     #change-password {
@@ -68,11 +68,64 @@
       position: sticky;
       top: 105px;
       z-index: 10;
+
       .filter {
         margin-top: 0px !important;
+        position: relative;
+        margin-bottom: 32px;
+        margin-top: 32px;
+
+        .filter-layout {
+          .ant-collapse-header {
+            padding: 12px 16px;
+            padding-right: 40px;
+
+            i {
+              left: unset;
+              right: 16px;
+            }
+          }
+
+          .filter-container {
+            .ant-collapse-header {
+              .filter-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              }
+            }
+
+            .ant-collapse-content {
+              .ant-collapse-content-box {
+                display: grid;
+                gap: 16px;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+                .filter-item {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 8px;
+
+                  i.ant-cascader-picker-clear {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .reset-filter-btn {
+          border-radius: 16px;
+          font-size: 12px;
+          min-height: 26px;
+          padding: 2px 10px;
+          position: absolute;
+          right: 56px;
+          top: 12px;
+        }
       }
     }
-
     .table-order {
       table {
         .ant-tag {
@@ -93,7 +146,7 @@
 
     .sidebar {
       display: flex;
-      width: 100%;
+      width: 100% !important;
       padding: 0 15px !important;
 
       .avatar {
@@ -120,6 +173,27 @@
 
     .content {
       padding: 15px !important;
+      width: 100% !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .user-profile_container {
+    .sidebar {
+      .avatar {
+        font-size: 13px;
+      }
+      .information {
+        .ant-menu {
+          .ant-menu-item {
+            font-size: 12px;
+            i {
+              font-size: 12px;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -10,11 +10,13 @@ export default ({detail, visible, setVisible, t, mapType}) => {
         return '-'
     }
 
-    const renderMoney = el => {
+    const renderMoney = (el, prefix = '+') => {
         if (el && (el + '').startsWith('-')) {
             return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
+        }  else if (el === 0) {
+            return <b>0 VND</b>
         }
-        return <b style={{color: 'green'}}>{el === 0 ? '0' : `+${convertCurrencyVN(el)}`}</b>
+        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
     }
 
     return  <div>
@@ -57,20 +59,20 @@ export default ({detail, visible, setVisible, t, mapType}) => {
                     <Col sm={16}>{getValue(detail.warranty_ticket_id)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Tiền khuyến mãi</b></Col>
+                    <Col sm={8}><b>Tiền khuyến mãi đã sử dụng</b></Col>
                     <Col sm={16}>{renderMoney(detail.add_bonus)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Tiền tài khoản</b></Col>
+                    <Col sm={8}><b>Tiền tài khoản đã sử dụng</b></Col>
                     <Col sm={16}>{renderMoney(detail.add_amount)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
                     <Col sm={8}><b>Số dư khuyến mãi</b></Col>
-                    <Col sm={16}>{renderMoney(detail.bonus_remain)}</Col>
+                    <Col sm={16}>{renderMoney(detail.bonus_remain, '')}</Col>
                 </Row>
                 <Row className={'history_detail'}>
                     <Col sm={8}><b>Số dư tài khoản</b></Col>
-                    <Col sm={16}>{renderMoney(detail.amount_remain)}</Col>
+                    <Col sm={16}>{renderMoney(detail.amount_remain, '')}</Col>
                 </Row>
                 <Row className={'history_detail'}>
                     <Col sm={8}><b>Nội dung</b></Col>

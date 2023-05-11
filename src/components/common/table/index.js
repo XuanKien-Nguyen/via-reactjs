@@ -5,7 +5,9 @@ import './style.scss'
 
 const PAGE_SIZE_OPTION = ['5', '10', '20', '30', '50']
 
-export default ({datasource, columns, page, onChangePage, onChangeSize, bordered, className = '', expandedRowRender}) => {
+export default (props) => {
+
+    const {datasource, columns, page, onChangePage, onChangeSize, bordered, className = '', expandedRowRender} = props
 
     const { t } = useTranslation()
 
@@ -18,7 +20,9 @@ export default ({datasource, columns, page, onChangePage, onChangeSize, bordered
                columns={columns}
                rowKey="id"
                expandedRowRender={expandedRowRender ? expandedRowRender : null}
-               pagination={false} />
+               pagination={false}
+               {...props}
+        />
         <div id={'common_table'}>
             <Pagination defaultCurrent={1}
                         current={currentPage}

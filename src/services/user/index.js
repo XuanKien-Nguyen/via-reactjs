@@ -64,6 +64,20 @@ export const getLogUserBalanceType = () => {
     return client.get(`/api/log-user-balance/common/log-user-balance-type`)
 }
 
+export const getLogDownloadProduct = (params) => {
+    return client.get(`/api/log-download-product/client/`, {params})
+}
+
+
+export const forgotPassword = (body) => {
+    return client.post(`${ENDPOINT_USER}/forgot-password`, body)
+}
+
+export const resetPassword = (email, token, body) => {
+    return client.post(`${ENDPOINT_USER}/reset-password?email=${email}&resetPasswordToken=${token}`, body)
+}
+
+
 export const getAllRechargeSuccess = (params) =>{
     return client.get(`/api/recharge-success/client/`, {params});
 }

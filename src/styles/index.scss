@@ -1,5 +1,3 @@
-@import '../styles/product-page.scss';
-
 /*---DEFAULT---*/
 *,
 *::before,
@@ -169,7 +167,7 @@ ul {
 .category-container,
 .QandA-container,
 .feature-container,
-.filter {
+.filter-order .filter {
     max-width: 1400px !important;
     margin-left: auto;
     margin-right: auto;
@@ -272,8 +270,8 @@ header#header_user {
 
     ul li a {
         color: #333333;
-        font-weight: 700 !important;
-        font-size: 14px !important;
+        font-weight: 700;
+        font-size: 14px;
     }
 }
 
@@ -371,6 +369,15 @@ li .item-button {
 
 
 /*-----CONTENT-----*/
+
+/*--BREADCRUMB--*/
+
+.breadcrumb-layout {
+    margin-top: 32px;
+    .ant-breadcrumb {
+        word-wrap: break-word;
+    }
+}
 
 /*--HOME PAGE--*/
 
@@ -495,6 +502,33 @@ li .item-button {
 
 #product-layout {
     margin-bottom: 32px;
+}
+
+.product-image__modal {
+    max-width: 800px;
+    min-width: 300px;
+    .ant-modal-close-x {
+        width: 32px !important;
+        height: 32px !important;
+        line-height: 32px !important;
+    }
+
+    .ant-modal-body {
+        img {
+            margin: auto;
+            margin-top: 8px !important;
+        }  
+    }
+}
+
+.product-desc__modal {
+    max-width: 500px;
+    min-width: 300px;
+    .ant-modal-close-x {
+        width: 32px !important;
+        height: 32px !important;
+        line-height: 32px !important;
+    }
 }
 
 .category-container {
@@ -666,14 +700,14 @@ li .item-button {
             }
 
             .shopping-button,
-            .show-image-button {
+            .show-image-button,
+            .show-desc-button {
                 padding: 6px 8px;
-                border-radius: 8px;
+                border-radius: 6px;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-top: 12px;
             }
         }
     }
@@ -833,7 +867,7 @@ li .item-button {
 /*-----------------------------RESPONSIVE----------------------------*/
 
 @media only screen and (max-width: 768px) {
-
+    
     /*---HEADER--*/
     header#header_user {
         .header-top {

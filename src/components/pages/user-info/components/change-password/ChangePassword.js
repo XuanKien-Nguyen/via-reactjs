@@ -128,8 +128,8 @@ const ChangePassword = (props) => {
                     // placeholder="Nhập lại mật khẩu mới"
                                    prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}/>)}
             </Form.Item>
-            <Form.Item>
-                <Button type="primary" onClick={openModal} className="login-form-button" loading={loading}>
+            <Form.Item style={{textAlign: 'center'}}>
+                <Button style={{width: '144px'}} type="primary" onClick={openModal} className="login-form-button" loading={loading}>
                     {t('password.button')}
                 </Button>
             </Form.Item>
