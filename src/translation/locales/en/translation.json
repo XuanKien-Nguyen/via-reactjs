@@ -71,7 +71,8 @@
         "status": "Status",
         "all": "All",
         "stocking": "Stocking",
-        "out-stock": "Out of stock"
+        "out-stock": "Out of stock",
+        "type": "Type"
     },
     "profile": {
         "balance" : "Balance",

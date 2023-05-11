@@ -71,7 +71,8 @@
         "status": "Tình trạng",
         "all": "Xem tất cả",
         "stocking": "Còn hàng",
-        "out-stock": "Hết hàng"
+        "out-stock": "Hết hàng",
+        "type": "Loại"
     },
     "profile": {
         "balance" : "Số dư",

@@ -1,11 +1,14 @@
 import React, {useEffect, useState, Fragment} from "react";
-import search from "./components/seach"
+import Tag from "antd/es/tag";
+
 import {getAllRechargeSuccess} from "../../../../../services/user";
 import TableCommon from "../../../../common/table";
 import {Button, Collapse, Icon, message} from "antd";
 import FilterItem from "../../../category/components/filter/FilterItem";
 import {useTranslation} from "react-i18next";
-const { Panel } = Collapse
+import {convertCurrencyVN} from "../../../../../utils/helpers";
+
+const {Panel} = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
 export default ({loading}) => {
@@ -21,10 +24,9 @@ export default ({loading}) => {
     const [type, setType] = useState("")
     const [transactionId, setTransactionId] = useState("")
 
-    const { t } = useTranslation()
+    const {t} = useTranslation()
 
     useEffect(() => {
-        console.log(date)
         let updated_time = date.length > 0 ? JSON.stringify(date?.map(el => el?.format(dateFormat))) : "";
         let body = {
             updated_time,
@@ -42,83 +44,114 @@ export default ({loading}) => {
         }
         loading(true)
         getAllRechargeSuccess(body).then((resp) => {
-            console.log(resp);
-            if(resp.status === 200){
+            if (resp.status === 200) {
                 const data = resp?.data?.successRechargeList || [];
                 setData(data)
+                const pageInfo = {
+                    total: resp?.data?.totalSuccessRecharge,
+                    perpage: resp?.data?.perPage,
+                    totalPages: resp?.data?.totalPages,
+                    currentPage: resp?.data?.currentPage,
+                }
+                setPage(pageInfo)
             }
         }).catch(() => message.error('Có lỗi xảy ra khi lấy lịch sử nạp'))
-            .finally(loading(false))
+            .finally(() => loading(false))
     }, [date, type, JSON.stringify(page), updatedBy, transactionId])
+
+    const renderMoney = (el, prefix = '+') => {
+        if (el && (el + '').startsWith('-')) {
+            return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
+        } else if (el === 0) {
+            return <b>0 VND</b>
+        }
+        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
+    }
 
     const columns = [
         {
             title: 'ID',
             dataIndex: 'id',
-            align: 'center',
-        },
-        {
-            title: 'Username',
-            dataIndex: 'username',
+            render: v => `#${v}`,
+            width: '150px',
             align: 'center',
         },
         {
             title: 'Mã giao dịch',
             dataIndex: 'transaction_id',
+            width: '300px',
             align: 'center',
         },
         {
             title: 'Mã ticket nạp lỗi',
             dataIndex: 'pending_recharge_id',
+            width: '300px',
             align: 'center',
         },
         {
             title: 'Tiền khuyễn mãi',
             dataIndex: 'bonus',
+            width: '200px',
+            render: v => renderMoney(v),
             align: 'center',
         },
         {
             title: 'Tiền tài khoản',
             dataIndex: 'amount',
+            width: '200px',
+            render: v => renderMoney(v),
             align: 'center',
         },
         {
-          title: 'Tiền USTD',
-          dataIndex: 'usdt_amount',
-          align: 'center'
+            title: 'Tiền USTD',
+            dataIndex: 'usdt_amount',
+            width: '200px',
+            align: 'center'
         },
         {
             title: 'USTD/VND',
+            width: '200px',
             dataIndex: 'rate',
             align: 'center',
-        },{
+        }, {
             title: 'Loại',
+            width: '200px',
             dataIndex: 'type',
+            render: v => {
+                if (v === 'banking') {
+                    return <Tag color={'blue'}>{v.toUpperCase()}</Tag>
+                }
+                return <Tag color={'grey'}>{v.toUpperCase()}</Tag>
+            },
             align: 'center',
         },
         {
             title: 'Thời gian tạo',
+            width: '200px',
             dataIndex: 'created_time',
             align: 'center',
         },
         {
             title: 'Tạo bởi',
+            width: '150px',
             dataIndex: 'createdby',
             align: 'center',
         },
         {
             title: 'Thời gian cập nhật',
             dataIndex: 'updated_time',
+            width: '200px',
             align: 'center',
         },
         {
             title: 'QTV cập nhật',
             dataIndex: 'updatedby',
+            width: '150px',
             align: 'center',
         }
     ]
 
-    const onReset = () =>{
+    const onReset = () => {
         setType('')
         setUpdatedBy('')
         setDate([])
@@ -130,17 +163,17 @@ export default ({loading}) => {
         setTransactionId("")
     }
 
-    const getType = () =>{
+    const getType = () => {
         return [{
-                label: 'Chọn',
-                value: ''
-            }, {
-                label: 'Banking',
-                value: 'banking'
-            },{
-                label: 'USTD-TRC20',
-                value: 'usdt-trc20'
-            }]
+            label: 'Tất cả',
+            value: ''
+        }, {
+            label: 'Banking',
+            value: 'banking'
+        }, {
+            label: 'USTD-TRC20',
+            value: 'usdt-trc20'
+        }]
     }
 
     const onChangePage = (currentPage, perPage) => {
@@ -148,7 +181,7 @@ export default ({loading}) => {
             perpage: perPage,
             currentPage: currentPage
         })
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     const onChangeSize = (currentPage, perPage) => {
@@ -156,22 +189,23 @@ export default ({loading}) => {
             perpage: perPage,
             currentPage: 1
         })
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     return <Fragment>
-        <div className='product-page filter-order'>
+        <div className='filter-order'>
             <div className='filter' style={{padding: '0px'}}>
                 <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
                     <Panel key={1} className='filter-container' header={<div className='filter-header'>
                         <div><Icon type="filter" theme="filled"/>&nbsp;{''}</div>
                     </div>}>
+                        <FilterItem defaultValue={transactionId} setValue={setTransactionId} type={'text'}
+                                    title={'Mã giao dịch'}/>
                         <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                     placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
                         <FilterItem defaultValue={type} setValue={setType} options={getType()} type={'select'}
-                                    title={t('filter.status')}/>
-                        <FilterItem defaultValue={updatedBy} setValue={setUpdatedBy} options={getType()} type={'text'} title={'Người tạo'}/>
-                        <FilterItem defaultValue={transactionId} setValue={setTransactionId} type={'text'} title={'Mã giao dịch'}/>
+                                    title={t('filter.type')}/>
+                        <FilterItem defaultValue={updatedBy} setValue={setUpdatedBy} type={'text'} title={'Người tạo'}/>
 
                     </Panel>
                 </Collapse>
@@ -179,13 +213,13 @@ export default ({loading}) => {
                         onClick={onReset}>{t('common.reset')}</Button>
             </div>
         </div>
-            <TableCommon className='table-order'
-                         bordered={true}
-                         rowKey="id"
-                         page={page}
-                         datasource={data}
-                         columns={columns}
-                         onChangePage={onChangePage}
-                         onChangeSize={onChangeSize}/>
+        <TableCommon className='table-order'
+                     bordered={true}
+                     rowKey="id"
+                     page={page}
+                     datasource={data}
+                     columns={columns}
+                     onChangePage={onChangePage}
+                     onChangeSize={onChangeSize}/>
     </Fragment>
 }
