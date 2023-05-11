@@ -16,7 +16,7 @@ export default ({loading}) => {
     const [datasource, setDatasource] = useState([])
     const [detail, setDetail] = useState(null)
     const [visible, setVisible] = useState(false)
-    const [withTable, setWidthTable] = useState('81%')
+    // const [withTable, setWidthTable] = useState('81%')
 
     const { t } = useTranslation()
 
@@ -27,20 +27,20 @@ export default ({loading}) => {
     })
 
     // check width to resize the table
-    useEffect(() => {
-        fn = () => {
-            const currentWidth = getWindowDimensions().width
-            if (currentWidth < 950) {
-                setWidthTable('100%')
-            } else {
-                setWidthTable('81%')
-            }
-        }
-        window.addEventListener('resize', fn);
-        return () => {
-            window.removeEventListener("resize", fn)
-        }
-    }, [])
+    // useEffect(() => {
+    //     fn = () => {
+    //         const currentWidth = getWindowDimensions().width
+    //         if (currentWidth < 950) {
+    //             setWidthTable('100%')
+    //         } else {
+    //             setWidthTable('81%')
+    //         }
+    //     }
+    //     window.addEventListener('resize', fn);
+    //     return () => {
+    //         window.removeEventListener("resize", fn)
+    //     }
+    // }, [])
 
     const [lstBalanceType, setLstBalanceType] = useState([])
 

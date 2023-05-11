@@ -177,3 +177,23 @@
     }
   }
 }
+
+@media only screen and (max-width: 480px) {
+  .user-profile_container {
+    .sidebar {
+      .avatar {
+        font-size: 13px;
+      }
+      .information {
+        .ant-menu {
+          .ant-menu-item {
+            font-size: 12px;
+            i {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

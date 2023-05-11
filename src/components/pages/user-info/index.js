@@ -7,6 +7,7 @@ import PurchaseDetail from './components/purchase/components/Detail'
 import Recharge from './components/recharge'
 import RechargeHistory from './components/recharge-history'
 import BalanceHistory from './components/balance-history'
+import DownloadHistory from "./components/download-history";
 import Footer from './components/footer'
 import '../../../assets/scss/user-info.scss'
 import {useDispatch, useSelector} from "react-redux";
@@ -24,7 +25,8 @@ const BREAD_CRUMB = {
     'change-password': 'profile.change-password',
     recharge: 'profile.recharge',
     'recharge-history': 'profile.recharge-history',
-    'balance-history': 'profile.balance-history'
+    'balance-history': 'profile.balance-history',
+    'download-history': 'profile.download-history'
 }
 
 const UserInfo = () => {
@@ -50,7 +52,7 @@ const UserInfo = () => {
     const getBreadCrumb = () => {
         return BREAD_CRUMB[query.get('menu') || 'info']
     }
-
+    
     useEffect(() => {
         setTimeout(() => {
             dispatch({type: 'SET_CHILDREN_BREADCRUMB', payload: t(getBreadCrumb())})
@@ -87,6 +89,8 @@ const UserInfo = () => {
             return <RechargeHistory loading={setLoading}/>
         } else if (current === 'balance-history') {
             return <BalanceHistory loading={setLoading}/>
+        } else if (current === 'download-history') {
+            return <DownloadHistory loading={setLoading}/>
         }
         return <UserDetail user={user} loading={setLoading} />
     }
@@ -103,12 +107,12 @@ const UserInfo = () => {
         <div className="sidebar">
             <div className="avatar">
                 <img src={require('../../../assets/img/avatar.png')} alt="" className="src"/>
-                <p>{`@${user?.username}`}<i className="id_text">{`#${user?.id}`}</i></p>
+                <p style={{textAlign: 'center'}}>{`@${user?.username}`}<i className="id_text">{` #${user?.id}`}</i></p>
                 <Tag color={user?.role === 'admin' ? 'red' : 'blue'}>{user?.role}</Tag>
                 <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.balance')}: </span>
-                <p style={{color: 'blue'}}>{convertCurrencyVN(user?.amount_available || 0)}</p>
+                <p style={{color: 'blue', marginBottom: 0}}>{convertCurrencyVN(user?.amount_available || 0)}</p>
                 <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.bonus')}: </span>
-                <p style={{color: 'blue'}}>{convertCurrencyVN(user?.bonus || 0)}</p>
+                <p style={{color: 'blue', marginBottom: 0}}>{convertCurrencyVN(user?.bonus || 0)}</p>
             </div>
 
             <div className="information">
@@ -143,6 +147,10 @@ const UserInfo = () => {
                     <Menu.Item key="balance-history">
                         <Icon type="file-sync" />
                         {t('profile.balance-history')}
+                    </Menu.Item>
+                    <Menu.Item key="download-history">
+                        <Icon type="download" />
+                        {t('profile.download-history')}
                     </Menu.Item>
                     { (user?.role === 'admin' || user?.role === 'staff') &&<Menu.Item key="auth-2fa">
                         <Icon type="qrcode" />
