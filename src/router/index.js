@@ -28,7 +28,7 @@ export const dashboardRoutes = [
         role: ['admin']
     },
     {
-        path: '/create-product',
+        path: '/admin/create-product',
         component: CreateProduct,
         name: "Create Product",
         icon: "upload",
@@ -38,12 +38,12 @@ export const dashboardRoutes = [
         role: ['admin']
     },
     {
-        path: '/product/:productSlug',
+        path: '/admin/product/:productSlug',
         component: ProductDetails,
         name: "Product details",
         icon: "team",
         exact: true,
-        showAlways: false,
+        showAlways: true,
         layout: admin,
         role: ['admin']
     },
