@@ -82,33 +82,33 @@ export default ({loading}) => {
             align: 'center',
         },
         {
-            title: 'Mã giao dịch',
+            title: t('recharge.transaction-id'),
             dataIndex: 'transaction_id',
             width: '300px',
             align: 'center',
         },
         {
-            title: 'Mã ticket nạp lỗi',
+            title: t('recharge.pending-recharge-id'),
             dataIndex: 'pending_recharge_id',
             width: '300px',
             align: 'center',
         },
         {
-            title: 'Tiền khuyễn mãi',
+            title: t('recharge.bonus'),
             dataIndex: 'bonus',
             width: '200px',
             render: v => renderMoney(v),
             align: 'center',
         },
         {
-            title: 'Tiền tài khoản',
+            title: t('recharge.amount'),
             dataIndex: 'amount',
             width: '200px',
             render: v => renderMoney(v),
             align: 'center',
         },
         {
-            title: 'Tiền USTD',
+            title: t('recharge.ustd-amount'),
             dataIndex: 'usdt_amount',
             width: '200px',
             align: 'center'
@@ -119,7 +119,7 @@ export default ({loading}) => {
             dataIndex: 'rate',
             align: 'center',
         }, {
-            title: 'Loại',
+            title: t('recharge.type'),
             width: '200px',
             dataIndex: 'type',
             render: v => {
@@ -131,25 +131,25 @@ export default ({loading}) => {
             align: 'center',
         },
         {
-            title: 'Thời gian tạo',
+            title: t('recharge.created-time'),
             width: '200px',
             dataIndex: 'created_time',
             align: 'center',
         },
         {
-            title: 'Tạo bởi',
+            title: t('recharge.created-by'),
             width: '150px',
             dataIndex: 'createdby',
             align: 'center',
         },
         {
-            title: 'Thời gian cập nhật',
+            title: t('recharge.updated-time'),
             dataIndex: 'updated_time',
             width: '200px',
             align: 'center',
         },
         {
-            title: 'QTV cập nhật',
+            title: t('recharge.updated-by'),
             dataIndex: 'updatedby',
             width: '150px',
             align: 'center',
@@ -170,10 +170,10 @@ export default ({loading}) => {
 
     const getType = () => {
         return [{
-            label: 'Tất cả',
+            label: t('filter.all'),
             value: ''
         }, {
-            label: 'Banking',
+            label: t('filter.bank'),
             value: 'banking'
         }, {
             label: 'USTD-TRC20',
@@ -202,15 +202,15 @@ export default ({loading}) => {
             <div className='filter' style={{padding: '0px'}}>
                 <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
                     <Panel key={1} className='filter-container' header={<div className='filter-header'>
-                        <div><Icon type="filter" theme="filled"/>&nbsp;{''}</div>
+                        <div><Icon type="filter" theme="filled"/>&nbsp;{t('filter.title')}</div>
                     </div>}>
                         <FilterItem defaultValue={transactionId} setValue={setTransactionId} type={'text'}
-                                    title={'Mã giao dịch'}/>
+                                    title={t('filter.transaction-id')}/>
                         <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                     placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
                         <FilterItem defaultValue={type} setValue={setType} options={getType()} type={'select'}
                                     title={t('filter.type')}/>
-                        <FilterItem defaultValue={updatedBy} setValue={setUpdatedBy} type={'text'} title={'Người tạo'}/>
+                        <FilterItem defaultValue={updatedBy} setValue={setUpdatedBy} type={'text'} title={t('filter.created-by')}/>
 
                     </Panel>
                 </Collapse>

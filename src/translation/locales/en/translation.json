@@ -72,7 +72,10 @@
         "all": "All",
         "stocking": "Stocking",
         "out-stock": "Out of stock",
-        "type": "Type"
+        "type": "Type",
+        "transaction-id": "Transaction ID",
+        "created-by": "Created by",
+        "bank": "Banking"
     },
     "profile": {
         "balance" : "Balance",
@@ -90,7 +93,16 @@
         "fullname": "Full name",
         "email": "Email",
         "phone": "Phone Number",
-        "create": "Create date"
+        "create": "Create date",
+        "device": "Device",
+        "browser": "Browser",
+        "ip-address": "IP Address",
+        "location": "Location",
+        "created-time": "Created time",
+        "status": "Status",
+        "success": "Login successfully",
+        "fail": "Login failed",
+        "title-history": "Login history (The last 15 times):"
     },
     "order": {
         "id": "ID",
@@ -109,7 +121,10 @@
         "download-error": "Something wrong when downloading",
         "detail-title": "Order detail",
         "records": "records",
-        "total-records": "Total"
+        "total-records": "Total",
+        "download-time": "Download Time",
+        "purchase-id": "Purchase ID",
+        "amount": "Amount"
     },
     "recharge": {
         "placeholder": "Enter top-up amount",
@@ -135,7 +150,17 @@
         "wallet-current": "Your current wallet address",
         "wallet-click": "click here",
         "wallet-text": "to update your wallet address",
-        "wallet-content": "Please transfer funds to the wallet address below"
+        "wallet-content": "Please transfer funds to the wallet address below",
+        "transaction-id":"Transaction ID",
+        "pending-recharge-id": "Pending Recharge ID",
+        "bonus": "Bonus",
+        "amount": "Amount",
+        "ustd-amount": "USTD Amount",
+        "type": "Type",
+        "created-time": "Created time",
+        "created-by":"Created by",
+        "updated-time": "Updated time",
+        "updated-by": "Updated by"
     },
     "password": {
         "button": "Change Password",

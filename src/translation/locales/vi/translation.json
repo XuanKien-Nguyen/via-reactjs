@@ -72,7 +72,10 @@
         "all": "Xem tất cả",
         "stocking": "Còn hàng",
         "out-stock": "Hết hàng",
-        "type": "Loại"
+        "type": "Loại",
+        "transaction-id": "Mã giao dịch",
+        "created-by": "Người tạo",
+        "bank": "Ngân hàng"
     },
     "profile": {
         "balance" : "Số dư",
@@ -90,7 +93,16 @@
         "fullname": "Tên đầy đủ",
         "email": "Email",
         "phone": "Số điện thoại",
-        "create": "Ngày tạo"
+        "create": "Ngày tạo",
+        "device": "Thiết bị",
+        "browser": "Trình duyệt",
+        "ip-address": "Địa chỉ IP",
+        "location": "Khu vực",
+        "created-time": "Thời gian",
+        "status": "Tình trạng",
+        "success": "Đăng nhập thành công",
+        "fail": "Đăng nhập thất bại",
+        "title-history": "Lịch sử đăng nhập (15 lần gần nhất):"
     },
     "order": {
         "id": "ID",
@@ -109,7 +121,10 @@
         "download-error": "Có lỗi xảy ra khi tải xuống",
         "detail-title": "Chi tiết đơn hàng",
         "records": "bản ghi",
-        "total-records": "Tổng số"
+        "total-records": "Tổng số",
+        "download-time": "Thời gian tải xuống",
+        "purchase-id": "Mã đơn hàng",
+        "amount": "Số lượng"
     },
     "recharge": {
         "placeholder": "Nhập số tiền muốn nạp",
@@ -135,7 +150,17 @@
         "wallet-current": "Địa chỉ ví hiện tại của bạn",
         "wallet-click": "bấm vào đây",
         "wallet-text": "để cập nhật địa chỉ",
-        "wallet-content": "Vui lòng chuyển tiền đến địa chỉ ví bên dưới"
+        "wallet-content": "Vui lòng chuyển tiền đến địa chỉ ví bên dưới",
+        "transaction-id":"Mã giao dịch",
+        "pending-recharge-id": "Mã ticket nạp lỗi",
+        "bonus": "Tiền khuyễn mãi",
+        "amount": "Tiền tài khoản",
+        "ustd-amount": "Tiền USTD",
+        "type": "Loại",
+        "created-time": "Thời gian tạo",
+        "created-by":"Người tạo",
+        "updated-time": "Thời gian cập nhật",
+        "updated-by": "QTV cập nhật"
     },
     "password": {
         "button": "Đổi mật khẩu",

@@ -5,8 +5,6 @@ import { useTranslation } from 'react-i18next';
 const { Panel } = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
-const PURCHASE_TYPE = [{label: 'Tất cả', value: ''}, {label: 'Trực tiếp', value: 'direct'}, {label: 'Cộng tác viên', value: 'api'}]
-const STATUS_LIST = [{label: 'Tất cả', value: ''}, {label: 'Bảo hành', value: 'valid'}, {label: 'Hết bảo hành', value: 'invalid'}]
 
 export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
 
@@ -67,6 +65,32 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
             .finally(() => loading(false))
     }
 
+    const getPurchaseType = () => {
+        return [{
+            label: t('filter.all'),
+            value: ''
+        }, {
+            label: t('order.direct'),
+            value: 'direct'
+        }, {
+            label: t('order.api'),
+            value: 'api'
+        }]
+    }
+
+    const getStatusList = () => {
+        return [{
+            label: t('filter.all'),
+            value: ''
+        }, {
+            label: t('order.valid'),
+            value: 'valid'
+        }, {
+            label: t('order.invalid'),
+            value: 'invalid'
+        }]
+    }
+
     return <div className='filter-order'>
         <div className='filter' style={{padding: '0px'}}>
             <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
@@ -76,9 +100,9 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
                     <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={t('filter.uid')}/>
                     <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                 placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
-                    <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={PURCHASE_TYPE}
+                    <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={getPurchaseType()}
                                 type={'select'} title={t('filter.payment-method')}/>
-                    <FilterItem defaultValue={status} setValue={setStatus} options={STATUS_LIST} type={'select'}
+                    <FilterItem defaultValue={status} setValue={setStatus} options={getStatusList()} type={'select'}
                                 title={t('filter.status')}/>
                 </Panel>
             </Collapse>
