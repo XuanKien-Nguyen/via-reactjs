@@ -24,12 +24,15 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
         setPurchaseType('')
     }
 
-    useEffect(() => {
-        getList()
-    }, [])
+    // useEffect(() => {
+    //     getList()
+    // }, [])
 
     useEffect(() => {
-        getList()
+        clearTimeout(debounce)
+        debounce = setTimeout(() => {
+            getList()
+        }, 100)
     }, [date, purchaseType, status, page.perpage, page.currentPage])
 
     useEffect(() => {
