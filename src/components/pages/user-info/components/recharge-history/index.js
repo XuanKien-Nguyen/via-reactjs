@@ -205,7 +205,7 @@ export default ({loading}) => {
                         <div><Icon type="filter" theme="filled"/>&nbsp;{t('filter.title')}</div>
                     </div>}>
                         <FilterItem defaultValue={transactionId} setValue={setTransactionId} type={'text'}
-                                    title={t('filter.transaction-id')}/>
+                                    title={t('filter.transaction-id')} allowClear={true}/>
                         <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                     placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
                         <FilterItem defaultValue={type} setValue={setType} options={getType()} type={'select'}

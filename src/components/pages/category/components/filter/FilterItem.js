@@ -22,9 +22,19 @@ const FilterItem = (props) => {
     const renderType = () => {
         if (type === 'number' || type === 'text') {
 
-            return <Input type={type} placeholder={title} onChange={onChangeNumberText} defaultValue={defaultValue} style={{ width }} />
+            return <Input type={type}
+                          placeholder={title}
+                          onChange={onChangeNumberText}
+                          defaultValue={defaultValue}
+                          style={{ width }}
+                          {...props} />
         } else if (type === 'date') {
-            return <RangePicker onChange={onChangeDate} placeholder={placeholder || title} defaultValue={defaultValue} value={defaultValue} style={{ width }} />
+            return <RangePicker onChange={onChangeDate}
+                                placeholder={placeholder || title}
+                                defaultValue={defaultValue}
+                                value={defaultValue}
+                                style={{ width }}
+                                {...props} />
         } else {
             return <Select
                 showSearch
