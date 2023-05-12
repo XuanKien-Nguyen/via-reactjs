@@ -12,19 +12,19 @@ const UserDetail = ({form, user, loading}) => {
 
     const columns = [
         {
-            title: 'Thiết bị',
+            title: t('info.device'),
             dataIndex: 'device'
         },
         {
-            title: 'Trình duyệt',
+            title: t('info.browser'),
             dataIndex: 'browser'
         },
         {
-            title: 'Địa chỉ IP',
+            title: t('info.ip-address'),
             dataIndex: 'ip_address'
         },
         {
-            title: 'Khu vực',
+            title: t('info.location'),
             dataIndex: 'location',
             align: 'center',
             render: l => {
@@ -35,18 +35,18 @@ const UserDetail = ({form, user, loading}) => {
             }
         },
         {
-            title: 'Thời gian',
+            title: t('info.created-time'),
             dataIndex: 'created_time'
         },
         {
-            title: 'Trạng thái',
+            title: t('info.status'),
             dataIndex: 'status',
             align: 'center',
             render: s => {
                 if (s === 'success') {
-                    return <Tag color={'#87d068'}>Đăng nhập thành công</Tag>
+                    return <Tag color={'#87d068'}>{t('info.success')}</Tag>
                 }
-                return <Tag color={'#f50'}>Đăng nhập thất bại</Tag>
+                return <Tag color={'#f50'}>{t('info.fail')}</Tag>
             }
         },
     ]
@@ -62,7 +62,7 @@ const UserDetail = ({form, user, loading}) => {
 
     const {getFieldDecorator} = form;
     return <Fragment>
-            <Form>
+            <Form className="user-info_form">
         <Form.Item disabled label={t('info.fullname')}>
             {getFieldDecorator('fullname', {
                 initialValue: user?.fullname || ''
@@ -84,8 +84,8 @@ const UserDetail = ({form, user, loading}) => {
             })(<Input disabled/>)}
         </Form.Item>
     </Form>
-        <h3>Lịch sử đăng nhập (15 lần gần nhất): </h3>
-        <Table columns={columns} dataSource={loginList} pagination={false} rowKey={'id'}/>
+        <h3>{t('info.title-history')}</h3>
+        <Table bordered columns={columns} dataSource={loginList} pagination={false} rowKey={'id'}/>
         </Fragment>
 }
 
