@@ -8,11 +8,13 @@ const dateFormat = 'YYYY-MM-DD';
 
 let debounce = null
 
+let firsInit = false
 export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
 
     const { t } = useTranslation()
 
     const [uid, setUid] = useState('')
+    const [init, setInit] = useState(0)
     const [date, setDate] = useState([])
     const [purchaseType, setPurchaseType] = useState('')
     const [status, setStatus] = useState('')
@@ -24,22 +26,26 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
         setPurchaseType('')
     }
 
-    // useEffect(() => {
-    //     getList()
-    // }, [])
+    useEffect(() => {
+        getList()
+    }, [])
 
     useEffect(() => {
-        clearTimeout(debounce)
-        debounce = setTimeout(() => {
-            getList()
-        }, 100)
+        if (init > 1) {
+                getList()
+        }
+        setInit(init + 1)
     }, [date, purchaseType, status, page.perpage, page.currentPage])
 
+
     useEffect(() => {
-        clearTimeout(debounce)
-        debounce = setTimeout(() => {
-            getList()
-        }, 500)
+        if (init > 1) {
+            clearTimeout(debounce)
+            debounce = setTimeout(() => {
+                getList()
+            }, 500)
+        }
+        setInit(init + 1)
     }, [uid])
 
     const getList = () => {
