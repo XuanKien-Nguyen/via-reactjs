@@ -86,7 +86,7 @@ export default ({id, loading}) => {
             value: convertCurrencyVN(productDetail.content)
         },
         {
-            title: 'Tiền khuyến tài khoản đã sử dụng:',
+            title: 'Tiền tài khoản đã sử dụng:',
             value: convertCurrencyVN(productDetail.amount_of_buyer_spend)
         },
         {
