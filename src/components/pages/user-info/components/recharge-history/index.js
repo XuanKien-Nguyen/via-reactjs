@@ -11,6 +11,8 @@ import {convertCurrencyVN} from "../../../../../utils/helpers";
 const {Panel} = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
+
+let debounce = null
 export default ({loading}) => {
 
     const [data, setData] = useState([]);
@@ -27,37 +29,40 @@ export default ({loading}) => {
     const {t} = useTranslation()
 
     useEffect(() => {
-        let updated_time = date.length > 0 ? JSON.stringify(date?.map(el => el?.format(dateFormat))) : "";
-        let body = {
-            updated_time,
-            transaction_id: transactionId,
-            type,
-            page: page.currentPage,
-            perpage: page.perpage,
-            updatedby: updatedBy
-        }
+        clearTimeout(debounce)
+        debounce = setTimeout(() => {
+            let updated_time = date.length > 0 ? JSON.stringify(date?.map(el => el?.format(dateFormat))) : "";
+            let body = {
+                updated_time,
+                transaction_id: transactionId,
+                type,
+                page: page.currentPage,
+                perpage: page.perpage,
+                updatedby: updatedBy
+            }
 
-        for (const key of Object.keys(body)) {
-            if (body[key] === "") {
-                delete body[key];
-            }
-        }
-        loading(true)
-        getAllRechargeSuccess(body).then((resp) => {
-            if (resp.status === 200) {
-                const data = resp?.data?.successRechargeList || [];
-                setData(data)
-                const pageInfo = {
-                    total: resp?.data?.totalSuccessRecharge,
-                    perpage: resp?.data?.perPage,
-                    totalPages: resp?.data?.totalPages,
-                    currentPage: resp?.data?.currentPage,
+            for (const key of Object.keys(body)) {
+                if (body[key] === "") {
+                    delete body[key];
                 }
-                setPage(pageInfo)
             }
-        }).catch(() => message.error('Có lỗi xảy ra khi lấy lịch sử nạp'))
-            .finally(() => loading(false))
-    }, [date, type, JSON.stringify(page), updatedBy, transactionId])
+            loading(true)
+            getAllRechargeSuccess(body).then((resp) => {
+                if (resp.status === 200) {
+                    const data = resp?.data?.successRechargeList || [];
+                    setData(data)
+                    const pageInfo = {
+                        total: resp?.data?.totalSuccessRecharge,
+                        perpage: resp?.data?.perPage,
+                        totalPages: resp?.data?.totalPages,
+                        currentPage: resp?.data?.currentPage === 0 ? 1 : resp?.data?.currentPage ,
+                    }
+                    setPage(pageInfo)
+                }
+            }).catch(() => message.error('Có lỗi xảy ra khi lấy lịch sử nạp'))
+                .finally(() => loading(false))
+        }, 500)
+    }, [date, type, page.currentPage, page.perpage, updatedBy, transactionId])
 
     const renderMoney = (el, prefix = '+') => {
         if (el && (el + '').startsWith('-')) {
