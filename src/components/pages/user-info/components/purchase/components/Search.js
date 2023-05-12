@@ -29,11 +29,15 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
     }, [])
 
     useEffect(() => {
+        getList()
+    }, [date, purchaseType, status, page.perpage, page.currentPage])
+
+    useEffect(() => {
         clearTimeout(debounce)
         debounce = setTimeout(() => {
             getList()
         }, 500)
-    }, [uid, date, purchaseType, status, page.perpage, page.currentPage])
+    }, [uid])
 
     const getList = () => {
         let created_time = ''
