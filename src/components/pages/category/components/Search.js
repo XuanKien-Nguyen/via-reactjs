@@ -83,7 +83,7 @@ export default ({ setResultSearch, parentId, getParentCategory, getTypeStockList
 
     return <div className='filter-product'>
         <div className='filter' style={{ padding: '0px' }}>
-            <Collapse className='filter-layout' accordion style={{ backgroundColor: '#e9e9e9' }} defaultActiveKey={1}>
+            <Collapse className='filter-layout' accordion style={{ backgroundColor: '#e9e9e9' }} defaultActiveKey={1} expandIconPosition={"right"}>
                 <Panel key={1} className='filter-container' header={<div className='filter-header'>
                     <div><Icon type="filter" theme="filled" />&nbsp;{t('filter.title')}</div>
                 </div>}>
