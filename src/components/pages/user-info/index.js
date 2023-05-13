@@ -103,7 +103,7 @@ const UserInfo = () => {
         }, 100)
     }
 
-    return <div id='user_id' className='user-profile_container p-t-30'>
+    return <div id='user_id' className='user-profile_container'>
         <div className="sidebar">
             <div className="avatar">
                 <img src={require('../../../assets/img/avatar.png')} alt="" className="src"/>

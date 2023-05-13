@@ -242,7 +242,7 @@ export default ({id, loading}) => {
             </p>
             <b>SẢN PHẨM</b>
             <br/>
-            <Tag color="geekblue" style={{margin: '10px 0px'}}>Định dạng: <span style={{color: 'red'}}>{productDetail.category_format}</span></Tag>
+            <Tag color="geekblue" style={{margin: '10px 0px', display: 'flex', flexWrap: 'nowrap', gap: '4px', maxWidth: 'fit-content'}}>Định dạng: <span style={{color: 'red', display: 'block', wordWrap: 'break-word', whiteSpace: 'normal', width: 'calc(100% - 64px)'}}>{productDetail.category_format}</span></Tag>
             {/*<b>Định dạng: </b>*/}
             <Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} />
             {product && buy()}
