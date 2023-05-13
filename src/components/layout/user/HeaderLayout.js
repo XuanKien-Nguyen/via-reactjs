@@ -137,7 +137,7 @@ function HeaderLayout({ history }) {
                     <div className='header-main-icon__menu'>
                         <Icon type="menu" style={{ fontSize: '20px' }} onClick={toggleMenu} />
                     </div>
-                    <div className='header-logo' style={{ marginRight: '30px', cursor: 'pointer' }} onClick={() => history.push('/')}>
+                    <div className='header-logo' style={{ marginRight: '30px', cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
                         <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{ width: '135px' }} />
                     </div>
                     <div className="header-main_left">
@@ -167,7 +167,7 @@ function HeaderLayout({ history }) {
             <div className='header-divider'><div className='top-divider'></div></div>
             <div id="header__mobile" className='nav-bar__moblie'>
                 <div className='nav-bar-container'>
-                    <div className='header-logo' style={{ marginBottom: '8px', cursor: 'pointer' }} onClick={() => history.push('/')}>
+                    <div className='header-logo' style={{ marginBottom: '8px', cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
                         <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{ width: '150px' }} />
                     </div>
                     <Tabs defaultActiveKey="1">

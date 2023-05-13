@@ -6,11 +6,15 @@ const { Panel } = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
 
+let debounce = null
+
+let firsInit = false
 export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
 
     const { t } = useTranslation()
 
     const [uid, setUid] = useState('')
+    const [init, setInit] = useState(0)
     const [date, setDate] = useState([])
     const [purchaseType, setPurchaseType] = useState('')
     const [status, setStatus] = useState('')
@@ -27,8 +31,22 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
     }, [])
 
     useEffect(() => {
-        getList()
-    }, [uid, date, purchaseType, status, JSON.stringify(page)])
+        if (init > 1) {
+                getList()
+        }
+        setInit(init + 1)
+    }, [date, purchaseType, status, page.perpage, page.currentPage])
+
+
+    useEffect(() => {
+        if (init > 1) {
+            clearTimeout(debounce)
+            debounce = setTimeout(() => {
+                getList()
+            }, 500)
+        }
+        setInit(init + 1)
+    }, [uid])
 
     const getList = () => {
         let created_time = ''
@@ -56,7 +74,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
                     total: data.totalPurchases,
                     perpage: data.perPage,
                     totalPages: data.totalPages,
-                    currentPage: data.currentPage,
+                    currentPage: data.currentPage === 0 ? 1 : data.currentPage,
                 }
                 setPageInfo(pageInfo)
                 setPurchaseList(resp?.data?.newPurchaseList || [])
@@ -97,7 +115,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
                 <Panel key={1} className='filter-container' header={<div className='filter-header'>
                     <div><Icon type="filter" theme="filled"/>&nbsp;{t('filter.title')}</div>
                 </div>}>
-                    <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={t('filter.uid')}/>
+                    <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={t('filter.uid')} allowClear={true}/>
                     <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                 placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
                     <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={getPurchaseType()}
