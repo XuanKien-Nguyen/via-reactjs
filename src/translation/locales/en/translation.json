@@ -71,7 +71,7 @@
         "status": "Status",
         "all": "All",
         "stocking": "Stocking",
-        "out-stock": "Out of stock",
+        "out_of_stock": "Out of stock",
         "type": "Type",
         "transaction-id": "Transaction ID",
         "created-by": "Created by",

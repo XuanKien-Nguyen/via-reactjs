@@ -71,7 +71,7 @@
         "status": "Tình trạng",
         "all": "Xem tất cả",
         "stocking": "Còn hàng",
-        "out-stock": "Hết hàng",
+        "out_of_stock": "Hết hàng",
         "type": "Loại",
         "transaction-id": "Mã giao dịch",
         "created-by": "Người tạo",
