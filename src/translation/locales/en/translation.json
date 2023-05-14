@@ -56,7 +56,8 @@
         "checkpoint-email": "Checkpoint Email",
         "email": "Email",
         "change": "Change Information",
-        "back-up": "Support Backup"
+        "back-up": "Support Backup",
+        "modal-desc": "Description"
     },
     "filter": {
         "title": "Filter",
@@ -124,7 +125,8 @@
         "total-records": "Total",
         "download-time": "Download Time",
         "purchase-id": "Purchase ID",
-        "amount": "Amount"
+        "amount": "Amount",
+        "type": "Type"
     },
     "recharge": {
         "placeholder": "Enter top-up amount",
@@ -198,5 +200,33 @@
         "SYSTEM_BANKING": "Bank recharge",
         "SYSTEM_TRC20": "Top up virtual money",
         "MANAGER_REFUND": "Warranty refund"
+    },
+    "category-type": {
+        "ALL": "All",
+        "STOCK": "Stock",
+        "OUT_OF_STOCK": "Out of stock"
+    },
+    "purchase-type": {
+        "ALL": "All",
+        "API_TYPE": "API",
+        "DIRECT_TYPE": "Direct"
+    },
+    "purchase-status": {
+        "ALL": "All",
+        "VALID_STATUS": "Valid",
+        "INVALID_STATUS": "Invalid"
+    },
+    "recharge-type": {
+        "ALL": "All",
+        "TYPE_BANKING": "Banking",
+        "TYPE_USDT": "USDT-TRC20"
+    },
+    "download-type": {
+        "ALL": "All",
+        "TYPE_DOWNLOAD_NOTSOLD": "Not sold",
+        "TYPE_DOWNLOAD_SOLD": "Sold",
+        "TYPE_DOWNLOAD_CHECKPOINT": "Checkpoint",
+        "TYPE_DOWNLOAD_REPLACE": "Replace",
+        "TYPE_DOWNLOAD_ERROR": "Error"
     }
 }

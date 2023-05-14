@@ -1,12 +1,17 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Search from "./components/Search";
 import TableCommon from "../../../../common/table";
-import { getLogDownloadProduct } from "../../../../../services/user";
+import { getLogDownloadProduct, getLogDownloadProductType } from "../../../../../services/user";
 import { useTranslation } from "react-i18next";
+import Tag from "antd/es/tag";
 import './style.scss'
+
+const MAP_TYPE = {}
+
 export default ({ loading }) => {
 
     const [datasource, setDatasource] = useState([])
+    const [downloadTypeList, setDownloadTypeList] = useState([])
 
     const { t } = useTranslation()
 
@@ -58,6 +63,13 @@ export default ({ loading }) => {
             width: '150px',
             render: purchase_id => <b style={{ cursor: 'pointer' }} onClick={() => { goToOrderPurchaseDetail(purchase_id) }}>#{purchase_id}</b>
         },
+        // {
+        //     title: t('order.type'),
+        //     width: '200px',
+        //     dataIndex: 'type',
+        //     render: type => <Tag color={'grey'}>{t(MAP_TYPE[type])}</Tag>,
+        //     align: 'center',
+        // },
         {
             title: t('order.amount'),
             dataIndex: 'amount',
@@ -78,6 +90,30 @@ export default ({ loading }) => {
         },
     ];
 
+    useEffect(() => {
+        getLogDownloadProductType().then(resp => {
+            if (resp.status === 200) {
+                const data = resp.data?.TYPE_OBJ || []
+                const lstType = [{label: 'download-type.ALL', value: ''}]
+                for (const key of Object.keys(data)) {
+                    lstType.push({
+                        label: `download-type.${key}`,
+                        value: data[key]
+                    })
+                    MAP_TYPE[data[key]] = `download-type.${key}`
+                }
+                setDownloadTypeList(lstType)
+            }
+        })
+    }, [])
+
+    const getDownloadTypeList = () => {
+        return downloadTypeList.map(el => ({
+            label: t(el.label),
+            value: el.value
+        }))
+    }
+
     return <Fragment>
         <Search setList={setDatasource}
             api={getLogDownloadProduct}
@@ -85,6 +121,7 @@ export default ({ loading }) => {
             setPageInfo={setPage}
             page={page}
             t={t}
+            getDownloadTypeList={getDownloadTypeList}
         />
         <TableCommon className='table-order'
             style={{ overflow: 'auto' }}

@@ -185,6 +185,7 @@ const ProductCard = ({ productDetail }) => {
                 onCancel={() => setShowDescProduct(false)}
                 visible={showDescProduct}
                 footer={null}
+                title={t('product.modal-desc')}
             >
                 <div><span>{productDetail.description}</span></div>
             </Modal>

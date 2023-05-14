@@ -58,14 +58,17 @@ export default () => {
 
       const respTypeList = await getTypeList();
       if (respTypeList.status === 200) {
-        const typeLst = respTypeList.data?.CATEGORY_TYPE_LIST || [];
+        const typeLst = respTypeList.data?.TYPE_OBJ || [];
         const list = [{
-          label: 'all',
+          label: 'ALL',
           value: ''
         }]
-        typeLst.map(type => {
-          list.push({ label: type, value: type })
-        });
+        for (const key of Object.keys(typeLst)) {
+          list.push({
+              label: key,
+              value: typeLst[key]
+          })
+        }
         setTypeList(list);
       }
     }
@@ -78,7 +81,7 @@ export default () => {
 
   const getTypeStockList = () => {
     return typeList.map(el => ({
-      label: t(`filter.${el.label}`),
+      label: t(`category-type.${el.label}`),
       value: el.value
     }))
   }

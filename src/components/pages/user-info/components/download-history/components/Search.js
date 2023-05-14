@@ -6,12 +6,14 @@ const { Panel } = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
 
-export default ({setList, api, loading, setPageInfo, page, t}) => {
+export default ({setList, api, loading, setPageInfo, page, t, getDownloadTypeList}) => {
 
     const [date, setDate] = useState([])
+    const [downloadType, setDownloadType] = useState('')
 
     const onReset = () => {
         setDate([])
+        setDownloadType('')
     }
 
     useEffect(() => {
@@ -62,6 +64,9 @@ export default ({setList, api, loading, setPageInfo, page, t}) => {
                 </div>}>
                     <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                 placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
+                    {/* <FilterItem defaultValue={downloadType} setValue={setDownloadType} options={getDownloadTypeList()} type={'select'}
+                                allowClear={true}
+                                title={t('filter.type')}/> */}
                 </Panel>
             </Collapse>
             <Button className='reset-filter-btn' type="primary" size='small' icon="reload"

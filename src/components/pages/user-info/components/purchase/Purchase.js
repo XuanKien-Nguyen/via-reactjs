@@ -1,6 +1,6 @@
 import React, {useEffect, useState, Fragment} from "react";
 import {Badge, message, Table, Button, Icon, Tooltip, Tag} from "antd";
-import {purchaseList, downloadPurchase} from "../../../../../services/purchases";
+import {purchaseList, downloadPurchase, getPurchaseType, getPurchaseStatus} from "../../../../../services/purchases";
 import Modal from "antd/es/modal";
 import {convertCurrencyVN, textToFile} from '../../../../../utils/helpers'
 import Search from './components/Search'
@@ -20,7 +20,9 @@ export default ({loading}) => {
 
     const [visible, setVisible] = useState(false)
 
-     const [productDetail, setProductDetail] = useState(null)
+    const [productDetail, setProductDetail] = useState(null)
+    const [purchaseType, setPurchaseType] = useState([])
+    const [purchaseStatus, setPurchaseStatus] = useState([])
 
     const [page, setPage] = useState({
         perpage: 10,
@@ -125,8 +127,60 @@ export default ({loading}) => {
         })
     }
 
+    useEffect(() => {
+        getPurchaseType().then(resp => {
+                if (resp.status === 200) {
+                    const data = resp.data?.TYPE_OBJ || []
+                    const lstType = [{label: 'purchase-type.ALL', value: ''}]
+                    for (const key of Object.keys(data)) {
+                        lstType.push({
+                            label: `purchase-type.${key}`,
+                            value: data[key]
+                        })
+                    }
+                    setPurchaseType(lstType)
+                }
+            }
+        )
+        getPurchaseStatus().then(resp => {
+            if (resp.status === 200) {
+                const data = resp.data?.STATUS_OBJ || []
+                const lstStatus = [{label: 'purchase-status.ALL', value: ''}]
+                for (const key of Object.keys(data)) {
+                    lstStatus.push({
+                        label: `purchase-status.${key}`,
+                        value: data[key]
+                    })
+                }
+                setPurchaseStatus(lstStatus)
+            }
+        }
+    )
+    }, [])
+
+    const getTypeList = () => {
+        return purchaseType.map(el => ({
+            label: t(el.label),
+            value: el.value
+        }))
+    } 
+
+    const getStatusList = () => {
+        return purchaseStatus.map(el => ({
+            label: t(el.label),
+            value: el.value
+        }))
+    } 
+
     return <Fragment>
-        <Search setPurchaseList={setDs} api={purchaseList} loading={loading} setPageInfo={setPage} page={page}/>
+        <Search setPurchaseList={setDs} 
+                api={purchaseList} 
+                loading={loading} 
+                setPageInfo={setPage} 
+                page={page}
+                getTypeList={getTypeList}
+                getStatusList={getStatusList}
+        />
         <TableCommon
             className='table-order'
             bordered={true}

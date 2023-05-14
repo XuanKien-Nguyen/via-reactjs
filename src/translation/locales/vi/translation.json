@@ -56,7 +56,8 @@
         "checkpoint-email": "Checkpoint Email",
         "email": "Email",
         "change": "Đổi thông tin",
-        "back-up": "Hỗ trợ Backup"
+        "back-up": "Hỗ trợ Backup",
+        "modal-desc": "Mô tả"
     },
     "filter": {
         "title": "Bộ lọc",
@@ -124,7 +125,8 @@
         "total-records": "Tổng số",
         "download-time": "Thời gian tải xuống",
         "purchase-id": "Mã đơn hàng",
-        "amount": "Số lượng"
+        "amount": "Số lượng",
+        "type": "Loại"
     },
     "recharge": {
         "placeholder": "Nhập số tiền muốn nạp",
@@ -198,5 +200,33 @@
         "SYSTEM_BANKING": "Nạp tiền ngân hàng",
         "SYSTEM_TRC20": "Nạp tiền ảo",
         "MANAGER_REFUND": "Hoàn tiền bảo hành"
+    },
+    "category-type": {
+        "ALL": "Xem tất cả",
+        "STOCK": "Còn hàng",
+        "OUT_OF_STOCK": "Hết hàng"
+    },
+    "purchase-type": {
+        "ALL": "Xem tất cả",
+        "API_TYPE": "Cộng tác viên",
+        "DIRECT_TYPE": "Trực tiếp"
+    },
+    "purchase-status": {
+        "ALL": "Xem tất cả",
+        "VALID_STATUS": "Bảo hành",
+        "INVALID_STATUS": "Hết bảo hành"
+    },
+    "recharge-type": {
+        "ALL": "Xem tất cả",
+        "TYPE_BANKING": "Ngân hàng",
+        "TYPE_USDT": "USDT-TRC20"
+    },
+    "download-type": {
+        "ALL":"Xem tất cả",
+        "TYPE_DOWNLOAD_NOTSOLD": "Not sold",
+        "TYPE_DOWNLOAD_SOLD": "Sold",
+        "TYPE_DOWNLOAD_CHECKPOINT": "Checkpoint",
+        "TYPE_DOWNLOAD_REPLACE": "Replace",
+        "TYPE_DOWNLOAD_ERROR": "Error"
     }
 }

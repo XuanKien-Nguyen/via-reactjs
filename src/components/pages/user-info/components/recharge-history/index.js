@@ -2,6 +2,7 @@ import React, {useEffect, useState, Fragment} from "react";
 import Tag from "antd/es/tag";
 
 import {getAllRechargeSuccess} from "../../../../../services/user";
+import {getRechargeType} from "../../../../../services/recharge"
 import TableCommon from "../../../../common/table";
 import {Button, Collapse, Icon, message} from "antd";
 import FilterItem from "../../../category/components/filter/FilterItem";
@@ -11,6 +12,7 @@ import {convertCurrencyVN} from "../../../../../utils/helpers";
 const {Panel} = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
+const MAP_TYPE = {}
 
 let debounce = null
 export default ({loading}) => {
@@ -24,9 +26,27 @@ export default ({loading}) => {
     })
     const [date, setDate] = useState([])
     const [type, setType] = useState("")
+    const [rechargeTypeList, setRechargeTypeList] = useState([])
     const [transactionId, setTransactionId] = useState("")
 
     const {t} = useTranslation()
+
+    useEffect(() => {
+        getRechargeType().then(resp => {
+            if (resp.status === 200) {
+                const data = resp.data?.TYPE_OBJ || []
+                const lstType = [{label: 'recharge-type.ALL', value: ''}]
+                for (const key of Object.keys(data)) {
+                    lstType.push({
+                        label: `recharge-type.${key}`,
+                        value: data[key]
+                    })
+                    MAP_TYPE[data[key]] = `recharge-type.${key}`
+                }
+                setRechargeTypeList(lstType)
+            }
+        })
+    }, [])
 
     useEffect(() => {
         clearTimeout(debounce)
@@ -118,16 +138,12 @@ export default ({loading}) => {
             width: '200px',
             dataIndex: 'rate',
             align: 'center',
-        }, {
+        }, 
+        {
             title: t('recharge.type'),
             width: '200px',
             dataIndex: 'type',
-            render: v => {
-                if (v === 'banking') {
-                    return <Tag color={'blue'}>{v.toUpperCase()}</Tag>
-                }
-                return <Tag color={'grey'}>{v.toUpperCase()}</Tag>
-            },
+            render: type => <Tag color={type === 'banking' ? 'blue' : 'grey'}>{t(MAP_TYPE[type])}</Tag>,
             align: 'center',
         },
         {
@@ -168,17 +184,11 @@ export default ({loading}) => {
         setTransactionId("")
     }
 
-    const getType = () => {
-        return [{
-            label: t('filter.all'),
-            value: ''
-        }, {
-            label: t('filter.bank'),
-            value: 'banking'
-        }, {
-            label: 'USTD-TRC20',
-            value: 'usdt-trc20'
-        }]
+    const getRechargeTypeList = () => {
+        return rechargeTypeList.map(el => ({
+            label: t(el.label),
+            value: el.value
+        }))
     }
 
     const onChangePage = (currentPage, perPage) => {
@@ -208,7 +218,7 @@ export default ({loading}) => {
                                     title={t('filter.transaction-id')} allowClear={true}/>
                         <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                     placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
-                        <FilterItem defaultValue={type} setValue={setType} options={getType()} type={'select'}
+                        <FilterItem defaultValue={type} setValue={setType} options={getRechargeTypeList()} type={'select'}
                                     title={t('filter.type')}/>
                         <FilterItem defaultValue={updatedBy} setValue={setUpdatedBy} type={'text'} title={t('filter.created-by')}/>
 

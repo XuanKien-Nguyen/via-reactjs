@@ -9,7 +9,7 @@ const dateFormat = 'YYYY-MM-DD';
 let debounce = null
 
 let firsInit = false
-export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
+export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, getStatusList}) => {
 
     const { t } = useTranslation()
 
@@ -83,32 +83,6 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
             .finally(() => loading(false))
     }
 
-    const getPurchaseType = () => {
-        return [{
-            label: t('filter.all'),
-            value: ''
-        }, {
-            label: t('order.direct'),
-            value: 'direct'
-        }, {
-            label: t('order.api'),
-            value: 'api'
-        }]
-    }
-
-    const getStatusList = () => {
-        return [{
-            label: t('filter.all'),
-            value: ''
-        }, {
-            label: t('order.valid'),
-            value: 'valid'
-        }, {
-            label: t('order.invalid'),
-            value: 'invalid'
-        }]
-    }
-
     return <div className='filter-order'>
         <div className='filter' style={{padding: '0px'}}>
             <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
@@ -118,7 +92,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page}) => {
                     <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={t('filter.uid')} allowClear={true}/>
                     <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                 placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
-                    <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={getPurchaseType()}
+                    <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={getTypeList()}
                                 type={'select'} title={t('filter.payment-method')}/>
                     <FilterItem defaultValue={status} setValue={setStatus} options={getStatusList()} type={'select'}
                                 title={t('filter.status')}/>

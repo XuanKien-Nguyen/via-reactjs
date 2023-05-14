@@ -68,6 +68,9 @@ export const getLogDownloadProduct = (params) => {
     return client.get(`/api/log-download-product/client/`, {params})
 }
 
+export const getLogDownloadProductType = () => {
+    return client.get(`/api/log-download-product/common/type-list`)
+}
 
 export const forgotPassword = (body) => {
     return client.post(`${ENDPOINT_USER}/forgot-password`, body)
