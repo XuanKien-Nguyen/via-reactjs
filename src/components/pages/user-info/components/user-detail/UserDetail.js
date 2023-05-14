@@ -1,8 +1,10 @@
 import React, {useEffect, useState, Fragment} from "react";
 
 import {Form, Input, Button, Tag, Table} from 'antd';
-import {getLogUserLogin} from "../../../../../services/user";
+import {getLogUserLogin, getLogUserStatus} from "../../../../../services/user";
 import { useTranslation } from "react-i18next";
+
+const MAP_TYPE = {}
 
 const UserDetail = ({form, user, loading}) => {
 
@@ -42,12 +44,7 @@ const UserDetail = ({form, user, loading}) => {
             title: t('info.status'),
             dataIndex: 'status',
             align: 'center',
-            render: s => {
-                if (s === 'success') {
-                    return <Tag color={'#87d068'}>{t('info.success')}</Tag>
-                }
-                return <Tag color={'#f50'}>{t('info.fail')}</Tag>
-            }
+            render: s => <Tag color={s === 'success' ? '#87d068' : '#f50'}>{t(MAP_TYPE[s])}</Tag>
         },
     ]
 
@@ -58,7 +55,18 @@ const UserDetail = ({form, user, loading}) => {
                 setLoginList(resp.data?.logUserLoginList || [])
             }
         }).finally(() => loading(false))
+
+        getLogUserStatus().then(resp => {
+            if (resp.status === 200) {
+                const userLoginStatus = resp.data?.STATUS_OBJ || [];
+                for (const key of Object.keys(userLoginStatus)) {
+                    MAP_TYPE[userLoginStatus[key]] = `user-login-status.${key}`
+                }
+            }
+        })
     }, [])
+
+    console.log(MAP_TYPE);
 
     const {getFieldDecorator} = form;
     return <Fragment>

@@ -56,6 +56,10 @@ export const getLogUserLogin = () => {
     return client.get(`/api/log-user-login/client/`)
 }
 
+export const getLogUserStatus = () => {
+    return client.get(`/api/log-user-login/common/status-list`)
+}
+
 export const getLogUserBalance = (params) => {
     return client.get(`/api/log-user-balance/client/`, {params})
 }

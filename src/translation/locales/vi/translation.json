@@ -228,5 +228,9 @@
         "TYPE_DOWNLOAD_CHECKPOINT": "Checkpoint",
         "TYPE_DOWNLOAD_REPLACE": "Replace",
         "TYPE_DOWNLOAD_ERROR": "Error"
+    },
+    "user-login-status": {
+        "STATUS_SUCCESS": "Đăng nhập thành công",
+        "STATUS_FAIL": "Đăng nhập thất bại"
     }
 }
