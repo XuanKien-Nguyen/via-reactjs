@@ -66,8 +66,6 @@ const UserDetail = ({form, user, loading}) => {
         })
     }, [])
 
-    console.log(MAP_TYPE);
-
     const {getFieldDecorator} = form;
     return <Fragment>
             <Form className="user-info_form">

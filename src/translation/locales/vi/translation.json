@@ -88,6 +88,7 @@
         "2fa": "BẬT XÁC THỰC 2FA",
         "recharge-history": "LỊCH SỬ NẠP TIỀN",
         "balance-history": "LỊCH SỬ THAY ĐỔI SỐ DƯ",
+        "recharge-tickets": "PHIẾU NẠP TIỀN",
         "download-history": "LỊCH SỬ TẢI XUỐNG"
     },
     "info": {
@@ -228,9 +229,17 @@
         "TYPE_DOWNLOAD_CHECKPOINT": "Checkpoint",
         "TYPE_DOWNLOAD_REPLACE": "Replace",
         "TYPE_DOWNLOAD_ERROR": "Error"
-    },
+    },  
     "user-login-status": {
         "STATUS_SUCCESS": "Đăng nhập thành công",
         "STATUS_FAIL": "Đăng nhập thất bại"
+    },
+    "recharge-tickets-status": {
+        "ALL":"Xem tất cả",
+        "DELETE_STATUS": "Đã xóa",
+        "PENDING_STATUS": "Đang chờ phê duyệt",
+        "DONE_STATUS": "Đã phê duyệt",
+        "SOLVING_STATUS": "Đang xử lý",
+        "REJECT_STATUS": "Đã từ chối"
     }
 }

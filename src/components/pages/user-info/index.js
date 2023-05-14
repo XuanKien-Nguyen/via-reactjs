@@ -8,6 +8,7 @@ import Recharge from './components/recharge'
 import RechargeHistory from './components/recharge-history'
 import BalanceHistory from './components/balance-history'
 import DownloadHistory from "./components/download-history";
+import RechargeTickets from "./components/recharge-tickets";
 import Footer from './components/footer'
 import '../../../assets/scss/user-info.scss'
 import {useDispatch, useSelector} from "react-redux";
@@ -91,6 +92,8 @@ const UserInfo = () => {
             return <BalanceHistory loading={setLoading}/>
         } else if (current === 'download-history') {
             return <DownloadHistory loading={setLoading}/>
+        } else if (current === 'recharge-tickets') {
+            return <RechargeTickets loading={setLoading}/>
         }
         return <UserDetail user={user} loading={setLoading} />
     }
@@ -147,6 +150,10 @@ const UserInfo = () => {
                     <Menu.Item key="balance-history">
                         <Icon type="file-sync" />
                         {t('profile.balance-history')}
+                    </Menu.Item>
+                    <Menu.Item key="recharge-tickets">
+                        <Icon type="credit-card" />
+                        {t('profile.recharge-tickets')}
                     </Menu.Item>
                     <Menu.Item key="download-history">
                         <Icon type="download" />

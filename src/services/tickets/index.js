@@ -10,6 +10,6 @@ export const getAllRechargeTickets = (params) => {
     return service.get(`${ENDPOINT}/client`, {params})
 }
 
-export const getSyntaxToTopupUSDT = () => {
+export const getRechargeTicketsStatusList = () => {
     return service.get(`${ENDPOINT}/common/status-list`)
 }
