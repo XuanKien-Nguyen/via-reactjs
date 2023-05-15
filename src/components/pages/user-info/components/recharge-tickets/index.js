@@ -15,6 +15,7 @@ export default ({ loading }) => {
     const [rechargeTicketList, setRechargeTicketList] = useState([])
     const [ticketsStatusList, setTicketsStatusList] = useState([])
     const [visible, setVisible] = useState(false)
+    const [render, setRender] = useState(0)
 
     const { t } = useTranslation()
 
@@ -129,6 +130,7 @@ export default ({ loading }) => {
             page={page}
             t={t}
             getTicketsStatusList={getTicketsStatusList}
+            render={render}
         />
         <Button style={{marginBottom: '16px'}} type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button-create')}</Button>
         <TableCommon className='table-order'
@@ -141,6 +143,6 @@ export default ({ loading }) => {
             rowKey="id"
             onChangePage={onChangePage}
             onChangeSize={onChangeSize} />
-            <CreateTicket visible={visible} setVisible={setVisible} />
+            <CreateTicket visible={visible} setVisible={setVisible} setRender={setRender} render={render}/>
     </Fragment>
 }

@@ -4,13 +4,12 @@ import Modal from "antd/es/modal";
 import { Button, Input, Upload, Icon, message, Form } from 'antd';
 import { createRechargeTickets } from "../../../../../../services/tickets";
 
-
 const { Dragger } = Upload;
 const { TextArea } = Input;
 
 let fn
 
-export default ({visible, setVisible}) => {
+export default ({visible, setVisible, render, setRender}) => {
 
     const { t } = useTranslation()
 
@@ -55,18 +54,15 @@ export default ({visible, setVisible}) => {
         createRechargeTickets(formData).then(resp => {
             if (resp.status === 200) {
                 message.success(resp?.data?.message)
-            }       
+            }
             setVisible(false)
         }).catch(err => {
             message.error(err?.response?.data?.message)
-        }).finally(() => setPending(false))
+        }).finally(() => {
+            setRender(render + 1)
+            setPending(false)
+        })
     }
-
-    useEffect(() => {
-        if(visible) {
-
-        }
-    }, [visible])
 
     return <div className='modal-tickets'>
         <Modal
