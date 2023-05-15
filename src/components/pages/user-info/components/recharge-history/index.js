@@ -18,6 +18,8 @@ let debounce = null
 export default ({loading}) => {
 
     const [data, setData] = useState([]);
+    const [totalRechargeAmount, setTotalRechargeAmount] = useState(0);
+    const [totalRechargeBonus, setTotalRechargeBonus] = useState(0);
     const [updatedBy, setUpdatedBy] = useState('')
     const [page, setPage] = useState({
         perpage: 10,
@@ -78,6 +80,8 @@ export default ({loading}) => {
                         currentPage: resp?.data?.currentPage === 0 ? 1 : resp?.data?.currentPage ,
                     }
                     setPage(pageInfo)
+                    setTotalRechargeAmount(resp?.data?.toltalAmountSuccessRecharge || 0);
+                    setTotalRechargeBonus(resp?.data?.toltalBonusSuccessRecharge || 0);
                 }
             }).catch(() => message.error('Có lỗi xảy ra khi lấy lịch sử nạp'))
                 .finally(() => loading(false))
@@ -227,6 +231,10 @@ export default ({loading}) => {
                 <Button className='reset-filter-btn' type="primary" size='small' icon="reload"
                         onClick={onReset}>{t('common.reset')}</Button>
             </div>
+        </div>
+        <div className="recharge-total" style={{marginBottom: '16px', fontSize: '16px'}}>
+            <div>{t('recharge-history.total-amount')}: {renderMoney(totalRechargeAmount)}</div>
+            <div>{t('recharge-history.total-bonus')}: {renderMoney(totalRechargeBonus)}</div>
         </div>
         <TableCommon className='table-order'
                      bordered={true}

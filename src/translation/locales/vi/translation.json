@@ -21,7 +21,8 @@
         "close": "Đóng",
         "copy": "Sao chép",
         "ok": "OK",
-        "cancel": "Hủy bỏ"
+        "cancel": "Hủy bỏ",
+        "create": "Tạo"
     },
     "access-denied": {
         "title": "TRUY CẬP BỊ TỪ CHỐI",
@@ -71,12 +72,12 @@
         "payment-method": "Phương thức thanh toán",
         "status": "Tình trạng",
         "all": "Xem tất cả",
-        "stocking": "Còn hàng",
-        "out_of_stock": "Hết hàng",
         "type": "Loại",
         "transaction-id": "Mã giao dịch",
         "created-by": "Người tạo",
-        "bank": "Ngân hàng"
+        "content": "Nội dung",
+        "lastest-decided-by": "Người quyết định cuối cùng",
+        "lastest-decided-date": "Chọn thời gian quyết định cuối cùng"
     },
     "profile": {
         "balance" : "Số dư",
@@ -88,7 +89,7 @@
         "2fa": "BẬT XÁC THỰC 2FA",
         "recharge-history": "LỊCH SỬ NẠP TIỀN",
         "balance-history": "LỊCH SỬ THAY ĐỔI SỐ DƯ",
-        "recharge-tickets": "PHIẾU NẠP TIỀN",
+        "recharge-tickets": "PHIẾU NẠP TIỀN LỖI",
         "download-history": "LỊCH SỬ TẢI XUỐNG"
     },
     "info": {
@@ -164,6 +165,24 @@
         "created-by":"Người tạo",
         "updated-time": "Thời gian cập nhật",
         "updated-by": "QTV cập nhật"
+    },
+    "recharge-history": {
+        "total-amount": "Tổng tiền tài khoản nạp thành công",
+        "total-bonus": "Tổng tiền khuyến mãi nạp thành công"
+    },
+    "recharge-tickets": {
+        "button-create": "Tạo phiếu nạp lỗi",
+        "modal-title": "Phiếu nạp lỗi",
+        "modal-content": "Lý do tạo phiếu",
+        "modal-content-placeholder": "Vui lòng nhập lý do bạn muốn tạo phiếu",
+        "id": "ID",
+        "status": "Trạng thái",
+        "content": "Nội dung",
+        "added-bonus": "Tiền khuyến mãi đã nạp",
+        "added-amount": "Tiền tài khoản đã nạp",
+        "created-time": "Thời gian tạo",
+        "lastest-decided-by": "Người quyết định cuối cùng",
+        "lastest-decided-time": "Thời gian quyết định cuối cùng"
     },
     "password": {
         "button": "Đổi mật khẩu",

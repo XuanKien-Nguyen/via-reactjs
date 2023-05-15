@@ -8,7 +8,6 @@ const dateFormat = 'YYYY-MM-DD';
 
 let debounce = null
 
-let firsInit = false
 export default ({ setRechargeTicketList, api, loading, setPageInfo, page, getTicketsStatusList }) => {
 
     const { t } = useTranslation()
@@ -86,7 +85,7 @@ export default ({ setRechargeTicketList, api, loading, setPageInfo, page, getTic
                 setPageInfo(pageInfo)
                 setRechargeTicketList(resp?.data?.rechargeTicketList || [])
             }
-        }).catch(() => message.error('Có lỗi xảy ra khi lấy thông tin'))
+        }).catch(() => message.error('Có lỗi xảy ra khi lấy thông tin phiếu nạp lỗi'))
             .finally(() => loading(false))
     }
 
@@ -96,14 +95,14 @@ export default ({ setRechargeTicketList, api, loading, setPageInfo, page, getTic
                 <Panel key={1} className='filter-container' header={<div className='filter-header'>
                     <div><Icon type="filter" theme="filled" />&nbsp;{t('filter.title')}</div>
                 </div>}>     
-                    <FilterItem defaultValue={content} setValue={setContent} type={'text'} title={'Content'} />
-                    <FilterItem defaultValue={lastestDecidedBy} setValue={setLastestDecidedBy} type={'text'} title={'Lastest Decided By'} />
+                    <FilterItem defaultValue={content} setValue={setContent} type={'text'} title={t('filter.content')} />
+                    <FilterItem defaultValue={lastestDecidedBy} setValue={setLastestDecidedBy} type={'text'} title={t('filter.lastest-decided-by')} />
                     <FilterItem defaultValue={status} setValue={setStatus} options={getTicketsStatusList()} type={'select'}
                         title={t('filter.type')} />
                     <FilterItem defaultValue={createDate} setValue={setCreateDate} type={'date'}
-                        placeholder={[t('filter.from'), t('filter.to')]} title={t('Create Date')} />
+                        placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')} />
                     <FilterItem defaultValue={lastestDate} setValue={setLastestDate} type={'date'}
-                        placeholder={[t('filter.from'), t('filter.to')]} title={'Lastest Date'} />
+                        placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.lastest-decided-date')} />
                 </Panel>
             </Collapse>
             <Button className='reset-filter-btn' type="primary" size='small' icon="reload"

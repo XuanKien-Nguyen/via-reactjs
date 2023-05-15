@@ -21,7 +21,8 @@
         "close": "Close",
         "copy": "Copy",
         "ok": "Okay",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "create": "Create"
     },
     "access-denied": {
         "title": "ACCESS DENIED",
@@ -71,12 +72,12 @@
         "payment-method": "Payment Method",
         "status": "Status",
         "all": "All",
-        "stocking": "Stocking",
-        "out_of_stock": "Out of stock",
         "type": "Type",
         "transaction-id": "Transaction ID",
         "created-by": "Created by",
-        "bank": "Banking"
+        "content": "Content",
+        "lastest-decided-by": "Lastest decided by",
+        "lastest-decided-date": "Select lastest decided date"
     },
     "profile": {
         "balance" : "Balance",
@@ -164,6 +165,24 @@
         "created-by":"Created by",
         "updated-time": "Updated time",
         "updated-by": "Updated by"
+    },
+    "recharge-history": {
+        "total-amount": "Total Amount Successfully Recharge",
+        "total-bonus": "Total Bonus Successfully Recharge"
+    },
+    "recharge-tickets": {
+        "button-create": "Create new ticket",
+        "modal-title": "New Recharge Ticket",
+        "modal-content": "Reason create ticket",
+        "modal-content-placeholder": "Please enter the reason you want to create ticket",
+        "id": "ID",
+        "status": "Status",
+        "content": "Content",
+        "added-bonus": "Added Bonus",
+        "added-amount": "Added Amount",
+        "created-time": "Created Time",
+        "lastest-decided-by": "Lastest Decided By",
+        "lastest-decided-time": "Lastest Decided Time"
     },
     "password": {
         "button": "Change Password",

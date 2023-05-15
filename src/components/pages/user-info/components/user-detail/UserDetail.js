@@ -4,13 +4,12 @@ import {Form, Input, Button, Tag, Table} from 'antd';
 import {getLogUserLogin, getLogUserStatus} from "../../../../../services/user";
 import { useTranslation } from "react-i18next";
 
-const MAP_TYPE = {}
-
 const UserDetail = ({form, user, loading}) => {
 
     const { t } = useTranslation()
 
     const [loginList, setLoginList] = useState([])
+    const [loginStatusList, setLoginStatusList] = useState({})
 
     const columns = [
         {
@@ -44,7 +43,7 @@ const UserDetail = ({form, user, loading}) => {
             title: t('info.status'),
             dataIndex: 'status',
             align: 'center',
-            render: s => <Tag color={s === 'success' ? '#87d068' : '#f50'}>{t(MAP_TYPE[s])}</Tag>
+            render: s => <Tag color={s === 'success' ? '#87d068' : '#f50'}>{t(loginStatusList[s])}</Tag>
         },
     ]
 
@@ -59,9 +58,11 @@ const UserDetail = ({form, user, loading}) => {
         getLogUserStatus().then(resp => {
             if (resp.status === 200) {
                 const userLoginStatus = resp.data?.STATUS_OBJ || [];
+                const MAP_TYPE = {}
                 for (const key of Object.keys(userLoginStatus)) {
                     MAP_TYPE[userLoginStatus[key]] = `user-login-status.${key}`
                 }
+                setLoginStatusList(MAP_TYPE)
             }
         })
     }, [])

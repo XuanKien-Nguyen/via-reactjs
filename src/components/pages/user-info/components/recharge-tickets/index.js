@@ -1,9 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useContext } from "react";
 import Search from "./components/Search";
 import TableCommon from "../../../../common/table";
+import CreateTicket from "./components/CreateTicket";
 import { getAllRechargeTickets, getRechargeTicketsStatusList } from "../../../../../services/tickets";
 import { useTranslation } from "react-i18next";
 import Tag from "antd/es/tag";
+import { Button } from "antd";
 import './style.scss'
 
 const MAP_TYPE = {}
@@ -12,6 +14,7 @@ export default ({ loading }) => {
 
     const [rechargeTicketList, setRechargeTicketList] = useState([])
     const [ticketsStatusList, setTicketsStatusList] = useState([])
+    const [visible, setVisible] = useState(false)
 
     const { t } = useTranslation()
 
@@ -39,52 +42,52 @@ export default ({ loading }) => {
     
     const columns = [
         {
-            title: 'ID',
+            title: t('recharge-tickets.id'),
             dataIndex: 'id',
             align: 'center',
             width: '100px',
             render: id => <b>#{id}</b>
         },
         {
-            title: 'Status',
+            title: t('recharge-tickets.status'),
             width: '150px',
             dataIndex: 'status',
             render: s => <Tag color={'grey'}>{t(MAP_TYPE[s])}</Tag>,
             align: 'center',
         },
         {
-            title: 'Content',
+            title: t('recharge-tickets.content'),
             dataIndex: 'content',
             align: 'center',
             width: '300px'
         },
         {
-            title: 'Added Bonus',
-            dataIndex: 'added-bonus',
+            title: t('recharge-tickets.added-bonus'),
+            dataIndex: 'added_bonus',
             align: 'center',
             width: '150px',
         },
         {
-            title: 'Added Amount',
-            dataIndex: 'added-amount',
+            title: t('recharge-tickets.added-amount'),
+            dataIndex: 'added_amount',
             align: 'center',
             width: '150px',
         },
         {
-            title: 'Create time',
-            dataIndex: 'create-time',
+            title: t('recharge-tickets.created-time'),
+            dataIndex: 'created_time',
             align: 'center',
             width: '200px',
         },
         {
-            title: 'Lastest decide by',
-            dataIndex: 'lastest-decidedby',
+            title: t('recharge-tickets.lastest-decided-by'),
+            dataIndex: 'lastest_decidedby',
             align: 'center',
             width: '200px',
         },
         {
-            title: 'Lastest decided time',
-            dataIndex: 'lastest-decided-time',
+            title: t('recharge-tickets.lastest-decided-time'),
+            dataIndex: 'lastest_decided_time',
             align: 'center',
             width: '200px',
         },
@@ -114,8 +117,12 @@ export default ({ loading }) => {
         }))
     }
 
+    const onCreateTickets = () => {
+        setVisible(true)
+    }
+
     return <Fragment>
-        <Search setList={setRechargeTicketList}
+        <Search setRechargeTicketList={setRechargeTicketList}
             api={getAllRechargeTickets}
             loading={loading}
             setPageInfo={setPage}
@@ -123,6 +130,7 @@ export default ({ loading }) => {
             t={t}
             getTicketsStatusList={getTicketsStatusList}
         />
+        <Button style={{marginBottom: '16px'}} type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button-create')}</Button>
         <TableCommon className='table-order'
             style={{ overflow: 'auto' }}
             bordered={true}
@@ -133,5 +141,6 @@ export default ({ loading }) => {
             rowKey="id"
             onChangePage={onChangePage}
             onChangeSize={onChangeSize} />
+            <CreateTicket visible={visible} setVisible={setVisible} />
     </Fragment>
 }
