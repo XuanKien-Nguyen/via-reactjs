@@ -12,13 +12,15 @@ import RechargeTickets from "./components/recharge-tickets";
 import Footer from './components/footer'
 import '../../../assets/scss/user-info.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Icon, Menu, Tag} from 'antd';
+import {Button, Icon, Menu, Popover, Tag, Input, message} from 'antd';
 import {LayoutContext} from "../../../contexts";
 import {useHistory, useLocation} from "react-router-dom";
 import {convertCurrencyVN} from "../../../utils/helpers";
+import {checkStatus, registerPartner, getInfoClientPartner} from "../../../services/partners";
 
 
 import { useTranslation } from 'react-i18next';
+import Modal from "antd/es/modal";
 
 const BREAD_CRUMB = {
     'info': 'profile.information',
@@ -44,15 +46,33 @@ const UserInfo = () => {
 
     const [current, setCurrent] = useState(query.get('menu') || 'info')
 
+    const [partnerStatus, setPartnerStatus] = useState(null)
+
     const location = useLocation()
 
     const [purchaseDetailId, setPurchaseDetailId] = useState(null)
+
+    const [visible, setVisible] = useState(false)
+
+    const [domain, setDomain] = useState('')
+    const [pending, setPending] = useState(false)
+
+    const [errorMessage, setErrorMessage] = useState('')
 
     const dispatch = useDispatch()
 
     const getBreadCrumb = () => {
         return BREAD_CRUMB[query.get('menu') || 'info']
     }
+
+    useEffect(() => {
+        setLoading(true)
+        checkStatus().then(resp => {
+            if (resp.status === 200) {
+                setPartnerStatus(resp?.data || null)
+            }
+        }).finally(() => setLoading(false))
+    }, [])
     
     useEffect(() => {
         setTimeout(() => {
@@ -106,6 +126,53 @@ const UserInfo = () => {
         }, 100)
     }
 
+    const handleRegisterPartner = () => {
+        if (!domain) {
+            setErrorMessage('Vui lòng nhập tên miền')
+            return
+        }
+        setPending(true)
+        registerPartner({domain}).then(resp => {
+            if (resp.status === 201) {
+                setPartnerStatus({
+                    message: resp?.data?.message,
+                    status: resp?.data?.newPartner?.status || null
+                })
+                message.success(resp?.data?.message)
+                setVisible(false)
+            }
+        }).catch(error => setErrorMessage(error.response?.data?.message)).finally(() => setPending(false))
+    }
+
+    const renderPartnerStatus = () => {
+        if (partnerStatus !== null) {
+            const {status, message} = partnerStatus
+                if (status === 'pending') {
+                    return <Popover placement="right"
+                                    title={'Trạng thái: Chờ phê duyệt'}
+                                    content={<div style={{width: '200px', wordWrap: 'break-word'}}>{message}</div>}
+                                    trigger="click">
+                        <Button type='dashed'>CTV <Icon type="history" /></Button>
+                    </Popover>
+                } else if (status === 'rejected') {
+                    return <Popover placement="right" title={'Trạng thái: Bị từ chối'}
+                                    content={<div style={{width: '200px'}}>{message}</div>}
+                                    trigger="click">
+                        <Button type={'danger'}>CTV <Icon type="close" />  </Button>
+                    </Popover>
+                } else {
+                    return <Popover placement="right"
+                                    title={'Trạng thái: Đã đăng ký'}
+                                    content={<div style={{width: '200px', wordWrap: 'break-word'}}>{message}</div>}
+                                    trigger="click">
+                        <Button type={'primary'}>CTV <Icon type="check"/></Button>
+                    </Popover>
+                }
+        } else {
+            return <Button onClick={() => setVisible(true)}>Đăng ký CTV</Button>
+        }
+    }
+
     return <div id='user_id' className='user-profile_container'>
         <div className="sidebar">
             <div className="avatar">
@@ -116,6 +183,32 @@ const UserInfo = () => {
                 <p style={{color: 'blue', marginBottom: 0}}>{convertCurrencyVN(user?.amount_available || 0)}</p>
                 <span style={{marginTop: '10px', width: '100%', overflowWrap: 'break-word', textAlign: 'center'}}>{t('profile.bonus')}: </span>
                 <p style={{color: 'blue', marginBottom: 0}}>{convertCurrencyVN(user?.bonus || 0)}</p>
+                {user?.role !== 'admin' && <div className={'m-t-10'}>
+                    {renderPartnerStatus()}
+                    <Modal
+                        maskClosable={false}
+                        title="Đăng ký cộng tác viên"
+                        visible={visible}
+                        footer={[
+                            <Button type="danger" loading={pending} onClick={() => {
+                                setVisible(false)
+                                setErrorMessage('')
+                            }}>
+                                Đóng
+                            </Button>,
+                            <Button type="primary" loading={pending} onClick={handleRegisterPartner}>
+                                Đăng ký
+                            </Button>
+                        ]}
+                    >
+                        <p>Tên miền: </p>
+                        <Input autoFocus={true} value={domain} onChange={e => {
+                            setDomain(e.target.value)
+                            setErrorMessage('')
+                        }}/>
+                        {<p style={{color: 'red'}}>{errorMessage}</p>}
+                    </Modal>
+                </div>}
             </div>
 
             <div className="information">

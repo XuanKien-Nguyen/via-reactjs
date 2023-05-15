@@ -1,5 +1,5 @@
 import {Pagination, Table} from "antd";
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect} from "react";
 import { useTranslation } from 'react-i18next';
 import './style.scss'
 
@@ -7,11 +7,37 @@ const PAGE_SIZE_OPTION = ['5', '10', '20', '30', '50']
 
 export default (props) => {
 
-    const {datasource, columns, page, onChangePage, onChangeSize, bordered, className = '', expandedRowRender} = props
+    const {datasource, columns, page, onChangePage, onChangeSize, bordered, className = '', expandedRowRender, setPage} = props
 
     const { t } = useTranslation()
 
     const {perpage, currentPage, total} = page
+
+    const whenSizeChanged = (currentPage, perPage) => {
+        if (setPage) {
+            return () => {
+                setPage({
+                    perpage: perPage,
+                    currentPage: 1
+                })
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        return onChangeSize
+    }
+
+    const whenPageChanged = (currentPage, perPage) => {
+        if (setPage) {
+            return () => {
+                setPage({
+                    perpage: perPage,
+                    currentPage: currentPage
+                })
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        return onChangePage
+    }
 
     return <Fragment >
         <Table className={className}
@@ -30,9 +56,9 @@ export default (props) => {
                         total={total}
                         pageSize={perpage}
                         showSizeChanger
-                        onChange={onChangePage}
+                        onChange={whenPageChanged()}
                         pageSizeOptions={PAGE_SIZE_OPTION}
-                        onShowSizeChange={onChangeSize}
+                        onShowSizeChange={whenSizeChanged()}
                         showTotal={(total) => `${t('order.total-records')} ${total}`}/>
         </div>
     </Fragment>

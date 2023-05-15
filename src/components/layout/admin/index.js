@@ -4,6 +4,7 @@ import HeaderLayout from "./HeaderLayout";
 import FooterLayout from "./FooterLayout";
 import React, {useContext} from "react";
 import {LayoutContext} from "../../../contexts";
+import '../../../assets/scss/user-info.scss'
 
 const {Content} = Layout;
 

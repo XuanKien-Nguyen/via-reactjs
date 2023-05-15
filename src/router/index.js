@@ -2,10 +2,11 @@
 import Login from '../components/pages/login';
 import Register from '../components/pages/register'
 import Home from '../components/pages/home';
-import CreateProduct from '../components/pages/create-product';
-import ProductDetails from '../components/pages/product-detail';
 import HomePage from '../components/pages/homepage/HomePage';
 import Category from '../components/pages/category';
+import CategoryManager from '../components/pages/category-manager'
+import ProductManager from '../components/pages/product-manager';
+
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
@@ -17,31 +18,31 @@ import AccessDenied from "../components/pages/access-denied/403";
 import ResetPassword from '../components/pages/reset-password'
 
 export const dashboardRoutes = [
+    // {
+    //     path: '/admin',
+    //     component: Home,
+    //     name: "Home Admin",
+    //     icon: "shop",
+    //     exact: true,
+    //     showAlways: true,
+    //     layout: admin,
+    //     role: ['admin']
+    // },
     {
-        path: '/admin',
-        component: Home,
-        name: "Home Admin",
-        icon: "shop",
+        path: '/admin/category-manager',
+        component: CategoryManager,
+        name: "Quản lý danh mục",
+        icon: "folder",
         exact: true,
         showAlways: true,
         layout: admin,
         role: ['admin']
     },
     {
-        path: '/admin/create-product',
-        component: CreateProduct,
-        name: "Create Product",
-        icon: "upload",
-        showAlways: true,
-        exact: true,
-        layout: admin,
-        role: ['admin']
-    },
-    {
-        path: '/admin/product/:productSlug',
-        component: ProductDetails,
-        name: "Product details",
-        icon: "team",
+        path: '/admin/product-manager',
+        component: ProductManager,
+        name: "Quản lý sản phẩm",
+        icon: "file",
         exact: true,
         showAlways: true,
         layout: admin,
