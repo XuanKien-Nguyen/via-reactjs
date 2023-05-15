@@ -213,7 +213,7 @@ export default ({loading}) => {
 
     return <Fragment>
         <div className='filter-order'>
-            <div className='filter' style={{padding: '0px'}}>
+            <div className='filter' style={{padding: '0px', width: '100%', maxWidth: '3000px !important'}}>
                 <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
                     <Panel key={1} className='filter-container' header={<div className='filter-header'>
                         <div><Icon type="filter" theme="filled"/>&nbsp;{t('filter.title')}</div>

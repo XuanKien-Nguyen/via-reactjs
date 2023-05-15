@@ -7,6 +7,7 @@ export default ({loading, visible, setVisible, reload}) => {
     const [pending, setPending] = useState(false)
     return <Modal
         centered
+        width={'80%'}
         closable={false}
         visible={visible}
         maskClosable={false}

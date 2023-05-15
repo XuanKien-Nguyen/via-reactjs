@@ -34,7 +34,7 @@ export default ({items, onReset, search, loading, setPage, page, state = [], rel
             .finally(() => loading(false))
     }
 
-    return <div className="filter-order">
+    return <div className="filter-order-admin">
         <div className='filter' style={{padding: '0px'}}>
             <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
                 <Panel key={1} className='filter-container' header={<div className='filter-header'>

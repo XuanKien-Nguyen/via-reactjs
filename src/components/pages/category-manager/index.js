@@ -66,10 +66,6 @@ export default () => {
         setReload(reload + 1)
     }
 
-    const expandedKeys = () => {
-       return ds.map((el, idx) => idx + '')
-    }
-
     return <div>
         <Search items={getItems()}
                 search={setupSearch()}
