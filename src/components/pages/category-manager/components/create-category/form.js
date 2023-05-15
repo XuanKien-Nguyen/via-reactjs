@@ -4,6 +4,7 @@ import {createCategory} from "../../../../../services/category-manager";
 import {getParentCategoryList} from "../../../../../services/category/category";
 import {getPropertiesProduct} from "../../../../../services/product-manager";
 import {getLocationList} from "../../../../../services/category/category";
+import TextArea from "antd/es/input/TextArea";
 
 const {Option} = Select
 
@@ -44,10 +45,35 @@ const Wrapper = (props) => {
         init()
     }, [])
 
+    useEffect(() => {
+        setFormat(['', '', '', '', '', '', '', '', '', ''])
+        setFormatErr('')
+        setCheckPointEmail(false)
+        setHasChange(false)
+        setHas2Fa(false)
+        setHasEmail(false)
+        setHasBackup(false)
+        setCreateChild(false)
+    }, [props.visible])
+
+    useEffect(() => {
+        setFormat(['', '', '', '', '', '', '', '', '', ''])
+        setFormatErr('')
+        setCheckPointEmail(false)
+        setHasChange(false)
+        setHas2Fa(false)
+        setHasEmail(false)
+        setHasBackup(false)
+    }, [createChild])
+
     const handleSubmit = e => {
         e.preventDefault();
         props.form.validateFields((err, values) => {
-            if (!err) {
+            if (format.includes('')) {
+                setFormatErr('Vui lòng không bỏ trống định dạng')
+                return
+            }
+            if (!err && !format.includes('')) {
                 setPending(true)
                 createCategory(values).then(resp => {
                     if (resp.status === 200) {
@@ -63,16 +89,16 @@ const Wrapper = (props) => {
     };
 
     const onChangeFormat = (idx, value) => {
-        console.log(value);
         format[idx] = value
         setFormat([...format])
+        setFormatErr('')
     }
 
     const renderFormat = () => {
         let text = ''
         format.forEach((el, idx) => {
             if (el === '') {
-                text += `{${idx}}|`
+                text += `{${idx + 1}}|`
             } else {
                 text += `${el}|`
             }
@@ -116,7 +142,7 @@ const Wrapper = (props) => {
 
             {createChild && <Fragment>
                 <Form.Item label="Danh mục cha">
-                    {getFieldDecorator('parentId', {
+                    {getFieldDecorator('parent_id', {
                         rules: [{required: true, message: 'Vui lòng chọn danh mục cha'}],
                     })(<Select
                         showSearch
@@ -133,10 +159,10 @@ const Wrapper = (props) => {
                     {properties?.map((e, idx) => {
                         return <Col sm={24} md={12} lg={4} className={'m-b-10'}>
                             <Select
+                                allowClear={true}
                                 onChange={e => onChangeFormat(idx, e)}
                                 suffixIcon={idx + 1}
                                 showSearch
-                                placeholder={`{${idx + 1}}`}
                                 filterOption={(input, option) =>
                                     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                 }
@@ -146,7 +172,7 @@ const Wrapper = (props) => {
                         </Col>
                     })}
                 </Row>
-                {<p>{formatErr}</p>}
+                {<p style={{color: 'red'}}>{formatErr}</p>}
                 <Form.Item label="Đơn giá">
                     {getFieldDecorator('price', {
                         rules: [{required: true, message: 'Vui lòng nhập đơn giá'}],
@@ -191,7 +217,9 @@ const Wrapper = (props) => {
                         }
                     >
                         {locationList.map(el => <Option value={el.name}>
-                            <div style={{display: 'flex', alignItems: 'center'}}><img style={{width: '20px', marginRight: '8px'}} src={el.path} alt="" className="src"/>{el.name}</div>
+                            <div style={{display: 'flex', alignItems: 'center'}}><img
+                                style={{width: '20px', marginRight: '8px'}} src={el.path} alt=""
+                                className="src"/>{el.name}</div>
                         </Option>)}
                     </Select>)}
                 </Form.Item>
@@ -202,12 +230,19 @@ const Wrapper = (props) => {
                         <Input placeholder={'Thời gian'}/>,
                     )}
                 </Form.Item>
+                <Form.Item label="Mô tả">
+                    {getFieldDecorator('description', {
+                        rules: [{required: true, message: 'Vui lòng nhập mô tả'}],
+                    })(
+                        <TextArea placeholder={'Mô tả'} rows={4}/>,
+                    )}
+                </Form.Item>
                 <Form.Item label="Hình ảnh">
                     {getFieldDecorator('category_image', {
                         valuePropName: 'fileList',
                         getValueFromEvent: normFile,
                     })(
-                        <Upload.Dragger name="files">
+                        <Upload.Dragger name="files" customRequest={() => Promise.resolve()}>
                             <p className="ant-upload-drag-icon">
                                 <Icon type="inbox"/>
                             </p>
