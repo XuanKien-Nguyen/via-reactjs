@@ -1,0 +1,129 @@
+#user_id .ant-tabs {
+  width: 100%
+}
+
+@media only screen and (max-width: 949px) {
+  .user-profile_container {
+    display: flex;
+    flex-direction: column !important;
+    margin-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 24px !important;
+
+    .sidebar {
+      display: flex;
+      width: 100% !important;
+      padding: 0 15px !important;
+
+      .avatar {
+        max-width: 250px !important;
+        width: 35% !important;
+        padding: 16px !important;
+        margin-right: 8px !important;
+
+        img {
+          width: 80px !important;
+        }
+      }
+
+      .information {
+        .ant-menu-inline {
+          border: none;
+
+          li {
+            padding-left: 16px !important;
+          }
+        }
+      }
+    }
+
+    .content {
+      padding: 15px !important;
+      width: 100% !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .user-profile_container {
+    .sidebar {
+      .avatar {
+        font-size: 13px;
+      }
+      .information {
+        .ant-menu {
+          .ant-menu-item {
+            font-size: 12px;
+            i {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.filter-order-admin {
+  position: sticky;
+  top: 105px;
+  z-index: 10;
+
+  .filter {
+    margin-top: 0px !important;
+    position: relative;
+    margin-bottom: 32px;
+    margin-top: 32px;
+
+    .filter-layout {
+      .ant-collapse-header {
+        padding: 12px 16px;
+        padding-right: 40px;
+
+        i {
+          left: unset;
+          right: 16px;
+        }
+      }
+
+      .filter-container {
+        .ant-collapse-header {
+          .filter-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+        }
+
+        .ant-collapse-content {
+          .ant-collapse-content-box {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+            .filter-item {
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+
+              i.ant-cascader-picker-clear {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .reset-filter-btn {
+      border-radius: 16px;
+      font-size: 12px;
+      min-height: 26px;
+      padding: 2px 10px;
+      position: absolute;
+      right: 56px;
+      top: 12px;
+    }
+  }
+}
