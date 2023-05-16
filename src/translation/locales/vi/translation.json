@@ -13,6 +13,7 @@
         "sign-up": "Đăng ký",
         "profile": "Cá nhân",
         "admin": "Quản trị dành cho Admin",
+        "status": "Trạng thái",
         "sign-out": "Thoát",
         "yes": "Có",
         "no": "Không",
@@ -84,9 +85,11 @@
         "bonus" : "Khuyến mãi",
         "partner-register-text": "Đăng ký",
         "partner-main-text": "Cộng tác viên",
+        "enter-domamin": "Vui lòng nhập tên miền",
         "partner-rejected": "Trạng thái: Đã từ chối",
         "partner-pending": "Trạng thái: Chờ phê duyệt",
         "partner-registered": "Trạng thái: Đã đăng ký",
+        "partner-banned": "Trạng thái: Đã cấm",
         "information": "THÔNG TIN CÁ NHÂN",
         "order": "ĐƠN HÀNG",
         "recharge": "NẠP TIỀN",
@@ -266,5 +269,11 @@
         "DONE_STATUS": "Đã phê duyệt",
         "SOLVING_STATUS": "Đang xử lý",
         "REJECT_STATUS": "Đã từ chối"
+    },
+    "partner-status": {
+        "ACTIVE_STATUS": "Đã đăng ký",
+        "PENDING_STATUS": "Chờ phê duyệt",
+        "REJECT_STATUS": "Đã từ chối",
+        "ABANDON_STATUS": "Đã cấm"
     }
 }

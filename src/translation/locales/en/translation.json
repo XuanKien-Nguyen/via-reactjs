@@ -13,6 +13,7 @@
         "sign-up": "Sign Up",
         "profile": "Profile",
         "admin": "Administration",
+        "status": "Status",
         "sign-out": "Sign Out",
         "yes": "Yes",
         "no": "No",
@@ -84,9 +85,11 @@
         "bonus" : "Bonus",
         "partner-register-text": "Register",
         "partner-main-text": "Partner",
+        "enter-domamin": "Please enter domain name",
         "partner-rejected": "Status: Rejected",
         "partner-pending": "Status: Pending",
         "partner-registered": "Status: Registered",
+        "partner-banned": "Status: Banned",
         "information": "PERSONAL INFORMATION",
         "order": "ORDER",
         "recharge": "RECHARGE",
@@ -266,5 +269,11 @@
         "DONE_STATUS": "Done",
         "SOLVING_STATUS": "Solving",
         "REJECT_STATUS": "Rejected"
+    },
+    "partner-status": {
+        "ACTIVE_STATUS": "Active",
+        "PENDING_STATUS": "Pending",
+        "REJECT_STATUS": "Rejected",
+        "ABANDON_STATUS": "Abandon"
     }
 }
