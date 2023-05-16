@@ -52,12 +52,11 @@ export default ({visible, setVisible, render, setRender}) => {
         formData.append('recharge_tickets_image', image)
         formData.append('content', content);
         createRechargeTickets(formData).then(resp => {
-            if (resp.status === 200) {
-                message.success(resp?.data?.message)
-                // Modal.success({
-                //     content: resp?.data?.message,
-                //     onOk: () => {}
-                // });
+            if (resp.status === 201) {
+                Modal.success({
+                    content: resp?.data?.message,
+                    onOk: () => {}
+                });
             }
             setVisible(false)
         }).catch(err => {

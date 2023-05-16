@@ -66,7 +66,7 @@
         "location": "Chọn khu vực",
         "stock": "Còn hàng",
         "uid": "UID",
-        "date": "Chọn ngày",
+        "date": "Chọn ngày tạo",
         "from": "Từ ngày",
         "to": "Đến ngày",
         "payment-method": "Phương thức thanh toán",
@@ -76,8 +76,8 @@
         "transaction-id": "Mã giao dịch",
         "created-by": "Người tạo",
         "content": "Nội dung",
-        "lastest-decided-by": "Người quyết định cuối cùng",
-        "lastest-decided-date": "Chọn thời gian quyết định cuối cùng"
+        "lastest-decided-by": "Người quyết định",
+        "lastest-decided-date": "Chọn thời gian quyết định"
     },
     "profile": {
         "balance" : "Số dư",

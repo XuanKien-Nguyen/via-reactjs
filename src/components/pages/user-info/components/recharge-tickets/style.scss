@@ -7,12 +7,15 @@
         height:100%;
         top:0;left:0;right:0;
         background-color:rgba(0,0,0,0);
+        border: 1px solid rgba(128, 128, 128, 0.219);
+        border-radius: 6px;
     }
     &:hover::before {
         background-color:rgba(0,0,0,0.3);
     }
     img {
         display:block;
+        border-radius: 6px;
     }
     i {
         position: absolute;
@@ -29,6 +32,19 @@
     &:hover {
         i {
             opacity: 0.8;
+        }
+    }
+}
+
+.recharge-tickets-image_modal {
+    .ant-modal-content {
+        .ant-modal-confirm-btns {
+            display: none;
+        }
+        .ant-modal-confirm-body {
+            i {
+                display: none;
+            }
         }
     }
 }
