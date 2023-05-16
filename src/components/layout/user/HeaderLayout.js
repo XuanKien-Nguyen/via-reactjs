@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
-import { Dropdown, Icon, Input, Layout, Menu, Tabs, Select } from 'antd';
+import { Dropdown, Icon, Input, Layout, Menu, Tabs, Select, Drawer } from 'antd';
 import { logout } from "../../../services/user";
 import { getParentCategoryList } from '../../../services/category/category';
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +22,7 @@ function HeaderLayout({ history }) {
     const categories = useSelector(store => store.categories)
 
     const [userInfo, setUserInfo] = useState()
+    const [visible, setVisible] = useState(false)
 
     const { setLoading } = useContext(LayoutContext);
 
@@ -31,6 +32,14 @@ function HeaderLayout({ history }) {
 
     const onClick = ({ key }) => {
         window.location.href = `/categories?id=${key}`
+    };
+
+    const showDrawer = () => {
+        setVisible(true)
+    };
+    
+    const onClose = () => {
+        setVisible(false)
     };
 
     const handleLogout = async () => {
@@ -86,11 +95,6 @@ function HeaderLayout({ history }) {
         </Dropdown>
     }
 
-    const toggleMenu = () => {
-        const menu = document.getElementById('header__mobile');
-        menu.classList.toggle("opened");
-    }
-
     const changeLanguage = (value) => {
         i18n.changeLanguage(value);
     }
@@ -110,6 +114,14 @@ function HeaderLayout({ history }) {
         })
     }
 
+    const goToRecharge = () => {
+        if (!userInfo) {
+            history.push('/login')
+            return
+        } 
+        history.push('/user-info?menu=recharge')
+    }
+
     return (
         <Header id='header_user' style={{ height: 'auto', padding: 0, margin: 0 }}>
             <div id="top-bar" className="header-top" style={{ backgroundColor: '#1b74e4', height: '40px', lineHeight: '40px' }}>
@@ -124,7 +136,7 @@ function HeaderLayout({ history }) {
                         <ul>
                             <li className='item'><a href='' onClick={() => {searchProduct('')}}>{t('common.all-product')}</a></li>
                             <li className='item'><a href=''>{t('common.guide')}</a></li>
-                            <li className='item'><a href=''>{t('common.recharge')}</a></li>
+                            <li className='item'><a href='' onClick={goToRecharge}>{t('common.recharge')}</a></li>
                             <li className='item'><a href=''>{t('common.tricks')}</a></li>
                             <li className='item'><a href=''>{t('common.about-us')}</a></li>
                             <li className='item'><a href=''>{t('common.contact')}</a></li>
@@ -135,7 +147,7 @@ function HeaderLayout({ history }) {
             <div id="master-header" className="header-main" style={{ height: '63px' }}>
                 <div className='header-main_container'>
                     <div className='header-main-icon__menu'>
-                        <Icon type="menu" style={{ fontSize: '20px' }} onClick={toggleMenu} />
+                        <Icon type="menu" style={{ fontSize: '20px' }} onClick={showDrawer} />
                     </div>
                     <div className='header-logo' style={{ marginRight: '30px', cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
                         <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{ width: '135px' }} />
@@ -165,8 +177,14 @@ function HeaderLayout({ history }) {
                 </div>
             </div>
             <div className='header-divider'><div className='top-divider'></div></div>
-            <div id="header__mobile" className='nav-bar__moblie'>
-                <div className='nav-bar-container'>
+            <Drawer
+                id="header_mobile"
+                placement='left'
+                onClose={onClose}
+                visible={visible}
+                headerStyle={{display: 'none'}}
+                bodyStyle={{padding: 0}}
+            >
                     <div className='header-logo' style={{ marginBottom: '8px', cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
                         <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{ width: '150px' }} />
                     </div>
@@ -182,7 +200,7 @@ function HeaderLayout({ history }) {
                                 <Menu.Item key="guide" className='sub-menu__item'>
                                     <span className='uppercase'>{t('common.guide')}</span>
                                 </Menu.Item>
-                                <Menu.Item key="recharge" className='sub-menu__item'>
+                                <Menu.Item key="recharge" className='sub-menu__item' onClick={goToRecharge}>
                                     <span className='uppercase'>{t('common.recharge')}</span>
                                 </Menu.Item>
                                 <Menu.Item key="facebook" className='sub-menu__item'>
@@ -219,9 +237,7 @@ function HeaderLayout({ history }) {
                             </Menu>
                         </TabPane>
                     </Tabs>
-                </div>
-                <Icon className='close-menu-icon' type="close" style={{ fontSize: '24px' }} onClick={toggleMenu} />
-            </div>
+            </Drawer>
         </Header>
     );
 }

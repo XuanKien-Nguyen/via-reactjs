@@ -54,10 +54,17 @@ export default ({visible, setVisible, render, setRender}) => {
         createRechargeTickets(formData).then(resp => {
             if (resp.status === 200) {
                 message.success(resp?.data?.message)
+                // Modal.success({
+                //     content: resp?.data?.message,
+                //     onOk: () => {}
+                // });
             }
             setVisible(false)
         }).catch(err => {
-            message.error(err?.response?.data?.message)
+            Modal.error({
+                content: err.response?.data?.message,
+                onOk: () => {}
+            });
         }).finally(() => {
             setRender(render + 1)
             setPending(false)

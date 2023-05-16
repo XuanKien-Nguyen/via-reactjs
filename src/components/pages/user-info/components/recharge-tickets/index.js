@@ -5,7 +5,7 @@ import CreateTicket from "./components/CreateTicket";
 import { getAllRechargeTickets, getRechargeTicketsStatusList } from "../../../../../services/tickets";
 import { useTranslation } from "react-i18next";
 import Tag from "antd/es/tag";
-import { Button } from "antd";
+import { Button, Icon, Modal } from "antd";
 import './style.scss'
 
 const MAP_TYPE = {}
@@ -15,6 +15,7 @@ export default ({ loading }) => {
     const [rechargeTicketList, setRechargeTicketList] = useState([])
     const [ticketsStatusList, setTicketsStatusList] = useState([])
     const [visible, setVisible] = useState(false)
+    const [imageVisible, setImageVisible] = useState(false)
     const [render, setRender] = useState(0)
 
     const { t } = useTranslation()
@@ -55,6 +56,13 @@ export default ({ loading }) => {
             dataIndex: 'status',
             render: s => <Tag color={'grey'}>{t(MAP_TYPE[s])}</Tag>,
             align: 'center',
+        },
+        {
+            title: t('recharge-tickets.image'),
+            dataIndex: 'image_url',
+            align: 'center',
+            width: '200px',
+            render: image_url => <div className="recharge-tickets_image"><img alt="recharge-tickets" src={image_url} /><Icon type='eye' style={{color: 'white', fontSize: '24px'}} onClick={onShowImage(image_url)}/></div>
         },
         {
             title: t('recharge-tickets.content'),
@@ -120,6 +128,10 @@ export default ({ loading }) => {
 
     const onCreateTickets = () => {
         setVisible(true)
+    }
+
+    const onShowImage = (url) => {
+        setImageVisible(true)
     }
 
     return <Fragment>

@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from "react";
-import {Col, message, Row} from "antd";
+import {Col, message, Row, Modal} from "antd";
 import {getSyntaxToTopupBanking} from "../../../../../../services/recharge";
 import { useTranslation } from 'react-i18next';
 import Input from "antd/es/input";
@@ -18,7 +18,12 @@ export default ({loading, copy}) => {
             if (resp.status === 200) {
                 setRechargeInfo(resp.data)
             }
-        }).catch(err => message.error(err.response?.data?.message || `${t('recharge.msg-error')}: ` + err))
+        }).catch(err => {
+            Modal.error({
+                content: err.response?.data?.message || `${t('recharge.msg-error')}: ` + err,
+                onOk: () => {}
+            });
+        })
             .finally(() => loading(false))
     }
 
