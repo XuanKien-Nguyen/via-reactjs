@@ -4,13 +4,16 @@ import {createCategory} from "../../../../../services/category-manager";
 import {getParentCategoryList} from "../../../../../services/category/category";
 import {getPropertiesProduct} from "../../../../../services/product-manager";
 import {getLocationList} from "../../../../../services/category/category";
+import {getBase64} from "../../../../../utils/helpers";
 import TextArea from "antd/es/input/TextArea";
+import Modal from "antd/es/modal"
 
 const {Option} = Select
 
 const Wrapper = (props) => {
 
     const [createChild, setCreateChild] = useState(false)
+    const [initCreateChild, setInitCreateChild] = useState(true)
     const {getFieldDecorator} = props.form;
     const {setVisible, reload, setPending} = props
     const [parentList, setParentList] = useState([])
@@ -23,6 +26,9 @@ const Wrapper = (props) => {
     const [hasEmail, setHasEmail] = useState(false)
     const [hasBackup, setHasBackup] = useState(false)
     const [formatErr, setFormatErr] = useState('')
+
+    const [previewVisible, setPreviewVisible] = useState(false)
+    const [previewImage, setPreviewImage] = useState(null)
 
     const [format, setFormat] = useState(['', '', '', '', '', '', '', '', '', ''])
 
@@ -41,6 +47,7 @@ const Wrapper = (props) => {
             if (respLocation.status === 200) {
                 setLocationList(respLocation?.data?.nationalFlagList || [])
             }
+            setInitCreateChild(false)
         }
         init()
     }, [])
@@ -69,21 +76,41 @@ const Wrapper = (props) => {
     const handleSubmit = e => {
         e.preventDefault();
         props.form.validateFields((err, values) => {
-            if (format.includes('')) {
-                setFormatErr('Vui lòng không bỏ trống định dạng')
-                return
-            }
-            if (!err && !format.includes('')) {
+            if (!err) {
+                let body
+                if (!createChild) {
+                    body = values
+                } else {
+                    if (format.includes('')) {
+                        setFormatErr('Vui lòng không bỏ trống định dạng')
+                        return
+                    }
+                    const raw = {
+                        ...values,
+                        category_image: values.category_image[0].originFileObj,
+                        checkpoint_email: checkPointEmail,
+                        has_change: hasChange,
+                        has_2fa: has2Fa,
+                        has_email: hasEmail,
+                        has_backup: hasBackup,
+                        format: format.join('|')
+                    }
+                    const formData = new FormData()
+                    Object.keys(raw).forEach(k => formData.append(k, raw[k]))
+                    body = formData
+                }
                 setPending(true)
-                createCategory(values).then(resp => {
+                createCategory(body).then(resp => {
                     if (resp.status === 200) {
                         message.success(resp?.data?.message)
                         setVisible(false)
                         reload()
+                        if (!createChild) {
+                            parentList.push(resp?.data?.newParentCategory)
+                        }
                     }
                 }).catch(err => message.error(err?.response?.data?.message))
                     .finally(() => setPending(false))
-                console.log('Received values of form: ', values);
             }
         });
     };
@@ -121,12 +148,19 @@ const Wrapper = (props) => {
     }
 
     const normFile = e => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {
-            return e;
+        if (e.fileList.length > 1) {
+            e.fileList.shift();
         }
         return e && e.fileList;
-    };
+    }
+
+    const handlePreview = async file => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview)
+        setPreviewVisible(true)
+    }
 
     return <Fragment>
         {props.visible && <Form onSubmit={handleSubmit}>
@@ -137,7 +171,13 @@ const Wrapper = (props) => {
                     <Input placeholder={'Tên danh mục'}/>,
                 )}
             </Form.Item>
-            <p className={'m-t-10'}>Tạo danh mục con: <Switch checked={createChild} onChange={v => setCreateChild(v)}/>
+            <p className={'m-t-10'}>Tạo danh mục con:
+                <Switch checked={createChild}
+                        loading={initCreateChild}
+                        onChange={v => {
+                            setCreateChild(v)
+                        }}
+                />
             </p>
 
             {createChild && <Fragment>
@@ -212,9 +252,9 @@ const Wrapper = (props) => {
                     })(<Select
                         showSearch
                         placeholder="Quốc gia"
-                        filterOption={(input, option) =>
-                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
+                        // filterOption={(input, option) =>
+                        //     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        // }
                     >
                         {locationList.map(el => <Option value={el.name}>
                             <div style={{display: 'flex', alignItems: 'center'}}><img
@@ -241,15 +281,28 @@ const Wrapper = (props) => {
                     {getFieldDecorator('category_image', {
                         valuePropName: 'fileList',
                         getValueFromEvent: normFile,
+                        rules: [{required: true, message: 'Vui chọn file'}],
                     })(
-                        <Upload.Dragger name="files" customRequest={() => Promise.resolve()}>
+                        <Upload.Dragger
+                            name="files"
+                            multiple={false}
+                            beforeUpload={() => false}
+                            accept={'.png, .jpg'}
+                            onPreview={handlePreview}
+                            // disabled={props.form.getFieldValue('category_image')?.length > 0 || false}
+                            listType="picture"
+                        >
                             <p className="ant-upload-drag-icon">
                                 <Icon type="inbox"/>
                             </p>
                             <p className="ant-upload-text">Nhấp hoặc kéo tệp vào khu vực này để tải lên</p>
-                            <p className="ant-upload-hint">Hỗ trợ định dạng JPG, PNG</p>
+                            <p className="ant-upload-hint">Hỗ trợ định dạng JPEG, PNG</p>
+                            {/*<p className="ant-upload-hint">Chỉ hỗ trợ tối đa 1 file, vui lòng xoá file đã chọn nếu muốn thay thế file khác</p>*/}
                         </Upload.Dragger>,
                     )}
+                    <Modal visible={previewVisible} footer={null} onCancel={() => setPreviewVisible(false)}>
+                        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                    </Modal>
                 </Form.Item>
             </Fragment>}
             <Button id={'submit-create-category'} type="primary" htmlType="submit" hidden></Button>

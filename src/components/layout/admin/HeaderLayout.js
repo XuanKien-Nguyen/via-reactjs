@@ -28,18 +28,18 @@ function HeaderLayout() {
 
   return (
     <Header>
-      <div className="header-wrapper">
-        <div className="page-header">{headerComponent}</div>
-        <Icon type="logout" onClick={() => setLogoutModalOpen(true)} className="logout-icon" />  
-      </div>
-      <Modal
-        title="Đăng xuất"
-        visible={isLogoutModalOpen}
-        onOk={handleLogout}
-        onCancel={() => setLogoutModalOpen(false)}
-      >
-        Bạn có thực sự muốn thoát?
-      </Modal>
+      {/*<div className="header-wrapper">*/}
+      {/*  <div className="page-header">{headerComponent}</div>*/}
+      {/*  <Icon type="logout" onClick={() => setLogoutModalOpen(true)} className="logout-icon" />  */}
+      {/*</div>*/}
+      {/*<Modal*/}
+      {/*  title="Đăng xuất"*/}
+      {/*  visible={isLogoutModalOpen}*/}
+      {/*  onOk={handleLogout}*/}
+      {/*  onCancel={() => setLogoutModalOpen(false)}*/}
+      {/*>*/}
+      {/*  Bạn có thực sự muốn thoát?*/}
+      {/*</Modal>*/}
     </Header>
   );
 }

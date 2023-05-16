@@ -7,7 +7,7 @@ import {swapCategory} from "../../../services/category-manager";
 import {LayoutContext} from "../../../contexts";
 import './style.scss'
 
-import {Button, Tree} from 'antd';
+import {Button, Icon, Tree} from 'antd';
 
 const { TreeNode, DirectoryTree } = Tree;
 
@@ -33,11 +33,12 @@ export default () => {
                         type={'text'}
                         title={'Tên danh mục'}
                         allowClear={true}/>,
-            <FilterItem defaultValue={date}
-                        setValue={setDate}
-                        type={'date'}
-                        placeholder={['Từ ngày', 'Đến ngày']}
-                        title={'Chọn ngày'}/>]
+            // <FilterItem defaultValue={date}
+            //             setValue={setDate}
+            //             type={'date'}
+            //             placeholder={['Từ ngày', 'Đến ngày']}
+            //             title={'Chọn ngày'}/>
+        ]
     }
     const setupSearch = () => {
         const params = {
@@ -58,6 +59,7 @@ export default () => {
         const targetNode = p.node.props
         const targetIdx = targetNode.idx
         const currentId = p.dragNode.props.id
+        setLoading(true)
         await swapCategory(currentId, {index: targetIdx})
         setReload(reload + 1)
     }
@@ -72,9 +74,10 @@ export default () => {
                 loading={setLoading}
                 setPage={setPage}
                 reload={reload}
+                state={[name]}
                 page={page}/>
         <p style={{textAlign: 'right'}}>
-            <Button type={'primary'} onClick={() => setVisible(true)}>Thêm mới danh mục</Button>
+            <Button type={'primary'} onClick={() => setVisible(true)}><Icon type="plus" />Thêm mới danh mục</Button>
         </p>
         <div className={'m-t-10'} style={{    border:' 1px solid #eaeaea',
             padding: '15px'}}>
@@ -83,7 +86,7 @@ export default () => {
                 onDrop={onDragEnd}
             >
                 {ds.map((el, pIdx) => <TreeNode expanded title={el.name} key={pIdx + ''} id={el.id} idx={pIdx}>
-                    {el.childCategoryList.map((child, cIdx) => <TreeNode expanded disabled id={el.id} idx={cIdx} title={child.name} key={`${pIdx}-${cIdx}`} isLeaf />)}
+                    {el.childCategoryList.map((child, cIdx) => <TreeNode id={child.id} idx={cIdx} title={child.name} key={`${pIdx}-${cIdx}`} isLeaf />)}
                 </TreeNode>)}
             </DirectoryTree>
         </div>
