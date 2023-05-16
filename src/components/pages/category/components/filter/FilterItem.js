@@ -23,6 +23,7 @@ const FilterItem = (props) => {
         if (type === 'number' || type === 'text') {
 
             return <Input type={type}
+                          value={defaultValue}
                           placeholder={title}
                           onChange={onChangeNumberText}
                           defaultValue={defaultValue}

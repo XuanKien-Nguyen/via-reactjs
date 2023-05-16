@@ -1,4 +1,4 @@
-import React, {useState, Fragment, useContext, useEffect} from "react";
+import React, {useState, Fragment, useEffect} from "react";
 import {Button, Form, Icon, Input, Checkbox, message, Select, Switch, Upload, Col, Row, Tag} from "antd";
 import {createCategory} from "../../../../../services/category-manager";
 import {getParentCategoryList} from "../../../../../services/category/category";
@@ -102,14 +102,18 @@ const Wrapper = (props) => {
                 setPending(true)
                 createCategory(body).then(resp => {
                     if (resp.status === 200) {
-                        message.success(resp?.data?.message)
+                        Modal.success({
+                            content: resp?.data?.message,
+                            onOk: () => {}})
                         setVisible(false)
                         reload()
                         if (!createChild) {
                             parentList.push(resp?.data?.newParentCategory)
                         }
                     }
-                }).catch(err => message.error(err?.response?.data?.message))
+                }).catch(err => Modal.error({
+                        content: err?.response?.data?.message,
+                        onOk: () => {}}))
                     .finally(() => setPending(false))
             }
         });

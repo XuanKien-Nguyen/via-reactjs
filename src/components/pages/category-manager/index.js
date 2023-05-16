@@ -34,7 +34,7 @@ export default () => {
                         title={'Tên danh mục'}
                         allowClear={true}/>,
             // <FilterItem defaultValue={date}
-            //             setValue={setDate}
+            //    x         setValue={setDate}
             //             type={'date'}
             //             placeholder={['Từ ngày', 'Đến ngày']}
             //             title={'Chọn ngày'}/>
@@ -75,6 +75,10 @@ export default () => {
                 setPage={setPage}
                 reload={reload}
                 state={[name]}
+                onReset={() => {
+                    console.log('hehehe');
+                    setName('')
+                }}
                 page={page}/>
         <p style={{textAlign: 'right'}}>
             <Button type={'primary'} onClick={() => setVisible(true)}><Icon type="plus" />Thêm mới danh mục</Button>
