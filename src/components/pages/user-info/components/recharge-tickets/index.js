@@ -147,7 +147,6 @@ export default ({ loading }) => {
             loading={loading}
             setPageInfo={setPage}
             page={page}
-            t={t}
             getTicketsStatusList={getTicketsStatusList}
             reload={reload}
         />
