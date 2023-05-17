@@ -8,3 +8,7 @@ export const getPropertiesProduct = () => {
 export const getProductList = (params) => {
     return client.get(`${ENDPOINT}`, {params})
 }
+
+export const createProduct = (body) =>{
+    return client.post(`${ENDPOINT}`, body)
+}
