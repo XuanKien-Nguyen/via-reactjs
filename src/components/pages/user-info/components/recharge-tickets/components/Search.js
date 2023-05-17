@@ -36,7 +36,7 @@ export default ({ setRechargeTicketList, api, loading, setPageInfo, page, getTic
             getList()
         }
         setInit(init + 1)
-    }, [createDate, lastestDate, status, page.perpage, page.currentPage, render])
+    }, [render, createDate, lastestDate, status, page.perpage, page.currentPage])
 
 
     useEffect(() => {
