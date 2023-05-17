@@ -1,16 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Button, Collapse, Icon, Tag} from "antd";
+import {Button, Collapse, Icon, Tag, Tooltip} from "antd";
 import {useTranslation} from "react-i18next";
-import {getProductList} from "../../../services/product-manager";
+import {downloadNotSoldProduct, getProductList} from "../../../services/product-manager";
 import {message} from "antd";
 import TableCommon from "../../common/table";
-import {convertCurrencyVN} from "../../../utils/helpers";
+import {convertCurrencyVN, textToFile} from "../../../utils/helpers";
 import FilterItem from "../category/components/filter/FilterItem";
 import Modal from "antd/es/modal";
 import {Input, Select} from "antd";
 import {getCategoryList} from "../../../services/category/category";
 import {LayoutContext} from "../../../contexts";
 import Form from "./form";
+import {downloadPurchase} from "../../../services/purchases";
 
 const {Option, OptGroup} = Select;
 const {Panel} = Collapse
@@ -36,6 +37,14 @@ function Index() {
     const [reload, setReload] = useState(1)
     const [categoryList, setCategoryList] = useState([]);
     const [visible, setVisible] = useState(false)
+    const [visibleDownload, setVisibleDownload] = useState(false)
+
+    const [productDownloadInfo, setProductDownloadInfo] = useState({
+        category_id: '',
+        comment: '',
+        amount: 0
+    })
+
     const [createdBy, setCreatedBy] = useState('')
 
     useEffect(() => {
@@ -116,7 +125,6 @@ function Index() {
 
     const createNewProduct = () => {
         setVisible(true)
-        return false
     }
 
     const closePopup = () => {
@@ -143,6 +151,47 @@ function Index() {
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
+    const enterCommentDownload = (category_id, amount) =>{
+        setVisibleDownload(true);
+
+        let downloadInfo = {
+            category_id: category_id,
+            comment: '',
+            amount: amount
+        }
+
+        setProductDownloadInfo(downloadInfo);
+
+    }
+    const handleDownload = (comment) => {
+
+        console.log(comment)
+        setLoading(true);
+        console.log(productDownloadInfo);
+
+        let body = {
+            category_id: productDownloadInfo.category_id,
+            amount: productDownloadInfo.amount, comment
+        }
+        console.log(body)
+        downloadNotSoldProduct(body).then((resp) => {
+            console.log(resp)
+            if(resp.status === 200){
+            }
+        }).catch(() => message.error("Có lỗi xảy ra"))
+            .finally(setLoading(false))
+
+
+        // loading(true)
+        // downloadPurchase(id).then(resp => {
+        //     const {data} = resp
+        //     message.success(data.message)
+        //     const content = data.purchaseDownloadList.join('\r\n');
+        //     textToFile(categoryName, content)
+        // }).catch(err => {
+        //     message.error(err.response?.data?.message || 'Có lỗi xảy ra khi tải xuống')
+        // }).finally(() => loading(false))
+    }
 
     const columns = [
         {
@@ -195,6 +244,23 @@ function Index() {
             dataIndex: 'created_time',
             width: '150px',
             align: 'center',
+        },
+        {
+            title: 'Ngày tạo',
+            dataIndex: 'created_time',
+            width: '150px',
+            align: 'center',
+        },{
+            title: "Tải xuống",
+            // dataIndex: 'id',
+            render: row => {
+                return <div>
+                    <Tooltip title={t('order.download')}>
+                        <Button type={'danger'} style={{margin: '5px 0px'}} onClick={() => enterCommentDownload(row.category_id, row.cost)}><Icon type="download" /></Button>
+                    </Tooltip>
+                </div>
+            }
+
         }
     ]
     return (
@@ -223,11 +289,12 @@ function Index() {
                                 }
                             </Select>
                         </div>
-                        <FilterItem defaultValue={createdTime} setValue={setCreatedTime} type={'date'}
-                                    placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
                         <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title='UUID'/>
                         <FilterItem defaultValue={createdBy} setValue={setCreatedBy} type={'text'}
                                     title={t('filter.created-by')}/>
+                        <FilterItem defaultValue={createdTime} setValue={setCreatedTime} type={'date'}
+                                    placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
+
                     </Panel>
                 </Collapse>
                 <Button className='reset-filter-btn' type="primary" size='small' icon="reload"
@@ -235,7 +302,7 @@ function Index() {
             </div>
             <div>
                 <p style={{textAlign: 'right'}}>
-                    <Button type={'primary'} onClick={createNewProduct}>{'Thêm mới sản phẩm'}</Button>
+                    <Button type={'primary'} onClick={createNewProduct}><Icon type="plus" />{'Thêm mới sản phẩm'}</Button>
                 </p>
             </div>
 
@@ -248,6 +315,33 @@ function Index() {
                          onChangeSize={onChangeSize}
                          datasource={productList}
                          columns={columns}/>
+
+            <Modal
+                centered
+                width={'50%'}
+                closable={false}
+                visible={visibleDownload}
+                maskClosable={false}
+                title={'Thêm mới sản phẩm'}
+                onCancel={() => () => {
+                    setVisibleDownload(false)
+                }}
+                footer={[
+                    <Button key="back" disabled={false} onClick={() => {
+                        setVisibleDownload(false)
+                    }}>
+                        Huỷ bỏ
+                    </Button>,
+                    <Button key="submit" type="primary" loading={pending} onClick={() => {
+                        const comment = document.getElementById("comment").value;
+                        handleDownload(comment)
+                    }}>
+                        Tải xống
+                    </Button>
+                ]}>
+
+                <Input title='Lý do tải xuống' id={'comment'}/>
+            </Modal>
 
             <Modal
                 centered

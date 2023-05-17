@@ -10,10 +10,10 @@ const Wrapper = (props) =>{
     const {closePopup, setReload, categoryOptions, setPending } = props
     const handleSubmit = e =>{
         e.preventDefault();
-        setPending(true)
         console.log(props.form.getFieldsValue());
         props.form.validateFields((errors, values) =>{
             if(!errors){
+                setPending(true)
                 let body = {
                     category_id: values.categoryId,
                     cost: values.cost,
