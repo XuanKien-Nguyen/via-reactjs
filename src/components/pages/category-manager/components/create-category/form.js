@@ -166,6 +166,33 @@ const Wrapper = (props) => {
         setPreviewVisible(true)
     }
 
+    const beforeUpload = (file) => {
+        const extension = file.name.split('.')
+
+        const errorFn = () => {
+            const els = document.querySelector('.ant-upload-list-item-card-actions a i')
+            if (els) {
+                els.click()
+            }
+        }
+        if (extension.length > 1) {
+            const isJpgOrPng = extension[extension.length - 1] === 'jpg' || extension[extension.length - 1] === 'png';
+            if (!isJpgOrPng) {
+                Modal.error({
+                    content: 'Chỉ hỗ trợ định dạng ảnh là JPG và PNG',
+                    onOk: errorFn
+                });
+            }
+            if (file.size / 1024 / 1024 > 1) {
+                Modal.error({
+                    content: 'Kích thước ảnh tối đa là 1Mb',
+                    onOk: errorFn
+                });
+            }
+        }
+        return false
+    }
+
     return <Fragment>
         {props.visible && <Form onSubmit={handleSubmit}>
             <Form.Item label="Tên danh mục">
@@ -290,22 +317,23 @@ const Wrapper = (props) => {
                         <Upload.Dragger
                             name="files"
                             multiple={false}
-                            beforeUpload={() => false}
+                            beforeUpload={beforeUpload}
                             accept={'.png, .jpg'}
                             onPreview={handlePreview}
                             // disabled={props.form.getFieldValue('category_image')?.length > 0 || false}
                             listType="picture"
+                            id={'upload-file-category'}
                         >
                             <p className="ant-upload-drag-icon">
                                 <Icon type="inbox"/>
                             </p>
                             <p className="ant-upload-text">Nhấp hoặc kéo tệp vào khu vực này để tải lên</p>
-                            <p className="ant-upload-hint">Hỗ trợ định dạng JPEG, PNG</p>
-                            {/*<p className="ant-upload-hint">Chỉ hỗ trợ tối đa 1 file, vui lòng xoá file đã chọn nếu muốn thay thế file khác</p>*/}
+                            <p className="ant-upload-hint">Hỗ trợ định dạng JPG, PNG</p>
+                            <p className="ant-upload-hint">Tải lên tối đa 1 file, dung lượng tối đa 1MB</p>
                         </Upload.Dragger>,
                     )}
                     <Modal visible={previewVisible} footer={null} onCancel={() => setPreviewVisible(false)}>
-                        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                        <img style={{ width: '100%' }} src={previewImage} />
                     </Modal>
                 </Form.Item>
             </Fragment>}
