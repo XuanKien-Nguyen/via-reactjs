@@ -30,6 +30,7 @@ const BREAD_CRUMB = {
     recharge: 'profile.recharge',
     'recharge-history': 'profile.recharge-history',
     'balance-history': 'profile.balance-history',
+    'recharge-tickets': 'profile.recharge-tickets',
     'download-history': 'profile.download-history'
 }
 
@@ -133,7 +134,7 @@ const UserInfo = () => {
 
     const handleRegisterPartner = () => {
         if (!domain) {
-            setErrorMessage('Vui lòng nhập tên miền')
+            setErrorMessage(t('profile.enter-domain'))
             return
         }
         setPending(true)
@@ -171,23 +172,29 @@ const UserInfo = () => {
             const {status, message} = partnerStatus
                 if (status === 'pending') {
                     return <Popover placement="right"
-                                    title={t('profile.partner-pending')}
-                                    content={<div style={{width: '200px', wordWrap: 'break-word'}}>{message}</div>}
+                                    title={'Trạng thái: Chờ xét duyệt'}
+                                    content={<div style={{width: '200px', wordBreak: 'break-word'}}>{message}</div>}
                                     trigger="click">
-                        <Button type='dashed'>{renderTextAPI} <Icon type="history" /></Button>
+                        <Button style={{color: 'white', backgroundColor: '#FFCF85', border: 'none'}}>{renderTextAPI} <Icon type="history" /></Button>
                     </Popover>
                 } else if (status === 'rejected') {
-                    return <Popover placement="right" title={t('profile.partner-rejected')}
-                                    content={<div style={{width: '200px'}}>{message}</div>}
+                    return <Popover placement="right" title={'Trạng thái: Đã từ chối'}
+                                    content={<div style={{width: '200px', wordBreak: 'break-word'}}>{message}</div>}
                                     trigger="click">
-                        <Button type={'danger'}>{renderTextAPI} <Icon type="close" />  </Button>
+                        <Button style={{color: 'white', backgroundColor: '#ED5330', border: 'none'}}>{renderTextAPI} <Icon type="close" />  </Button>
+                    </Popover>
+                } else if (status === 'ban') {
+                    return <Popover placement="right" title={'Trạng thái: Đã cấm'}
+                                    content={<div style={{width: '200px', wordBreak: 'break-word'}}>{message}</div>}
+                                    trigger="click">
+                        <Button style={{color: 'white', backgroundColor: '#AEB6BF', border: 'none'}}>{renderTextAPI} <Icon type="stop" />  </Button>
                     </Popover>
                 } else {
                     return <Popover placement="right"
-                                    title={t('profile.partner-registered')}
-                                    content={<div style={{width: '200px', wordWrap: 'break-word'}}>{message}</div>}
+                                    title={'Trạng thái: Đã đăng ký'}
+                                    content={<div style={{width: '200px', wordBreak: 'break-word'}}>{message}</div>}
                                     trigger="click">
-                        <Button type={'primary'}>{renderTextAPI} <Icon type="check"/></Button>
+                        <Button type='primary'>{renderTextAPI} <Icon type="check"/></Button>
                     </Popover>
                 }
         } else {

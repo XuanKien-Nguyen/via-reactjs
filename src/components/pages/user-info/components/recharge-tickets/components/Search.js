@@ -8,7 +8,7 @@ const dateFormat = 'YYYY-MM-DD';
 
 let debounce = null
 
-export default ({ setRechargeTicketList, api, loading, setPageInfo, page, getTicketsStatusList, render }) => {
+export default ({ setRechargeTicketList, api, loading, setPageInfo, page, getTicketsStatusList, reload }) => {
 
     const { t } = useTranslation()
 
@@ -32,11 +32,15 @@ export default ({ setRechargeTicketList, api, loading, setPageInfo, page, getTic
     }, [])
 
     useEffect(() => {
+        getList()
+    }, [reload])
+
+    useEffect(() => {
         if (init > 1) {
             getList()
         }
         setInit(init + 1)
-    }, [render, createDate, lastestDate, status, page.perpage, page.currentPage])
+    }, [createDate, lastestDate, status, page.perpage, page.currentPage])
 
 
     useEffect(() => {

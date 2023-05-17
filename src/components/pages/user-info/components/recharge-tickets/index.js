@@ -15,8 +15,7 @@ export default ({ loading }) => {
     const [rechargeTicketList, setRechargeTicketList] = useState([])
     const [ticketsStatusList, setTicketsStatusList] = useState([])
     const [visible, setVisible] = useState(false)
-    const [imageVisible, setImageVisible] = useState(false)
-    const [render, setRender] = useState(0)
+    const [reload, setReload] = useState(0)
 
     const { t } = useTranslation()
 
@@ -41,6 +40,10 @@ export default ({ loading }) => {
         })
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    const forceReload = () => {
+        setReload(reload + 1)
+    }
     
     const columns = [
         {
@@ -62,7 +65,7 @@ export default ({ loading }) => {
             dataIndex: 'image_url',
             align: 'center',
             width: '200px',
-            render: image_url => <div className="recharge-tickets_image"><img alt="recharge-tickets" src={image_url} /><Icon type='eye' style={{color: 'white', fontSize: '24px'}} onClick={onShowImage(image_url)}/></div>
+            render: image_url => <div className="recharge-tickets_image"><img alt="recharge-tickets" src={image_url} /><Icon type='eye' style={{color: 'white', fontSize: '24px'}} onClick={() => {onShowImage(image_url)}}/></div>
         },
         {
             title: t('recharge-tickets.content'),
@@ -131,7 +134,11 @@ export default ({ loading }) => {
     }
 
     const onShowImage = (url) => {
-        setImageVisible(true)
+        Modal.info({
+            className: "recharge-tickets-image_modal",
+            content: <div><img alt="recharge-tickets" src={url}/></div>,
+            maskClosable: true,
+        })
     }
 
     return <Fragment>
@@ -140,11 +147,12 @@ export default ({ loading }) => {
             loading={loading}
             setPageInfo={setPage}
             page={page}
-            t={t}
             getTicketsStatusList={getTicketsStatusList}
-            render={render}
+            reload={reload}
         />
-        <Button style={{marginBottom: '16px'}} type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button-create')}</Button>
+        <div style={{marginBottom: '16px', textAlign: 'end'}}>
+            <Button type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button-create')}</Button>
+        </div>
         <TableCommon className='table-order'
             style={{ overflow: 'auto' }}
             bordered={true}
@@ -155,6 +163,11 @@ export default ({ loading }) => {
             rowKey="id"
             onChangePage={onChangePage}
             onChangeSize={onChangeSize} />
-            <CreateTicket visible={visible} setVisible={setVisible} setRender={setRender} render={render}/>
+        <CreateTicket
+            visible={visible} 
+            setVisible={setVisible}
+            reload={forceReload}
+            t={t}
+        />
     </Fragment>
 }

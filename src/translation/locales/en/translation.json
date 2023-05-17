@@ -13,6 +13,7 @@
         "sign-up": "Sign Up",
         "profile": "Profile",
         "admin": "Administration",
+        "status": "Status",
         "sign-out": "Sign Out",
         "yes": "Yes",
         "no": "No",
@@ -85,9 +86,11 @@
         "bonus" : "Bonus",
         "partner-register-text": "Register",
         "partner-main-text": "Partner",
+        "enter-domamin": "Please enter domain name",
         "partner-rejected": "Status: Rejected",
         "partner-pending": "Status: Pending",
         "partner-registered": "Status: Registered",
+        "partner-banned": "Status: Banned",
         "information": "PERSONAL INFORMATION",
         "order": "ORDER",
         "recharge": "RECHARGE",
@@ -178,9 +181,16 @@
     },
     "recharge-tickets": {
         "button-create": "Create new ticket",
-        "modal-title": "New Recharge Ticket",
+        "modal-title": "Recharge Ticket",
         "modal-content": "Reason create ticket",
         "modal-content-placeholder": "Please enter the reason you want to create ticket",
+        "modal-content-required": "Please enter reason",
+        "modal-image": "Choose image",
+        "modal-image-required": "Please choose a file image",
+        "modal-image-text": "Click or drag file to this area to upload",
+        "modal-image-hint": "Only JPG and PNG are supported",
+        "modal-image-only": "Upload only 1 file",
+        "modal-image-size": "Maximum file size is 1MB",
         "id": "ID",
         "status": "Status",
         "image": "Image",
@@ -267,5 +277,11 @@
         "DONE_STATUS": "Done",
         "SOLVING_STATUS": "Solving",
         "REJECT_STATUS": "Rejected"
+    },
+    "partner-status": {
+        "ACTIVE_STATUS": "Active",
+        "PENDING_STATUS": "Pending",
+        "REJECT_STATUS": "Rejected",
+        "ABANDON_STATUS": "Abandon"
     }
 }
