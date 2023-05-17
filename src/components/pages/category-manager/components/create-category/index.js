@@ -6,6 +6,7 @@ import Form from './form'
 export default ({loading, visible, setVisible, reload}) => {
     const [pending, setPending] = useState(false)
     return <Modal
+        className={'create-category'}
         centered
         width={'80%'}
         closable={false}

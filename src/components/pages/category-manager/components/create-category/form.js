@@ -1,15 +1,19 @@
-import React, {useState, Fragment, useContext, useEffect} from "react";
+import React, {useState, Fragment, useEffect} from "react";
 import {Button, Form, Icon, Input, Checkbox, message, Select, Switch, Upload, Col, Row, Tag} from "antd";
 import {createCategory} from "../../../../../services/category-manager";
 import {getParentCategoryList} from "../../../../../services/category/category";
 import {getPropertiesProduct} from "../../../../../services/product-manager";
 import {getLocationList} from "../../../../../services/category/category";
+import {getBase64} from "../../../../../utils/helpers";
+import TextArea from "antd/es/input/TextArea";
+import Modal from "antd/es/modal"
 
 const {Option} = Select
 
 const Wrapper = (props) => {
 
     const [createChild, setCreateChild] = useState(false)
+    const [initCreateChild, setInitCreateChild] = useState(true)
     const {getFieldDecorator} = props.form;
     const {setVisible, reload, setPending} = props
     const [parentList, setParentList] = useState([])
@@ -22,6 +26,9 @@ const Wrapper = (props) => {
     const [hasEmail, setHasEmail] = useState(false)
     const [hasBackup, setHasBackup] = useState(false)
     const [formatErr, setFormatErr] = useState('')
+
+    const [previewVisible, setPreviewVisible] = useState(false)
+    const [previewImage, setPreviewImage] = useState(null)
 
     const [format, setFormat] = useState(['', '', '', '', '', '', '', '', '', ''])
 
@@ -40,39 +47,89 @@ const Wrapper = (props) => {
             if (respLocation.status === 200) {
                 setLocationList(respLocation?.data?.nationalFlagList || [])
             }
+            setInitCreateChild(false)
         }
         init()
     }, [])
+
+    useEffect(() => {
+        setFormat(['', '', '', '', '', '', '', '', '', ''])
+        setFormatErr('')
+        setCheckPointEmail(false)
+        setHasChange(false)
+        setHas2Fa(false)
+        setHasEmail(false)
+        setHasBackup(false)
+        setCreateChild(false)
+    }, [props.visible])
+
+    useEffect(() => {
+        setFormat(['', '', '', '', '', '', '', '', '', ''])
+        setFormatErr('')
+        setCheckPointEmail(false)
+        setHasChange(false)
+        setHas2Fa(false)
+        setHasEmail(false)
+        setHasBackup(false)
+    }, [createChild])
 
     const handleSubmit = e => {
         e.preventDefault();
         props.form.validateFields((err, values) => {
             if (!err) {
+                let body
+                if (!createChild) {
+                    body = values
+                } else {
+                    if (format.includes('')) {
+                        setFormatErr('Vui lòng không bỏ trống định dạng')
+                        return
+                    }
+                    const raw = {
+                        ...values,
+                        category_image: values.category_image[0].originFileObj,
+                        checkpoint_email: checkPointEmail,
+                        has_change: hasChange,
+                        has_2fa: has2Fa,
+                        has_email: hasEmail,
+                        has_backup: hasBackup,
+                        format: format.join('|')
+                    }
+                    const formData = new FormData()
+                    Object.keys(raw).forEach(k => formData.append(k, raw[k]))
+                    body = formData
+                }
                 setPending(true)
-                createCategory(values).then(resp => {
+                createCategory(body).then(resp => {
                     if (resp.status === 200) {
-                        message.success(resp?.data?.message)
+                        Modal.success({
+                            content: resp?.data?.message,
+                            onOk: () => {}})
                         setVisible(false)
                         reload()
+                        if (!createChild) {
+                            parentList.push(resp?.data?.newParentCategory)
+                        }
                     }
-                }).catch(err => message.error(err?.response?.data?.message))
+                }).catch(err => Modal.error({
+                        content: err?.response?.data?.message,
+                        onOk: () => {}}))
                     .finally(() => setPending(false))
-                console.log('Received values of form: ', values);
             }
         });
     };
 
     const onChangeFormat = (idx, value) => {
-        console.log(value);
         format[idx] = value
         setFormat([...format])
+        setFormatErr('')
     }
 
     const renderFormat = () => {
         let text = ''
         format.forEach((el, idx) => {
             if (el === '') {
-                text += `{${idx}}|`
+                text += `{${idx + 1}}|`
             } else {
                 text += `${el}|`
             }
@@ -95,12 +152,46 @@ const Wrapper = (props) => {
     }
 
     const normFile = e => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {
-            return e;
+        if (e.fileList.length > 1) {
+            e.fileList.shift();
         }
         return e && e.fileList;
-    };
+    }
+
+    const handlePreview = async file => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewImage(file.url || file.preview)
+        setPreviewVisible(true)
+    }
+
+    const beforeUpload = (file) => {
+        const extension = file.name.split('.')
+
+        const errorFn = () => {
+            const els = document.querySelector('.ant-upload-list-item-card-actions a i')
+            if (els) {
+                els.click()
+            }
+        }
+        if (extension.length > 1) {
+            const isJpgOrPng = extension[extension.length - 1] === 'jpg' || extension[extension.length - 1] === 'png';
+            if (!isJpgOrPng) {
+                Modal.error({
+                    content: 'Chỉ hỗ trợ định dạng ảnh là JPG và PNG',
+                    onOk: errorFn
+                });
+            }
+            if (file.size / 1024 / 1024 > 1) {
+                Modal.error({
+                    content: 'Kích thước ảnh tối đa là 1Mb',
+                    onOk: errorFn
+                });
+            }
+        }
+        return false
+    }
 
     return <Fragment>
         {props.visible && <Form onSubmit={handleSubmit}>
@@ -111,12 +202,18 @@ const Wrapper = (props) => {
                     <Input placeholder={'Tên danh mục'}/>,
                 )}
             </Form.Item>
-            <p className={'m-t-10'}>Tạo danh mục con: <Switch checked={createChild} onChange={v => setCreateChild(v)}/>
+            <p className={'m-t-10'}>Tạo danh mục con:
+                <Switch checked={createChild}
+                        loading={initCreateChild}
+                        onChange={v => {
+                            setCreateChild(v)
+                        }}
+                />
             </p>
 
             {createChild && <Fragment>
                 <Form.Item label="Danh mục cha">
-                    {getFieldDecorator('parentId', {
+                    {getFieldDecorator('parent_id', {
                         rules: [{required: true, message: 'Vui lòng chọn danh mục cha'}],
                     })(<Select
                         showSearch
@@ -133,10 +230,10 @@ const Wrapper = (props) => {
                     {properties?.map((e, idx) => {
                         return <Col sm={24} md={12} lg={4} className={'m-b-10'}>
                             <Select
+                                allowClear={true}
                                 onChange={e => onChangeFormat(idx, e)}
                                 suffixIcon={idx + 1}
                                 showSearch
-                                placeholder={`{${idx + 1}}`}
                                 filterOption={(input, option) =>
                                     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                 }
@@ -146,7 +243,7 @@ const Wrapper = (props) => {
                         </Col>
                     })}
                 </Row>
-                {<p>{formatErr}</p>}
+                {<p style={{color: 'red'}}>{formatErr}</p>}
                 <Form.Item label="Đơn giá">
                     {getFieldDecorator('price', {
                         rules: [{required: true, message: 'Vui lòng nhập đơn giá'}],
@@ -186,12 +283,14 @@ const Wrapper = (props) => {
                     })(<Select
                         showSearch
                         placeholder="Quốc gia"
-                        filterOption={(input, option) =>
-                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
+                        // filterOption={(input, option) =>
+                        //     option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        // }
                     >
                         {locationList.map(el => <Option value={el.name}>
-                            <div style={{display: 'flex', alignItems: 'center'}}><img style={{width: '20px', marginRight: '8px'}} src={el.path} alt="" className="src"/>{el.name}</div>
+                            <div style={{display: 'flex', alignItems: 'center'}}><img
+                                style={{width: '20px', marginRight: '8px'}} src={el.path} alt=""
+                                className="src"/>{el.name}</div>
                         </Option>)}
                     </Select>)}
                 </Form.Item>
@@ -202,19 +301,40 @@ const Wrapper = (props) => {
                         <Input placeholder={'Thời gian'}/>,
                     )}
                 </Form.Item>
+                <Form.Item label="Mô tả">
+                    {getFieldDecorator('description', {
+                        rules: [{required: true, message: 'Vui lòng nhập mô tả'}],
+                    })(
+                        <TextArea placeholder={'Mô tả'} rows={4}/>,
+                    )}
+                </Form.Item>
                 <Form.Item label="Hình ảnh">
                     {getFieldDecorator('category_image', {
                         valuePropName: 'fileList',
                         getValueFromEvent: normFile,
+                        rules: [{required: true, message: 'Vui chọn file'}],
                     })(
-                        <Upload.Dragger name="files">
+                        <Upload.Dragger
+                            name="files"
+                            multiple={false}
+                            beforeUpload={beforeUpload}
+                            accept={'.png, .jpg'}
+                            onPreview={handlePreview}
+                            // disabled={props.form.getFieldValue('category_image')?.length > 0 || false}
+                            listType="picture"
+                            id={'upload-file-category'}
+                        >
                             <p className="ant-upload-drag-icon">
                                 <Icon type="inbox"/>
                             </p>
                             <p className="ant-upload-text">Nhấp hoặc kéo tệp vào khu vực này để tải lên</p>
                             <p className="ant-upload-hint">Hỗ trợ định dạng JPG, PNG</p>
+                            <p className="ant-upload-hint">Tải lên tối đa 1 file, dung lượng tối đa 1MB</p>
                         </Upload.Dragger>,
                     )}
+                    <Modal visible={previewVisible} footer={null} onCancel={() => setPreviewVisible(false)}>
+                        <img style={{ width: '100%' }} src={previewImage} />
+                    </Modal>
                 </Form.Item>
             </Fragment>}
             <Button id={'submit-create-category'} type="primary" htmlType="submit" hidden></Button>

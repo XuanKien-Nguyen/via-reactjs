@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { Breadcrumb } from 'antd';
 
-const BreadCrumbUser = ({history}) => {
+const BreadCrumbUser = ({history, layoutAdmin = false}) => {
 
   const breadcrumb = useSelector(store => store.system.breadcrumb);
 
   return (
-    <div className='breadcrumb-layout layout-lg'>
+    <div className={'breadcrumb-layout + ' + (layoutAdmin ? '' : 'layout-lg')}>
       <Breadcrumb>
         <Breadcrumb.Item><a className='uppercase' href="" onClick={() => history.push('/')}>Trang chủ</a></Breadcrumb.Item>
         <Breadcrumb.Item>

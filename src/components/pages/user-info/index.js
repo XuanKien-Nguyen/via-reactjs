@@ -17,6 +17,7 @@ import {LayoutContext} from "../../../contexts";
 import {useHistory, useLocation} from "react-router-dom";
 import {convertCurrencyVN} from "../../../utils/helpers";
 import {checkStatus, registerPartner, getInfoClientPartner} from "../../../services/partners";
+import {getWindowDimensions} from "../../../utils/helpers";
 
 
 import { useTranslation } from 'react-i18next';
@@ -31,6 +32,8 @@ const BREAD_CRUMB = {
     'balance-history': 'profile.balance-history',
     'download-history': 'profile.download-history'
 }
+
+let fn
 
 const UserInfo = () => {
 
@@ -58,6 +61,8 @@ const UserInfo = () => {
     const [pending, setPending] = useState(false)
 
     const [errorMessage, setErrorMessage] = useState('')
+
+    const [renderTextAPI, setRenderTextAPI] = useState('')
 
     const dispatch = useDispatch()
 
@@ -144,32 +149,49 @@ const UserInfo = () => {
         }).catch(error => setErrorMessage(error.response?.data?.message)).finally(() => setPending(false))
     }
 
+    useEffect(() => {
+        fn = () => {
+            const currentWidth = getWindowDimensions().width
+
+            if (currentWidth < 768) {
+                setRenderTextAPI('CTV')
+            } else {
+                setRenderTextAPI('Cộng tác viên')
+            }
+        }
+        fn()
+        window.addEventListener('resize', fn);
+        return () => {
+            window.removeEventListener("resize", fn)
+        }
+    }, [])
+
     const renderPartnerStatus = () => {
         if (partnerStatus !== null) {
             const {status, message} = partnerStatus
                 if (status === 'pending') {
                     return <Popover placement="right"
-                                    title={'Trạng thái: Chờ phê duyệt'}
+                                    title={t('profile.partner-pending')}
                                     content={<div style={{width: '200px', wordWrap: 'break-word'}}>{message}</div>}
                                     trigger="click">
-                        <Button type='dashed'>CTV <Icon type="history" /></Button>
+                        <Button type='dashed'>{renderTextAPI} <Icon type="history" /></Button>
                     </Popover>
                 } else if (status === 'rejected') {
-                    return <Popover placement="right" title={'Trạng thái: Bị từ chối'}
+                    return <Popover placement="right" title={t('profile.partner-rejected')}
                                     content={<div style={{width: '200px'}}>{message}</div>}
                                     trigger="click">
-                        <Button type={'danger'}>CTV <Icon type="close" />  </Button>
+                        <Button type={'danger'}>{renderTextAPI} <Icon type="close" />  </Button>
                     </Popover>
                 } else {
                     return <Popover placement="right"
-                                    title={'Trạng thái: Đã đăng ký'}
+                                    title={t('profile.partner-registered')}
                                     content={<div style={{width: '200px', wordWrap: 'break-word'}}>{message}</div>}
                                     trigger="click">
-                        <Button type={'primary'}>CTV <Icon type="check"/></Button>
+                        <Button type={'primary'}>{renderTextAPI} <Icon type="check"/></Button>
                     </Popover>
                 }
         } else {
-            return <Button onClick={() => setVisible(true)}>Đăng ký CTV</Button>
+            return <Button onClick={() => setVisible(true)}>Đăng ký {renderTextAPI}</Button>
         }
     }
 

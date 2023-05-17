@@ -46,7 +46,10 @@ export default ({loading, copy, changTab}) => {
         setPending(true)
         changeBinanceWallet({usdt_trc20_address: binanceWallet}).then(resp => {
             if (resp?.status === 200) {
-                message.success(resp?.data?.message)
+                Modal.success({
+                    content: resp?.data?.message,
+                    onOk: () => {}
+                });
                 setVisible(false)
                 setBinanceWallet('')
             }
