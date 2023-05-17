@@ -169,28 +169,28 @@ const UserInfo = () => {
     const renderPartnerStatus = () => {
         if (partnerStatus !== null) {
             const {status, message} = partnerStatus
-                if (status === 'ban') {
+                if (status === 'pending') {
                     return <Popover placement="right"
-                                    title={t('profile.partner-pending')}
+                                    title={'Trạng thái: Chờ xét duyệt'}
                                     content={<div style={{width: '200px', wordBreak: 'break-word'}}>{message}</div>}
                                     trigger="click">
                         <Button style={{color: 'white', backgroundColor: '#FFCF85', border: 'none'}}>{renderTextAPI} <Icon type="history" /></Button>
                     </Popover>
                 } else if (status === 'rejected') {
-                    return <Popover placement="right" title={t('profile.partner-rejected')}
+                    return <Popover placement="right" title={'Trạng thái: Đã từ chối'}
                                     content={<div style={{width: '200px', wordBreak: 'break-word'}}>{message}</div>}
                                     trigger="click">
                         <Button style={{color: 'white', backgroundColor: '#ED5330', border: 'none'}}>{renderTextAPI} <Icon type="close" />  </Button>
                     </Popover>
-                } else if (status === 'pending') {
-                    return <Popover placement="right" title={t('profile.partner-banned')}
+                } else if (status === 'ban') {
+                    return <Popover placement="right" title={'Trạng thái: Đã cấm'}
                                     content={<div style={{width: '200px', wordBreak: 'break-word'}}>{message}</div>}
                                     trigger="click">
                         <Button style={{color: 'white', backgroundColor: '#AEB6BF', border: 'none'}}>{renderTextAPI} <Icon type="stop" />  </Button>
                     </Popover>
                 } else {
                     return <Popover placement="right"
-                                    title={t('profile.partner-registered')}
+                                    title={'Trạng thái: Đã đăng ký'}
                                     content={<div style={{width: '200px', wordBreak: 'break-word'}}>{message}</div>}
                                     trigger="click">
                         <Button type='primary'>{renderTextAPI} <Icon type="check"/></Button>

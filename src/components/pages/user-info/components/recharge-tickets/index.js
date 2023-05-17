@@ -15,7 +15,7 @@ export default ({ loading }) => {
     const [rechargeTicketList, setRechargeTicketList] = useState([])
     const [ticketsStatusList, setTicketsStatusList] = useState([])
     const [visible, setVisible] = useState(false)
-    const [render, setRender] = useState(0)
+    const [reload, setReload] = useState(0)
 
     const { t } = useTranslation()
 
@@ -39,6 +39,10 @@ export default ({ loading }) => {
             currentPage: 1
         })
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    const forceReload = () => {
+        setReload(reload + 1)
     }
     
     const columns = [
@@ -145,7 +149,7 @@ export default ({ loading }) => {
             page={page}
             t={t}
             getTicketsStatusList={getTicketsStatusList}
-            render={render}
+            reload={reload}
         />
         <Button style={{marginBottom: '16px'}} type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button-create')}</Button>
         <TableCommon className='table-order'
@@ -158,6 +162,11 @@ export default ({ loading }) => {
             rowKey="id"
             onChangePage={onChangePage}
             onChangeSize={onChangeSize} />
-            <CreateTicket visible={visible} setVisible={setVisible} setRender={setRender} render={render}/>
+        <CreateTicket
+            visible={visible} 
+            setVisible={setVisible}
+            reload={forceReload}
+            t={t}
+        />
     </Fragment>
 }
