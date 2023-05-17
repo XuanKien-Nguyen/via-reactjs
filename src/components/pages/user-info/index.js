@@ -30,6 +30,7 @@ const BREAD_CRUMB = {
     recharge: 'profile.recharge',
     'recharge-history': 'profile.recharge-history',
     'balance-history': 'profile.balance-history',
+    'recharge-tickets': 'profile.recharge-tickets',
     'download-history': 'profile.download-history'
 }
 

@@ -150,7 +150,9 @@ export default ({ loading }) => {
             getTicketsStatusList={getTicketsStatusList}
             reload={reload}
         />
-        <Button style={{marginBottom: '16px'}} type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button-create')}</Button>
+        <div style={{marginBottom: '16px', textAlign: 'end'}}>
+            <Button type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button-create')}</Button>
+        </div>
         <TableCommon className='table-order'
             style={{ overflow: 'auto' }}
             bordered={true}
