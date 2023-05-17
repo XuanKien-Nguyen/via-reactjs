@@ -7,7 +7,7 @@ const PAGE_SIZE_OPTION = ['5', '10', '20', '30', '50']
 
 export default (props) => {
 
-    const {datasource, columns, page, onChangePage, onChangeSize, bordered, className = '', expandedRowRender, setPage} = props
+    const {datasource, columns, page, onChangePage, onChangeSize, bordered, className = '', expandedRowRender, setPage, rowKey = 'id'} = props
 
     const { t } = useTranslation()
 
@@ -44,9 +44,12 @@ export default (props) => {
                bordered={bordered}
                dataSource={datasource}
                columns={columns}
-               rowKey="id"
+               rowKey={rowKey}
                expandedRowRender={expandedRowRender ? expandedRowRender : null}
                pagination={false}
+               locale={{
+                   emptyText: t('common.no-data')
+               }}
                {...props}
         />
         <div id={'common_table'}>

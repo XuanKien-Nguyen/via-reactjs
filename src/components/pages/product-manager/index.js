@@ -11,17 +11,12 @@ import {Input, Select} from "antd";
 import {getCategoryList} from "../../../services/category/category";
 import {LayoutContext} from "../../../contexts";
 import Form from "./form";
-import {downloadPurchase} from "../../../services/purchases";
 
 const {Option, OptGroup} = Select;
 const {Panel} = Collapse
 const dateFormat = 'YYYY-MM-DD';
 
 function Index() {
-    const selectAll = {label: "Chọn", options: [{
-            label: 'Chọn',
-            value: ''
-        }]}
     const {setLoading} = useContext(LayoutContext);
     const {t} = useTranslation()
     const [productList, setProductList] = useState([])
@@ -37,19 +32,18 @@ function Index() {
     const [reload, setReload] = useState(1)
     const [categoryList, setCategoryList] = useState([]);
     const [visible, setVisible] = useState(false)
-    const [visibleDownload, setVisibleDownload] = useState(false)
 
-    const [productDownloadInfo, setProductDownloadInfo] = useState({
-        category_id: '',
-        comment: '',
-        amount: 0
-    })
+    const [comment, setComment] = useState('')
+    const [amount, setAmount] = useState('')
+    const [errorComment, setErrorComment] = useState('')
+    const [errorAmount, setErrorAmount] = useState('')
+    const [categoryIdSelected, setCategoryIdSelected] = useState(null)
+    const [categoryNameSelected, setCategoryNameSelected] = useState(null)
 
     const [createdBy, setCreatedBy] = useState('')
 
     useEffect(() => {
         getCategoryList().then((resp) => {
-            console.log('category: ', resp);
             if (resp.status === 200) {
                 const data = generateCategoryOption(resp?.data?.categoryListFound || [])
                 setCategoryList(data);
@@ -79,7 +73,6 @@ function Index() {
         }
 
         getProductList(body).then((resp) => {
-            console.log(resp);
             if (resp.status === 200) {
                 const pageInfo = {
                     total: resp?.data?.totalProducts,
@@ -107,7 +100,7 @@ function Index() {
         setReload(reload + 1);
     }
     const generateCategoryOption = (arr) => {
-        return [selectAll, ...arr.map((e) => {
+        return arr.map((e) => {
             return {
                 label: e.name,
                 options: e.childCategoryList?.map((c) => {
@@ -117,10 +110,7 @@ function Index() {
                     }
                 }) || []
             }
-        })]
-    }
-    const getCategoryOptions = () => {
-        return categoryList;
+        })
     }
 
     const createNewProduct = () => {
@@ -151,46 +141,32 @@ function Index() {
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
-    const enterCommentDownload = (category_id, amount) =>{
-        setVisibleDownload(true);
 
-        let downloadInfo = {
-            category_id: category_id,
-            comment: '',
-            amount: amount
+    const handleDownload = () => {
+        if (!amount) {
+            setErrorAmount('Vui lòng nhập số lượng')
+        }
+        if (!comment) {
+            setErrorComment('Vui lòng nhập lý do tải xuống')
         }
 
-        setProductDownloadInfo(downloadInfo);
-
-    }
-    const handleDownload = (comment) => {
-
-        console.log(comment)
-        setLoading(true);
-        console.log(productDownloadInfo);
-
-        let body = {
-            category_id: productDownloadInfo.category_id,
-            amount: productDownloadInfo.amount, comment
-        }
-        console.log(body)
-        downloadNotSoldProduct(body).then((resp) => {
-            console.log(resp)
-            if(resp.status === 200){
+        if (amount && comment) {
+            setPending(true);
+            let body = {
+                category_id: categoryIdSelected,
+                amount: amount,
+                comment
             }
-        }).catch(() => message.error("Có lỗi xảy ra"))
-            .finally(setLoading(false))
-
-
-        // loading(true)
-        // downloadPurchase(id).then(resp => {
-        //     const {data} = resp
-        //     message.success(data.message)
-        //     const content = data.purchaseDownloadList.join('\r\n');
-        //     textToFile(categoryName, content)
-        // }).catch(err => {
-        //     message.error(err.response?.data?.message || 'Có lỗi xảy ra khi tải xuống')
-        // }).finally(() => loading(false))
+            downloadNotSoldProduct(body).then((resp) => {
+                if (resp.status === 200) {
+                    const content = resp?.data?.downloadNotSoldList?.join('\r\n');
+                    textToFile(categoryNameSelected, content)
+                    setCategoryIdSelected(null)
+                    setCategoryNameSelected(null)
+                }
+            }).catch(() => message.error("Có lỗi xảy ra"))
+                .finally(() => setPending(false))
+        }
     }
 
     const columns = [
@@ -216,7 +192,7 @@ function Index() {
         {
             title: 'Loại',
             dataIndex: 'type',
-            render: v => v === 'not_sold' ? <Tag color="#55acee">Chưa bán</Tag> : <Tag color="#87d068">Đã bán</Tag>,
+            render: v => v === 'not_sold' ? <Tag color="green">Chưa bán</Tag> : <Tag color="red">Đã bán</Tag>,
             width: '150px',
             align: 'center',
         },
@@ -246,17 +222,24 @@ function Index() {
             align: 'center',
         },
         {
-            title: 'Ngày tạo',
-            dataIndex: 'created_time',
+            title: 'Ngày cập nhật',
+            dataIndex: 'updated_time',
             width: '150px',
             align: 'center',
-        },{
+        },
+        {
             title: "Tải xuống",
+            align: 'center',
             // dataIndex: 'id',
+            width: '150px',
             render: row => {
                 return <div>
                     <Tooltip title={t('order.download')}>
-                        <Button type={'danger'} style={{margin: '5px 0px'}} onClick={() => enterCommentDownload(row.category_id, row.cost)}><Icon type="download" /></Button>
+                        <Button type={'danger'}
+                                onClick={() => {
+                                    setCategoryIdSelected(row.category_id)
+                                    setCategoryNameSelected(row.category_name)
+                                }}><Icon type="download"/></Button>
                     </Tooltip>
                 </div>
             }
@@ -272,7 +255,7 @@ function Index() {
                     </div>}>
                         <div className={`filter-item`}>
                             <span>Danh mục</span>
-                            <Select label="Danh mục" defaultValue={""} onChange={onChangeCategory}>
+                            <Select allowClear={true} label="Danh mục" defaultValue={""} onChange={onChangeCategory}>
                                 {
                                     categoryList.map(e => {
                                         return (
@@ -302,7 +285,8 @@ function Index() {
             </div>
             <div>
                 <p style={{textAlign: 'right'}}>
-                    <Button type={'primary'} onClick={createNewProduct}><Icon type="plus" />{'Thêm mới sản phẩm'}</Button>
+                    <Button type={'primary'} onClick={createNewProduct}><Icon type="plus"/>{'Thêm mới sản phẩm'}
+                    </Button>
                 </p>
             </div>
 
@@ -320,27 +304,44 @@ function Index() {
                 centered
                 width={'50%'}
                 closable={false}
-                visible={visibleDownload}
+                visible={categoryIdSelected !== null}
                 maskClosable={false}
-                title={'Thêm mới sản phẩm'}
-                onCancel={() => () => {
-                    setVisibleDownload(false)
-                }}
+                title={`Tải xuống: ${categoryNameSelected}`}
+                onCancel={() => setCategoryIdSelected(null)}
                 footer={[
                     <Button key="back" disabled={false} onClick={() => {
-                        setVisibleDownload(false)
+                        setCategoryIdSelected(null)
                     }}>
                         Huỷ bỏ
                     </Button>,
-                    <Button key="submit" type="primary" loading={pending} onClick={() => {
-                        const comment = document.getElementById("comment").value;
-                        handleDownload(comment)
-                    }}>
+                    <Button key="submit" type="primary" loading={pending} onClick={handleDownload}>
                         Tải xống
                     </Button>
                 ]}>
+                <p>Lý do tải xuống <span style={{color: 'red'}}>*</span>:</p>
+                <Input placeholder={'Lý do tải xuống'} value={comment} onChange={v => {
+                    const value = v.target.value
+                    setComment(value)
+                    if (value === '') {
+                        setErrorComment('Vui lòng nhập lý do tải xuống')
+                    } else {
+                        setErrorComment('')
+                    }
+                }}/>
+                <p style={{color: 'red'}}>{errorComment}</p>
 
-                <Input title='Lý do tải xuống' id={'comment'}/>
+                <p className={'m-t-10'}>Số lượng <span style={{color: 'red'}}>*</span>:</p>
+                <Input placeholder='Số lượng' type={'number'} min={1} value={amount} onChange={v => {
+                    const value = v.target.value
+                    setAmount(value)
+                    if (value === '') {
+                        setErrorAmount('Vui lòng nhập số lượng')
+                    } else {
+                        setErrorAmount('')
+                    }
+                }}/>
+                <p style={{color: 'red'}}>{errorAmount}</p>
+
             </Modal>
 
             <Modal
@@ -368,10 +369,12 @@ function Index() {
                         Thêm mới
                     </Button>
                 ]}>
-                <Form categoryOptions={getCategoryOptions}
+                <Form categoryOptions={categoryList}
                       setReload={forceReload}
                       setPending={setPending}
-                      closePopup={closePopup}/>
+                      closePopup={closePopup}
+                      visible={visible}
+                />
             </Modal>
 
         </div>

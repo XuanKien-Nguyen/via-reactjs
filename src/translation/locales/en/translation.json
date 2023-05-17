@@ -22,7 +22,8 @@
         "copy": "Copy",
         "ok": "Okay",
         "cancel": "Cancel",
-        "create": "Create"
+        "create": "Create",
+        "no-data": "No Data"
     },
     "access-denied": {
         "title": "ACCESS DENIED",

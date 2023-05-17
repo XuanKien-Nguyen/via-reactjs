@@ -92,7 +92,7 @@ const UserDetail = ({form, user, loading}) => {
         </Form.Item>
     </Form>
         <h3>{t('info.title-history')}</h3>
-        <Table bordered columns={columns} dataSource={loginList} pagination={false} rowKey={'id'}/>
+        <Table bordered columns={columns} dataSource={loginList} pagination={false} rowKey={'id'} locale={{emptyText: t('common.no-data')}}/>
         </Fragment>
 }
 

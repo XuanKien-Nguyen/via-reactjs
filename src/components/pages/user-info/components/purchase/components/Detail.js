@@ -8,6 +8,7 @@ import {useHistory} from "react-router-dom";
 import Modal from "antd/es/modal";
 
 import {LayoutContext} from "../../../../../../contexts";
+import {useTranslation} from "react-i18next";
 
 const { confirm } = Modal;
 
@@ -29,6 +30,8 @@ export default ({id, loading}) => {
     const [errorText, setErrorText] = useState('')
 
     const [product, setProduct] = useState(null)
+
+    const { t } = useTranslation()
 
     const columns = [
         {
@@ -235,7 +238,7 @@ export default ({id, loading}) => {
             <b>Đơn hàng <span style={{color: 'red'}}>#{productDetail.id}</span> đã được đặt lúc {productDetail.created_time} và hiện tại là
                 <Tag color={productDetail.status === 'valid' ? '#87d068' : '#f50'}>{productDetail.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'}</Tag>
             </b>
-            <Table rowKey="title" dataSource={dataSource} columns={columns} pagination={false} />
+            <Table rowKey="title" dataSource={dataSource} columns={columns} pagination={false} locale={{emptyText: t('common.no-data')}}/>
             <p align={'center'} style={{marginTop: '10px'}}>
                 <Button type='primary' className={'m-r-5'} onClick={beforeOpenModal}>Đặt lại hàng</Button>
                 <Button type='danger' onClick={() => handleDownload(productDetail.id, productDetail.category_name)}>Tải xuống</Button>
@@ -244,7 +247,7 @@ export default ({id, loading}) => {
             <br/>
             <Tag color="geekblue" style={{margin: '10px 0px', display: 'flex', flexWrap: 'nowrap', gap: '4px', maxWidth: 'fit-content'}}>Định dạng: <span style={{color: 'red', display: 'block', wordWrap: 'break-word', whiteSpace: 'normal', width: 'calc(100% - 64px)'}}>{productDetail.category_format}</span></Tag>
             {/*<b>Định dạng: </b>*/}
-            <Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} />
+            <Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} locale={{emptyText: t('common.no-data')}}/>
             {product && buy()}
         </Fragment> : <p>Không tìm thấy chi tiết đơn hàng</p>}
     </div>

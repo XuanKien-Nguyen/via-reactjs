@@ -76,7 +76,6 @@ export default () => {
                 reload={reload}
                 state={[name]}
                 onReset={() => {
-                    console.log('hehehe');
                     setName('')
                 }}
                 page={page}/>

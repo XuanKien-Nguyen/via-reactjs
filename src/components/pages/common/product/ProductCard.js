@@ -89,8 +89,6 @@ const ProductCard = ({ productDetail }) => {
             }
             setVisible(false)
         }).catch(err => {
-            // console.log(err.response)
-            // message.error( err?.response?.data?.message)
             setErrorText(err?.response?.data?.message)
         }).finally(() => setPending(false))
     }

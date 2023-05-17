@@ -22,7 +22,8 @@
         "copy": "Sao chép",
         "ok": "OK",
         "cancel": "Hủy bỏ",
-        "create": "Tạo"
+        "create": "Tạo",
+        "no-data": "Không có dữ liệu"
     },
     "access-denied": {
         "title": "TRUY CẬP BỊ TỪ CHỐI",
