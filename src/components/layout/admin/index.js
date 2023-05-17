@@ -22,7 +22,7 @@ const LayoutAdmin = ({children}) => {
             <HeaderLayout/>
             <Content>
                 <div style={{marginBottom: '20px'}}>
-                    <BreadCrumb history={history} />
+                    <BreadCrumb history={history} layoutAdmin={true} />
                 </div>
                 {children}
             </Content>
