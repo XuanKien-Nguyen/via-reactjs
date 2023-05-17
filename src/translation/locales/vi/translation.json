@@ -188,6 +188,8 @@
         "modal-image-required": "Vui lòng chọn tệp hình ảnh",
         "modal-image-text": "Nhấp hoặc kéo tệp vào khu vực này để tải lên",
         "modal-image-hint": "Chỉ hỗ trợ định dạng JPG, PNG",
+        "modal-image-only": "Chỉ tải lên một tệp duy nhất",
+        "modal-image-size": "Kích thước tệp tối đa 1MB",
         "id": "ID",
         "status": "Trạng thái",
         "image": "Hình ảnh",
