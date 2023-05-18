@@ -6,7 +6,7 @@ const { Panel } = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
 
-export default ({setList, api, loading, setPageInfo, page, t, getTypeList}) => {
+export default ({setList, api, loading, setPageInfo, page, t, getTypeList, setTotalAddedAmount, setTotalAddedBonus}) => {
 
     const [type, setType] = useState([])
     const [date, setDate] = useState([])
@@ -51,6 +51,9 @@ export default ({setList, api, loading, setPageInfo, page, t, getTypeList}) => {
                 }
                 setPageInfo(pageInfo)
                 setList(resp?.data?.logUserBalanceList || [])
+                setTotalAddedBonus(resp?.data?.totalAddedBonus || 0)
+                setTotalAddedAmount(resp?.data?.totalAddedAmount || 0)
+
             }
         }).catch(() => message.error('Có lỗi xảy ra khi lấy thông tin đơn hàng'))
             .finally(() => loading(false))

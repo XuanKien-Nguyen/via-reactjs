@@ -16,6 +16,8 @@ export default ({loading}) => {
     const [datasource, setDatasource] = useState([])
     const [detail, setDetail] = useState(null)
     const [visible, setVisible] = useState(false)
+    const [totalAddedAmount, setTotalAddedAmount] = useState(0);
+    const [totalAddedBonus, setTotalAddedBonus] = useState(0);
     // const [withTable, setWidthTable] = useState('81%')
 
     const { t } = useTranslation()
@@ -90,6 +92,15 @@ export default ({loading}) => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    const renderMoney = (el, prefix = '+') => {
+        if (el && (el + '').startsWith('-')) {
+            return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
+        } else if (el === 0) {
+            return <b>0 VND</b>
+        }
+        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
+    }
+
     const columns = [
         {
             title: 'ID',
@@ -115,28 +126,14 @@ export default ({loading}) => {
             dataIndex: 'add_bonus',
             align: 'center',
             width: '150px',
-            render: el => {
-                if (el && (el + '').startsWith('-')) {
-                    return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
-                } else if (el === 0) {
-                    return <b>0 VND</b>
-                }
-                return <b style={{color: 'green'}}>{el === 0 ? '0' : `+${convertCurrencyVN(el)}`}</b>
-            }
+            render: el => renderMoney(el)
         },
         {
             title: 'Tiền tài khoản đã sử dụng',
             dataIndex: 'add_amount',
             width: '150px',
             align: 'center',
-            render: el => {
-                if (el && (el + '').startsWith('-')) {
-                    return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
-                } else if (el === 0) {
-                    return <b>0 VND</b>
-                }
-                return <b style={{color: 'green'}}>{`+${convertCurrencyVN(el)}`}</b>
-            }
+            render: el => renderMoney(el)
         },
         {
             title: 'Số dư khuyến mãi',
@@ -192,7 +189,13 @@ export default ({loading}) => {
                     page={page}
                     t={t}
                     getTypeList={getTypeList}
+                    setTotalAddedAmount={setTotalAddedAmount}
+                    setTotalAddedBonus={setTotalAddedBonus}
             />
+            <div className="balance-total" style={{marginBottom: '16px', fontSize: '16px'}}>
+                <div>{t('balance-history.total-amount')}: {renderMoney(totalAddedAmount)}</div>
+                <div>{t('balance-history.total-bonus')}: {renderMoney(totalAddedBonus)}</div>
+            </div>
             <TableCommon className='table-order'
                          scroll={{ x: true }}
                          bordered={true}

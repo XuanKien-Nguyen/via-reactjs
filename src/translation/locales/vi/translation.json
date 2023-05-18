@@ -228,6 +228,10 @@
         "otp": "Mã OTP",
         "get-qr": "Lấy mã QR"
     },
+    "balance-history": {
+        "total-amount": "Tổng tiền tài khoản thay đổi",
+        "total-bonus": "Tổng tiền khuyến mãi thay đổi"
+    },
     "user-balance-type": {
         "MANAGER_UPDATE_BONUS": "QTV cộng tiền",
         "MANAGER_RESOLVED_RECHARGE": "Xử lý nạp lỗi",

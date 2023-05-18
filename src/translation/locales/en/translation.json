@@ -228,6 +228,10 @@
         "otp": "OPT code",
         "get-qr": "Get QR code"
     },
+    "balance-history": {
+        "total-amount": "Total Added Amount",
+        "total-bonus": "Total Added Bonus"
+    },
     "user-balance-type": {
         "MANAGER_UPDATE_BONUS": "ADMIN add money",
         "MANAGER_RESOLVED_RECHARGE": "Handling error recharge",
