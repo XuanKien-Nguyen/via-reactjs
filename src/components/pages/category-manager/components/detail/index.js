@@ -10,9 +10,9 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
             ...el,
             children: el.childCategoryList
         }
-        if (data.children.length === 0) {
-            delete data.children
-        }
+        // if (data.children.length === 0) {
+        //     delete data.children
+        // }
         return data
     })
 
@@ -45,7 +45,7 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
 
     const renderDetail = (el) => {
         if (el) {
-            return <div className='product-more-info'>
+            return <div>
                 <Row>
                     <Col xs={12}>Số lượng:</Col>
                     <Col xs={12}>
@@ -120,6 +120,7 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
                     <Col xs={12}>Định dạng: </Col>
                     <Col xs={12}>
                         <a onClick={() => Modal.info({
+                            maskClosable: true,
                             width: '1000px',
                             content: <div>
                                 <b>Định dạng: <Tag color="geekblue">{el.format}</Tag></b>
@@ -180,13 +181,13 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
                 <img alt="recharge-tickets" src={image_url} />
                 <Icon type='eye' style={{color: 'white', fontSize: '24px'}} onClick={() => onShowImage(image_url)}/>
             </div> : '-',
-            width: '150px',
+            width: '270px',
             align: 'center',
         },
         {
             title: 'Chi tiết',
             render: el => el.parent_id === null ? '-' : renderDetail(el),
-            width: '300px',
+            width: '500px',
         },
         {
             title: 'Người tạo',
@@ -228,7 +229,7 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
                 </Col>
             </Row>,
             fixed: 'right',
-            width: '150px'
+            width: '130px'
         },
     ]
 

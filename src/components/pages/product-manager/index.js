@@ -272,7 +272,7 @@ function Index() {
                                 }
                             </Select>
                         </div>
-                        <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title='UUID'/>
+                        <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title='UID'/>
                         <FilterItem defaultValue={createdBy} setValue={setCreatedBy} type={'text'}
                                     title={t('filter.created-by')}/>
                         <FilterItem defaultValue={createdTime} setValue={setCreatedTime} type={'date'}
