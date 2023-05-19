@@ -15,6 +15,7 @@ const Wrapper = (props) => {
     const [createChild, setCreateChild] = useState(false)
     const [initCreateChild, setInitCreateChild] = useState(true)
     const {getFieldDecorator} = props.form;
+    const {updateObject} = props
     const {setVisible, reload, setPending} = props
     const [parentList, setParentList] = useState([])
     const [properties, setProperties] = useState(null)
@@ -51,6 +52,16 @@ const Wrapper = (props) => {
         }
         init()
     }, [])
+
+    useEffect(() => {
+        console.log('is update', updateObject);
+        if (updateObject) {
+          console.log('is update', updateObject);
+          setVisible(true)
+      } else {
+          setVisible(false)
+      }
+    }, [updateObject])
 
     useEffect(() => {
         setFormat(['', '', '', '', '', '', '', '', '', ''])

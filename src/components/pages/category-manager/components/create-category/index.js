@@ -3,8 +3,9 @@ import Modal from "antd/es/modal";
 import {Button} from "antd";
 import Form from './form'
 
-export default ({loading, visible, setVisible, reload}) => {
+export default ({loading, visible, setVisible, reload, updateObject}) => {
     const [pending, setPending] = useState(false)
+
     return <Modal
         className={'create-category'}
         centered
@@ -12,7 +13,7 @@ export default ({loading, visible, setVisible, reload}) => {
         closable={false}
         visible={visible}
         maskClosable={false}
-        title={'Thêm mới danh mục'}
+        title={updateObject ? 'Cập nhật danh mục' : 'Thêm mới danh mục'}
         onCancel={() => () => {
             setVisible(false)
         }}
@@ -28,7 +29,7 @@ export default ({loading, visible, setVisible, reload}) => {
                     submitBtn.click()
                 }
             }}>
-                Thêm mới
+                {updateObject ? 'Cập nhật' : 'Thêm mới'}
             </Button>
         ]}
     >
@@ -36,6 +37,7 @@ export default ({loading, visible, setVisible, reload}) => {
               reload={reload}
               setPending={setPending}
               visible={visible}
+              updateObject={updateObject}
         />
     </Modal>
 }

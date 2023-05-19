@@ -2,21 +2,22 @@ import React, {useContext, useState} from "react";
 import Search from './components/Search'
 import FilterItem from "../category/components/filter/FilterItem";
 import CreateCategory from "./components/create-category";
+import List from './components/detail'
 import {getCategoryList} from "../../../services/category/category";
 import {swapCategory} from "../../../services/category-manager";
 import {LayoutContext} from "../../../contexts";
 import './style.scss'
-
-import {Button, Icon, Tree} from 'antd';
+import {Button, Icon, Tree, Tabs} from 'antd';
 
 const { TreeNode, DirectoryTree } = Tree;
-
+const { TabPane } = Tabs;
 export default () => {
 
     const {setLoading} = useContext(LayoutContext)
 
     const [name, setName] = useState('')
     const [date, setDate] = useState(['', ''])
+    const [updateObject, setUpdateObject] = useState(null)
     const [visible, setVisible] = useState(false)
     const [ds, setDs] = useState([])
     const [reload, setReload] = useState(0)
@@ -82,20 +83,34 @@ export default () => {
         <p style={{textAlign: 'right'}}>
             <Button type={'primary'} onClick={() => setVisible(true)}><Icon type="plus" />Thêm mới danh mục</Button>
         </p>
-        <div className={'m-t-10'} style={{    border:' 1px solid #eaeaea',
-            padding: '15px'}}>
-            <DirectoryTree
-                draggable
-                onDrop={onDragEnd}
-            >
-                {ds.map((el, pIdx) => <TreeNode expanded title={el.name} key={pIdx + ''} id={el.id} idx={pIdx}>
-                    {el.childCategoryList.map((child, cIdx) => <TreeNode id={child.id} idx={cIdx} title={child.name} key={`${pIdx}-${cIdx}`} isLeaf />)}
-                </TreeNode>)}
-            </DirectoryTree>
-        </div>
+
+        <Tabs defaultActiveKey="1" onChange={() => {}}>
+            <TabPane tab="Danh sách" key="1">
+                <List
+                    datasource={ds}
+                    reload={forceReload}
+                    loading={setLoading}
+                    setUpdateObject={setUpdateObject}
+                />
+            </TabPane>
+            <TabPane tab="Sắp xếp danh mục" key="2">
+                <div className={'m-t-10'} style={{border:' 1px solid #eaeaea', padding: '15px'}}>
+                    <DirectoryTree
+                        draggable
+                        onDrop={onDragEnd}
+                    >
+                        {ds.map((el, pIdx) => <TreeNode expanded title={el.name} key={pIdx + ''} id={el.id} idx={pIdx}>
+                            {el.childCategoryList.map((child, cIdx) => <TreeNode id={child.id} idx={cIdx} title={child.name} key={`${pIdx}-${cIdx}`} isLeaf />)}
+                        </TreeNode>)
+                        }
+                    </DirectoryTree>
+                </div>
+            </TabPane>
+        </Tabs>
         <CreateCategory visible={visible}
                         setVisible={setVisible}
                         reload={forceReload}
+                        updateObject={updateObject}
         />
     </div>
 }
