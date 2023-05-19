@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import {Icon, Modal, Table, Tag, Row, Col, Button} from "antd";
 import {convertCurrencyVN} from "../../../../../utils/helpers";
 import {deleteCategory} from "../../../../../services/category-manager";
 
-export default ({datasource, loading, reload, setUpdateObject}) => {
+export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
+
+    const [count, setCount] = useState(0)
+
 
     const ds = datasource.map(el => {
         const data = {
@@ -23,23 +26,27 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
             cancelText: 'Huỷ',
             okText: 'Xoá',
             okButtonProps: {
-               type: 'danger'
+                type: 'danger'
             },
             onOk: () => {
                 loading(true)
                 deleteCategory(el.id).then(resp => {
                     if (resp.status === 200) {
                         Modal.success({
+                            width: '400px',
                             content: resp?.data?.message,
                             onOk: reload
                         })
                     }
                 }).catch(err => Modal.error({
+                    width: '700px',
                     content: err?.response?.data?.message,
-                    onOk: () => {}
+                    onOk: () => {
+                    }
                 })).finally(() => loading(false))
             },
-            onCancel: () => {}
+            onCancel: () => {
+            }
         })
     }
 
@@ -63,7 +70,18 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
                 <Row>
                     <Col xs={12}>Quốc gia:</Col>
                     <Col xs={12}>
-                        <p style={{textAlign: 'right', marginBottom: '0px'}}><img width={'25px'} src={el.location_img_url} alt="" className="src"/></p>
+                        <p style={{textAlign: 'right', marginBottom: '0px', display: 'inline-flex'}}>
+                            <img width={'20px'}
+                                 height={'20px'}
+                                 src={el.location_img_url}
+                                 alt=""
+                                 className="src"/>
+                            <span
+                                style={{
+                                    lineHeight: '22px',
+                                    paddingLeft: '10px'
+                                }}>  {'  ' + el.location}</span>
+                        </p>
                     </Col>
                 </Row>
                 <hr style={{margin: '5px 0px'}}/>
@@ -142,13 +160,13 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
                         {el.status === 'show' ? 'Hiển thị' : 'Ẩn'}
                     </Col>
                 </Row>
-                <hr style={{margin: '5px 0px'}}/>
-                <Row>
-                    <Col xs={12}>Người tạo: </Col>
-                    <Col xs={12}>
-                        {el.createdby}
-                    </Col>
-                </Row>
+                {/*<hr style={{margin: '5px 0px'}}/>*/}
+                {/*<Row>*/}
+                {/*    <Col xs={12}>Người tạo: </Col>*/}
+                {/*    <Col xs={12}>*/}
+                {/*        {el.createdby}*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
             </div>
         } else
             return '-'
@@ -178,7 +196,7 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
             title: 'Hình ảnh',
             dataIndex: 'image_url',
             render: image_url => image_url ? <div className="recharge-tickets_image">
-                <img alt="recharge-tickets" src={image_url} />
+                <img alt="recharge-tickets" src={image_url}/>
                 <Icon type='eye' style={{color: 'white', fontSize: '24px'}} onClick={() => onShowImage(image_url)}/>
             </div> : '-',
             width: '270px',
@@ -218,7 +236,10 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
             align: "center",
             render: el => <Row gutter={5}>
                 <Col xs={12} style={{textAlign: 'right'}}>
-                    <Button type={'primary'} onClick={() => setUpdateObject(el)}>
+                    <Button type={'primary'} onClick={() => {
+                        setUpdateObject(el)
+                        setVisible(true)
+                    }}>
                         <Icon type='edit'/>
                     </Button>
                 </Col>
@@ -243,13 +264,19 @@ export default ({datasource, loading, reload, setUpdateObject}) => {
     }
 
     return <Table bordered
-                  scroll={{ x: true }}
+                  scroll={{x: true}}
                   columns={columns}
                   dataSource={ds}
                   locale={{emptyText: 'Không có dữ liệu'}}
                   rowKey={'id'}
                   indentSize={40}
                   pagination={false}
+        // fix bug bị vỡ form khi expand row
+                  onExpand={() => {
+                      setTimeout(() => {
+                          setCount(count + 1)
+                      }, 100)
+                  }}
     />
 
 }

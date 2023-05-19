@@ -3,7 +3,7 @@ import Modal from "antd/es/modal";
 import {Button} from "antd";
 import Form from './form'
 
-export default ({loading, visible, setVisible, reload, updateObject}) => {
+export default ({visible, setVisible, reload, updateObject, setUpdateObject}) => {
     const [pending, setPending] = useState(false)
 
     return <Modal
@@ -38,6 +38,7 @@ export default ({loading, visible, setVisible, reload, updateObject}) => {
               setPending={setPending}
               visible={visible}
               updateObject={updateObject}
+              setUpdateObject={setUpdateObject}
         />
     </Modal>
 }
