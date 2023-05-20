@@ -287,5 +287,10 @@
         "PENDING_STATUS": "Pending",
         "REJECT_STATUS": "Rejected",
         "ABANDON_STATUS": "Abandon"
+    },
+    "user-manager": {
+        "ALL": "All",
+        "ACTIVE_STATUS": "Active",
+        "ABANDON_STATUS": "Ban"
     }
 }

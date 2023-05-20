@@ -6,7 +6,8 @@ import HomePage from '../components/pages/homepage/HomePage';
 import Category from '../components/pages/category';
 import CategoryManager from '../components/pages/category-manager'
 import ProductManager from '../components/pages/product-manager';
-
+import UserManager from '../components/pages/user-manager';
+import PartnerManager from '../components/pages/partner-manager';
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
@@ -36,7 +37,7 @@ export const dashboardRoutes = [
         exact: true,
         showAlways: true,
         layout: admin,
-        role: ['admin']
+        role: ['admin', 'staff']
     },
     {
         path: '/admin/product-manager',
@@ -46,7 +47,27 @@ export const dashboardRoutes = [
         exact: true,
         showAlways: true,
         layout: admin,
-        role: ['admin']
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/user-manager',
+        component: UserManager,
+        name: "Quản lý người dùng",
+        icon: "user",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/partner-manager',
+        component: PartnerManager,
+        name: "Quản lý cộng tác viên",
+        icon: "team",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
     },
     {
         path: '/user-info',

@@ -287,5 +287,10 @@
         "PENDING_STATUS": "Chờ phê duyệt",
         "REJECT_STATUS": "Đã từ chối",
         "ABANDON_STATUS": "Đã cấm"
+    },
+    "user-manager": {
+        "ALL": "Xem tất cả",
+        "ACTIVE_STATUS": "Active",
+        "ABANDON_STATUS": "Ban"
     }
 }
