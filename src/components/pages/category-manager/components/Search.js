@@ -1,15 +1,14 @@
 import {Button, Collapse, Icon} from "antd";
 import React, {useEffect, useState} from "react";
-import { useTranslation } from 'react-i18next';
-const { Panel } = Collapse
+import {useTranslation} from 'react-i18next';
+
+const {Panel} = Collapse
 let debounce = null
 export default ({items, onReset, search, loading, setPage, page, state = [], reload}) => {
 
     const {api, resolve, reject} = search
 
-    const [init, setInit] = useState(0)
-
-    const { t } = useTranslation()
+    const {t} = useTranslation()
 
     useEffect(() => {
         getList()
@@ -18,11 +17,8 @@ export default ({items, onReset, search, loading, setPage, page, state = [], rel
     useEffect(() => {
         clearTimeout(debounce)
         debounce = setTimeout(() => {
-            if (init > 1) {
-                getList()
-            }
+            getList()
         }, 300)
-        setInit(init + 1)
     }, [...state, page.perpage, page.currentPage])
 
     useEffect(() => {
