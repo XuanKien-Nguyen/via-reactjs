@@ -292,5 +292,12 @@
         "ALL": "All",
         "ACTIVE_STATUS": "Active",
         "ABANDON_STATUS": "Ban"
+    },
+    "partner-manager": {
+        "ALL": "All",
+        "ACTIVE_STATUS": "Active",
+        "PENDING_STATUS": "Pending",
+        "REJECT_STATUS": "Rejected",
+        "ABANDON_STATUS": "Ban"
     }
 }

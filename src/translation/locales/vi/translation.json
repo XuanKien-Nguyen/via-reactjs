@@ -290,7 +290,14 @@
     },
     "user-manager": {
         "ALL": "Xem tất cả",
-        "ACTIVE_STATUS": "Active",
-        "ABANDON_STATUS": "Ban"
+        "ACTIVE_STATUS": "Đã đăng ký",
+        "ABANDON_STATUS": "Đã cấm"
+    },
+    "partner-manager": {
+        "ALL": "Xem tất cả",
+        "ACTIVE_STATUS": "Đã đăng ký",
+        "PENDING_STATUS": "Chờ phê duyệt",
+        "REJECT_STATUS": "Đã từ chối",
+        "ABANDON_STATUS": "Đã cấm"
     }
 }
