@@ -1,4 +1,4 @@
-import {Button, Form, Input, message, Select} from 'antd'
+import {Button, Form, Input, message, Select, Tag} from 'antd'
 import React, {Fragment, useEffect, useState} from "react";
 import TextArea from "antd/es/input/TextArea";
 import {createProduct} from "../../../services/product-manager";
@@ -9,6 +9,7 @@ const Wrapper = (props) => {
 
     const {getFieldDecorator} = props.form;
     const {closePopup, setReload, categoryOptions, setPending, visible} = props
+    const [format, setFormat] = useState('');
     const handleSubmit = e => {
         e.preventDefault();
         console.log(props.form.getFieldsValue());
@@ -43,6 +44,8 @@ const Wrapper = (props) => {
             productText: null,
             cost: null,
         })
+
+        setFormat(null)
     }, [visible])
 
     return <Fragment>
@@ -50,7 +53,15 @@ const Wrapper = (props) => {
             <Form.Item label="Danh mục">
                 {getFieldDecorator('categoryId', {
                     rules: [{required: true, message: 'Vui lòng chọn danh mục'}],
-                })(<Select placeholder={'Danh mục'}>
+                })(<Select placeholder={'Danh mục'} onChange={e => {
+                    const allChildren = []
+                    categoryOptions.forEach(el => allChildren.push(...el.options))
+                    const obj = allChildren.find(el => el.value === e);
+                    if(obj){
+                        setFormat(obj.format)
+                    }
+                    console.log(obj)
+                    }}>
                         {
                             categoryOptions.map(e => {
                                 return (
@@ -68,6 +79,9 @@ const Wrapper = (props) => {
                     </Select>
                 )}
             </Form.Item>
+            <div>
+                <b>Định dạng: <Tag color="geekblue">{format}</Tag></b>
+            </div>
             <Form.Item label="Sản phẩm">
                 {getFieldDecorator('productText', {
                     rules: [{required: true, message: 'Vui lòng nhập sản phẩm'}],

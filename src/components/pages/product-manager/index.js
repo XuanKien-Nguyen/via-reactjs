@@ -11,10 +11,12 @@ import {Input, Select} from "antd";
 import {getCategoryList} from "../../../services/category/category";
 import {LayoutContext} from "../../../contexts";
 import Form from "./form";
+import breadCrumb from "../common/breadcrumb/BreadCrumb";
 
 const {Option, OptGroup} = Select;
 const {Panel} = Collapse
 const dateFormat = 'YYYY-MM-DD';
+let debounce = null
 
 function Index() {
     const {setLoading} = useContext(LayoutContext);
@@ -35,17 +37,30 @@ function Index() {
 
     const [comment, setComment] = useState('')
     const [amount, setAmount] = useState('')
+    const [errorCategorySelect, setErrorCategorySelect] = useState('')
+
     const [errorComment, setErrorComment] = useState('')
     const [errorAmount, setErrorAmount] = useState('')
-    const [categoryIdSelected, setCategoryIdSelected] = useState(null)
-    const [categoryNameSelected, setCategoryNameSelected] = useState(null)
 
     const [createdBy, setCreatedBy] = useState('')
+
+    const [categoryIdSelected, setCategoryIdSelected] = useState(null)
+    const [visibleDownload, setVisibleDownload] = useState(false)
+
+    useEffect(() => {
+        setCategoryIdSelected(null)
+        setAmount(null)
+        setComment(null)
+        setErrorComment("")
+        setErrorAmount("")
+        setErrorCategorySelect("")
+    }, [visibleDownload])
 
     useEffect(() => {
         getCategoryList().then((resp) => {
             if (resp.status === 200) {
                 const data = generateCategoryOption(resp?.data?.categoryListFound || [])
+                console.log(data)
                 setCategoryList(data);
             }
         }).catch(() => {
@@ -56,36 +71,44 @@ function Index() {
     }, [])
 
     useEffect(() => {
-        setLoading(true)
-        let created_time = createdTime.length > 0 ? JSON.stringify(createdTime?.map(el => el?.format(dateFormat))) : "";
-        const body = {
-            category_id: categoryId,
-            uid,
-            created_time,
-            createdby: createdBy,
-            page: page.currentPage,
-            perpage: page.perpage
-        }
-        for (const key of Object.keys(body)) {
-            if (body[key] === "") {
-                delete body[key];
+        clearTimeout(debounce)
+        debounce = setTimeout(() => {
+            setLoading(true)
+            let created_time = createdTime.length > 0 ? JSON.stringify(createdTime?.map(el => el?.format(dateFormat))) : "";
+            const body = {
+                category_id: categoryId,
+                uid,
+                created_time,
+                createdby: createdBy,
+                page: page.currentPage,
+                perpage: page.perpage
             }
-        }
-
-        getProductList(body).then((resp) => {
-            if (resp.status === 200) {
-                const pageInfo = {
-                    total: resp?.data?.totalProducts,
-                    perpage: resp?.data?.perpage,
-                    totalPages: resp?.data?.totalPages,
-                    currentPage: resp?.data?.currentPage === 0 ? 1 : resp?.data?.currentPage,
+            for (const key of Object.keys(body)) {
+                if (body[key] === "") {
+                    delete body[key];
                 }
-                setPage(pageInfo)
-                setProductList(resp?.data?.listProduct || []);
             }
-        }).catch(() => message.error('Có lỗi xảy ra khi lấy sản phẩm')).finally(() => {
-            setLoading(false)
-        });
+
+            getProductList(body).then((resp) => {
+                if (resp.status === 200) {
+                    const pageInfo = {
+                        total: resp?.data?.totalProducts,
+                        perpage: resp?.data?.perpage,
+                        totalPages: resp?.data?.totalPages,
+                        currentPage: resp?.data?.currentPage === 0 ? 1 : resp?.data?.currentPage,
+                    }
+
+                    console.log(resp?.data?.listProduct)
+
+                    setPage(pageInfo)
+                    setProductList(resp?.data?.listProduct || []);
+                }
+            }).catch(() => message.error('Có lỗi xảy ra khi lấy sản phẩm')).finally(() => {
+                setLoading(false)
+            });
+        }, 500)
+
+
     }, [categoryId, uid, createdTime, createdBy, reload, page.currentPage, page.perpage])
 
     const onReset = () => {
@@ -106,7 +129,8 @@ function Index() {
                 options: e.childCategoryList?.map((c) => {
                     return {
                         label: c.name,
-                        value: c.id
+                        value: c.id,
+                        format: c.format
                     }
                 }) || []
             }
@@ -143,13 +167,20 @@ function Index() {
 
 
     const handleDownload = () => {
+        const allChildren = []
+        categoryList.forEach(el => allChildren.push(...el.options))
+        const obj = allChildren.find(el => el.value === categoryIdSelected)
+
+        if(!categoryIdSelected){
+            setErrorCategorySelect("Vui chọn danh mục")
+        }
+
         if (!amount) {
             setErrorAmount('Vui lòng nhập số lượng')
         }
         if (!comment) {
             setErrorComment('Vui lòng nhập lý do tải xuống')
         }
-
         if (amount && comment) {
             setPending(true);
             let body = {
@@ -159,10 +190,14 @@ function Index() {
             }
             downloadNotSoldProduct(body).then((resp) => {
                 if (resp.status === 200) {
-                    const content = resp?.data?.downloadNotSoldList?.join('\r\n');
-                    textToFile(categoryNameSelected, content)
-                    setCategoryIdSelected(null)
-                    setCategoryNameSelected(null)
+                    if (!resp?.data?.downloadNotSoldList) {
+                        Modal.error({
+                            content: resp?.data?.message
+                        })
+                    } else {
+                        const content = resp?.data?.downloadNotSoldList?.join('\r\n');
+                        textToFile(obj.label, content)
+                    }
                 }
             }).catch(() => message.error("Có lỗi xảy ra"))
                 .finally(() => setPending(false))
@@ -174,7 +209,7 @@ function Index() {
             title: 'ID',
             dataIndex: 'id',
             render: v => `#${v}`,
-            width: '150px',
+            width: '100px',
             align: 'center',
         },
         {
@@ -193,7 +228,7 @@ function Index() {
             title: 'Loại',
             dataIndex: 'type',
             render: v => v === 'not_sold' ? <Tag color="green">Chưa bán</Tag> : <Tag color="red">Đã bán</Tag>,
-            width: '150px',
+            width: '50px',
             align: 'center',
         },
         {
@@ -204,47 +239,54 @@ function Index() {
             align: 'center',
         },
         {
+            title: 'Chi tiết sản phẩm',
+            dataIndex: 'productDetail',
+            width: '150px',
+            align: 'center',
+        },
+        {
             title: 'Tạo bởi',
             dataIndex: 'createdby',
             width: '150px',
             align: 'center',
         },
-        {
-            title: 'Cập nhật bởi',
-            dataIndex: 'updatedby',
-            width: '150px',
-            align: 'center',
-        },
+        // {
+        //     title: 'Cập nhật bởi',
+        //     dataIndex: 'updatedby',
+        //     width: '150px',
+        //     align: 'center',
+        // },
         {
             title: 'Ngày tạo',
             dataIndex: 'created_time',
             width: '150px',
             align: 'center',
         },
-        {
-            title: 'Ngày cập nhật',
-            dataIndex: 'updated_time',
-            width: '150px',
-            align: 'center',
-        },
-        {
-            title: "Tải xuống",
-            align: 'center',
-            // dataIndex: 'id',
-            width: '150px',
-            render: row => {
-                return <div>
-                    <Tooltip title={t('order.download')}>
-                        <Button type={'danger'}
-                                onClick={() => {
-                                    setCategoryIdSelected(row.category_id)
-                                    setCategoryNameSelected(row.category_name)
-                                }}><Icon type="download"/></Button>
-                    </Tooltip>
-                </div>
-            }
-
-        }
+        // {
+        //     title: 'Ngày cập nhật',
+        //     dataIndex: 'updated_time',
+        //     width: '150px',
+        //     align: 'center',
+        // }
+        // ,
+        // {
+        //     title: "Tải xuống",
+        //     align: 'center',
+        //     // dataIndex: 'id',
+        //     width: '150px',
+        //     render: row => {
+        //         return <div>
+        //             <Tooltip title={t('order.download')}>
+        //                 <Button type={'danger'}
+        //                         onClick={() => {
+        //                             setCategoryIdSelected(row.category_id)
+        //                             setCategoryNameSelected(row.category_name)
+        //                         }}><Icon type="download"/></Button>
+        //             </Tooltip>
+        //         </div>
+        //     }
+        //
+        // }
     ]
     return (
         <div className="filter-order-admin">
@@ -272,8 +314,8 @@ function Index() {
                                 }
                             </Select>
                         </div>
-                        <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title='UID'/>
-                        <FilterItem defaultValue={createdBy} setValue={setCreatedBy} type={'text'}
+                        <FilterItem defaultValue={uid} allowClear={true} setValue={setUid} type={'text'} title='UID'/>
+                        <FilterItem defaultValue={createdBy} allowClear={true} setValue={setCreatedBy} type={'text'}
                                     title={t('filter.created-by')}/>
                         <FilterItem defaultValue={createdTime} setValue={setCreatedTime} type={'date'}
                                     placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
@@ -285,6 +327,9 @@ function Index() {
             </div>
             <div>
                 <p style={{textAlign: 'right'}}>
+                    <Button type={'danger'} style={{'marginRight': '5px'}}
+                            onClick={() => setVisibleDownload(true)}
+                    ><Icon type="download"/> Tải xuống</Button>
                     <Button type={'primary'} onClick={createNewProduct}><Icon type="plus"/>{'Thêm mới sản phẩm'}
                     </Button>
                 </p>
@@ -304,20 +349,37 @@ function Index() {
                 centered
                 width={'50%'}
                 closable={false}
-                visible={categoryIdSelected !== null}
+                visible={visibleDownload}
                 maskClosable={false}
-                title={`Tải xuống: ${categoryNameSelected}`}
-                onCancel={() => setCategoryIdSelected(null)}
+                title={`Tải xuống`}
+                onCancel={() => setVisibleDownload(false)}
                 footer={[
-                    <Button key="back" disabled={false} onClick={() => {
-                        setCategoryIdSelected(null)
-                    }}>
+                    <Button key="back" disabled={false} onClick={() => setVisibleDownload((false))}>
                         Huỷ bỏ
                     </Button>,
                     <Button key="submit" type="primary" loading={pending} onClick={handleDownload}>
                         Tải xống
                     </Button>
                 ]}>
+                <div>
+                    <p>Chọn danh mục<span style={{color: 'red'}}>*</span></p>
+                    <p>
+                        <Select placeholder={'Danh mục'} value={categoryIdSelected} style={{width: '100%'}} onChange={e => {
+                            setErrorCategorySelect("")
+                            setCategoryIdSelected(e)}}>
+                            {
+                                categoryList.map(e => <OptGroup label={e.label}>
+                                        {e.options.map(c => <Option value={c.value}>{c.label}</Option>)}
+                                    </OptGroup>
+                                )
+                            }
+                        </Select>
+                    </p>
+                    <p style={{color: 'red'}}>{errorCategorySelect}</p>
+
+                </div>
+
+
                 <p>Lý do tải xuống <span style={{color: 'red'}}>*</span>:</p>
                 <Input placeholder={'Lý do tải xuống'} value={comment} onChange={v => {
                     const value = v.target.value
@@ -346,7 +408,7 @@ function Index() {
 
             <Modal
                 centered
-                width={'50%'}
+                width={'70%'}
                 closable={false}
                 visible={visible}
                 maskClosable={false}
