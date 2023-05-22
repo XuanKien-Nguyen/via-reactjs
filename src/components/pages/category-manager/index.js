@@ -6,7 +6,6 @@ import List from './components/detail'
 import {getCategoryList} from "../../../services/category/category";
 import {swapCategory} from "../../../services/category-manager";
 import {LayoutContext} from "../../../contexts";
-import './style.scss'
 import {Button, Icon, Tree, Tabs} from 'antd';
 
 const {TreeNode, DirectoryTree} = Tree;

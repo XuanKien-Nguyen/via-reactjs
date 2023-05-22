@@ -175,9 +175,13 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
     const columns = [
         {
             title: 'ID',
-            dataIndex: 'id',
-            render: v => `#${v}`,
-            width: '150px',
+            render: el => {
+                if (el.parent_id) {
+                    return <p style={{textAlign: 'right'}}><b>#{el.parent_id}</b> <Icon type="caret-right" /> <i>#{el.id}</i></p>
+                }
+                return <span><b> #{el.id}</b>   ({el.childCategoryList?.length || 0})</span>
+            },
+            width: '200px',
         },
         {
             title: 'Tên danh mục',
@@ -263,7 +267,21 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
         })
     }
 
+    const customExpandIcon = (props) => {
+        if (props.expanded) {
+            return <a onClick={e => {
+                props.onExpand(props.record, e);
+            }}><Icon type="caret-down" /></a>
+        } else if(props.record.children){
+            return <a onClick={e => {
+                props.onExpand(props.record, e);
+            }}><Icon type="caret-right" /></a>
+        }
+        return ''
+    }
+
     return <Table bordered
+                  expandIcon={customExpandIcon}
                   scroll={{x: true}}
                   columns={columns}
                   dataSource={ds}

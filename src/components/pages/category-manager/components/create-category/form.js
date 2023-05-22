@@ -31,7 +31,6 @@ const Wrapper = (props) => {
     const [previewVisible, setPreviewVisible] = useState(false)
     const [previewImage, setPreviewImage] = useState(null)
 
-    const [changeImage, setChangeImage] = useState(false)
     const [defaultFileList, setDefaultFileList] = useState(null)
 
     const [format, setFormat] = useState(['', '', '', '', '', '', '', '', '', ''])
@@ -85,7 +84,7 @@ const Wrapper = (props) => {
                 setTimeout(() => {
                     const file = {
                         uid: '1',
-                        name: 'no_name',
+                        name: '',
                         status: 'done',
                         url: updateObject.image_url,
                     }
@@ -389,7 +388,7 @@ const Wrapper = (props) => {
                         getValueFromEvent: normFile,
                         rules: [{
                             required: true,
-                            message: 'Vui chọn file'
+                            message: 'Vui lòng chọn tệp hình ảnh'
                         }],
                     })(
                         <Upload.Dragger

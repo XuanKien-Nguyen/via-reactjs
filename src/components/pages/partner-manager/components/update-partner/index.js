@@ -6,7 +6,7 @@ import Form from './form'
 export default ({loading, visible, setVisible, reload, partnerId}) => {
     const [pending, setPending] = useState(false)
     return <Modal
-        className={'update-user'}
+        className={'modal-body-80vh'}
         centered
         width={'80%'}
         closable={false}
@@ -28,7 +28,7 @@ export default ({loading, visible, setVisible, reload, partnerId}) => {
                     submitBtn.click()
                 }
             }}>
-                Sửa
+                Cập nhật
             </Button>
         ]}
     >

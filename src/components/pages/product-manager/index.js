@@ -60,7 +60,6 @@ function Index() {
         getCategoryList().then((resp) => {
             if (resp.status === 200) {
                 const data = generateCategoryOption(resp?.data?.categoryListFound || [])
-                console.log(data)
                 setCategoryList(data);
             }
         }).catch(() => {
@@ -97,9 +96,6 @@ function Index() {
                         totalPages: resp?.data?.totalPages,
                         currentPage: resp?.data?.currentPage === 0 ? 1 : resp?.data?.currentPage,
                     }
-
-                    console.log(resp?.data?.listProduct)
-
                     setPage(pageInfo)
                     setProductList(resp?.data?.listProduct || []);
                 }
@@ -197,6 +193,7 @@ function Index() {
                     } else {
                         const content = resp?.data?.downloadNotSoldList?.join('\r\n');
                         textToFile(obj.label, content)
+                        setVisibleDownload(false)
                     }
                 }
             }).catch(() => message.error("Có lỗi xảy ra"))
@@ -257,7 +254,7 @@ function Index() {
         //     align: 'center',
         // },
         {
-            title: 'Ngày tạo',
+            title: 'Ngày tải lên',
             dataIndex: 'created_time',
             width: '150px',
             align: 'center',

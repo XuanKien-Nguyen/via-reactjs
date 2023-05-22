@@ -127,3 +127,10 @@
     }
   }
 }
+
+.modal-body-80vh {
+  .ant-modal-body {
+    height: 80vh;
+    overflow: auto;
+  }
+}

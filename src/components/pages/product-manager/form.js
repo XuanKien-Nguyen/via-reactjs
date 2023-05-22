@@ -12,7 +12,6 @@ const Wrapper = (props) => {
     const [format, setFormat] = useState('');
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(props.form.getFieldsValue());
         props.form.validateFields((errors, values) => {
             if (!errors) {
                 setPending(true)
@@ -60,7 +59,6 @@ const Wrapper = (props) => {
                     if(obj){
                         setFormat(obj.format)
                     }
-                    console.log(obj)
                     }}>
                         {
                             categoryOptions.map(e => {

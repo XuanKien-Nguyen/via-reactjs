@@ -7,7 +7,7 @@ export default ({visible, setVisible, reload, updateObject, setUpdateObject}) =>
     const [pending, setPending] = useState(false)
 
     return <Modal
-        className={'create-category'}
+        className={'modal-body-80vh'}
         centered
         width={'80%'}
         closable={false}
