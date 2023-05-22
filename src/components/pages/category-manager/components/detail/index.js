@@ -269,10 +269,30 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
 
     const customExpandIcon = (props) => {
         if (props.expanded) {
+            const parentElement = document.querySelector(`[data-row-key='${props.record.id}']`);
+            if (parentElement) {
+                parentElement.style.backgroundColor = '#e6f7ff'
+            }
+            // props.record.children.forEach(el => {
+            //    const element = document.querySelector(`[data-row-key='${el.id}']`);
+            //    if (element) {
+            //        element.style.backgroundColor = '#e6f7ff'
+            //    }
+            // })
             return <a onClick={e => {
                 props.onExpand(props.record, e);
             }}><Icon type="caret-down" /></a>
         } else if(props.record.children){
+            const parentElement = document.querySelector(`[data-row-key='${props.record.id}']`);
+            if (parentElement) {
+                parentElement.style.backgroundColor = ''
+            }
+            // props.record.children.forEach(el => {
+            //     const element = document.querySelector(`[data-row-key='${el.id}']`);
+            //     if (element) {
+            //         element.style.backgroundColor = '#e6f7ff'
+            //     }
+            // })
             return <a onClick={e => {
                 props.onExpand(props.record, e);
             }}><Icon type="caret-right" /></a>

@@ -24,7 +24,7 @@ export default () => {
 
     const [visible, setVisible] = useState(false)
 
-    const [selectedPartner, setSelectedPartner] = useState('')
+    const [selectedPartner, setSelectedPartner] = useState(null)
 
     const [ds, setDs] = useState([])
     const [userId, setUserId] = useState('')
@@ -175,8 +175,8 @@ export default () => {
         })
     }
 
-    const openModalUpdate = (id) => {
-        setSelectedPartner(id)
+    const openModalUpdate = (row) => {
+        setSelectedPartner(row)
         setVisible(true)
     }
 
@@ -263,8 +263,8 @@ export default () => {
             fixed: 'right',
             render: row => {
                 return <div>
-                    <Tooltip title='Update'>
-                        <Button type='primary' onClick={() => {openModalUpdate(row.partner_id)}}><Icon type="edit" /></Button>
+                    <Tooltip title='Cập nhật'>
+                        <Button type='primary' onClick={() => {openModalUpdate(row)}}><Icon type="edit" /></Button>
                     </Tooltip>
                 </div>
             }
@@ -306,7 +306,10 @@ export default () => {
                     setVisible={setVisible}
                     reload={forceReload}
                     loading={setLoading}
-                    partnerId={selectedPartner}/>
+                    partner={selectedPartner}
+                           setPartner={setSelectedPartner}
+
+            />
         </Fragment>}  
     </div>
 }

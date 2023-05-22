@@ -13,7 +13,7 @@ const Wrapper = (props) => {
 
     const { getFieldDecorator, setFieldsValue } = props.form;
 
-    const { setVisible, reload, setPending, visible, userDetailId, userRole, loading } = props
+    const { setVisible, reload, setPending, visible, userDetail, userRole } = props
 
     const [statusList, setStatusList] = useState([])
 
@@ -33,11 +33,11 @@ const Wrapper = (props) => {
 
     useEffect(() => {
         if (visible) {
-            loading(true)
-            const api = userRole === 'staff' ? getUserByIdForAdmin(userDetailId) : getUserByIdForStaff(userDetailId)
-            api.then(resp => {
-                if (resp.status === 200) {
-                    const userDetail = resp.data.userFound;
+            // loading(true)
+            // const api = userRole === 'staff' ? getUserByIdForAdmin(userDetailId) : getUserByIdForStaff(userDetailId)
+            // api.then(resp => {
+            //     if (resp.status === 200) {
+            //         const userDetail = resp.data.userFound;
                     setFieldsValue({
                         username: userDetail.username,
                         fullname: userDetail.fullname,
@@ -46,13 +46,13 @@ const Wrapper = (props) => {
                         amount_available: userDetail.amount_available,
                         status: userDetail.status
                     })
-                }
-            }).catch(err => Modal.error({
-                content: err?.response?.data?.message,
-                onOk: () => {
-                    setVisible(false)
-                }
-            })).finally(() => loading(false))
+        //         }
+        //     }).catch(err => Modal.error({
+        //         content: err?.response?.data?.message,
+        //         onOk: () => {
+        //             setVisible(false)
+        //         }
+        //     })).finally(() => loading(false))
         }
     }, [visible])
 
@@ -73,7 +73,7 @@ const Wrapper = (props) => {
                 // Object.keys(raw).forEach(k => formData.append(k, raw[k]))
                 body = values
                 setPending(true)
-                const api = userRole === 'admin' ? updateUserForAdmin(userDetailId, body) : updateUserForStaff(userDetailId, body)
+                const api = userRole === 'admin' ? updateUserForAdmin(userDetail.id, body) : updateUserForStaff(userDetail.id, body)
                 api.then(resp => {
                     if (resp.status === 200) {
                         Modal.success({
@@ -95,9 +95,9 @@ const Wrapper = (props) => {
 
     return <Fragment>
         <Form onSubmit={handleSubmit}>
-            <Form.Item label="Username">
+            <Form.Item label="Tên người dùng">
                 {getFieldDecorator('username')(
-                    <Input type={'text'} placeholder={'Username'} disabled />,
+                    <Input type={'text'} placeholder={'Tên người dùng'} disabled />,
                 )}
             </Form.Item>
             <Form.Item label="Tên đầy đủ">

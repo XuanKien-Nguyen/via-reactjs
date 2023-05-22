@@ -1,7 +1,7 @@
 import { Button, Form, Input, message, Select } from 'antd'
 import React, { Fragment, useEffect, useState } from "react";
 import TextArea from "antd/es/input/TextArea";
-import { updatePartner, getPartnerStatusList, getPartnerById } from '../../../../../services/partner-manager';
+import { updatePartner, getPartnerStatusList } from '../../../../../services/partner-manager';
 import Modal from "antd/es/modal";
 import { useTranslation } from 'react-i18next';
 
@@ -13,7 +13,7 @@ const Wrapper = (props) => {
 
     const { getFieldDecorator, setFieldsValue } = props.form;
 
-    const { setVisible, reload, setPending, visible, partnerId, userRole, loading } = props
+    const { setVisible, reload, setPending, visible, partner, userRole, loading } = props
 
     const [statusList, setStatusList] = useState([])
 
@@ -33,28 +33,28 @@ const Wrapper = (props) => {
 
     useEffect(() => {
         if (visible) {
-            loading(true)
-            const api = getPartnerById(partnerId)
-            api.then(resp => {
-                if (resp.status === 200) {
-                    const partnerDetail = resp.data.partnerFound[0];
+            // loading(true)
+            // const api = getPartnerById(partnerId)
+            // api.then(resp => {
+            //     if (resp.status === 200) {
+            //         const partnerDetail = resp.data.partnerFound[0];
                     setFieldsValue({
-                        username: partnerDetail.username,
-                        email: partnerDetail.email,
-                        amount_available: partnerDetail.amount_available,
-                        domain: partnerDetail.domain,
-                        api_key: partnerDetail.api_key,
-                        status: partnerDetail.status,
-                        comment: partnerDetail.comment,
+                        username: partner.username,
+                        email: partner.email,
+                        amount_available: partner.amount_available,
+                        domain: partner.domain,
+                        api_key: partner.api_key,
+                        status: partner.status,
+                        comment: partner.comment,
                     })
                 }
-            }).catch(err => Modal.error({
-                content: err?.response?.data?.message,
-                onOk: () => {
-                    setVisible(false)
-                }
-            })).finally(() => loading(false))
-        }
+        //     }).catch(err => Modal.error({
+        //         content: err?.response?.data?.message,
+        //         onOk: () => {
+        //             setVisible(false)
+        //         }
+        //     })).finally(() => loading(false))
+        // }
     }, [visible])
 
     const handleSubmit = e => {
@@ -68,7 +68,7 @@ const Wrapper = (props) => {
                     domain: values.domain
                 }
                 setPending(true)
-                const api = updatePartner(partnerId, body)
+                const api = updatePartner(partner.partner_id, body)
                 api.then(resp => {
                     if (resp.status === 200) {
                         Modal.success({
@@ -90,9 +90,9 @@ const Wrapper = (props) => {
 
     return <Fragment>
         <Form onSubmit={handleSubmit}>
-            <Form.Item label="Username">
+            <Form.Item label="Tên người dùng">
                 {getFieldDecorator('username')(
-                    <Input type={'text'} placeholder={'Username'} disabled />,
+                    <Input type={'text'} placeholder={'Tên người dùng'} disabled />,
                 )}
             </Form.Item>
             <Form.Item label="Email">

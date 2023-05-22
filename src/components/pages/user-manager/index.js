@@ -22,7 +22,7 @@ export default () => {
 
     const [visible, setVisible] = useState(false)
 
-    const [userDetailId, setUserDetailId] = useState('')
+    const [userDetail, setUserDetail] = useState('')
 
     const [ds, setDs] = useState([])
     const [id, setId] = useState('')
@@ -135,8 +135,8 @@ export default () => {
         })
     }
 
-    const openModalUpdate = (userId) => {
-        setUserDetailId(userId)
+    const openModalUpdate = (row) => {
+        setUserDetail(row)
         setVisible(true)
     }
 
@@ -156,13 +156,13 @@ export default () => {
             render: r => <Tag color={r === 'admin' ? 'red' : 'blue'}>{r}</Tag>
         },
         {
-            title: 'Username',
+            title: 'Tên người dùng',
             width: '200px',
             dataIndex: 'username',
             align: 'center'
         },
         {
-            title: 'Full Name',
+            title: 'Tên đầy đủ',
             width: '200px',
             dataIndex: 'fullname',
             align: 'center'
@@ -174,58 +174,58 @@ export default () => {
             align: 'center'
         },
         {
-            title: 'Phone number',
+            title: 'Số điện thoại',
             width: '200px',
             dataIndex: 'phone',
             align: 'center'
         },
         {
-            title: 'USDT Wallet Address',
+            title: 'Địa chỉ ví USDT',
             width: '200px',
             dataIndex: 'usdttrc20_wallet_address',
             align: 'center',
             render: val => val ? val : '-'
         },
         {
-            title: 'Amount Available',
+            title: 'Số dư tài khoản',
             width: '200px',
             dataIndex: 'amount_available',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
-            title: 'Status',
+            title: 'Trạng thái',
             width: '150px',
             dataIndex: 'status',
             align: 'center',
             render: status => <Tag color={status === 'active' ? 'green' : 'red'}>{status.charAt(0).toUpperCase() + status.slice(1)}</Tag>
         },
         {
-            title: 'Created time',
+            title: 'Thời gian tạo',
             width: '200px',
             dataIndex: 'created_time',
             align: 'center'
         },
         {
-            title: 'Lastest updated by',
+            title: 'Người cập nhật cuối',
             width: '200px',
             dataIndex: 'lastest_updatedby',
             align: 'center'
         },
         {
-            title: 'Lastest updated time',
+            title: 'Thời gian cập nhật cuối',
             width: '200px',
             dataIndex: 'lastest_updated_time',
             align: 'center'
         },
         {
-            title: 'Action',
+            title: 'Thao tác',
             align: 'center',
             fixed: 'right',
             render: row => {
                 return <div>
-                    <Tooltip title='Update'>
-                        <Button type='primary' onClick={() => {openModalUpdate(row.id)}}><Icon type="edit" /></Button>
+                    <Tooltip title='Cập nhật'>
+                        <Button type='primary' onClick={() => {openModalUpdate(row)}}><Icon type="edit" /></Button>
                     </Tooltip>
                 </div>
             }
@@ -263,7 +263,8 @@ export default () => {
                     setVisible={setVisible}
                     reload={forceReload}
                     loading={setLoading}
-                    userDetailId={userDetailId}
+                    userDetail={userDetail}
+                        setUserDetail={setUserDetail}
                     userRole={user.role}/>
         </Fragment>}  
     </div>
