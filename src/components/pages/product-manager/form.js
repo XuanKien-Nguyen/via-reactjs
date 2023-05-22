@@ -1,8 +1,9 @@
-import {Button, Form, Input, message, Select, Tag} from 'antd'
+import {Button, Form, Input, message, Row, Select, Tag, Col} from 'antd'
 import React, {Fragment, useEffect, useState} from "react";
 import TextArea from "antd/es/input/TextArea";
 import {createProduct} from "../../../services/product-manager";
 import Modal from "antd/es/modal";
+import {textToFile} from "../../../utils/helpers";
 
 const {OptGroup, Option} = Select;
 const Wrapper = (props) => {
@@ -22,12 +23,45 @@ const Wrapper = (props) => {
                 }
                 createProduct(body).then((resp) => {
                     if (resp.status === 200) {
-                        Modal.success({
-                            content: resp?.data?.message,
-                            onOk: () => {
-                                closePopup()
-                                setReload();
-                            }})
+                        const data = resp.data
+                        if (data) {
+                            Modal.success({
+                                content: <div>
+                                    <Row>
+                                        <Row><b>Kết quả tải lên</b></Row>
+                                        <Row />
+                                        <Row className={'m-t-10'}>
+                                            <Col sm={16} style={{color: 'red'}}>Lỗi: {data.numErrorProduct}</Col>
+                                            <Col sm={8}>
+                                                <a style={{textDecoration: 'underline'}}
+                                                   disabled={data.numErrorProduct.length === 0}
+                                                   onClick={() => textToFile('result_upload_numErrProduct', data.ErrorProductList.join('\r\n'))}
+                                                >Tải xuống</a>
+                                            </Col>
+                                        </Row>
+                                        <Row className={'m-t-10'}>
+                                            <Col sm={16}>Trùng tải lên: {data.numProductDuplicateInUploadList}</Col>
+                                            <Col sm={8}>
+                                                <a style={{textDecoration: 'underline'}}
+                                                   disabled={data.numProductDuplicateInUploadList === 0}
+                                                   onClick={() => textToFile('result_upload_numProductDuplicateInUploadList', data.productDuplicateInUploadList.join('\r\n'))}
+                                                >Tải xuống</a>
+                                            </Col>
+                                        </Row>
+                                        <Row className={'m-t-10'}>
+                                            <Col sm={16}>Trùng chưa bán: {data.numProductDuplicateWithNotSoldProduct}</Col>
+                                            {/*<Col sm={8}>*/}
+                                            {/*    <a style={{textDecoration: 'underline'}}*/}
+                                            {/*       disabled={data.numProductDuplicateWithNotSoldProduct === 0}>Tải xuống</a>*/}
+                                            {/*</Col>*/}
+                                        </Row>
+                                    </Row>
+                                </div>,
+                                onOk: () => {
+                                    closePopup()
+                                    setReload();
+                                }})
+                        }
                     }
                 }).catch(() => message.error('Có lỗi xả ra'))
                     .finally(() => {

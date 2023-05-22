@@ -10,6 +10,8 @@ import Modal from "antd/es/modal"
 
 const {Option} = Select
 
+let DEFAULT_PROP = []
+
 const Wrapper = (props) => {
 
     const [createChild, setCreateChild] = useState(false)
@@ -19,6 +21,7 @@ const Wrapper = (props) => {
     const {setVisible, reload, setPending, updateObject, setUpdateObject, form} = props
     const [parentList, setParentList] = useState([])
     const [properties, setProperties] = useState(null)
+    const [defaultProperties, setDefaultProperties] = useState(null)
     const [locationList, setLocationList] = useState([])
 
     const [checkPointEmail, setCheckPointEmail] = useState(false)
@@ -35,6 +38,15 @@ const Wrapper = (props) => {
 
     const [format, setFormat] = useState(['', '', '', '', '', '', '', '', '', ''])
 
+    const resetDefaultProperties = () => {
+        const temp = ['', '', '', '', '', '', '', '', '', '']
+        for(let i = 0; i < DEFAULT_PROP.length; i++) {
+            temp[i] = DEFAULT_PROP[i]
+        }
+        setFormatErr('')
+        setFormat(temp)
+    }
+
     useEffect(() => {
         const init = async () => {
             const resp = await getParentCategoryList()
@@ -42,10 +54,12 @@ const Wrapper = (props) => {
                 setParentList(resp?.data?.parentCategoryList || [])
             }
             const respProp = await getPropertiesProduct()
+            console.log(respProp);
             if (respProp.status === 200) {
                 setProperties(respProp?.data?.properties)
+                DEFAULT_PROP = respProp?.data?.defaultProperties
+                // resetDefaultProperties()
             }
-
             const respLocation = await getLocationList()
             if (respLocation.status === 200) {
                 setLocationList(respLocation?.data?.nationalFlagList || [])
@@ -111,6 +125,7 @@ const Wrapper = (props) => {
     }
 
     useEffect(() => {
+        // resetDefaultProperties()
         setFormat(['', '', '', '', '', '', '', '', '', ''])
         setFormatErr('')
         setCheckPointEmail(false)
@@ -223,6 +238,7 @@ const Wrapper = (props) => {
     }
 
     const normFile = e => {
+        e.fileList.forEach(el => el.name = '')
         if (e.fileList.length > 1) {
             e.fileList.shift();
         }
@@ -317,6 +333,7 @@ const Wrapper = (props) => {
                         </Col>
                     })}
                 </Row>
+                <Button type={'primary'} onClick={resetDefaultProperties}>Thiết lập mặc định</Button>
                 {<p style={{color: 'red'}}>{formatErr}</p>}
                 <Form.Item label="Đơn giá">
                     {getFieldDecorator('price', {
