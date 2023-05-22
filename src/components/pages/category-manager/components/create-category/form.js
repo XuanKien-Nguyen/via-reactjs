@@ -1,5 +1,5 @@
 import React, {useState, Fragment, useEffect} from "react";
-import {Button, Form, Icon, Input, Checkbox, message, Select, Switch, Upload, Col, Row, Tag} from "antd";
+import {Button, Form, Icon, Input, Checkbox, Select, Switch, Upload, Col, Row, Tag} from "antd";
 import {createCategory, updateCategory} from "../../../../../services/category-manager";
 import {getParentCategoryList} from "../../../../../services/category/category";
 import {getPropertiesProduct} from "../../../../../services/product-manager";
@@ -21,7 +21,6 @@ const Wrapper = (props) => {
     const {setVisible, reload, setPending, updateObject, setUpdateObject, form} = props
     const [parentList, setParentList] = useState([])
     const [properties, setProperties] = useState(null)
-    const [defaultProperties, setDefaultProperties] = useState(null)
     const [locationList, setLocationList] = useState([])
 
     const [checkPointEmail, setCheckPointEmail] = useState(false)
@@ -40,7 +39,7 @@ const Wrapper = (props) => {
 
     const resetDefaultProperties = () => {
         const temp = ['', '', '', '', '', '', '', '', '', '']
-        for(let i = 0; i < DEFAULT_PROP.length; i++) {
+        for (let i = 0; i < DEFAULT_PROP.length; i++) {
             temp[i] = DEFAULT_PROP[i]
         }
         setFormatErr('')
@@ -54,11 +53,9 @@ const Wrapper = (props) => {
                 setParentList(resp?.data?.parentCategoryList || [])
             }
             const respProp = await getPropertiesProduct()
-            console.log(respProp);
             if (respProp.status === 200) {
                 setProperties(respProp?.data?.properties)
                 DEFAULT_PROP = respProp?.data?.defaultProperties
-                // resetDefaultProperties()
             }
             const respLocation = await getLocationList()
             if (respLocation.status === 200) {
@@ -118,7 +115,12 @@ const Wrapper = (props) => {
                     setHas2Fa(updateObject.has_2fa)
                     setHasChange(updateObject.has_change)
                     setHasBackup(updateObject.has_backup)
-                    setFormat(updateObject.format.split('|'))
+                    const temp = ['', '', '', '', '', '', '', '', '', '']
+                    const arrFormat = updateObject.format.split('|')
+                    for (let i = 0; i < arrFormat.length; i++) {
+                        temp[i] = arrFormat[i]
+                    }
+                    setFormat(temp)
                 }, 100)
             }
         }
@@ -155,7 +157,7 @@ const Wrapper = (props) => {
                         has_2fa: has2Fa,
                         has_email: hasEmail,
                         has_backup: hasBackup,
-                        format: format.filter(el => el !== '').join('|')
+                        format: format.filter(el => !!el).join('|')
                     }
                     const formData = new FormData()
                     Object.keys(raw).forEach(k => formData.append(k, raw[k]))
@@ -206,7 +208,11 @@ const Wrapper = (props) => {
     };
 
     const onChangeFormat = (idx, value) => {
+        if (!value) {
+            value = ''
+        }
         format[idx] = value
+        setFormat([...format])
         setFormat([...format])
         setFormatErr('')
     }
@@ -214,7 +220,7 @@ const Wrapper = (props) => {
     const renderFormat = () => {
         let text = ''
         format.forEach((el, idx) => {
-            if (el === '') {
+            if (!el) {
                 text += `{${idx + 1}}|`
             } else {
                 text += `${el}|`
@@ -225,7 +231,7 @@ const Wrapper = (props) => {
             display: 'flex',
             flexWrap: 'nowrap',
             gap: '4px',
-            maxWidth: 'fit-content'
+            maxWidth: '800px'
         }}>
             Định dạng: <span style={{
             color: 'red',
@@ -313,7 +319,7 @@ const Wrapper = (props) => {
                     >
                         {parentList.map(el => <Option value={el.id}>{el.name}</Option>)}
                     </Select>)}
-                </Form.Item>
+                </Form.Item>render
                 <p className={'m-t-10'}>{renderFormat()}</p>
                 <Row gutter={16}>
                     {properties?.map((e, idx) => {
