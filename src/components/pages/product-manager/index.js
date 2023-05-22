@@ -11,7 +11,6 @@ import {Input, Select} from "antd";
 import {getCategoryList} from "../../../services/category/category";
 import {LayoutContext} from "../../../contexts";
 import Form from "./form";
-import breadCrumb from "../common/breadcrumb/BreadCrumb";
 
 const {Option, OptGroup} = Select;
 const {Panel} = Collapse
@@ -57,6 +56,7 @@ function Index() {
     }, [visibleDownload])
 
     useEffect(() => {
+        setLoading(true)
         getCategoryList().then((resp) => {
             if (resp.status === 200) {
                 const data = generateCategoryOption(resp?.data?.categoryListFound || [])
@@ -64,9 +64,10 @@ function Index() {
             }
         }).catch(() => {
             message.error("Có lỗi xảy ra khi lấy danh sách danh mục")
-        }).finally(() => {
-
-        })
+        }).finally(() => {})
+        setTimeout(() => {
+            setLoading(false)
+        }, 5000)
     }, [])
 
     useEffect(() => {
@@ -231,7 +232,7 @@ function Index() {
         {
             title: 'Đơn giá',
             dataIndex: 'cost',
-            render: v => convertCurrencyVN(v),
+            render: v => <b>{convertCurrencyVN(v)}</b>,
             width: '150px',
             align: 'center',
         },
@@ -242,7 +243,7 @@ function Index() {
             align: 'center',
         },
         {
-            title: 'Tạo bởi',
+            title: 'Người tải lên',
             dataIndex: 'createdby',
             width: '150px',
             align: 'center',
