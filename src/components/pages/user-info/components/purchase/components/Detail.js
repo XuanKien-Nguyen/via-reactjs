@@ -9,6 +9,7 @@ import Modal from "antd/es/modal";
 
 import {LayoutContext} from "../../../../../../contexts";
 import {useTranslation} from "react-i18next";
+import TableCommon from "../../../../../common/table";
 
 const { confirm } = Modal;
 
@@ -30,6 +31,8 @@ export default ({id, loading}) => {
     const [errorText, setErrorText] = useState('')
 
     const [product, setProduct] = useState(null)
+
+    const [productList, setProductList] = useState([])
 
     const { t } = useTranslation()
 
@@ -71,9 +74,16 @@ export default ({id, loading}) => {
         }
     ]
 
+    const [page, setPage] = useState({
+        perpage: 10,
+        currentPage: 1,
+        total: 0
+    })
+
     const getDsSP = () => {
-        return productDetail.product_recycle_bins.map(el => ({
-            name: productDetail.content,
+        const content = productDetail.content
+        return productList.map(el => ({
+            name: content,
             account: el.productDetail
         }))
     }
@@ -118,6 +128,29 @@ export default ({id, loading}) => {
         setErrorText('')
     }, [visible])
 
+    useEffect(() => {
+        const run = async () => {
+            loading(true)
+            console.log('page',page);
+            const resp1 = await purchaseDetail(id, {
+                page: page.currentPage,
+                perpage: page.perpage
+            })
+            if (resp1.status === 200) {
+                const arr = resp1?.data?.newPurchaseDetailList || []
+                setProductList(arr)
+                setPage({
+                    ...page,
+                    total: resp1?.data?.totalPurchaseDetails || 0,
+                    // currentPage: resp1?.data?.currentPage || 0,
+                    // perpage: resp1?.data?.perPage || 0,
+                })
+            }
+            loading(false)
+        }
+        run()
+    }, [page.perpage, page.currentPage])
+
     const handlePurchase = () => {
         setErrorText('')
         if (quantity < 1 && quantity > product.sum_via) {
@@ -154,15 +187,32 @@ export default ({id, loading}) => {
     }
 
     useEffect(() => {
-        loading(true)
-        purchaseList({id}).then(resp => {
+        const init = async () => {
+            loading(true)
+            const resp = await purchaseList({id})
             if (resp.status === 200) {
                 const data = resp.data
                 if (data && data.newPurchaseList) {
                     setProductDetail(data.newPurchaseList[0])
                 }
             }
-        }).catch(err => message.error(err)).finally(() => loading(false))
+            const resp1 = await purchaseDetail(id, {
+                page: page.currentPage,
+                perpage: page.perpage
+            })
+            if (resp1.status === 200) {
+                const arr = resp1?.data?.newPurchaseDetailList || []
+                setProductList(arr)
+                setPage({
+                    ...page,
+                    total: resp1?.data?.totalPurchaseDetails || 0,
+                    // currentPage: resp1?.data?.currentPage || 0,
+                    // perpage: resp1?.data?.perPage || 0,
+                })
+            }
+            loading(false)
+        }
+        init()
     }, [])
 
     const beforeOpenModal = () => {
@@ -231,6 +281,7 @@ export default ({id, loading}) => {
         });
     }
 
+
     return <div>
         <Button style={{marginBottom: '10px'}} onClick={() => history.push({search: `menu=purchase`})}>Quay lại</Button>
         {productDetail.id ? <Fragment>
@@ -239,6 +290,7 @@ export default ({id, loading}) => {
                 <Tag color={productDetail.status === 'valid' ? '#87d068' : '#f50'}>{productDetail.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'}</Tag>
             </b>
             <Table rowKey="title" dataSource={dataSource} columns={columns} pagination={false} locale={{emptyText: t('common.no-data')}}/>
+            <div id={'scroll-id'}></div>
             <p align={'center'} style={{marginTop: '10px'}}>
                 <Button type='primary' className={'m-r-5'} onClick={beforeOpenModal}>Đặt lại hàng</Button>
                 <Button type='danger' onClick={() => handleDownload(productDetail.id, productDetail.category_name)}>Tải xuống</Button>
@@ -247,7 +299,14 @@ export default ({id, loading}) => {
             <br/>
             <Tag color="geekblue" style={{margin: '10px 0px', display: 'flex', flexWrap: 'nowrap', gap: '4px', maxWidth: 'fit-content'}}>Định dạng: <span style={{color: 'red', display: 'block', wordWrap: 'break-word', whiteSpace: 'normal', width: 'calc(100% - 64px)'}}>{productDetail.category_format}</span></Tag>
             {/*<b>Định dạng: </b>*/}
-            <Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} locale={{emptyText: t('common.no-data')}}/>
+            <TableCommon bordered={true}
+                         rowKey="account"
+                         page={page}
+                         setPage={setPage}
+                         datasource={getDsSP()}
+                         scrollToID={'scroll-id'}
+                         columns={columnSP}/>
+            {/*<Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} locale={{emptyText: t('common.no-data')}}/>*/}
             {product && buy()}
         </Fragment> : <p>Không tìm thấy chi tiết đơn hàng</p>}
     </div>

@@ -10,8 +10,8 @@ export const purchaseList = (params) => {
     return service.get(`${ENDPOINT}`,  {params: params})
 }
 
-export const purchaseDetail = (id) => {
-    return service.get(`${ENDPOINT}/${id}`)
+export const purchaseDetail = (id, params) => {
+    return service.get(`${ENDPOINT}/${id}`, {params})
 }
 
 export const downloadPurchase = (id) => {

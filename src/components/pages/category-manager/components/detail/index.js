@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {Icon, Modal, Table, Tag, Row, Col, Button} from "antd";
+import {Icon, Modal, Table, Tag, Row, Col, Button, Tooltip} from "antd";
 import {convertCurrencyVN} from "../../../../../utils/helpers";
-import {deleteCategory} from "../../../../../services/category-manager";
+import {deleteCategory, updateCategory} from "../../../../../services/category-manager";
 
 export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
 
@@ -22,7 +22,7 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
     const handleDelete = el => {
         Modal.confirm({
             content: <p>Bạn có chắc chắn muốn xoá danh mục <br/><b>#{el.id} - {el.name}</b>?</p>,
-            width: '400px',
+            width: '500px',
             cancelText: 'Huỷ',
             okText: 'Xoá',
             okButtonProps: {
@@ -34,6 +34,38 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
                     if (resp.status === 200) {
                         Modal.success({
                             width: '400px',
+                            content: resp?.data?.message,
+                            onOk: reload
+                        })
+                    }
+                }).catch(err => Modal.error({
+                    width: '700px',
+                    content: err?.response?.data?.message,
+                    onOk: () => {
+                    }
+                })).finally(() => loading(false))
+            },
+            onCancel: () => {
+            }
+        })
+    }
+
+    const handleChangeStatus = el => {
+        Modal.confirm({
+            content: <p>Bạn có chắc chắn muốn {el.status === 'show' ? <b style={{color: 'red'}}>Ẩn</b> : <b style={{color: 'red'}}>Hiển thị</b>} danh mục <b>#{el.id} - {el.name}?</b>
+                </p>,
+            width: '500px',
+            cancelText: 'Huỷ',
+            okText: 'Đổi trạng thái',
+            okButtonProps: {
+                type: 'primary'
+            },
+            onOk: () => {
+                loading(true)
+                updateCategory(el.id, {status: el.status === 'show' ? 'hide' : 'show'}).then(resp => {
+                    if (resp.status === 200) {
+                        Modal.success({
+                            width: '500px',
                             content: resp?.data?.message,
                             onOk: reload
                         })
@@ -153,13 +185,13 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
                         {el.description}
                     </Col>
                 </Row>
-                <hr style={{margin: '5px 0px'}}/>
-                <Row>
-                    <Col xs={12}>Trạng thái: </Col>
-                    <Col xs={12}>
-                        {el.status === 'show' ? 'Hiển thị' : 'Ẩn'}
-                    </Col>
-                </Row>
+                {/*<hr style={{margin: '5px 0px'}}/>*/}
+                {/*<Row>*/}
+                {/*    <Col xs={12}>Trạng thái: </Col>*/}
+                {/*    <Col xs={12}>*/}
+                {/*        {el.status === 'show' ? 'Hiển thị' : 'Ẩn'}*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
                 {/*<hr style={{margin: '5px 0px'}}/>*/}
                 {/*<Row>*/}
                 {/*    <Col xs={12}>Người tạo: </Col>*/}
@@ -187,6 +219,15 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
             title: 'Tên danh mục',
             dataIndex: 'name',
             width: '150px',
+            align: 'center',
+        },
+        {
+            title: 'Trạng thái',
+            dataIndex: 'status',
+            width: '150px',
+            render: status => {
+                return <Tag color={status === 'show' ? 'blue' : 'red'}>{status === 'show' ? 'Hiển thị' : 'Ẩn'}</Tag>
+            },
             align: 'center',
         },
         {
@@ -239,22 +280,33 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
             title: 'Thao tác',
             align: "center",
             render: el => <Row gutter={5}>
-                <Col xs={12} style={{textAlign: 'right'}}>
-                    <Button type={'primary'} onClick={() => {
-                        setUpdateObject(el)
-                        setVisible(true)
-                    }}>
-                        <Icon type='edit'/>
-                    </Button>
+                <Col xs={8} style={{textAlign: 'right'}}>
+                    <Tooltip title={'Cập nhật'}>
+                        <Button type={'primary'} onClick={() => {
+                            setUpdateObject(el)
+                            setVisible(true)
+                        }}>
+                            <Icon type='edit'/>
+                        </Button>
+                    </Tooltip>
                 </Col>
-                <Col xs={12} style={{textAlign: 'left'}}>
-                    <Button type={'danger'} onClick={() => handleDelete(el)}>
-                        <Icon type='delete'/>
-                    </Button>
+                <Col xs={8}>
+                    <Tooltip title={'Đổi trạng thái'}>
+                        <Button type={'ghost'} disabled={el.parent_id === null} onClick={() => handleChangeStatus(el)}>
+                            <Icon type="sync" />
+                        </Button>
+                    </Tooltip>
+                </Col>
+                <Col xs={8} style={{textAlign: 'left'}}>
+                    <Tooltip title={'Xoá'}>
+                        <Button type={'danger'} onClick={() => handleDelete(el)}>
+                            <Icon type='delete'/>
+                        </Button>
+                    </Tooltip>
                 </Col>
             </Row>,
             fixed: 'right',
-            width: '130px'
+            width: '200px'
         },
     ]
 

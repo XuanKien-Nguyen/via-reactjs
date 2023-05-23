@@ -7,33 +7,41 @@ const PAGE_SIZE_OPTION = ['5', '10', '20', '30', '50']
 
 export default (props) => {
 
-    const {datasource, columns, page, onChangePage, onChangeSize, bordered, className = '', expandedRowRender, setPage, rowKey = 'id'} = props
+    const {datasource, columns, page, onChangePage, onChangeSize, bordered, className = '', expandedRowRender, setPage, rowKey = 'id', scrollToID} = props
 
     const { t } = useTranslation()
 
     const {perpage, currentPage, total} = page
 
-    const whenSizeChanged = (currentPage, perPage) => {
+    const whenSizeChanged = () => {
         if (setPage) {
-            return () => {
+            return (currentPage, perPage) => {
                 setPage({
                     perpage: perPage,
                     currentPage: 1
                 })
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (scrollToID) {
+                    window.location.href = '#' + scrollToID
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
         }
         return onChangeSize
     }
 
-    const whenPageChanged = (currentPage, perPage) => {
+    const whenPageChanged = () => {
         if (setPage) {
-            return () => {
+            return (currentPage, perPage) => {
                 setPage({
                     perpage: perPage,
                     currentPage: currentPage
                 })
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (scrollToID) {
+                    window.location.href = '#' + scrollToID
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
         }
         return onChangePage
