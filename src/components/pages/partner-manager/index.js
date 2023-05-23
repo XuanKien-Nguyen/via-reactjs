@@ -37,6 +37,9 @@ export default () => {
     const [date, setDate] = useState([])
     const [decidedTime, setDecidedTime] = useState([])
 
+    const [totalAmount, setTotalAmount] = useState(0)
+    const [totalBonus, setTotalBonus] = useState(0)
+
     const [page, setPage] = useState({
         perpage: 10,
         currentPage: 1,
@@ -154,6 +157,8 @@ export default () => {
                         totalPages: resp.data.totalPages,
                         currentPage: resp.data.currentPage === 0 ? 1 : resp.data.currentPage,
                     })
+                    setTotalAmount(resp.data.totalAmountAvailable)
+                    setTotalBonus(resp.data.totalBonusAvailable)
                 }
             },
             reject: (err) => console.log(err)
@@ -178,6 +183,15 @@ export default () => {
     const openModalUpdate = (row) => {
         setSelectedPartner(row)
         setVisible(true)
+    }
+
+    const renderMoney = (el, prefix = '+') => {
+        if (el && (el + '').startsWith('-')) {
+            return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
+        } else if (el === 0) {
+            return <b>0 VND</b>
+        }
+        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
     }
 
     const columns = [
@@ -291,6 +305,10 @@ export default () => {
                 setDecidedTime([])
             }}
             page={page} />
+            <div style={{marginBottom: '8px', fontWeight: 'bold'}}>
+                <div>Tổng số dư tài khoản: {renderMoney(totalAmount)}</div>
+                <div>Tổng số dư khuyến mãi: {renderMoney(totalBonus)}</div>
+            </div>
             <TableCommon
                 className='table-order'
                 bordered={true}

@@ -154,7 +154,7 @@ const UserInfo = () => {
         fn = () => {
             const currentWidth = getWindowDimensions().width
 
-            if (currentWidth < 768) {
+            if (currentWidth < 800) {
                 setRenderTextAPI('CTV')
             } else {
                 setRenderTextAPI('Cộng tác viên')

@@ -169,7 +169,7 @@ function HeaderLayout({ history }) {
                                 </Select>
                             </li>
                             {user && <li className='item header_user-balance'><b>{t('profile.balance')}:&nbsp;{convertCurrencyVN(user?.amount_available)}</b></li>}
-                            {user && <li className='item header_user-bonus'><b>{t('profile.bonus')}:&nbsp;{convertCurrencyVN(user?.bonus)}</b></li>}
+                            {/* {user && <li className='item header_user-bonus'><b>{t('profile.bonus')}:&nbsp;{convertCurrencyVN(user?.bonus)}</b></li>} */}
                             <li className='header-devider'></li>
                             <li className='item' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                             <li style={{

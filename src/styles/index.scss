@@ -881,7 +881,7 @@ li .item-button {
 
 /*-----------------------------RESPONSIVE----------------------------*/
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
     
     /*---HEADER--*/
     header#header_user {
@@ -950,4 +950,10 @@ li .item-button {
         display: none !important;
     }
 
+}
+
+@media only screen and (max-width: 500px) {
+    .header_user-balance {
+        display: none !important;
+    }
 }

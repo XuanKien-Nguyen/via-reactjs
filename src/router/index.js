@@ -8,6 +8,7 @@ import CategoryManager from '../components/pages/category-manager'
 import ProductManager from '../components/pages/product-manager';
 import UserManager from '../components/pages/user-manager';
 import PartnerManager from '../components/pages/partner-manager';
+import RechargeSuccessManager from '../components/pages/recharge-success-manager';
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
@@ -64,6 +65,16 @@ export const dashboardRoutes = [
         component: PartnerManager,
         name: "Quản lý cộng tác viên",
         icon: "team",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/recharge-success-manager',
+        component: RechargeSuccessManager,
+        name: "Quản lý nạp thành công",
+        icon: "bank",
         exact: true,
         showAlways: true,
         layout: admin,
