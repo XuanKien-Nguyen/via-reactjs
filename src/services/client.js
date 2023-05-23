@@ -55,7 +55,7 @@ client.interceptors.response.use(
                     .catch(err => {
                         localStorage.removeItem('is_logged')
                         localStorage.removeItem('user_info')
-                        if (err.response?.data?.error === 'refresh_token must be provide') {
+                        if (['refresh_token must be provide', 'token has been conflict'].includes(err.response?.data?.error)) {
                             window.location.href = '/login'
                         }
                         processQueue(err);
