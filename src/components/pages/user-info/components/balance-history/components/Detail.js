@@ -23,71 +23,71 @@ export default ({detail, visible, setVisible, t, mapType}) => {
         {detail && <Modal
             visible={visible}
             width={800}
-            title={`Chi tiết lịch sử thay đổi số dư #${detail?.id}`}
+            title={`${t('balance-history.modal-title')} #${detail?.id}`}
             onOk={() => setVisible(false)}
             onCancel={() => setVisible(false)}
             footer={[
                 <Button key="submit" type="primary" onClick={() => setVisible(false)}>
-                    Đóng
+                    {t('common.close')}
                 </Button>,
             ]}
         >
             <div id={'balance_detail'}>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Loại</b></Col>
+                    <Col sm={8}><b>{t('balance-history.type')}</b></Col>
                     <Col sm={16}>{t(mapType[detail.type])}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Tên sản phẩm</b></Col>
+                    <Col sm={8}><b>{t('balance-history.category-name')}</b></Col>
                     <Col sm={16}>{getValue(detail.category_name)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Mã đơn hàng</b></Col>
+                    <Col sm={8}><b>{t('balance-history.purchase-id')}</b></Col>
                     <Col sm={16}>{detail.purchase_id ? <a onClick={() => window.location.href = `/user-info?menu=purchase&id=${detail.purchase_id}`
                     }>#{detail.purchase_id}</a> : '-'}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Mã nạp tiền</b></Col>
+                    <Col sm={8}><b>{t('balance-history.transaction-id')}</b></Col>
                     <Col sm={16}>{getValue(detail.transaction_id)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Mã ticket nạp lỗi</b></Col>
+                    <Col sm={8}><b>{t('balance-history.recharge-ticket-id')}</b></Col>
                     <Col sm={16}>{getValue(detail.recharge_ticket_id)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Mã ticket bảo hành</b></Col>
+                    <Col sm={8}><b>{t('balance-history.warranty-ticket-id')}</b></Col>
                     <Col sm={16}>{getValue(detail.warranty_ticket_id)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Tiền khuyến mãi đã sử dụng</b></Col>
+                    <Col sm={8}><b>{t('balance-history.add-bonus')}</b></Col>
                     <Col sm={16}>{renderMoney(detail.add_bonus)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Tiền tài khoản đã sử dụng</b></Col>
+                    <Col sm={8}><b>{t('balance-history.add-amount')}</b></Col>
                     <Col sm={16}>{renderMoney(detail.add_amount)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Số dư khuyến mãi</b></Col>
+                    <Col sm={8}><b>{t('balance-history.bonus-remain')}</b></Col>
                     <Col sm={16}>{renderMoney(detail.bonus_remain, '')}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Số dư tài khoản</b></Col>
+                    <Col sm={8}><b>{t('balance-history.amount-remain')}</b></Col>
                     <Col sm={16}>{renderMoney(detail.amount_remain, '')}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Nội dung</b></Col>
+                    <Col sm={8}><b>{t('balance-history.content')}</b></Col>
                     <Col sm={16}>{getValue(detail.content)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Ghi chú</b></Col>
+                    <Col sm={8}><b>{t('balance-history.note')}</b></Col>
                     <Col sm={16}>{getValue(detail.comment)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Tạo bởi</b></Col>
+                    <Col sm={8}><b>{t('balance-history.created-by')}</b></Col>
                     <Col sm={16}>{getValue(detail.createdby)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>Thời gian</b></Col>
+                    <Col sm={8}><b>{t('balance-history.created-time')}</b></Col>
                     <Col sm={16}>{getValue(detail.created_time)}</Col>
                 </Row>
             </div>

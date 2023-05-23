@@ -6,13 +6,14 @@ const { Panel } = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
 
-export default ({setList, api, loading, setPageInfo, page, t, getTypeList, setTotalAddedAmount, setTotalAddedBonus}) => {
+export default ({setList, api, loading, setPageInfo, page, t, type, setType, getTypeList, setTotalAddedAmount, setTotalAddedBonus}) => {
 
-    const [type, setType] = useState([])
+    // const [type, setType] = useState('')
     const [date, setDate] = useState([])
 
     const onReset = () => {
         setDate([])
+        setType('')
     }
 
     useEffect(() => {

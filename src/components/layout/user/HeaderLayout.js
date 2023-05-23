@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState, Fragment } from 'react';
 import { Dropdown, Icon, Input, Layout, Menu, Tabs, Select, Drawer } from 'antd';
 import { logout } from "../../../services/user";
 import { getParentCategoryList } from '../../../services/category/category';
+import { convertCurrencyVN } from '../../../utils/helpers';
 import { useDispatch, useSelector } from "react-redux";
 import { LayoutContext } from "../../../contexts";
 
@@ -19,6 +20,7 @@ function HeaderLayout({ history }) {
     const { t } = useTranslation()
 
     const user = useSelector(store => store.user)
+
     const categories = useSelector(store => store.categories)
 
     const [userInfo, setUserInfo] = useState()
@@ -166,12 +168,14 @@ function HeaderLayout({ history }) {
                                     <Option value="en">English</Option>
                                 </Select>
                             </li>
+                            {user && <li className='item header_user-balance'><b>{t('profile.balance')}:&nbsp;{convertCurrencyVN(user?.amount_available)}</b></li>}
+                            {user && <li className='item header_user-bonus'><b>{t('profile.bonus')}:&nbsp;{convertCurrencyVN(user?.bonus)}</b></li>}
+                            <li className='header-devider'></li>
+                            <li className='item' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                             <li style={{
                                 height: '64px',
                                 display: 'flex',
                             }} className='item'><div className='signin-signup d-flex justify-content-center align-items-center' style={{ height: '100%' }}>{userInfo ? dropDownUser() : <Fragment><div className={'login-home uppercase'} onClick={() => goto('/login')}>{t('common.sign-in')}</div><div className={'register-home uppercase'} onClick={() => goto('/register')}>{t('common.sign-up')}</div></Fragment>}</div></li>
-                            <li className='header-devider' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}}></li>
-                            <li className='item' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                         </ul>
                     </div>
                 </div>

@@ -230,7 +230,23 @@
     },
     "balance-history": {
         "total-amount": "Total Added Amount",
-        "total-bonus": "Total Added Bonus"
+        "total-bonus": "Total Added Bonus",
+        "type": "Type",
+        "content": "Content",
+        "amount-remain": "Amount Remain",
+        "bonus-remain": "Bonus Remain",
+        "add-amount": "Add Amount",
+        "add-bonus": "Add Bonus",
+        "created-by": "Created By",
+        "created-time": "Created Time",
+        "action":"Action",
+        "modal-title": "Balance History Detail",
+        "category-name": "Category Name",
+        "purchase-id": "Purchase ID",
+        "transaction-id": "Transaction ID",
+        "recharge-ticket-id": "Recharge Ticket ID",
+        "warranty-ticket-id": "Warranty Ticket ID",
+        "note": "Note"
     },
     "user-balance-type": {
         "MANAGER_UPDATE_BONUS": "ADMIN add money",

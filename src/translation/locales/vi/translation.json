@@ -230,7 +230,23 @@
     },
     "balance-history": {
         "total-amount": "Tổng tiền tài khoản thay đổi",
-        "total-bonus": "Tổng tiền khuyến mãi thay đổi"
+        "total-bonus": "Tổng tiền khuyến mãi thay đổi",
+        "type": "Loại",
+        "content": "Nội dung",
+        "amount-remain": "Số dư tài khoản",
+        "bonus-remain": "Số dư khuyến mãi",
+        "add-amount": "Số dư tài khoản thay đổi",
+        "add-bonus": "Số dư khuyến mãi thay đổi",
+        "created-by": "Người tạo",
+        "created-time": "Thời gian",
+        "action":"Thao tác",
+        "modal-title": "Chi tiết lịch sử thay đổi số dư",
+        "category-name": "Tên sản phẩm",
+        "purchase-id": "Mã đơn hàng",
+        "transaction-id": "Mã giao dịch",
+        "recharge-ticket-id": "Mã ticket nạp lỗi",
+        "warranty-ticket-id": "Mã ticket bảo hành",
+        "note": "Ghi chú"
     },
     "user-balance-type": {
         "MANAGER_UPDATE_BONUS": "QTV cộng tiền",

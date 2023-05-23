@@ -14,6 +14,7 @@ let fn
 export default ({loading}) => {
 
     const [datasource, setDatasource] = useState([])
+    const [type, setType] = useState('')
     const [detail, setDetail] = useState(null)
     const [visible, setVisible] = useState(false)
     const [totalAddedAmount, setTotalAddedAmount] = useState(0);
@@ -110,33 +111,33 @@ export default ({loading}) => {
             render: id => <b>#{id}</b>
         },
         {
-            title: 'Loại',
+            title: t('balance-history.type'),
             dataIndex: 'type',
             align: 'center',
             width: '150px',
             render: type => <b>{t(MAP_TYPE[type])}</b>
         },
         {
-            title: 'Nội dung',
+            title: t('balance-history.content'),
             dataIndex: 'content',
             width: '350px',
         },
         {
-            title: 'Tiền khuyến mãi đã sử dụng',
+            title: t('balance-history.add-bonus'),
             dataIndex: 'add_bonus',
             align: 'center',
             width: '150px',
             render: el => renderMoney(el)
         },
         {
-            title: 'Tiền tài khoản đã sử dụng',
+            title: t('balance-history.add-amount'),
             dataIndex: 'add_amount',
             width: '150px',
             align: 'center',
             render: el => renderMoney(el)
         },
         {
-            title: 'Số dư khuyến mãi',
+            title: t('balance-history.bonus-remain'),
             dataIndex: 'bonus_remain',
             width: '150px',
             align: 'center',
@@ -145,7 +146,7 @@ export default ({loading}) => {
             }
         },
         {
-            title: 'Số dư tài khoản',
+            title: t('balance-history.amount-remain'),
             dataIndex: 'amount_remain',
             width: '150px',
             align: 'center',
@@ -154,19 +155,19 @@ export default ({loading}) => {
             }
         },
         {
-            title: 'Tạo bởi',
+            title: t('balance-history.created-by'),
             dataIndex: 'createdby',
             width: '150px',
             align: 'center',
         },
         {
-            title: 'Thời gian',
+            title: t('balance-history.created-time'),
             dataIndex: 'created_time',
             width: '150px',
             align: 'center',
         },
         {
-            title: 'Thao tác',
+            title: t('balance-history.action'),
             align: 'center',
             width: '80px',
             fixed: 'right',
@@ -189,13 +190,15 @@ export default ({loading}) => {
                     page={page}
                     t={t}
                     getTypeList={getTypeList}
+                    type={type}
+                    setType={setType}
                     setTotalAddedAmount={setTotalAddedAmount}
                     setTotalAddedBonus={setTotalAddedBonus}
             />
-            <div className="balance-total" style={{marginBottom: '16px', fontSize: '16px'}}>
+            {type && <div className="balance-total" style={{marginBottom: '16px', fontSize: '16px'}}>
                 <div>{t('balance-history.total-amount')}: {renderMoney(totalAddedAmount)}</div>
                 <div>{t('balance-history.total-bonus')}: {renderMoney(totalAddedBonus)}</div>
-            </div>
+            </div>}
             <TableCommon className='table-order'
                          scroll={{ x: true }}
                          bordered={true}
