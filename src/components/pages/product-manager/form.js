@@ -10,6 +10,7 @@ const Wrapper = (props) => {
 
     const {getFieldDecorator} = props.form;
     const {closePopup, setReload, categoryOptions, setPending, visible} = props
+    const {categoryName, setCategoryName} = props
     const [format, setFormat] = useState('');
     const handleSubmit = e => {
         e.preventDefault();
@@ -24,17 +25,19 @@ const Wrapper = (props) => {
                 createProduct(body).then((resp) => {
                     if (resp.status === 200) {
                         const data = resp.data
+                        console.log(data)
                         if (data) {
                             Modal.success({
                                 content: <div>
                                     <Row>
                                         <Row><b>Kết quả tải lên</b></Row>
                                         <Row />
+                                        <Row><span>{data.message}</span></Row>
                                         <Row className={'m-t-10'}>
                                             <Col sm={16} style={{color: 'red'}}>Lỗi: {data.numErrorProduct}</Col>
                                             <Col sm={8}>
                                                 <a style={{textDecoration: 'underline'}}
-                                                   disabled={data.numErrorProduct.length === 0}
+                                                   disabled={data.numErrorProduct === 0}
                                                    onClick={() => textToFile('result_upload_numErrProduct', data.ErrorProductList.join('\r\n'))}
                                                 >Tải xuống</a>
                                             </Col>
@@ -63,7 +66,7 @@ const Wrapper = (props) => {
                                 }})
                         }
                     }
-                }).catch(() => message.error('Có lỗi xả ra'))
+                }).catch((err) => message.error(err.response))
                     .finally(() => {
                         setPending(false)
                     })

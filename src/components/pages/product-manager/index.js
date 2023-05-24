@@ -46,6 +46,8 @@ function Index() {
     const [categoryIdSelected, setCategoryIdSelected] = useState(null)
     const [visibleDownload, setVisibleDownload] = useState(false)
 
+    const [sumVia, setSumVia] = useState(0)
+
     useEffect(() => {
         setCategoryIdSelected(null)
         setAmount(null)
@@ -127,7 +129,8 @@ function Index() {
                     return {
                         label: c.name,
                         value: c.id,
-                        format: c.format
+                        format: c.format,
+                        sumVia: c.sum_via
                     }
                 }) || []
             }
@@ -314,9 +317,9 @@ function Index() {
                         </div>
                         <FilterItem defaultValue={uid} allowClear={true} setValue={setUid} type={'text'} title='UID'/>
                         <FilterItem defaultValue={createdBy} allowClear={true} setValue={setCreatedBy} type={'text'}
-                                    title={t('filter.created-by')}/>
+                                    title={'Người tải lên'}/>
                         <FilterItem defaultValue={createdTime} setValue={setCreatedTime} type={'date'}
-                                    placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
+                                    placeholder={[t('filter.from'), t('filter.to')]} title={'Ngày tải lên'}/>
 
                     </Panel>
                 </Collapse>
@@ -355,7 +358,7 @@ function Index() {
                     <Button key="back" disabled={false} onClick={() => setVisibleDownload((false))}>
                         Huỷ bỏ
                     </Button>,
-                    <Button key="submit" type="primary" loading={pending} onClick={handleDownload}>
+                    <Button key="submit" type="primary" loading={pending} onClick={handleDownload} disabled={sumVia === 0}>
                         Tải xống
                     </Button>
                 ]}>
@@ -363,7 +366,15 @@ function Index() {
                     <p>Chọn danh mục<span style={{color: 'red'}}>*</span></p>
                     <p>
                         <Select placeholder={'Danh mục'} value={categoryIdSelected} style={{width: '100%'}} onChange={e => {
-                            setErrorCategorySelect("")
+                            setErrorCategorySelect("");
+                            const allChildren = []
+                            categoryList.forEach(el => allChildren.push(...el.options))
+                            const obj = allChildren.find(el => el.value === e);
+                            console.log(obj)
+                            if(obj){
+                                setSumVia(obj.sumVia)
+                            }
+
                             setCategoryIdSelected(e)}}>
                             {
                                 categoryList.map(e => <OptGroup label={e.label}>
@@ -391,7 +402,7 @@ function Index() {
                 <p style={{color: 'red'}}>{errorComment}</p>
 
                 <p className={'m-t-10'}>Số lượng <span style={{color: 'red'}}>*</span>:</p>
-                <Input placeholder='Số lượng' type={'number'} min={1} value={amount} onChange={v => {
+                <Input placeholder='Số lượng' maxLength={1} type={'number'} min={1} value={amount} onChange={v => {
                     const value = v.target.value
                     setAmount(value)
                     if (value === '') {
@@ -400,6 +411,7 @@ function Index() {
                         setErrorAmount('')
                     }
                 }}/>
+                <p style={{marginTop: '15px', color: 'green'}}>Số lượng tối đã có thể tải: {sumVia}</p>
                 <p style={{color: 'red'}}>{errorAmount}</p>
 
             </Modal>

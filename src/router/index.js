@@ -10,7 +10,7 @@ import UserManager from '../components/pages/user-manager';
 import PartnerManager from '../components/pages/partner-manager';
 import RechargeSuccessManager from '../components/pages/recharge-success-manager';
 import PurchaseManager from '../components/pages/purchase-manager'
-
+import LogDownLoadProduct from '../components/pages/log-download-product';
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
 import {Fragment as blank} from 'react'
@@ -19,6 +19,7 @@ import UserInfo from "../components/pages/user-info";
 import AccessDenied from "../components/pages/access-denied/403";
 
 import ResetPassword from '../components/pages/reset-password'
+import LogUserLogin from "../components/pages/log-user-login";
 
 export const dashboardRoutes = [
     // {
@@ -82,6 +83,26 @@ export const dashboardRoutes = [
         role: ['admin', 'staff']
     },
     {
+        path: '/admin/log-download-product',
+        component: LogDownLoadProduct,
+        name: "Lịch sử tải xuống",
+        icon: "team",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/log-user-ligin',
+        component: LogUserLogin,
+        name: "Lịch sử đăng nhập",
+        icon: "team",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
         path: '/admin/purchase-manager',
         component: PurchaseManager,
         name: "Quản lý đơn hàng",
@@ -101,6 +122,7 @@ export const dashboardRoutes = [
         layout: user,
         role: ['admin', 'customer', 'staff']
     },
+
 ];
 export const baseRoutes = [
     {
