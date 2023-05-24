@@ -1,9 +1,7 @@
 import {Button, Collapse, Icon, message} from "antd";
-import FilterItem from "../../../../category/components/filter/FilterItem";
 import React, {useEffect, useState} from "react";
-import {useTranslation} from 'react-i18next';
-
-const {Panel} = Collapse
+import FilterItem from "../../category/components/filter/FilterItem";
+const { Panel } = Collapse
 
 const dateFormat = 'YYYY-MM-DD';
 
@@ -11,10 +9,8 @@ let debounce = null
 
 export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, getStatusList}) => {
 
-    const {t} = useTranslation()
-
     const [uid, setUid] = useState('')
-    const [init, setInit] = useState(0)
+    const [userId, setUserId] = useState(null)
     const [date, setDate] = useState([])
     const [purchaseType, setPurchaseType] = useState('')
     const [status, setStatus] = useState('')
@@ -31,18 +27,22 @@ export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, 
     }, [])
 
     useEffect(() => {
-        if (init > 1) {
+        // if (init > 1) {
             getList()
-        }
-        setInit(init + 1)
+        // }
+        // setInit(init + 1)
     }, [date, purchaseType, status, page.perpage, page.currentPage])
 
+
     useEffect(() => {
-        clearTimeout(debounce)
-        debounce = setTimeout(() => {
-            getList()
-        }, 500)
-    }, [uid])
+        // if (init > 1) {
+            clearTimeout(debounce)
+            debounce = setTimeout(() => {
+                getList()
+            }, 500)
+        // }
+        // setInit(i`nit + 1)
+    }, [uid, userId])
 
     const getList = () => {
         let created_time = ''
@@ -52,6 +52,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, 
         const body = {
             uid,
             purchase_type: purchaseType,
+            user_id: userId,
             status,
             created_time,
             perpage: page.perpage,
@@ -83,20 +84,20 @@ export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, 
         <div className='filter' style={{padding: '0px'}}>
             <Collapse className='filter-layout' accordion style={{backgroundColor: '#e9e9e9'}} defaultActiveKey={1}>
                 <Panel key={1} className='filter-container' header={<div className='filter-header'>
-                    <div><Icon type="filter" theme="filled"/>&nbsp;{t('filter.title')}</div>
+                    <div><Icon type="filter" theme="filled"/>&nbsp;Bộ lọc</div>
                 </div>}>
-                    <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={t('filter.uid')}
-                                allowClear={true}/>
-                    <FilterItem defaultValue={date} setValue={setDate} type={'date'}
-                                placeholder={[t('filter.from'), t('filter.to')]} title={t('order.date')}/>
+                    <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={'UID'} allowClear={true}/>
+                    <FilterItem defaultValue={userId} setValue={setUserId} type={'text'} title={'ID người mua hàng'} allowClear={true}/>
                     <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={getTypeList()}
-                                type={'select'} title={t('filter.payment-method')}/>
+                                type={'select'} title={'Phương thức thanh toán'}/>
                     <FilterItem defaultValue={status} setValue={setStatus} options={getStatusList()} type={'select'}
-                                title={t('filter.status')}/>
+                                title={'Tình trạng'}/>
+                    <FilterItem defaultValue={date} setValue={setDate} type={'date'}
+                                placeholder={['Từ ngày', 'Đến ngày']} title={'Thời gian mua hàng'}/>
                 </Panel>
             </Collapse>
             <Button className='reset-filter-btn' type="primary" size='small' icon="reload"
-                    onClick={onReset}>{t('common.reset')}</Button>
+                    onClick={onReset}>Làm mới</Button>
         </div>
     </div>
 }

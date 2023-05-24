@@ -1,7 +1,6 @@
 import React, {useEffect, useState, Fragment} from "react";
-import {Badge, message, Table, Button, Icon, Tooltip, Tag} from "antd";
+import {message, Button, Icon, Tooltip, Tag} from "antd";
 import {purchaseList, downloadPurchase, getPurchaseType, getPurchaseStatus} from "../../../../../services/purchases";
-import Modal from "antd/es/modal";
 import {convertCurrencyVN, textToFile} from '../../../../../utils/helpers'
 import Search from './components/Search'
 import TableCommon from '../../../../common/table'
@@ -11,16 +10,9 @@ import { useTranslation } from 'react-i18next';
 export default ({loading}) => {
 
     const { t } = useTranslation()
-
     const query = new URLSearchParams(window.location.search);
-
     const history = useHistory()
-
     const [ds, setDs] = useState([])
-
-    const [visible, setVisible] = useState(false)
-
-    const [productDetail, setProductDetail] = useState(null)
     const [purchaseType, setPurchaseType] = useState([])
     const [purchaseStatus, setPurchaseStatus] = useState([])
 
@@ -192,28 +184,6 @@ export default ({loading}) => {
             onChangeSize={onChangeSize}
             scroll={{x: true}}
         />
-        {productDetail && <Modal
-            width={'60vw'}
-            centered
-            closable={false}
-            visible={visible}
-            maskClosable={false}
-            title={t('order.detail-title')}
-            onOk={() => {}}
-            onCancel={() => () => {
-                setVisible(false)
-            }}
-            footer={[
-                <Button key="submit" type="primary" onClick={() => setVisible(false)}>
-                    {t('common.close')}
-                </Button>
-            ]}
-        >
-            <p>Đơn hàng <b>#{productDetail.id}</b> đã được đặt lúc {productDetail.created_time} và hiện tại là <Badge count={productDetail.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'}
-                                                                                                               style={{ backgroundColor: productDetail.status === 'valid' ? '#1890ff' : '#ff4d4f', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }}
-            />
-            </p>
-        </Modal>}
     </Fragment>
 
 }

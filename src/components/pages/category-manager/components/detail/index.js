@@ -292,7 +292,7 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
                 </Col>
                 <Col xs={8}>
                     <Tooltip title={'Đổi trạng thái'}>
-                        <Button type={'ghost'} disabled={el.parent_id === null} onClick={() => handleChangeStatus(el)}>
+                        <Button type={'ghost'} onClick={() => handleChangeStatus(el)}>
                             <Icon type="sync" />
                         </Button>
                     </Tooltip>
