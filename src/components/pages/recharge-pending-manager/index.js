@@ -2,12 +2,16 @@ import React, { useContext, useState, useEffect, Fragment } from "react";
 import Search from "./components/Search";
 import FilterItem from "../category/components/filter/FilterItem";
 import TableCommon from "../../common/table";
-import { getAllRechargePending, getStatusListRechargePending, getTypeListRechargePending } from "../../../services/recharge-manager";
+import RechargePendingDetail from "./components/Detail";
+import { getAllRechargePending, getStatusListRechargePending, getTypeListRechargePending, deleteRechargePendingById } from "../../../services/recharge-manager";
 import { LayoutContext } from "../../../contexts";
 import { useSelector } from "react-redux";
 import { convertCurrencyVN } from "../../../utils/helpers";
-import { Button, Icon, Tooltip, Tag } from "antd";
+import { Button, Icon, Tooltip, Tag, Spin } from "antd";
+import Modal from "antd/es/modal";
 import { useTranslation } from "react-i18next";
+
+const antIcon = <Icon type="loading" style={{fontSize: 24}} spin/>;
 
 const dateFormat = 'YYYY-MM-DD';
 
@@ -38,6 +42,7 @@ export default () => {
     const [lastestDecicedDate, setLastestDecicedDate] = useState([])
 
     const [rechargePendingDetail, setRechargePendingDetail] = useState(null)
+    const [initDetail, setInitDetail] = useState(false)
 
     const [totalAmount, setTotalAmount] = useState(0)
 
@@ -75,6 +80,14 @@ export default () => {
             setStatusList(lstStatus)
         })
     }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (!visible) {
+                setRechargePendingDetail(null)
+            }
+        }, 200)
+    }, [visible])
 
     const getTypeList = () => {
         return typeList.map(el => ({
@@ -177,10 +190,36 @@ export default () => {
         })
     }
 
-    const openModalUpdate = (row) => {
-        setRechargePendingDetail(row)
-        setVisible(true)
+    const handleDelete = ticket => {
+        Modal.confirm({
+            content: <p>Bạn có chắc chắn muốn xoá Ticket <b>#{ticket.id}</b>?</p>,
+            width: '500px',
+            cancelText: 'Huỷ',
+            okText: 'Xoá',
+            okButtonProps: {
+                type: 'danger'
+            },
+            onOk: () => {
+                deleteRechargePendingById(ticket.id).then(resp => {
+                    if (resp.status === 200) {
+                        Modal.success({
+                            width: '400px',
+                            content: resp?.data?.message,
+                            onOk: () => {}
+                        })
+                    }
+                }).catch(err => Modal.error({
+                    width: '700px',
+                    content: err?.response?.data?.message,
+                    onOk: () => {
+                    }
+                })).finally(() => {setReload(reload + 1)})
+            },
+            onCancel: () => {
+            }
+        })
     }
+
 
     const columns = [
         {
@@ -270,13 +309,18 @@ export default () => {
             render: row => {
                 return <div>
                     <Tooltip title='Chi tiết'>
-                        <Button type='primary' onClick={() => {openModalUpdate(row)}}><Icon type="file-search" /></Button>
+                        <Button type='primary' style={{marginRight: '8px'}} onClick={() => {
+                            setRechargePendingDetail(row)
+                            setVisible(true)
+                        }}><Icon type="file-search" /></Button>
+                        <Button type='danger' onClick={() => {
+                            handleDelete(row)
+                        }}><Icon type="delete" /></Button>
                     </Tooltip>
                 </div>
             }
         },
     ]
-
 
     return <div>
         {user && <Fragment>
@@ -311,6 +355,30 @@ export default () => {
                 onChangeSize={onChangeSize}
                 scroll={{ x: true }}
             />
+            {rechargePendingDetail && <Modal
+            className={'modal-body-80vh'}
+            width={'80%'}
+            style={{maxWidth: '1140px'}}
+            centered
+            closable={false}
+            visible={visible}
+            maskClosable={false}
+            title={'Chi tiết ticket nạp lỗi'}
+            onOk={() => {
+            }}
+            onCancel={() => () => {
+                setVisible(false)
+            }}
+            footer={[
+                <Button key="submit" type="primary" onClick={() => setVisible(false)}>
+                    Đóng
+                </Button>
+            ]}
+        >
+            <Spin spinning={initDetail} indicator={antIcon}>
+                <RechargePendingDetail id={rechargePendingDetail.id} loading={setInitDetail} mapType={MAP_TYPE} mapStatus={MAP_STATUS}/>
+            </Spin>
+        </Modal>}
         </Fragment>}  
     </div>
 }

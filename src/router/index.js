@@ -53,6 +53,16 @@ export const dashboardRoutes = [
         role: ['admin', 'staff']
     },
     {
+        path: '/admin/purchase-manager',
+        component: PurchaseManager,
+        name: "Quản lý đơn hàng",
+        icon: "shop",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
         path: '/admin/user-manager',
         component: UserManager,
         name: "Quản lý người dùng",
@@ -77,16 +87,6 @@ export const dashboardRoutes = [
         component: RechargeSuccessManager,
         name: "Quản lý nạp thành công",
         icon: "bank",
-        exact: true,
-        showAlways: true,
-        layout: admin,
-        role: ['admin', 'staff']
-    },
-    {
-        path: '/admin/purchase-manager',
-        component: PurchaseManager,
-        name: "Quản lý đơn hàng",
-        icon: "shop",
         exact: true,
         showAlways: true,
         layout: admin,
