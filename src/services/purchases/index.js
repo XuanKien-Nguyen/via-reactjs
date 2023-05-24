@@ -1,6 +1,6 @@
 import service from "../client";
 const ENDPOINT = '/api/purchases/client'
-const ENDPOINT_COMMON = 'api/purchases/common'
+const ENDPOINT_COMMON = '/api/purchases/common'
 
 export const createPurchase = (body) => {
     return service.post(`${ENDPOINT}`, body)
