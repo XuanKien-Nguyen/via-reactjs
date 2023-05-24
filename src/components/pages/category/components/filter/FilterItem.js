@@ -1,10 +1,9 @@
 import React from 'react';
-import {Input, Select} from 'antd';
-import { DatePicker } from 'antd';
+import {DatePicker, Input, Select} from 'antd';
 
-const { RangePicker } = DatePicker;
+const {RangePicker} = DatePicker;
 
-const { Option } = Select;
+const {Option, OptGroup} = Select;
 const FilterItem = (props) => {
 
     const {id, title, options, setValue, defaultValue, type = 'select', width = '100%', placeholder} = props
@@ -27,19 +26,28 @@ const FilterItem = (props) => {
                           placeholder={title}
                           onChange={onChangeNumberText}
                           defaultValue={defaultValue}
-                          style={{ width }}
+                          style={{width}}
                           {...props} />
         } else if (type === 'date') {
             return <RangePicker onChange={onChangeDate}
                                 placeholder={placeholder || title}
                                 defaultValue={defaultValue}
                                 value={defaultValue}
-                                style={{ width }}
+                                style={{width}}
                                 {...props} />
+        } else if (type === 'select-group') {
+            return <Select placeholder={title} onChange={onChange} {...props}>
+                {
+                    options.map(e => <OptGroup label={e.label}>
+                            {e.options.map(c => <Option value={c.value}>{c.label}</Option>)}
+                        </OptGroup>
+                    )
+                }
+            </Select>
         } else {
             return <Select
                 showSearch
-                style={{ width }}
+                style={{width}}
                 placeholder={placeholder || title}
                 defaultValue={defaultValue}
                 optionFilterProp="children"

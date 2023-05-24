@@ -1,7 +1,6 @@
 // GeneralViews
 import Login from '../components/pages/login';
 import Register from '../components/pages/register'
-import Home from '../components/pages/home';
 import HomePage from '../components/pages/homepage/HomePage';
 import Category from '../components/pages/category';
 import CategoryManager from '../components/pages/category-manager'
@@ -10,6 +9,7 @@ import UserManager from '../components/pages/user-manager';
 import PartnerManager from '../components/pages/partner-manager';
 import RechargeSuccessManager from '../components/pages/recharge-success-manager';
 import PurchaseManager from '../components/pages/purchase-manager'
+import BalanceHistoryManager from '../components/pages/balance-history-manager'
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
@@ -21,16 +21,6 @@ import AccessDenied from "../components/pages/access-denied/403";
 import ResetPassword from '../components/pages/reset-password'
 
 export const dashboardRoutes = [
-    // {
-    //     path: '/admin',
-    //     component: Home,
-    //     name: "Home Admin",
-    //     icon: "shop",
-    //     exact: true,
-    //     showAlways: true,
-    //     layout: admin,
-    //     role: ['admin']
-    // },
     {
         path: '/admin/category-manager',
         component: CategoryManager,
@@ -86,6 +76,16 @@ export const dashboardRoutes = [
         component: PurchaseManager,
         name: "Quản lý đơn hàng",
         icon: "shop",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/balance-manager',
+        component: BalanceHistoryManager,
+        name: "Quản lý thay đổi số dư",
+        icon: "file-sync",
         exact: true,
         showAlways: true,
         layout: admin,
