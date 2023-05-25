@@ -31,7 +31,7 @@ function SideBarLayout(props) {
             collapsed={sideBarCollapsed}
             onCollapse={() => setCollapsed(!sideBarCollapsed)}
         >
-            <div className="logo" onClick={() => history.push('/')} style={{cursor: 'pointer'}}>
+            <div className="logo" onClick={() => window.location.href = '/'} style={{cursor: 'pointer'}}>
                 <img src={require('../../../assets/img/favicon.png')} alt=""/>
                 {!sideBarCollapsed && <span>VIA2FA</span>}
             </div>
