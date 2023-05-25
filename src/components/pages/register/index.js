@@ -73,10 +73,12 @@ const Register = (props) => {
         {
             func: value => !!value,
             message: 'Vui lòng nhập số điện thoại'
-        }, {
-            func: isPhoneNumberVN,
-            message: 'Vui lòng nhập đúng định dạng số điện thoại'
-        }]
+        },
+        // {
+        //     func: isPhoneNumberVN,
+        //     message: 'Vui lòng nhập đúng định dạng số điện thoại'
+        // }
+        ]
     const validUsername = [{
         func: value => !!value,
         message: 'Vui lòng nhập tên tài khoản'
