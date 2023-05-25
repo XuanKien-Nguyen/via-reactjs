@@ -1,4 +1,4 @@
-import {Button, Form, Input, message, Row, Select, Tag, Col} from 'antd'
+import {Button, Col, Form, Input, message, Row, Select, Tag} from 'antd'
 import React, {Fragment, useEffect, useState} from "react";
 import TextArea from "antd/es/input/TextArea";
 import {createProduct} from "../../../services/product-manager";
@@ -31,8 +31,8 @@ const Wrapper = (props) => {
                                 content: <div>
                                     <Row>
                                         <Row><b>Kết quả tải lên</b></Row>
-                                        <Row />
-                                        <Row><span>{data.message}</span></Row>
+                                        <Row/>
+                                        <Row><span>{data.message?.split('-')[0]}</span></Row>
                                         <Row className={'m-t-10'}>
                                             <Col sm={16} style={{color: 'red'}}>Lỗi: {data.numErrorProduct}</Col>
                                             <Col sm={8}>
@@ -52,18 +52,16 @@ const Wrapper = (props) => {
                                             </Col>
                                         </Row>
                                         <Row className={'m-t-10'}>
-                                            <Col sm={16}>Trùng chưa bán: {data.numProductDuplicateWithNotSoldProduct}</Col>
-                                            {/*<Col sm={8}>*/}
-                                            {/*    <a style={{textDecoration: 'underline'}}*/}
-                                            {/*       disabled={data.numProductDuplicateWithNotSoldProduct === 0}>Tải xuống</a>*/}
-                                            {/*</Col>*/}
+                                            <Col sm={16}>Trùng chưa
+                                                bán: {data.numProductDuplicateWithNotSoldProduct}</Col>
                                         </Row>
                                     </Row>
                                 </div>,
                                 onOk: () => {
                                     closePopup()
                                     setReload();
-                                }})
+                                }
+                            })
                         }
                     }
                 }).catch((err) => message.error(err.response))
@@ -90,12 +88,12 @@ const Wrapper = (props) => {
                 {getFieldDecorator('categoryId', {
                     rules: [{required: true, message: 'Vui lòng chọn danh mục'}],
                 })(<Select placeholder={'Danh mục'} onChange={e => {
-                    const allChildren = []
-                    categoryOptions.forEach(el => allChildren.push(...el.options))
-                    const obj = allChildren.find(el => el.value === e);
-                    if(obj){
-                        setFormat(obj.format)
-                    }
+                        const allChildren = []
+                        categoryOptions.forEach(el => allChildren.push(...el.options))
+                        const obj = allChildren.find(el => el.value === e);
+                        if (obj) {
+                            setFormat(obj.format)
+                        }
                     }}>
                         {
                             categoryOptions.map(e => {

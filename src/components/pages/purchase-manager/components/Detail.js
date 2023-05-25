@@ -260,7 +260,7 @@ export default ({id, loading}) => {
 
 
     return <div>
-        {productDetail.id ? <Fragment>
+        {productDetail.id && <Fragment>
             <b>Đơn hàng <span style={{color: 'red'}}>#{productDetail.id}</span> đã được đặt lúc {productDetail.created_time} và hiện tại là
                 <Tag color={productDetail.status === 'valid' ? '#87d068' : '#f50'}>{productDetail.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'}</Tag>
             </b>
@@ -283,6 +283,6 @@ export default ({id, loading}) => {
                          columns={columnSP}/>
             {/*<Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} locale={{emptyText: t('common.no-data')}}/>*/}
             {/*{product && buy()}*/}
-        </Fragment> : <p>Không tìm thấy chi tiết đơn hàng</p>}
+        </Fragment>}
     </div>
 }

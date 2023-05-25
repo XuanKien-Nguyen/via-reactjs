@@ -87,18 +87,18 @@ export const dashboardRoutes = [
     {
         path: '/admin/log-download-product',
         component: LogDownLoadProduct,
-        name: "Lịch sử tải xuống",
-        icon: "team",
+        name: "Quản lý tải xuống",
+        icon: "download",
         exact: true,
         showAlways: true,
         layout: admin,
         role: ['admin', 'staff']
     },
     {
-        path: '/admin/log-user-ligin',
+        path: '/admin/log-user-login',
         component: LogUserLogin,
-        name: "Lịch sử đăng nhập",
-        icon: "team",
+        name: "Quản lý đăng nhập",
+        icon: "lock",
         exact: true,
         showAlways: true,
         layout: admin,

@@ -153,7 +153,7 @@ export default () => {
             width: '150px',
             dataIndex: 'type',
             align: 'center',
-            render: type => <Tag>{t(MAP_TYPE[type])}</Tag>
+            render: type => <b>{t(MAP_TYPE[type])}</b>
         },
         {
             title: 'Người bởi',

@@ -280,11 +280,11 @@
     },
     "download-type": {
         "ALL":"Xem tất cả",
-        "TYPE_DOWNLOAD_NOTSOLD": "Not sold",
-        "TYPE_DOWNLOAD_SOLD": "Sold",
+        "TYPE_DOWNLOAD_NOTSOLD": "Chưa bán",
+        "TYPE_DOWNLOAD_SOLD": "Đã bán",
         "TYPE_DOWNLOAD_CHECKPOINT": "Checkpoint",
-        "TYPE_DOWNLOAD_REPLACE": "Replace",
-        "TYPE_DOWNLOAD_ERROR": "Error"
+        "TYPE_DOWNLOAD_REPLACE": "Đổi trả",
+        "TYPE_DOWNLOAD_ERROR": "Lỗi khác"
     },  
     "user-login-status": {
         "STATUS_SUCCESS": "Đăng nhập thành công",

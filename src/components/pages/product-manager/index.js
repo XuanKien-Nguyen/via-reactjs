@@ -1,13 +1,11 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Button, Collapse, Icon, Tag, Tooltip} from "antd";
+import {Button, Collapse, Icon, Input, InputNumber, message, Select, Tag} from "antd";
 import {useTranslation} from "react-i18next";
 import {downloadNotSoldProduct, getProductList} from "../../../services/product-manager";
-import {message} from "antd";
 import TableCommon from "../../common/table";
 import {convertCurrencyVN, textToFile} from "../../../utils/helpers";
 import FilterItem from "../category/components/filter/FilterItem";
 import Modal from "antd/es/modal";
-import {Input, Select} from "antd";
 import {getCategoryList} from "../../../services/category/category";
 import {LayoutContext} from "../../../contexts";
 import Form from "./form";
@@ -35,7 +33,7 @@ function Index() {
     const [visible, setVisible] = useState(false)
 
     const [comment, setComment] = useState('')
-    const [amount, setAmount] = useState('')
+    const [amount, setAmount] = useState(null)
     const [errorCategorySelect, setErrorCategorySelect] = useState('')
 
     const [errorComment, setErrorComment] = useState('')
@@ -66,7 +64,8 @@ function Index() {
             }
         }).catch(() => {
             message.error("Có lỗi xảy ra khi lấy danh sách danh mục")
-        }).finally(() => {})
+        }).finally(() => {
+        })
         setTimeout(() => {
             setLoading(false)
         }, 5000)
@@ -171,7 +170,7 @@ function Index() {
         categoryList.forEach(el => allChildren.push(...el.options))
         const obj = allChildren.find(el => el.value === categoryIdSelected)
 
-        if(!categoryIdSelected){
+        if (!categoryIdSelected) {
             setErrorCategorySelect("Vui chọn danh mục")
         }
 
@@ -196,7 +195,7 @@ function Index() {
                         })
                     } else {
                         const content = resp?.data?.downloadNotSoldList?.join('\r\n');
-                        textToFile(obj.label, content)
+                        textToFile(obj.label + ` - (${amount} via)`, content)
                         setVisibleDownload(false)
                     }
                 }
@@ -358,24 +357,27 @@ function Index() {
                     <Button key="back" disabled={false} onClick={() => setVisibleDownload((false))}>
                         Huỷ bỏ
                     </Button>,
-                    <Button key="submit" type="primary" loading={pending} onClick={handleDownload} disabled={sumVia === 0}>
+                    <Button key="submit" type="primary" loading={pending} onClick={handleDownload}
+                            disabled={sumVia === 0}>
                         Tải xống
                     </Button>
                 ]}>
                 <div>
                     <p>Chọn danh mục<span style={{color: 'red'}}>*</span></p>
                     <p>
-                        <Select placeholder={'Danh mục'} value={categoryIdSelected} style={{width: '100%'}} onChange={e => {
-                            setErrorCategorySelect("");
-                            const allChildren = []
-                            categoryList.forEach(el => allChildren.push(...el.options))
-                            const obj = allChildren.find(el => el.value === e);
-                            console.log(obj)
-                            if(obj){
-                                setSumVia(obj.sumVia)
-                            }
+                        <Select placeholder={'Danh mục'} value={categoryIdSelected} style={{width: '100%'}}
+                                onChange={e => {
+                                    setErrorCategorySelect("");
+                                    const allChildren = []
+                                    categoryList.forEach(el => allChildren.push(...el.options))
+                                    const obj = allChildren.find(el => el.value === e);
+                                    console.log(obj)
+                                    if (obj) {
+                                        setSumVia(obj.sumVia)
+                                    }
 
-                            setCategoryIdSelected(e)}}>
+                                    setCategoryIdSelected(e)
+                                }}>
                             {
                                 categoryList.map(e => <OptGroup label={e.label}>
                                         {e.options.map(c => <Option value={c.value}>{c.label}</Option>)}
@@ -402,15 +404,20 @@ function Index() {
                 <p style={{color: 'red'}}>{errorComment}</p>
 
                 <p className={'m-t-10'}>Số lượng <span style={{color: 'red'}}>*</span>:</p>
-                <Input placeholder='Số lượng' maxLength={1} type={'number'} min={1} value={amount} onChange={v => {
-                    const value = v.target.value
-                    setAmount(value)
-                    if (value === '') {
-                        setErrorAmount('Vui lòng nhập số lượng')
-                    } else {
-                        setErrorAmount('')
-                    }
-                }}/>
+                <InputNumber placeholder='Số lượng'
+                             style={{width: '100%'}}
+                             max={sumVia}
+                             type={'number'}
+                             min={1} value={amount}
+                             disabled={sumVia === 0}
+                             onChange={v => {
+                                 setAmount(v)
+                                 if (!v) {
+                                     setErrorAmount('Vui lòng nhập số lượng')
+                                 } else {
+                                     setErrorAmount('')
+                                 }
+                             }}/>
                 <p style={{marginTop: '15px', color: 'green'}}>Số lượng tối đã có thể tải: {sumVia}</p>
                 <p style={{color: 'red'}}>{errorAmount}</p>
 
