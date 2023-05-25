@@ -123,6 +123,7 @@ export default () => {
 
     const forceReload = () => {
         setReload(reload + 1)
+        initDsTree()
     }
 
     return <div>
