@@ -16,7 +16,7 @@ const LayoutAdmin = ({children}) => {
 
     const {sideBarCollapsed} = useContext(LayoutContext);
 
-    return <Layout style={{marginLeft: sideBarCollapsed ? '80px' : '200px'}}>
+    return <Layout style={{marginLeft: sideBarCollapsed ? '80px' : '220px'}}>
         <SideBarLayout/>
         <Layout>
             <HeaderLayout/>
