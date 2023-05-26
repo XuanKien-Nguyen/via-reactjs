@@ -23,7 +23,7 @@ export default ({items, onReset, search, loading, setPage, page, state = [], rel
             }
         }, 300)
         setInit(init + 1)
-    }, [...state, page.perpage, page.currentPage])
+    }, [...state])
 
     useEffect(() => {
         getList()

@@ -2,14 +2,9 @@ import {Button, Collapse, Icon, message} from "antd";
 import FilterItem from "../../category/components/filter/FilterItem";
 import React, {useEffect, useState} from "react";
 import {getCategoryList} from "../../../../services/category/category";
-
 const {Panel} = Collapse
-
 const dateFormat = 'YYYY-MM-DD';
 let debounce = null
-
-let init = 0
-
 export default (props) => {
 
     const {
@@ -93,25 +88,22 @@ export default (props) => {
                 delete body[key];
             }
         }
-        if (init > 0) {
-            loading(true)
-            api(body).then(resp => {
-                if (resp.status === 200) {
-                    const data = resp.data
-                    const pageInfo = {
-                        ...page,
-                        total: data.totalLogUserBalances,
-                    }
-                    setPageInfo(pageInfo)
-                    setList(resp?.data?.logUserBalanceList || [])
-                    setTotalAddedBonus(resp?.data?.totalAddedBonus || 0)
-                    setTotalAddedAmount(resp?.data?.totalAddedAmount || 0)
-
+        loading(true)
+        api(body).then(resp => {
+            if (resp.status === 200) {
+                const data = resp.data
+                const pageInfo = {
+                    ...page,
+                    total: data.totalLogUserBalances,
                 }
-            }).catch(() => message.error('Có lỗi xảy ra khi lấy thông tin đơn hàng'))
-                .finally(() => loading(false))
-        }
-        init++
+                setPageInfo(pageInfo)
+                setList(resp?.data?.logUserBalanceList || [])
+                setTotalAddedBonus(resp?.data?.totalAddedBonus || 0)
+                setTotalAddedAmount(resp?.data?.totalAddedAmount || 0)
+
+            }
+        }).catch(() => message.error('Có lỗi xảy ra khi lấy thông tin đơn hàng'))
+            .finally(() => loading(false))
     }
 
     return <div className='filter-order'>

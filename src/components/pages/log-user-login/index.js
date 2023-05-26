@@ -101,16 +101,20 @@ export default () => {
 
     const onChangePage = (currentPage, perPage) => {
         setPage({
+            ...page,
             perpage: perPage,
             currentPage: currentPage
         })
+        setReload(reload+1)
     }
 
     const onChangeSize = (currentPage, perPage) => {
         setPage({
+            ...page,
             perpage: perPage,
             currentPage: 1
         })
+        setReload(reload+1)
     }
 
     const columns = [
