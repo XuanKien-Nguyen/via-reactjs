@@ -1,12 +1,50 @@
-import React, {useState} from "react";
-import {Icon, Modal, Table, Tag, Row, Col, Button, Tooltip} from "antd";
+import React, {useEffect, useState} from "react";
+import {Button, Col, Icon, Modal, Row, Table, Tag, Tooltip} from "antd";
 import {convertCurrencyVN} from "../../../../../utils/helpers";
 import {deleteCategory, updateCategory} from "../../../../../services/category-manager";
 
+let mouseDown = false;
+let startX, scrollLeft, slider, startDragging, stopDragging, handleDragging;
 export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
 
     const [count, setCount] = useState(0)
 
+    useEffect(() => {
+        // if (!slider) {
+        slider = document.querySelector('.ant-table-body');
+        // }
+        setTimeout(() => {
+            startDragging = (e) => {
+                mouseDown = true;
+                startX = e.pageX;
+                scrollLeft = slider.scrollLeft;
+            };
+            stopDragging = () => {
+                mouseDown = false;
+            };
+
+            handleDragging = (e) => {
+                e.preventDefault();
+                if (!mouseDown) {
+                    return;
+                }
+                const x = e.pageX - slider.offsetLeft;
+                const scroll = x - startX;
+                slider.scrollLeft = scrollLeft - scroll;
+            }
+
+            slider.addEventListener('mousemove', handleDragging);
+            slider.addEventListener('mousedown', startDragging, false);
+            slider.addEventListener('mouseup', stopDragging, false);
+            slider.addEventListener('mouseleave', stopDragging, false);
+        }, 500)
+        return () => {
+            slider.removeEventListener('mousemove', handleDragging);
+            slider.removeEventListener('mousedown', startDragging, false);
+            slider.removeEventListener('mouseup', stopDragging, false);
+            slider.removeEventListener('mouseleave', stopDragging, false);
+        }
+    }, [])
 
     const ds = datasource.map(el => {
         const data = {

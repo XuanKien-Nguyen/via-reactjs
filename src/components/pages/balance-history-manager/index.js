@@ -9,6 +9,7 @@ import {useTranslation} from "react-i18next";
 import {Button, Icon, Tooltip} from "antd";
 import './style.scss'
 import {LayoutContext} from "../../../contexts";
+
 const MAP_TYPE = {}
 
 export default () => {
@@ -22,7 +23,7 @@ export default () => {
     const [totalAddedAmount, setTotalAddedAmount] = useState(0);
     const [totalAddedBonus, setTotalAddedBonus] = useState(0);
 
-    const { t } = useTranslation()
+    const {t} = useTranslation()
 
     const [page, setPage] = useState({
         perpage: 10,
@@ -67,7 +68,7 @@ export default () => {
             perpage: perPage,
             currentPage: currentPage
         })
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     const onChangeSize = (currentPage, perPage) => {
@@ -75,7 +76,7 @@ export default () => {
             perpage: perPage,
             currentPage: 1
         })
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     const renderMoney = (el, prefix = '+') => {
@@ -165,7 +166,7 @@ export default () => {
             render: row => {
                 return <div>
                     <Tooltip title={t('order.detail')}>
-                        <Button type='primary' onClick={() => onViewDetail(row)}><Icon type="file-search" /></Button>
+                        <Button type='primary' onClick={() => onViewDetail(row)}><Icon type="file-search"/></Button>
                     </Tooltip>
                 </div>
             }
@@ -174,34 +175,35 @@ export default () => {
 
     return <Fragment>
         {/* <div className={'hehe'} style={{width: withTable}}> */}
-            <Search setList={setDatasource}
-                    api={getListBalance}
-                    loading={setLoading}
-                    setPageInfo={setPage}
-                    page={page}
-                    t={t}
-                    getTypeList={getTypeList}
-                    type={type}
-                    setType={setType}
-                    setTotalAddedAmount={setTotalAddedAmount}
-                    setTotalAddedBonus={setTotalAddedBonus}
-            />
-            {type && <div className="balance-total" style={{marginBottom: '16px', fontSize: '16px'}}>
-                <div>{t('balance-history.total-amount')}: {renderMoney(totalAddedAmount)}</div>
-                <div>{t('balance-history.total-bonus')}: {renderMoney(totalAddedBonus)}</div>
-            </div>}
-            <TableCommon className='table-order'
-                         scroll={{ x: true }}
-                         bordered={true}
-                         page={page}
-                         datasource={datasource}
-                         columns={columns}
-                // expandedRowRender={expandRender}
-                         rowKey="id"
-                         onChangePage={onChangePage}
-                         onChangeSize={onChangeSize}/>
+        <Search setList={setDatasource}
+                api={getListBalance}
+                loading={setLoading}
+                setPageInfo={setPage}
+                page={page}
+                t={t}
+                getTypeList={getTypeList}
+                type={type}
+                setType={setType}
+                setTotalAddedAmount={setTotalAddedAmount}
+                setTotalAddedBonus={setTotalAddedBonus}
+        />
+        {type && <div className="balance-total" style={{marginBottom: '16px', fontSize: '16px'}}>
+            <div>{t('balance-history.total-amount')}: {renderMoney(totalAddedAmount)}</div>
+            <div>{t('balance-history.total-bonus')}: {renderMoney(totalAddedBonus)}</div>
+        </div>}
+        <TableCommon
+            className='table-order'
+            scroll={{x: true}}
+            bordered={true}
+            page={page}
+            datasource={datasource}
+            columns={columns}
+            // expandedRowRender={expandRender}
+            rowKey="id"
+            onChangePage={onChangePage}
+            onChangeSize={onChangeSize}/>
 
-            <Detail detail={detail} visible={visible} setVisible={setVisible} mapType={MAP_TYPE} t={t}/>
+        <Detail detail={detail} visible={visible} setVisible={setVisible} mapType={MAP_TYPE} t={t}/>
         {/* </div> */}
     </Fragment>
 }
