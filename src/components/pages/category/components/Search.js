@@ -64,8 +64,8 @@ export default ({ setResultSearch, parentId, getParentCategory, getTypeStockList
 
     useEffect(() => {
         history.push({search: `?id=${parentCategory}&type=${stock}&location=${locationStocking}&name=${name}`})
-        setLoading(true)
         clearTimeout(debounce)
+        setLoading(true)
         debounce = setTimeout(() => {
             getCategoryList({
                 parent_id: parentCategory || null,
@@ -75,11 +75,12 @@ export default ({ setResultSearch, parentId, getParentCategory, getTypeStockList
             }).then(resp => {
                 if (resp.status === 200) {
                     setResultSearch(resp.data?.categoryListFound || [])
+                    setName('')
                 }
                 setLoading(false)
             })
         }, 500)
-    }, [parentCategory, stock, locationStocking, name])
+    }, [parentCategory, stock, locationStocking])
 
     return <div className='filter-product'>
         <div className='filter' style={{ padding: '0px' }}>

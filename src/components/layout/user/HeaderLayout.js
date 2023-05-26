@@ -107,13 +107,13 @@ function HeaderLayout({ history }) {
         if (name || name === '') {
             query.delete('name')
         }
-
         query.append('name', value)
-
-        history.push({
-            pathname: '/categories',
-            search: query.toString()
-        })
+        window.location.href = `/categories?${query.toString()}`
+        //
+        // history.push({
+        //     pathname: '',
+        //     search:
+        // })
     }
 
     const goToRecharge = () => {
