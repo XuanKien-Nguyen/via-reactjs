@@ -12,6 +12,7 @@ import PurchaseManager from '../components/pages/purchase-manager'
 import LogDownLoadProduct from '../components/pages/log-download-product';
 import BalanceHistoryManager from '../components/pages/balance-history-manager'
 import RechargePendingManager from '../components/pages/recharge-pending-manager';
+import RechargeTicketManager from '../components/pages/recharge-ticket-manager'
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
@@ -85,6 +86,26 @@ export const dashboardRoutes = [
         role: ['admin', 'staff']
     },
     {
+        path: '/admin/recharge-pending-manger',
+        component: RechargePendingManager,
+        name: "Quản lý nạp lỗi",
+        icon: "clock-circle",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/recharge-ticket-manager',
+        component: RechargeTicketManager,
+        name: "Phê duyệt phiếu nạp tiền",
+        icon: "wallet",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
         path: '/admin/log-download-product',
         component: LogDownLoadProduct,
         name: "Quản lý tải xuống",
@@ -99,16 +120,6 @@ export const dashboardRoutes = [
         component: LogUserLogin,
         name: "Quản lý đăng nhập",
         icon: "lock",
-        exact: true,
-        showAlways: true,
-        layout: admin,
-        role: ['admin', 'staff']
-    },
-    {
-        path: '/admin/recharge-pending-manager',
-        component: RechargePendingManager,
-        name: "Quản lý nạp lỗi",
-        icon: "clock-circle",
         exact: true,
         showAlways: true,
         layout: admin,

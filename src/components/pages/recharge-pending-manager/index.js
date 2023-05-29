@@ -18,18 +18,26 @@ const dateFormat = 'YYYY-MM-DD';
 const MAP_TYPE = {};
 const MAP_STATUS = {};
 
+const STATUS_COLOR = {
+    pending: 'grey',
+    done: '#99cc33',
+    rejected: 'red',
+    deleted: '#c7dcdd',
+    solving: '#ffcc00'
+}
+
+
 export default () => {
 
-    const { t } = useTranslation()
+    const {t} = useTranslation()
 
     const user = useSelector(store => store.user)
 
-    const { setLoading } = useContext(LayoutContext)
+    const {setLoading} = useContext(LayoutContext)
 
     const [visible, setVisible] = useState(false)
 
     const [ds, setDs] = useState([])
-    const [id, setId] = useState('')
     const [rechargeTicketId, setRechargeTicketId] = useState('')
     const [transactionId, setTransactionId] = useState('')
     const [content, setContent] = useState('')
@@ -57,7 +65,7 @@ export default () => {
     useEffect(() => {
         getTypeListRechargePending().then(resp => {
             const data = resp.data?.TYPE_OBJ || [];
-            const lstType = [{ label: 'recharge-type.ALL', value: '' }]
+            const lstType = [{label: 'recharge-type.ALL', value: ''}]
             for (const key of Object.keys(data)) {
                 lstType.push({
                     label: `recharge-type.${key}`,
@@ -282,7 +290,7 @@ export default () => {
             width: '150px',
             dataIndex: 'status',
             align: 'center',
-            render: status => <Tag color={status === 'done' ? 'green' : 'grey'}>{t(MAP_STATUS[status])}</Tag>
+            render: status => <Tag color={STATUS_COLOR[status]}>{t(MAP_STATUS[status])}</Tag>
         },
         {
             title: 'Thời gian tạo',
@@ -379,6 +387,6 @@ export default () => {
                 <RechargePendingDetail id={rechargePendingDetail.id} loading={setInitDetail} mapType={MAP_TYPE} mapStatus={MAP_STATUS}/>
             </Spin>
         </Modal>}
-        </Fragment>}  
+        </Fragment>}
     </div>
 }
