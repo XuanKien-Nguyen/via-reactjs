@@ -1,6 +1,6 @@
 {
     "common" : {
-        "placeholder-search": "What are you finding?",
+        "placeholder-search": "Which product are you looking for?",
         "all-product": "All product",
         "guide": "Guide",
         "recharge": "Recharge",
@@ -60,7 +60,8 @@
         "email": "Email",
         "change": "Change Information",
         "back-up": "Support Backup",
-        "modal-desc": "Description"
+        "modal-desc": "Description",
+        "view-detail": "View Detail"
     },
     "filter": {
         "title": "Filter",

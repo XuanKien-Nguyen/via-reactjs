@@ -156,15 +156,6 @@ export default () => {
         })
     }
 
-    const renderMoney = (el, prefix = '+') => {
-        if (el && (el + '').startsWith('-')) {
-            return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
-        } else if (el === 0) {
-            return <b>0 VND</b>
-        }
-        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
-    }
-
     const columns = [
         {
             title: 'ID',
@@ -187,13 +178,13 @@ export default () => {
             dataIndex: 'username',
             align: 'center'
         },
-        {
-            title: 'Trạng thái',
-            width: '150px',
-            dataIndex: 'status',
-            align: 'center',
-            render: status => <Tag color={status === 'active' ? 'blue' : 'grey'}>{status}</Tag>
-        },
+        // {
+        //     title: 'Trạng thái',
+        //     width: '150px',
+        //     dataIndex: 'status',
+        //     align: 'center',
+        //     render: status => <Tag color={status === 'active' ? 'blue' : 'grey'}>{status}</Tag>
+        // },
         {
             title: 'Mã giao dịch',
             dataIndex: 'transaction_id',
@@ -275,8 +266,8 @@ export default () => {
             }}
             page={page} />
             <div style={{marginBottom: '8px', fontWeight: 'bold'}}>
-                <div>Tổng tiền tài khoản nạp thành công: {renderMoney(totalAmount)}</div>
-                <div>Tổng tiền khuyến mãi nạp thành công: {renderMoney(totalBonus)}</div>
+                <div>Tổng tiền tài khoản nạp thành công: {convertCurrencyVN(totalAmount)}</div>
+                <div>Tổng tiền khuyến mãi nạp thành công: {convertCurrencyVN(totalBonus)}</div>
             </div>
             <TableCommon
                 className='table-order'

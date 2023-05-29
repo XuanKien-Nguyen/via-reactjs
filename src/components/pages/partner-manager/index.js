@@ -185,15 +185,6 @@ export default () => {
         setVisible(true)
     }
 
-    const renderMoney = (el, prefix = '+') => {
-        if (el && (el + '').startsWith('-')) {
-            return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
-        } else if (el === 0) {
-            return <b>0 VND</b>
-        }
-        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
-    }
-
     const columns = [
         {
             title: 'Partner ID',
@@ -306,8 +297,8 @@ export default () => {
             }}
             page={page} />
             <div style={{marginBottom: '8px', fontWeight: 'bold'}}>
-                <div>Tổng số dư tài khoản: {renderMoney(totalAmount)}</div>
-                <div>Tổng số dư khuyến mãi: {renderMoney(totalBonus)}</div>
+                <div>Tổng số dư tài khoản: {convertCurrencyVN(totalAmount)}</div>
+                <div>Tổng số dư khuyến mãi: {convertCurrencyVN(totalBonus)}</div>
             </div>
             <TableCommon
                 className='table-order'

@@ -5,6 +5,7 @@ import {Card, Button, Icon, Input, Badge, message, Tooltip} from 'antd';
 import Modal from "antd/es/modal";
 import {createPurchase} from "../../../../services/purchases";
 import {LayoutContext} from "../../../../contexts";
+import {getWindowDimensions} from '../../../../utils/helpers';
 
 import { useTranslation } from 'react-i18next';
 
@@ -93,9 +94,50 @@ const ProductCard = ({ productDetail }) => {
         }).finally(() => setPending(false))
     }
 
+    useEffect(() => {
+        const elList = document.getElementsByClassName('product-more-info')
+        const iconList = document.getElementsByClassName('toggle-icon')
+        const fn = () => {
+            const currentWidth = getWindowDimensions().width
+            if (currentWidth < 500) {
+                Array.from(elList).forEach(el => {
+                    el.classList.remove('expand')
+                    el.classList.add('collapse')
+                });
+                Array.from(iconList).forEach(el => {
+                    el.classList.remove('expand')
+                });
+            } else {
+                Array.from(elList).forEach(el => {
+                    el.classList.remove('collapse')
+                    el.classList.add('expand')
+                });
+            }
+        }
+        fn()
+        window.addEventListener('resize', fn);
+        return () => {
+            window.removeEventListener("resize", fn)
+        }
+    }, [])
+
+
+    const onCollapseDetail = (id) => {
+        const el = document.querySelector(`#product-${id} .product-more-info`)
+        const iconCollapse = document.querySelector(`#product-${id} .toggle-icon`)
+        if (el.classList.contains('expand')) {
+            el.classList.remove('expand')
+            el.classList.add('collapse')
+        } else if (el.classList.contains('collapse')) {
+            el.classList.remove('collapse')
+            el.classList.add('expand')
+        }
+        iconCollapse.classList.toggle('expand')
+    }
+
     return (
         <Fragment>
-            <Card className='product-card' style={{ width: 'auto' }}>
+            <Card className='product-card' id={`product-${productDetail.id}`} style={{ width: 'auto' }}>
                 <div className='product-header'>
                     <div className='product-title'><span>{productDetail.name}</span></div>
                 </div>
@@ -104,9 +146,12 @@ const ProductCard = ({ productDetail }) => {
                         <div className='product-price'>{productDetail?.price?.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} </div>
                         <div className='product-quantity'>{t('product.remain')}: <span>{productDetail.sum_via}</span></div>
                         <div className='product-sold'>{t('product.sold')}: <span>{productDetail.sold_via}</span></div>
-                        <div className='product-more-info'>
-                            <div className='info location'><div className='field-title'><Icon type="check" />{t('product.location')}</div><div className='field-value'>
-                                <img width={'25px'} src={productDetail.location_img_url} alt="" className="src"/></div></div>
+                        <div className='toggle_product-more-info' style={{cursor: 'pointer'}} onClick={() => {
+                            onCollapseDetail(productDetail.id)
+                        }}><a style={{textDecoration: 'underline'}}>{t('product.view-detail')}</a> <Icon type="caret-down" style={{color: "#1b74e4"}} className="toggle-icon" /></div>
+                        <div className='product-more-info expand'>
+                            <div className='info location'><div className='field-title'><Icon type="check" />{t('product.location')}</div><div className='field-value' style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
+                                <img width={'25px'} height={'25px'} src={productDetail.location_img_url} alt="" className="src"/><span>{productDetail.location}</span></div></div>
                             <div className='info create-time'><div className='field-title'><Icon type="check" />{t('product.create-time')}</div><div className='field-value'>{productDetail.time}</div></div>
                             <div className='info 2fa'><div className='field-title'><Icon type="check" />{t('product.2fa')}</div><div className='field-value'>{productDetail.has_2fa === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
                             <div className='info friend-number'><div className='field-title'><Icon type="check" />{t('product.friend')}</div><div className='field-value'>{productDetail.number_friend}</div></div>

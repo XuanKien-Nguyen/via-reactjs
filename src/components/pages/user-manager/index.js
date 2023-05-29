@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next";
 
 const dateFormat = 'YYYY-MM-DD';
 
+const MAP_STATUS = {}
+
 export default () => {
 
     const { t } = useTranslation()
@@ -53,6 +55,7 @@ export default () => {
                     label: `user-manager.${key}`,
                     value: data[key]
                 })
+                MAP_STATUS[data[key]] = `user-manager.${key}`
             }
             setStatusList(lstStatus)
         })
@@ -147,15 +150,6 @@ export default () => {
         setVisible(true)
     }
 
-    const renderMoney = (el, prefix = '+') => {
-        if (el && (el + '').startsWith('-')) {
-            return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
-        } else if (el === 0) {
-            return <b>0 VND</b>
-        }
-        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
-    }
-
     const columns = [
         {
             title: 'ID',
@@ -221,7 +215,7 @@ export default () => {
             width: '150px',
             dataIndex: 'status',
             align: 'center',
-            render: status => <Tag color={status === 'active' ? 'green' : 'red'}>{status.charAt(0).toUpperCase() + status.slice(1)}</Tag>
+            render: status => <Tag color={status === 'active' ? 'green' : 'red'}>{t(MAP_STATUS[status])}</Tag>
         },
         {
             title: 'Thời gian tạo',
@@ -272,9 +266,9 @@ export default () => {
             }}
             page={page} />
             <div style={{marginBottom: '8px', fontWeight: 'bold'}}>
-                <div>Tổng số dư: {renderMoney(totalBalance)}</div>
-                <div>Tổng số dư tài khoản: {renderMoney(totalAmount)}</div>
-                <div>Tổng số dư khuyến mãi: {renderMoney(totalBonus)}</div>
+                <div>Tổng số dư: {convertCurrencyVN(totalBalance)}</div>
+                <div>Tổng số dư tài khoản: {convertCurrencyVN(totalAmount)}</div>
+                <div>Tổng số dư khuyến mãi: {convertCurrencyVN(totalBonus)}</div>
             </div>
             <TableCommon
                 className='table-order'
