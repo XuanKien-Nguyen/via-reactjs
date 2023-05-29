@@ -354,7 +354,7 @@ function Index() {
                 title={`Tải xuống`}
                 onCancel={() => setVisibleDownload(false)}
                 footer={[
-                    <Button key="back" disabled={false} onClick={() => setVisibleDownload((false))}>
+                    <Button key="back" disabled={pending} onClick={() => setVisibleDownload((false))}>
                         Huỷ bỏ
                     </Button>,
                     <Button key="submit" type="primary" loading={pending} onClick={handleDownload}
