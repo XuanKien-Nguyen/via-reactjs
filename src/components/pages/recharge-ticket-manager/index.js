@@ -181,6 +181,7 @@ export default () => {
     useEffect(() => {
         if (!visible) {
             setCurrentRow(null)
+            setRechargePendingSelected(null)
         } else {
             setLoading(true)
         }
@@ -310,7 +311,7 @@ export default () => {
                     </Col>
                     <Col sm={12} style={{textAlign: 'left'}}>
                         <Tooltip title={'Từ chối phê duyệt'}>
-                            <Button style={{backgroundColor: '#ffcc00', color: 'white'}}>
+                            <Button type={'danger'}>
                                 <Icon type="stop"/>
                             </Button>
                         </Tooltip>
@@ -399,6 +400,8 @@ export default () => {
                         Modal.confirm({
                             title: 'Xác nhận',
                             content: 'Bạn có chắc chắn muốn phê duyệt yêu cầu này?',
+                            okText: 'Đồng ý',
+                            cancelText: 'Hủy bỏ',
                             onOk: () => {
                                 setStep(2)
                                 setInitDetail(true)
