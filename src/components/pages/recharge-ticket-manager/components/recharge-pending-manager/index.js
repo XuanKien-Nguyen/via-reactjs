@@ -13,11 +13,7 @@ const MAP_TYPE = {};
 let mouseDown = false;
 let startX, scrollLeft, slider1, startDragging, stopDragging, handleDragging;
 export default ({loading, setRechargePendingSelected, setStep, rechargePendingSelected}) => {
-
     const {t} = useTranslation()
-
-    const user = useSelector(store => store.user)
-
     const [ds, setDs] = useState([])
     const [rechargeTicketId, setRechargeTicketId] = useState('')
     const [transactionId, setTransactionId] = useState('')
@@ -182,6 +178,12 @@ export default ({loading, setRechargePendingSelected, setStep, rechargePendingSe
             align: 'center'
         },
         {
+            title: 'Nội dung',
+            width: '300px',
+            dataIndex: 'content',
+            align: 'center'
+        },
+        {
             title: 'Tiền tài khoản',
             width: '200px',
             dataIndex: 'amount',
@@ -208,12 +210,6 @@ export default ({loading, setRechargePendingSelected, setStep, rechargePendingSe
             dataIndex: 'type',
             align: 'center',
             render: type => <Tag color={type === 'banking' ? 'blue' : 'grey'}>{t(MAP_TYPE[type])}</Tag>
-        },
-        {
-            title: 'Nội dung',
-            width: '300px',
-            dataIndex: 'content',
-            align: 'center'
         },
         {
             title: 'Thời gian tạo',

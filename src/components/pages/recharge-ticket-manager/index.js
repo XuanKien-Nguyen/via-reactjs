@@ -8,12 +8,13 @@ import {
     exitTicket,
     getAllRechargeTicketsMgr,
     getRechargeTicketsStatusList,
-    registerSolveTicket
+    registerSolveTicket,
+    resolveErrorDeposit
 } from "../../../services/tickets";
 import ListRechargePending from './components/recharge-pending-manager'
 import {LayoutContext} from "../../../contexts";
 import {convertCurrencyVN} from "../../../utils/helpers";
-import {Button, Col, Icon, Modal, Row, Spin, Steps, Tag, Tooltip} from "antd";
+import {Button, Col, Icon, Input, Modal, Row, Spin, Steps, Tag, Tooltip} from "antd";
 import {useTranslation} from "react-i18next";
 
 const dateFormat = 'YYYY-MM-DD';
@@ -56,6 +57,10 @@ export default () => {
     const [step, setStep] = useState(0)
     const [initDetail, setInitDetail] = useState(false)
     const [rechargePendingSelected, setRechargePendingSelected] = useState(null)
+    const [errorComment, setErrorComment] = useState('')
+    const [comment, setComment] = useState('')
+    const [reload, setReload] = useState(0)
+    const [render, setRerender] = useState(0)
 
 
     const [page, setPage] = useState({
@@ -164,6 +169,10 @@ export default () => {
                         currentPage: resp.data.currentPage === 0 ? 1 : resp.data.currentPage,
                     })
                 }
+                // fix bug vỡ form sau khi reload
+                setTimeout(() => {
+                    setRerender(render + 1)
+                }, 500)
             },
             reject: (err) => console.log(err)
         }
@@ -307,14 +316,14 @@ export default () => {
                         </Tooltip>
                     </Col>
                     <Col sm={12} style={{textAlign: 'right', marginTop: '5px'}}>
-                        <Tooltip title={'Hoàn tác phê duyệt'}>
+                        <Tooltip title={'Hoàn tác phê duyệt'} placement={'bottom'}>
                             <Button>
                                 <Icon type="redo"/>
                             </Button>
                         </Tooltip>
                     </Col>
                     <Col sm={12} style={{textAlign: 'left', marginTop: '5px'}}>
-                        <Tooltip title={'Xoá yêu cầu'}>
+                        <Tooltip title={'Xoá yêu cầu'} placement={'bottom'}>
                             <Button type={'danger'}>
                                 <Icon type="delete"/>
                             </Button>
@@ -337,7 +346,7 @@ export default () => {
                 search={setupSearch()}
                 loading={setLoading}
                 setPage={setPage}
-                state={[id, userId, latest_decidedby, latest_decided_time, content, createdBy, createdDate, status]}
+                state={[id, userId, latest_decidedby, latest_decided_time, content, createdBy, createdDate, status, reload]}
                 onReset={() => {
                     setId('')
                     setUserId('')
@@ -386,12 +395,40 @@ export default () => {
                     {step === 0 ? 'Huỷ bỏ' : 'Quay lại'}
                 </Button>,
                 <Button key="submit" type="primary" disabled={isDisableNextStep()} loading={pending} onClick={() => {
-                    if (step === 2) {
+                    if (step === 1) {
+                        Modal.confirm({
+                            title: 'Xác nhận',
+                            content: 'Bạn có chắc chắn muốn phê duyệt yêu cầu này?',
+                            onOk: () => {
+                                setStep(2)
+                                setInitDetail(true)
+                                setPending(true)
+                                resolveErrorDeposit(rechargePendingSelected.id).then(resp => {
+                                    if (resp.status === 200) {
+                                        Modal.success({
+                                            content: resp?.data?.message
+                                        })
+                                        setReload(reload + 1)
+                                        setCurrentRow(null)
+                                        setStep(0)
+                                    }
+                                }).catch(err => {
+                                    setStep(1)
+                                    Modal.error({
+                                        content: err.response?.data?.message
+                                    })
+                                }).finally(() => {
+                                    setInitDetail(false)
+                                    setPending(false)
+                                    setVisible(false)
+                                })
+                            }
+                        })
                         return
                     }
                     setStep(step + 1)
                 }}>
-                    {step === 2 ? 'Phê duyệt yêu cầu' : 'Tiếp theo'}
+                    {step === 1 ? 'Phê duyệt yêu cầu' : 'Tiếp theo'}
                 </Button>
             ]}
         >
@@ -413,8 +450,14 @@ export default () => {
                     <div style={{display: step !== 1 ? 'none' : 'block'}}>
                         <RechargeDetail rechargePendingDetail={rechargePendingSelected} mapType={MAP_TYPE}/>
                     </div>
-                    <div style={{display: step !== 3 ? 'none' : 'block'}}>
-                        <Resolve rechargePendingDetail={rechargePendingSelected}/>
+                    <div style={{display: step !== 2 ? 'none' : 'block'}}>
+
+                        {/*<Resolve*/}
+                        {/*    errorComment={errorComment}*/}
+                        {/*    setErrorComment={setErrorComment}*/}
+                        {/*    comment={comment}*/}
+                        {/*    setComment={setComment}*/}
+                        {/*/>*/}
                     </div>
                 </Spin>
             </Fragment>
