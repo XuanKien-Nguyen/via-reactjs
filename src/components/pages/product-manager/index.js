@@ -335,15 +335,18 @@ function Index() {
                 </p>
             </div>
 
-            <TableCommon className='table-order'
-                         bordered={true}
-                         rowKey="id"
-                         page={page}
+            <TableCommon 
+                className='table-order'
+                bordered={true}
+                rowKey="id"
+                page={page}
                 // setPage={setPage}
-                         onChangePage={onChangePage}
-                         onChangeSize={onChangeSize}
-                         datasource={productList}
-                         columns={columns}/>
+                onChangePage={onChangePage}
+                onChangeSize={onChangeSize}
+                datasource={productList}
+                columns={columns}
+                scroll={{ x: true }}
+            />
 
             <Modal
                 centered
