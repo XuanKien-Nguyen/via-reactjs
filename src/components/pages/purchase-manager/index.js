@@ -58,6 +58,12 @@ export default () => {
             align: 'center'
         },
         {
+            title: 'Người mua hàng',
+            width: '200px',
+            dataIndex: 'createdby',
+            align: 'center'
+        },
+        {
             title: 'Thời gian mua hàng',
             width: '200px',
             dataIndex: 'created_time',

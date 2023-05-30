@@ -329,7 +329,7 @@ function Index() {
                 <p style={{textAlign: 'right'}}>
                     <Button type={'danger'} style={{'marginRight': '5px'}}
                             onClick={() => setVisibleDownload(true)}
-                    ><Icon type="download"/> Tải xuống</Button>
+                    ><Icon type="download"/> Tải xuống sản phẩm chưa bán</Button>
                     <Button type={'primary'} onClick={createNewProduct}><Icon type="plus"/>{'Thêm mới sản phẩm'}
                     </Button>
                 </p>

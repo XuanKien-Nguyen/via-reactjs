@@ -1,5 +1,5 @@
 import React, {useEffect, useState, Fragment} from "react";
-
+import TableCommon from '../../../../../components/common/table';
 import {Form, Input, Button, Tag, Table} from 'antd';
 import {getLogUserLogin, getLogUserStatus} from "../../../../../services/user";
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,12 @@ const UserDetail = ({form, user, loading}) => {
 
     const [loginList, setLoginList] = useState([])
     const [loginStatusList, setLoginStatusList] = useState({})
+
+    const [page, setPage] = useState({
+        perpage: 10,
+        currentPage: 1,
+        total: 0
+    })
 
     const columns = [
         {
@@ -67,6 +73,20 @@ const UserDetail = ({form, user, loading}) => {
         })
     }, [])
 
+    const onChangePage = (currentPage, perPage) => {
+        setPage({
+            perpage: perPage,
+            currentPage: currentPage
+        })
+    }
+
+    const onChangeSize = (currentPage, perPage) => {
+        setPage({
+            perpage: perPage,
+            currentPage: 1
+        })
+    }
+
     const {getFieldDecorator} = form;
     return <Fragment>
             <Form className="user-info_form">
@@ -92,7 +112,26 @@ const UserDetail = ({form, user, loading}) => {
         </Form.Item>
     </Form>
         <h3>{t('info.title-history')}</h3>
-        <Table bordered columns={columns} dataSource={loginList} pagination={false} rowKey={'id'} locale={{emptyText: t('common.no-data')}}/>
+        {/* <Table 
+            bordered 
+            columns={columns} 
+            dataSource={loginList} 
+            pagination={false} 
+            rowKey={'id'} 
+            locale={{emptyText: t('common.no-data')}}
+            /> */}
+        <TableCommon
+            className='table-order'
+            datasource={loginList}
+            bordered={true}
+            columns={columns}
+            rowKey="id"
+            pagination={false}
+            page={page}
+            onChangePage={onChangePage}
+            onChangeSize={onChangeSize}
+            scroll={{ x: true }}
+        />
         </Fragment>
 }
 

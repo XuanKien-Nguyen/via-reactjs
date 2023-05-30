@@ -153,7 +153,8 @@ export default ({ loading }) => {
         <div style={{marginBottom: '16px', textAlign: 'end'}}>
             <Button type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button-create')}</Button>
         </div>
-        <TableCommon className='table-order'
+        <TableCommon 
+            className='table-order'
             style={{ overflow: 'auto' }}
             bordered={true}
             page={page}
@@ -162,7 +163,9 @@ export default ({ loading }) => {
             // expandedRowRender={expandRender}
             rowKey="id"
             onChangePage={onChangePage}
-            onChangeSize={onChangeSize} />
+            onChangeSize={onChangeSize} 
+            scroll={{ x: true }}
+        />
         <CreateTicket
             visible={visible} 
             setVisible={setVisible}
