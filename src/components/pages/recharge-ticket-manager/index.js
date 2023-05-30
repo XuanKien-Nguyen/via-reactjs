@@ -3,13 +3,14 @@ import Search from "./components/Search";
 import FilterItem from "../category/components/filter/FilterItem";
 import TableCommon from "../../common/table";
 import RechargeDetail from './components/RechargeDetail'
-import Resolve from "./components/Resolve";
 import {
     exitTicket,
     getAllRechargeTicketsMgr,
     getRechargeTicketsStatusList,
     registerSolveTicket,
-    resolveErrorDeposit
+    rejectTicket,
+    resolveErrorDeposit,
+    restoringTicket
 } from "../../../services/tickets";
 import ListRechargePending from './components/recharge-pending-manager'
 import {LayoutContext} from "../../../contexts";
@@ -17,6 +18,7 @@ import {convertCurrencyVN} from "../../../utils/helpers";
 import {Button, Col, Icon, Input, Modal, Row, Spin, Steps, Tag, Tooltip} from "antd";
 import {useTranslation} from "react-i18next";
 
+const {TextArea} = Input
 const dateFormat = 'YYYY-MM-DD';
 
 const MAP_TYPE = {};
@@ -31,7 +33,7 @@ const STATUS_COLOR = {
 
 const {Step} = Steps
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin/>;
-
+let currentId = null
 
 export default () => {
 
@@ -56,6 +58,7 @@ export default () => {
 
     const [step, setStep] = useState(0)
     const [initDetail, setInitDetail] = useState(false)
+    const [visibleReject, setVisibleReject] = useState(false)
     const [rechargePendingSelected, setRechargePendingSelected] = useState(null)
     const [errorComment, setErrorComment] = useState('')
     const [comment, setComment] = useState('')
@@ -212,6 +215,44 @@ export default () => {
     }
 
 
+    const handleRejectTicket = () => {
+        setInitDetail(true)
+        rejectTicket(currentId, {comment}).then(resp => {
+            if (resp.status === 200) {
+                Modal.success({
+                    content: resp?.data?.message
+                })
+                setReload(reload + 1)
+                setComment('')
+                setErrorComment('')
+                setVisibleReject(false)
+            }
+        }).catch(err => Modal.error({
+            content: err.response?.data?.message
+        })).finally(() => setInitDetail(false))
+    }
+
+    const handleRestoringTicket = id => {
+        Modal.confirm({
+            content: 'Bạn có chắc chắn muốn hoàn tác yêu cầu này?',
+            okText: 'Hoàn tác',
+            cancelText: 'Huỷ bỏ',
+            onOk: () => {
+                setLoading(true)
+                restoringTicket(id).then(resp => {
+                    if (resp.status === 200) {
+                        Modal.success({
+                            content: resp?.data?.message
+                        })
+                        setReload(reload + 1)
+                    }
+                }).catch(err => Modal.error({
+                    content: err.response?.data?.message
+                })).finally(() => setLoading(false))
+            }
+        })
+    }
+
     const columns = [
         {
             title: 'ID',
@@ -304,28 +345,45 @@ export default () => {
                 return <Row gutter={5}>
                     <Col sm={12} style={{textAlign: 'right'}}>
                         <Tooltip title={'Đăng ký phê duyệt'}>
-                            <Button type={'primary'} onClick={() => handleRegisterResolveTicket(row)}>
+                            <Button type={'primary'} disabled={row.status !== 'pending'}
+                                    onClick={() => handleRegisterResolveTicket(row)}>
                                 <Icon type="file-done"/>
                             </Button>
                         </Tooltip>
                     </Col>
-                    <Col sm={12} style={{textAlign: 'left'}}>
+                    <Col sm={12} style={{
+                        textAlign: 'left'
+                    }}>
                         <Tooltip title={'Từ chối phê duyệt'}>
-                            <Button type={'danger'}>
+                            <Button style={{
+                                backgroundColor: '#ffc107',
+                                borderColor: '#ffc107',
+                                color: 'white'
+                            }}
+                                    onClick={() => {
+                                        currentId = row.id
+                                        setVisibleReject(true)
+                                    }}
+                            >
                                 <Icon type="stop"/>
                             </Button>
                         </Tooltip>
                     </Col>
                     <Col sm={12} style={{textAlign: 'right', marginTop: '5px'}}>
                         <Tooltip title={'Hoàn tác phê duyệt'} placement={'bottom'}>
-                            <Button>
+                            <Button disabled={row.status !== 'done'}
+                                    style={{
+                                        backgroundColor: row.status === 'done' ? '#17a2b8' : '',
+                                        color: row.status === 'done' ? 'white' : ''
+                                    }}
+                                    onClick={() => handleRestoringTicket(row.id)}>
                                 <Icon type="redo"/>
                             </Button>
                         </Tooltip>
                     </Col>
                     <Col sm={12} style={{textAlign: 'left', marginTop: '5px'}}>
                         <Tooltip title={'Xoá yêu cầu'} placement={'bottom'}>
-                            <Button type={'danger'}>
+                            <Button type={'danger'} disabled={row.status !== 'done'}>
                                 <Icon type="delete"/>
                             </Button>
                         </Tooltip>
@@ -454,17 +512,51 @@ export default () => {
                         <RechargeDetail rechargePendingDetail={rechargePendingSelected} mapType={MAP_TYPE}/>
                     </div>
                     <div style={{display: step !== 2 ? 'none' : 'block'}}>
-
-                        {/*<Resolve*/}
-                        {/*    errorComment={errorComment}*/}
-                        {/*    setErrorComment={setErrorComment}*/}
-                        {/*    comment={comment}*/}
-                        {/*    setComment={setComment}*/}
-                        {/*/>*/}
                     </div>
                 </Spin>
             </Fragment>
             }
+        </Modal>
+        <Modal
+            className={'modal-body-80vh'}
+            centered
+            width={'80%'}
+            closable={false}
+            visible={visibleReject}
+            maskClosable={false}
+            title={<p style={{marginBottom: '0px'}}>Từ chối phê duyệt</p>}
+            footer={[
+                <Button key="back" disabled={initDetail} onClick={() => {
+                    setVisibleReject(false)
+                    setComment('')
+                    setErrorComment('')
+                }}>
+                    Huỷ bỏ
+                </Button>,
+                <Button key="submit" type="primary" loading={initDetail} onClick={() => {
+                    if (comment) {
+                        handleRejectTicket()
+                    } else {
+                        setErrorComment('Vui lòng nhập lý do từ chối')
+                    }
+                }}>
+                    Từ chối
+                </Button>
+            ]}
+        >
+            <Spin spinning={initDetail} indicator={antIcon}>
+                <p><span style={{color: 'red'}}>*</span>Lý do từ chối: </p>
+                <TextArea autoFocus={true} rows={10} value={comment} onChange={e => {
+                    const value = e.target.value
+                    setComment(value)
+                    if (!value) {
+                        setErrorComment('Vui lòng nhập lý do từ chối')
+                    } else {
+                        setErrorComment('')
+                    }
+                }}/>
+                <p style={{color: 'red'}}>{errorComment}</p>
+            </Spin>
         </Modal>
     </Fragment>
 }

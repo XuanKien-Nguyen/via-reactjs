@@ -38,8 +38,8 @@ export const restoringTicket = (id) => {
     return service.patch(`${ENDPOINT}/manager/restore/${id}`)
 }
 
-export const rejectTicket = (id) => {
-    return service.patch(`${ENDPOINT}/manager/reject/${id}`)
+export const rejectTicket = (id, body) => {
+    return service.patch(`${ENDPOINT}/manager/reject/${id}`, body)
 }
 
 export const exitTicket = (id) => {
