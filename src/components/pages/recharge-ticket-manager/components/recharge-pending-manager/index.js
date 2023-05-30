@@ -59,6 +59,12 @@ export default ({loading, setRechargePendingSelected, setStep, rechargePendingSe
     useEffect(() => {
         // if (!slider) {
         slider1 = document.querySelector('#tb2 .ant-table-content .ant-table-body');
+        slider1.onmousedown = () => {
+            slider1.classList.add('do_scroll')
+        }
+        slider1.onmouseup = () => {
+            slider1.classList.remove('do_scroll')
+        }
         // }
         setTimeout(() => {
             startDragging = (e) => {

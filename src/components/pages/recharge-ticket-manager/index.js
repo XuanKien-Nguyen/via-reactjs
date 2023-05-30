@@ -345,7 +345,8 @@ export default () => {
                 return <Row gutter={5}>
                     <Col sm={12} style={{textAlign: 'right'}}>
                         <Tooltip title={'Đăng ký phê duyệt'}>
-                            <Button type={'primary'} disabled={row.status !== 'pending'}
+                            <Button type={'primary'}
+                                // disabled={row.status !== 'pending'}
                                     onClick={() => handleRegisterResolveTicket(row)}>
                                 <Icon type="file-done"/>
                             </Button>
@@ -371,19 +372,22 @@ export default () => {
                     </Col>
                     <Col sm={12} style={{textAlign: 'right', marginTop: '5px'}}>
                         <Tooltip title={'Hoàn tác phê duyệt'} placement={'bottom'}>
-                            <Button disabled={row.status !== 'done'}
-                                    style={{
-                                        backgroundColor: row.status === 'done' ? '#17a2b8' : '',
-                                        color: row.status === 'done' ? 'white' : ''
-                                    }}
-                                    onClick={() => handleRestoringTicket(row.id)}>
+                            <Button
+                                // disabled={row.status !== 'done'}
+                                style={{
+                                    backgroundColor: '#17a2b8',
+                                    color: 'white'
+                                }}
+                                onClick={() => handleRestoringTicket(row.id)}>
                                 <Icon type="redo"/>
                             </Button>
                         </Tooltip>
                     </Col>
                     <Col sm={12} style={{textAlign: 'left', marginTop: '5px'}}>
                         <Tooltip title={'Xoá yêu cầu'} placement={'bottom'}>
-                            <Button type={'danger'} disabled={row.status !== 'done'}>
+                            <Button type={'danger'}
+                                // disabled={row.status !== 'done'}
+                            >
                                 <Icon type="delete"/>
                             </Button>
                         </Tooltip>
@@ -453,7 +457,9 @@ export default () => {
                 }}>
                     {step === 0 ? 'Huỷ bỏ' : 'Quay lại'}
                 </Button>,
-                <Button key="submit" type="primary" disabled={isDisableNextStep()} loading={pending} onClick={() => {
+                <Button key="submit" type="primary"
+                        disabled={isDisableNextStep()}
+                        loading={pending} onClick={() => {
                     if (step === 1) {
                         Modal.confirm({
                             title: 'Xác nhận',
