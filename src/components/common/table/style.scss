@@ -3,3 +3,8 @@
   justify-content: end;
   margin-top: 32px;
 }
+
+.do_scroll:hover {
+  cursor: -webkit-grabbing; 
+  cursor: grabbing
+}

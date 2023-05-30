@@ -63,6 +63,12 @@ export default (props) => {
     useEffect(() => {
         // if (!slider) {
         slider = document.querySelector('.ant-table-body');
+        slider.onmousedown = () => {
+            slider.classList.add('do_scroll')
+          }
+          slider.onmouseup = () => {
+            slider.classList.remove('do_scroll')
+          }
         // }
         setTimeout(() => {
             startDragging = (e) => {

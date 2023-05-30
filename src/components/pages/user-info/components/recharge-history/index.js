@@ -236,13 +236,16 @@ export default ({loading}) => {
             <div>{t('recharge-history.total-amount')}: {renderMoney(totalRechargeAmount)}</div>
             <div>{t('recharge-history.total-bonus')}: {renderMoney(totalRechargeBonus)}</div>
         </div>
-        <TableCommon className='table-order'
-                     bordered={true}
-                     rowKey="id"
-                     page={page}
-                     datasource={data}
-                     columns={columns}
-                     onChangePage={onChangePage}
-                     onChangeSize={onChangeSize}/>
+        <TableCommon 
+            className='table-order'
+            bordered={true}
+            rowKey="id"
+            page={page}
+            datasource={data}
+            columns={columns}
+            onChangePage={onChangePage}
+            onChangeSize={onChangeSize}
+            scroll={{ x: true }}
+        />
     </Fragment>
 }

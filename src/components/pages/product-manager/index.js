@@ -329,21 +329,24 @@ function Index() {
                 <p style={{textAlign: 'right'}}>
                     <Button type={'danger'} style={{'marginRight': '5px'}}
                             onClick={() => setVisibleDownload(true)}
-                    ><Icon type="download"/> Tải xuống</Button>
+                    ><Icon type="download"/> Tải xuống sản phẩm chưa bán</Button>
                     <Button type={'primary'} onClick={createNewProduct}><Icon type="plus"/>{'Thêm mới sản phẩm'}
                     </Button>
                 </p>
             </div>
 
-            <TableCommon className='table-order'
-                         bordered={true}
-                         rowKey="id"
-                         page={page}
+            <TableCommon 
+                className='table-order'
+                bordered={true}
+                rowKey="id"
+                page={page}
                 // setPage={setPage}
-                         onChangePage={onChangePage}
-                         onChangeSize={onChangeSize}
-                         datasource={productList}
-                         columns={columns}/>
+                onChangePage={onChangePage}
+                onChangeSize={onChangeSize}
+                datasource={productList}
+                columns={columns}
+                scroll={{ x: true }}
+            />
 
             <Modal
                 centered

@@ -696,12 +696,29 @@ li .item-button {
                     // height: 0px;
                     // visibility: hidden;
                     // transition: height .5s;
+                    &.expand {
+                        visibility: visible !important;
+                        height: 250px !important;
+                        transition: height .5s;
+                        .info {
+                            opacity: 1 !important;
+                            transition-duration: 1.5s;
+                        }
+                    }
+
+                    &.collapse {
+                        height: 0px;
+                        visibility: hidden;
+                        transition: height .5s;
+                    }
+
                     .info {
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
                         border-bottom: 1px solid #dedede;
                         padding: 4px 0;
+                        gap: 8px;
 
                         &:last-child {
                             border: none;
@@ -709,6 +726,19 @@ li .item-button {
 
                         i {
                             margin-right: 4px;
+                        }
+
+                        .field-title {
+                            min-width: max-content;
+                        }
+                    }
+                }
+
+                .toggle_product-more-info {
+                    display: none;
+                    .toggle-icon {
+                        &.expand {
+                            rotate: 180deg;
                         }
                     }
                 }
@@ -955,5 +985,22 @@ li .item-button {
 @media only screen and (max-width: 500px) {
     .header_user-balance {
         display: none !important;
+    }
+
+    .product-card {
+        .product-container {
+            .product-detail {
+                // .product-more-info{
+                //     &.collapse {
+                //         height: 0px;
+                //         visibility: hidden;
+                //         transition: height .5s;
+                //     }
+                // }
+                .toggle_product-more-info {
+                    display: block !important;
+                }
+            }
+        }
     }
 }

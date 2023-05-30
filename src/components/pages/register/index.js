@@ -300,7 +300,7 @@ const Register = (props) => {
                             ],
                         })(<Input.Password
                             prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                            placeholder="Nhập mật khẩu"/>)}
+                            placeholder="Nhập mật khẩu (tối thiểu 6 kí tự)"/>)}
                     </Form.Item>
                     <Form.Item hasFeedback>
                         {getFieldDecorator('confirm', {

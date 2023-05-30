@@ -11,6 +11,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, 
 
     const [uid, setUid] = useState('')
     const [userId, setUserId] = useState(null)
+    const [createdBy, setCreatedBy] = useState('')
     const [date, setDate] = useState([])
     const [purchaseType, setPurchaseType] = useState('')
     const [status, setStatus] = useState('')
@@ -42,7 +43,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, 
             }, 500)
         // }
         // setInit(i`nit + 1)
-    }, [uid, userId])
+    }, [uid, userId, createdBy])
 
     const getList = () => {
         let created_time = ''
@@ -54,6 +55,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, 
             purchase_type: purchaseType,
             user_id: userId,
             status,
+            createdby: createdBy,
             created_time,
             perpage: page.perpage,
             page: page.currentPage
@@ -88,6 +90,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, 
                 </div>}>
                     <FilterItem defaultValue={uid} setValue={setUid} type={'text'} title={'UID'} allowClear={true}/>
                     <FilterItem defaultValue={userId} setValue={setUserId} type={'text'} title={'ID người mua hàng'} allowClear={true}/>
+                    <FilterItem defaultValue={createdBy} setValue={setCreatedBy} type={'text'} title={'Người mua hàng'} allowClear={true}/>
                     <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={getTypeList()}
                                 type={'select'} title={'Phương thức thanh toán'}/>
                     <FilterItem defaultValue={status} setValue={setStatus} options={getStatusList()} type={'select'}

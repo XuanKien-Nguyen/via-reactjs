@@ -132,7 +132,7 @@ function HeaderLayout({ history }) {
                         type='search'
                         placeholder={t('common.placeholder-search')}
                         onSearch={searchProduct}
-                        style={{ width: 156, color: 'white' }}
+                        style={{ width: 250, color: 'white' }}
                     /></div>
                     <div className='header-top_right'>
                         <ul>

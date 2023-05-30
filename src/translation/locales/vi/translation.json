@@ -1,6 +1,6 @@
 {
     "common" : {
-        "placeholder-search": "Bạn đang tìm gì?",
+        "placeholder-search": "Bạn muốn tìm sản phẩm nào?",
         "all-product": "Tất cả sản phẩm",
         "guide": "Hướng dẫn ",
         "recharge": "Nạp tiền",
@@ -60,7 +60,8 @@
         "email": "Email",
         "change": "Đổi thông tin",
         "back-up": "Hỗ trợ Backup",
-        "modal-desc": "Mô tả"
+        "modal-desc": "Mô tả",
+        "view-detail": "Xem chi tiết"
     },
     "filter": {
         "title": "Bộ lọc",
@@ -306,14 +307,14 @@
     },
     "user-manager": {
         "ALL": "Xem tất cả",
-        "ACTIVE_STATUS": "Đã đăng ký",
-        "ABANDON_STATUS": "Đã cấm"
+        "ACTIVE_STATUS": "Hoạt động",
+        "ABANDON_STATUS": "Tạm khóa"
     },
     "partner-manager": {
         "ALL": "Xem tất cả",
-        "ACTIVE_STATUS": "Đã đăng ký",
+        "ACTIVE_STATUS": "Hoạt động",
         "PENDING_STATUS": "Chờ phê duyệt",
-        "REJECT_STATUS": "Đã từ chối",
-        "ABANDON_STATUS": "Đã cấm"
+        "REJECT_STATUS": "Từ chối",
+        "ABANDON_STATUS": "Tạm khóa"
     }
 }

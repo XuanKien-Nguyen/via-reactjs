@@ -113,24 +113,24 @@ export default () => {
 
     const getItems = () => {
         return [
-            <FilterItem defaultValue={rechargeTicketId}
-                setValue={setRechargeTicketId}
-                type={'text'}
-                title={'Mã ticket nạp lỗi'}
-                allowClear={true} />,
             <FilterItem defaultValue={transactionId}
                 setValue={setTransactionId}
                 type={'text'}
                 title={'Mã giao dịch'}
                 allowClear={true} />,
-            <FilterItem defaultValue={type} setValue={setType} options={getTypeList()} type={'select'}
-                title={'Loại'} />,
-            <FilterItem defaultValue={status} setValue={setStatus} options={getStatusList()} type={'select'}
-                title={'Trạng thái'} />,
             <FilterItem defaultValue={content}
                 setValue={setContent}
                 type={'text'}
                 title={'Nội dung'}
+                allowClear={true} />,
+            <FilterItem defaultValue={type} setValue={setType} options={getTypeList()} type={'select'}
+                title={'Loại'} />,
+            <FilterItem defaultValue={status} setValue={setStatus} options={getStatusList()} type={'select'}
+                title={'Trạng thái'} />,
+            <FilterItem defaultValue={rechargeTicketId}
+                setValue={setRechargeTicketId}
+                type={'text'}
+                title={'Mã ticket nạp lỗi'}
                 allowClear={true} />,
             <FilterItem defaultValue={lastestDecicedBy}
                 setValue={setLastestDecicedBy}
@@ -238,17 +238,23 @@ export default () => {
             align: 'center',
         },
         {
-            title: 'Mã ticket nạp lỗi',
-            dataIndex: 'recharge_ticket_id',
-            width: '150px',
-            render: recharge_ticket_id => recharge_ticket_id ? <b>{recharge_ticket_id}</b> : '-',
-            align: 'center'
-        },
-        {
             title: 'Mã giao dịch',
             dataIndex: 'transaction_id',
             width: '250px',
             render: transaction_id => transaction_id ? <b>{transaction_id}</b> : '-',
+            align: 'center'
+        },
+        {
+            title: 'Nội dung',
+            width: '300px',
+            dataIndex: 'content',
+            align: 'center'
+        },
+        {
+            title: 'Mã ticket nạp lỗi',
+            dataIndex: 'recharge_ticket_id',
+            width: '150px',
+            render: recharge_ticket_id => recharge_ticket_id ? <b>{recharge_ticket_id}</b> : '-',
             align: 'center'
         },
         {
@@ -285,12 +291,6 @@ export default () => {
             dataIndex: 'status',
             align: 'center',
             render: status => <Tag color={STATUS_COLOR[status]}>{t(MAP_STATUS[status])}</Tag>
-        },
-        {
-            title: 'Nội dung',
-            width: '300px',
-            dataIndex: 'content',
-            align: 'center'
         },
         {
             title: 'Thời gian tạo',
