@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Button, Collapse, Icon, Input, InputNumber, message, Select, Tag} from "antd";
+import {Button, Collapse, Icon, Input, InputNumber, message, Select, Tag, DatePicker} from "antd";
 import {useTranslation} from "react-i18next";
 import {downloadNotSoldProduct, getProductList} from "../../../services/product-manager";
 import TableCommon from "../../common/table";
@@ -11,7 +11,8 @@ import {LayoutContext} from "../../../contexts";
 import Form from "./form";
 
 const {Option, OptGroup} = Select;
-const {Panel} = Collapse
+const {Panel} = Collapse;
+const {RangePicker} = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 let debounce = null
 
@@ -33,6 +34,8 @@ function Index() {
     const [visible, setVisible] = useState(false)
 
     const [comment, setComment] = useState('')
+    const [downloadCreatedBy, setDownloadCreatedBy] = useState('')
+    const [downloadCreatedTime, setDownloadCreatedTime] = useState([])
     const [amount, setAmount] = useState(null)
     const [errorCategorySelect, setErrorCategorySelect] = useState('')
 
@@ -48,8 +51,11 @@ function Index() {
 
     useEffect(() => {
         setCategoryIdSelected(null)
+        setDownloadCreatedBy('')
+        setDownloadCreatedTime([])
         setAmount(null)
         setComment(null)
+        setSumVia(0)
         setErrorComment("")
         setErrorAmount("")
         setErrorCategorySelect("")
@@ -164,6 +170,30 @@ function Index() {
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
+    const getProductNotSoldList = () => {
+        clearTimeout(debounce)
+        debounce = setTimeout(() => {
+            setPending(true)
+            let created_time = downloadCreatedTime.length > 0 ? JSON.stringify(downloadCreatedTime?.map(el => el?.format(dateFormat))) : "";
+            let params = {
+                category_id: categoryIdSelected,
+                createdby: downloadCreatedBy,
+                created_time
+            }
+            getProductList(params).then((resp) => {
+                if (resp.status === 200) {
+                    const totalVia = resp?.data?.totalProducts || 0
+                    setSumVia(totalVia)
+                }
+            }).catch(() => message.error("Có lỗi xảy ra"))
+                .finally(() => setPending(false)) 
+    }, 500)}
+
+    useEffect(() => {
+        if (categoryIdSelected || downloadCreatedBy || downloadCreatedTime.length > 0) {
+            getProductNotSoldList()
+        }
+    }, [categoryIdSelected, downloadCreatedBy, downloadCreatedTime])
 
     const handleDownload = () => {
         const allChildren = []
@@ -182,10 +212,13 @@ function Index() {
         }
         if (amount && comment) {
             setPending(true);
+            let created_time = downloadCreatedTime.length > 0 ? JSON.stringify(downloadCreatedTime?.map(el => el?.format(dateFormat))) : "";
             let body = {
                 category_id: categoryIdSelected,
                 amount: amount,
-                comment
+                comment,
+                createdby: downloadCreatedBy,
+                created_time
             }
             downloadNotSoldProduct(body).then((resp) => {
                 if (resp.status === 200) {
@@ -371,13 +404,13 @@ function Index() {
                         <Select placeholder={'Danh mục'} value={categoryIdSelected} style={{width: '100%'}}
                                 onChange={e => {
                                     setErrorCategorySelect("");
-                                    const allChildren = []
-                                    categoryList.forEach(el => allChildren.push(...el.options))
-                                    const obj = allChildren.find(el => el.value === e);
-                                    console.log(obj)
-                                    if (obj) {
-                                        setSumVia(obj.sumVia)
-                                    }
+                                    // const allChildren = []
+                                    // categoryList.forEach(el => allChildren.push(...el.options))
+                                    // const obj = allChildren.find(el => el.value === e);
+                                    // console.log(obj)
+                                    // if (obj) {
+                                    //     setSumVia(obj.sumVia)
+                                    // }
 
                                     setCategoryIdSelected(e)
                                 }}>
@@ -390,9 +423,28 @@ function Index() {
                         </Select>
                     </p>
                     <p style={{color: 'red'}}>{errorCategorySelect}</p>
-
                 </div>
+                
+                <p>Người tạo:</p>
+                <Input 
+                    value={downloadCreatedBy}
+                    placeholder={'Người tạo'}
+                    onChange={v => {
+                        const value = v.target.value
+                        setDownloadCreatedBy(value)}}
+                />
+                <p style={{color: 'red'}}></p>
 
+                <p>Ngày tải lên:</p>
+                <RangePicker 
+                    onChange={v => {
+                        setDownloadCreatedTime(v)
+                    }}
+                    placeholder={['Từ ngày', 'Đến ngày']}
+                    value={downloadCreatedTime}
+                    style={{width: '100%'}}
+                />
+                <p style={{color: 'red'}}></p>
 
                 <p>Lý do tải xuống <span style={{color: 'red'}}>*</span>:</p>
                 <Input placeholder={'Lý do tải xuống'} value={comment} onChange={v => {

@@ -110,6 +110,22 @@ export default () => {
             }
         },
         {
+            title: 'Tổng tiền hoàn lại',
+            width: '200px',
+            align: 'center',
+            render: row => {
+                return <div>
+                    <b>{convertCurrencyVN(row.total_refund)}</b>
+                </div>
+            }
+        },
+        {
+            title: 'Tổng sản phẩm bảo hành',
+            width: '150px',
+            dataIndex: 'total_product_replace',
+            align: 'center'
+        },
+        {
             title: 'Thao tác',
             align: 'center',
             fixed: 'right',
