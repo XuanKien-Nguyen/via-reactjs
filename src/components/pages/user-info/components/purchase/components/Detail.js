@@ -107,6 +107,14 @@ export default ({id, loading}) => {
             value: convertCurrencyVN(productDetail.bonus_of_buyer_spend)
         },
         {
+            title: 'Tổng tiền hoàn lại:',
+            value: convertCurrencyVN(productDetail.total_refund)
+        },
+        {
+            title: 'Tổng sản phẩm bảo hành:',
+            value: productDetail.total_product_replace
+        },
+        {
             title: 'Phương thức thanh toán: ',
             value: productDetail.purchase_type === 'direct' ? 'Trực tiếp' : 'Cộng tác viên'
         }

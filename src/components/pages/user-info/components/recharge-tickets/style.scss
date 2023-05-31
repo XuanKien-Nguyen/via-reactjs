@@ -37,6 +37,7 @@
 }
 
 .recharge-tickets-image_modal {
+    max-width: 80%;
     .ant-modal-content {
         .ant-modal-confirm-btns {
             display: none;
@@ -45,6 +46,15 @@
             i {
                 display: none;
             }
+        }        
+        .ant-modal-body {
+            img {
+                margin: auto;
+                margin-top: 8px !important;
+                max-width: 100%;
+                max-height: 100%;
+                width: 100%;
+            }  
         }
     }
 }

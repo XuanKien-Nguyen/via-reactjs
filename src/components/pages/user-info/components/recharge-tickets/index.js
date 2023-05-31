@@ -137,6 +137,7 @@ export default ({ loading }) => {
         Modal.info({
             className: "recharge-tickets-image_modal",
             content: <div><img alt="recharge-tickets" src={url}/></div>,
+            width: '1380px',
             maskClosable: true,
         })
     }

@@ -211,7 +211,7 @@ const ProductCard = ({ productDetail }) => {
             </Modal>
             <Modal
                 className='product-image__modal'
-                width={'auto'}
+                width={'1380px'}
                 centered
                 onOk={() => setShowImgProduct(false)}
                 onCancel={() => setShowImgProduct(false)}

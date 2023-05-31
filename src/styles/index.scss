@@ -520,8 +520,7 @@ li .item-button {
 }
 
 .product-image__modal {
-    max-width: 800px;
-    min-width: 300px;
+    max-width: 80%;
     .ant-modal-close-x {
         width: 32px !important;
         height: 32px !important;
@@ -532,6 +531,9 @@ li .item-button {
         img {
             margin: auto;
             margin-top: 8px !important;
+            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
         }  
     }
 }

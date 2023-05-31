@@ -74,6 +74,20 @@ export default ({loading}) => {
                     <b>{convertCurrencyVN(row.total_amount)}</b>
                 </div>
             }
+        },        {
+            title: t('order.total-refund'),
+            width: '200px',
+            render: row => {
+                return <div>
+                    <b>{convertCurrencyVN(row.total_refund)}</b>
+                </div>
+            }
+        },
+        {
+            title: t('order.total-product-replace'),
+            width: '150px',
+            dataIndex: 'total_product_replace',
+            align: 'center'
         },
         {
             title: t('order.action'),
