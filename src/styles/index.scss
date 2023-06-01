@@ -323,6 +323,12 @@ li .item-button {
     }
 }
 
+#header_noti {
+    .ant-drawer-content-wrapper {
+        max-width: 90%;
+    }
+}
+
 /*--FOOTER--*/
 #footer_user {
     .copyright-text {
@@ -913,7 +919,7 @@ li .item-button {
 
 /*-----------------------------RESPONSIVE----------------------------*/
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 840px) {
     
     /*---HEADER--*/
     header#header_user {

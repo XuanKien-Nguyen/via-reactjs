@@ -25,6 +25,7 @@ function HeaderLayout({ history }) {
 
     const [userInfo, setUserInfo] = useState()
     const [visible, setVisible] = useState(false)
+    const [visibleNoti, setVisibleNoti] = useState(false)
 
     const { setLoading } = useContext(LayoutContext);
 
@@ -34,14 +35,6 @@ function HeaderLayout({ history }) {
 
     const onClick = ({ key }) => {
         window.location.href = `/categories?id=${key}`
-    };
-
-    const showDrawer = () => {
-        setVisible(true)
-    };
-    
-    const onClose = () => {
-        setVisible(false)
     };
 
     const handleLogout = async () => {
@@ -149,7 +142,7 @@ function HeaderLayout({ history }) {
             <div id="master-header" className="header-main" style={{ height: '63px' }}>
                 <div className='header-main_container'>
                     <div className='header-main-icon__menu'>
-                        <Icon type="menu" style={{ fontSize: '20px' }} onClick={showDrawer} />
+                        <Icon type="menu" style={{ fontSize: '20px' }} onClick={() => {setVisible(true)}} />
                     </div>
                     <div className='header-logo' style={{ marginRight: '30px', cursor: 'pointer' }} onClick={() => window.location.href = '/'}>
                         <img alt='via2fa' src={require('../../../assets/img/clone-logo.gif')} style={{ width: '135px' }} />
@@ -170,7 +163,7 @@ function HeaderLayout({ history }) {
                             </li>
                             {user && <li className='item header_user-balance'><b>{t('profile.balance')}:&nbsp;{convertCurrencyVN(userInfo?.amount_available + userInfo?.bonus)}</b></li>}
                             <li className='header-devider'></li>
-                            <li className='item' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
+                            <li className='item' style={userInfo?.role !== 'admin' ? { display: 'none' } : {}} onClick={() => {setVisibleNoti(true)}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                             <li style={{
                                 height: '64px',
                                 display: 'flex',
@@ -183,7 +176,7 @@ function HeaderLayout({ history }) {
             <Drawer
                 id="header_mobile"
                 placement='left'
-                onClose={onClose}
+                onClose={() => {setVisible(false)}}
                 visible={visible}
                 headerStyle={{display: 'none'}}
                 bodyStyle={{padding: 0}}
@@ -240,6 +233,17 @@ function HeaderLayout({ history }) {
                             </Menu>
                         </TabPane>
                     </Tabs>
+            </Drawer>
+            <Drawer
+                id="header_noti"
+                placement='right'
+                onClose={() => {setVisibleNoti(false)}}
+                visible={visibleNoti}
+                headerStyle={{display: 'none'}}
+                bodyStyle={{padding: 0}}
+                width='600px'
+            >
+                    NOTIFICATION HERE
             </Drawer>
         </Header>
     );
