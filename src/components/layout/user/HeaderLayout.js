@@ -163,7 +163,7 @@ function HeaderLayout({ history }) {
                             </li>
                             {user && <li className='item header_user-balance'><b>{t('profile.balance')}:&nbsp;{convertCurrencyVN(user?.amount_available + user?.bonus)}</b></li>}
                             <li className='header-devider'></li>
-                            <li className='item' style={user?.role !== 'admin' ? { display: 'none' } : {}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
+                            <li className='item' style={user?.role !== 'admin' ? { display: 'none' } : {}} onClick={() => {setVisibleNoti(true)}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                             <li style={{
                                 height: '64px',
                                 display: 'flex',
