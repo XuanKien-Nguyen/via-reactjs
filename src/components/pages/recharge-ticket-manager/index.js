@@ -10,7 +10,8 @@ import {
     registerSolveTicket,
     rejectTicket,
     resolveErrorDeposit,
-    restoringTicket
+    restoringTicket,
+    deleteBulkTicket
 } from "../../../services/tickets";
 import ListRechargePending from './components/recharge-pending-manager'
 import {LayoutContext} from "../../../contexts";
@@ -65,6 +66,7 @@ export default () => {
     const [reload, setReload] = useState(0)
     const [render, setRerender] = useState(0)
 
+    const [ticketsSelected, setTicketsSelected] = useState([])
 
     const [page, setPage] = useState({
         perpage: 10,
@@ -193,7 +195,7 @@ export default () => {
     const onShowImage = (url) => {
         Modal.info({
             className: "recharge-tickets-image_modal",
-            width: '700px',
+            width: '1180px',
             content: <div><img alt="recharge-tickets" src={url}/></div>,
             maskClosable: true,
         })
@@ -240,6 +242,38 @@ export default () => {
             onOk: () => {
                 setLoading(true)
                 restoringTicket(id).then(resp => {
+                    if (resp.status === 200) {
+                        Modal.success({
+                            content: resp?.data?.message
+                        })
+                        setReload(reload + 1)
+                    }
+                }).catch(err => Modal.error({
+                    content: err.response?.data?.message
+                })).finally(() => setLoading(false))
+            }
+        })
+    }
+
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+          setTicketsSelected(selectedRowKeys)
+        },
+    };
+
+    const onDeleteTickets = (lstSelected) => {
+        //K nhan body
+        let body;
+        body = {
+            recharge_ticket_ids: lstSelected
+        }
+        Modal.confirm({
+            content: 'Bạn có chắc chắn muốn xóa phiếu nạp tiền?',
+            okText: 'Xóa',
+            cancelText: 'Huỷ bỏ',
+            onOk: () => {
+                setLoading(true)
+                deleteBulkTicket(body).then(resp => {
                     if (resp.status === 200) {
                         Modal.success({
                             content: resp?.data?.message
@@ -421,6 +455,9 @@ export default () => {
                     setCreatedDate([])
                 }}
                 page={page}/>
+        <Button type={'danger'} onClick={() => onDeleteTickets(ticketsSelected)}>
+            <Icon type='delete'/> Xóa Tickets
+        </Button>
         <TableCommon
             setPage={setPage}
             className='table-order'
@@ -430,6 +467,7 @@ export default () => {
             columns={columns}
             rowKey="id"
             scroll={{x: true}}
+            rowSelection={rowSelection}
         />
         <Modal
             className={'modal-body-80vh'}

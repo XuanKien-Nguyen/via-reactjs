@@ -101,23 +101,23 @@ export default ({loading, setRechargePendingSelected, setStep, rechargePendingSe
 
     const getItems = () => {
         return [
-            <FilterItem defaultValue={rechargeTicketId}
-                        setValue={setRechargeTicketId}
-                        type={'text'}
-                        title={'Mã ticket nạp lỗi'}
-                        allowClear={true}/>,
             <FilterItem defaultValue={transactionId}
                         setValue={setTransactionId}
                         type={'text'}
                         title={'Mã giao dịch'}
                         allowClear={true}/>,
-            <FilterItem defaultValue={type} setValue={setType} options={getTypeList()} type={'select'}
-                        title={'Loại'}/>,
             <FilterItem defaultValue={content}
                         setValue={setContent}
                         type={'text'}
                         title={'Nội dung'}
                         allowClear={true}/>,
+            <FilterItem defaultValue={rechargeTicketId}
+                        setValue={setRechargeTicketId}
+                        type={'text'}
+                        title={'Mã ticket nạp lỗi'}
+                        allowClear={true}/>,
+            <FilterItem defaultValue={type} setValue={setType} options={getTypeList()} type={'select'}
+                        title={'Loại'}/>,
             <FilterItem defaultValue={createdDate} setValue={setCreatedDate} type={'date'}
                         placeholder={['Từ ngày', 'Đến ngày']} title={'Chọn ngày tạo'}/>,
         ]

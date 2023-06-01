@@ -358,7 +358,7 @@ export default ({datasource, loading, reload, setUpdateObject, setVisible}) => {
     const onShowImage = (url) => {
         Modal.info({
             className: "recharge-tickets-image_modal",
-            width: '700px',
+            width: '1180px',
             content: <div><img alt="recharge-tickets" src={url}/></div>,
             maskClosable: true,
         })
