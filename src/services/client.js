@@ -67,7 +67,9 @@ client.interceptors.response.use(
             });
         } else if (err.response?.data?.error === 'refresh_token is invalid' && err.config.url !== '/api/users/client/me') {
             message.error('Phiên đăng nhập đã hết hạn')
-            window.location.href = '/login'
+            localStorage.removeItem('is_logged')
+            localStorage.removeItem('user_info')
+            window.location.href = '/'
         }
         return Promise.reject(err);
     }

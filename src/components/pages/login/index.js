@@ -63,7 +63,7 @@ function Index({form}) {
                         message.success("Đăng nhập thành công")
                         dispatch({type: 'SET_USER_INFO', payload: resp.data?.userFound})
                         localStorage.setItem("is_logged", 'true')
-                        localStorage.setItem('user_info', JSON.stringify(resp.data?.userFound || {}))
+                        // localStorage.setItem('user_info', JSON.stringify(resp.data?.userFound || {}))
                         window.location.href = '/'
                     } else {
                         message.error(resp?.data?.message || "Error")
