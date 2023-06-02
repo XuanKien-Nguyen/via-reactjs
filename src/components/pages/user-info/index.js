@@ -18,6 +18,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import {convertCurrencyVN} from "../../../utils/helpers";
 import {checkStatus, registerPartner, getInfoClientPartner} from "../../../services/partners";
 import {getWindowDimensions} from "../../../utils/helpers";
+import WarrantyTicket from './components/warranty-tickets'
 
 
 import { useTranslation } from 'react-i18next';
@@ -120,6 +121,8 @@ const UserInfo = () => {
             return <DownloadHistory loading={setLoading}/>
         } else if (current === 'recharge-tickets') {
             return <RechargeTickets loading={setLoading}/>
+        } else if (current === 'warranty-tickets') {
+            return <WarrantyTicket loading={setLoading}/>
         }
         return <UserDetail user={user} loading={setLoading} />
     }
@@ -276,6 +279,10 @@ const UserInfo = () => {
                     <Menu.Item key="recharge-tickets">
                         <Icon type="credit-card" />
                         {t('profile.recharge-tickets')}
+                    </Menu.Item>
+                    <Menu.Item key="warranty-tickets">
+                        <Icon type="credit-card" />
+                        {t('profile.warranty-tickets')}
                     </Menu.Item>
                     <Menu.Item key="download-history">
                         <Icon type="download" />

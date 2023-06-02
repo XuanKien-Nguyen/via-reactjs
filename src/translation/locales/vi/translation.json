@@ -100,6 +100,7 @@
         "recharge-history": "LỊCH SỬ NẠP TIỀN",
         "balance-history": "LỊCH SỬ THAY ĐỔI SỐ DƯ",
         "recharge-tickets": "PHIẾU NẠP TIỀN LỖI",
+        "warranty-tickets": "PHIẾU BẢO HÀNH",
         "download-history": "LỊCH SỬ TẢI XUỐNG"
     },
     "info": {
@@ -204,6 +205,23 @@
         "lastest-decided-by": "Người quyết định cuối cùng",
         "lastest-decided-time": "Thời gian quyết định cuối cùng"
     },
+    "warranty-tickets":  {
+        "title": "Tiêu đề",
+        "status": "Trạng thái",
+        "total_product_request": "Tổng sản phẩm đã mua",
+        "total_product_reject": "Tổng sản phẩm bị từ chối",
+        "total_product_replace": "Tổng sản phẩm bảo hành",
+        "total_refund_warranty": "Tổng số dư bảo hành",
+        "created_time": "Thời gian tạo",
+        "latest_decidedby": "Người quyết định cuối cùng",
+        "latest_decided_time": "Thời gian quyết định cuối cùng",
+        "category_price": "Giá sản phẩm",
+        "createdBy": "Người tạo",
+        "comment": "Bình luận",
+        "action": "Thao tác",
+        "detail": "Chi tiết",
+        "create-warranty": "Tạo mới yêu cầu bảo hành"
+    },
     "password": {
         "button": "Đổi mật khẩu",
         "current": "Nhập mật khẩu hiện tại của bạn",
@@ -300,6 +318,13 @@
         "DONE_STATUS": "Đã phê duyệt",
         "SOLVING_STATUS": "Đang xử lý",
         "REJECT_STATUS": "Đã từ chối"
+    },
+    "warranty-tickets-status": {
+        "ALL": "Xem tất cả",
+        "PENDING_STATUS": "Chờ phê duyệt",
+        "CLOSE_STATUS": "Đã đóng",
+        "SOLVING_STATUS": "Đang xử lý",
+        "DELETE_STATUS": "Đã từ chối"
     },
     "partner-status": {
         "ACTIVE_STATUS": "Đã đăng ký",

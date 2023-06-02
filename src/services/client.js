@@ -58,6 +58,7 @@ client.interceptors.response.use(
                         // if (['refresh_token must be provide', 'token has been conflict'].includes(err.response?.data?.error)) {
                         //     window.location.href = '/login'
                         // }
+                        window.location.href = '/login'
                         processQueue(err);
                         reject(err);
                     })

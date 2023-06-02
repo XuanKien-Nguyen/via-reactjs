@@ -100,6 +100,7 @@
         "recharge-history": "RECHARGE HISTORY",
         "balance-history": "BALANCE HISTORY",
         "recharge-tickets": "RECHARGE TICKETS",
+        "warranty-tickets": "WARRANTY TICKETS",
         "download-history": "DOWNLOAD HISTORY"
     },
     "info": {
@@ -204,6 +205,23 @@
         "lastest-decided-by": "Lastest Decided By",
         "lastest-decided-time": "Lastest Decided Time"
     },
+    "warranty-tickets":  {
+        "title": "Title",
+        "status": "Status",
+        "total_product_request": "Total product request",
+        "total_product_reject": "Total product reject",
+        "total_product_replace": "Total product replace",
+        "total_refund_warranty": "Total refund warranty",
+        "created_time": "Created Time",
+        "latest_decidedby": "Lastest Decided By",
+        "latest_decided_time": "Lastest Decided Time",
+        "category_price": "Category price",
+        "createdBy": "Created By",
+        "comment": "Comment",
+        "action": "Action",
+        "detail": "Detail",
+        "create-warranty": "Create new warranty tickets"
+    },
     "password": {
         "button": "Change Password",
         "current": "Enter your current password",
@@ -300,6 +318,13 @@
         "DONE_STATUS": "Done",
         "SOLVING_STATUS": "Solving",
         "REJECT_STATUS": "Rejected"
+    },
+    "warranty-tickets-status": {
+        "ALL": "All",
+        "PENDING_STATUS": "Pending",
+        "CLOSE_STATUS": "Close",
+        "SOLVING_STATUS": "Solving",
+        "DELETE_STATUS": "Rejected"
     },
     "partner-status": {
         "ACTIVE_STATUS": "Active",

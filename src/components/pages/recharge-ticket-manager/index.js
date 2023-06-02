@@ -455,9 +455,11 @@ export default () => {
                     setCreatedDate([])
                 }}
                 page={page}/>
-        <Button type={'danger'} onClick={() => onDeleteTickets(ticketsSelected)}>
-            <Icon type='delete'/> Xóa Tickets
-        </Button>
+        <p style={{textAlign: 'right'}} className={"m-b-10"}>
+            <Button type={'danger'} disabled={ticketsSelected.length === 0} onClick={() => onDeleteTickets(ticketsSelected)}>
+                <Icon type='delete'/> Xóa Tickets
+            </Button>
+        </p>
         <TableCommon
             setPage={setPage}
             className='table-order'
