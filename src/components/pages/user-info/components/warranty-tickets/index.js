@@ -43,6 +43,10 @@ export default ({loading}) => {
 
     const [reload, setReload] = useState(0)
 
+    const reloadTable = () => {
+        setReload(reload + 1)
+    }
+
     useEffect(() => {
         getStatusList().then(resp => {
             const data = resp.data?.STATUS_OBJ || []
@@ -219,7 +223,7 @@ export default ({loading}) => {
         <p style={{textAlign: 'right'}}>
             <Button type={"primary"} onClick={() => {
                 setVisible(true)
-            }}>{t('warranty-tickets.create-warranty')}</Button>
+            }}><Icon type={'plus'}/> {t('warranty-tickets.create-warranty')}</Button>
         </p>
         <TableCommon
             className='table-order'
@@ -231,6 +235,6 @@ export default ({loading}) => {
             setPage={setPage}
             scroll={{x: true}}
         />
-        <CreateWarranty t={t} visible={visible} setVisible={setVisible}/>
+        <CreateWarranty t={t} visible={visible} setVisible={setVisible} reload={reloadTable}/>
     </Fragment>
 }

@@ -281,7 +281,7 @@ const UserInfo = () => {
                         {t('profile.recharge-tickets')}
                     </Menu.Item>
                     <Menu.Item key="warranty-tickets">
-                        <Icon type="credit-card" />
+                        <Icon type="safety-certificate" />
                         {t('profile.warranty-tickets')}
                     </Menu.Item>
                     <Menu.Item key="download-history">
