@@ -262,7 +262,6 @@ export default () => {
     };
 
     const onDeleteTickets = (lstSelected) => {
-        //K nhan body
         let body;
         body = {
             recharge_ticket_ids: lstSelected
@@ -421,6 +420,7 @@ export default () => {
                         <Tooltip title={'Xoá yêu cầu'} placement={'bottom'}>
                             <Button type={'danger'}
                                 // disabled={row.status !== 'done'}
+                                onClick={() => {onDeleteTickets([row.id])}}
                             >
                                 <Icon type="delete"/>
                             </Button>
@@ -457,7 +457,7 @@ export default () => {
                 page={page}/>
         <p style={{textAlign: 'right'}} className={"m-b-10"}>
             <Button type={'danger'} disabled={ticketsSelected.length === 0} onClick={() => onDeleteTickets(ticketsSelected)}>
-                <Icon type='delete'/> Xóa Tickets
+                <Icon type='delete'/> Xóa phiếu nạp tiền lỗi
             </Button>
         </p>
         <TableCommon

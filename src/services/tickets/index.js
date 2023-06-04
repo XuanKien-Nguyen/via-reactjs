@@ -23,7 +23,7 @@ export const getRechargeTicketById = (id) => {
 }
 
 export const deleteBulkTicket = (body) => {
-    return service.delete(`${ENDPOINT}/manager/delete-bulk`, body)
+    return service.post(`${ENDPOINT}/manager/delete-bulk`, body)
 }
 
 export const registerSolveTicket = (id) => {
