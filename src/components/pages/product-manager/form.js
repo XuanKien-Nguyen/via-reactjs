@@ -25,7 +25,6 @@ const Wrapper = (props) => {
                 createProduct(body).then((resp) => {
                     if (resp.status === 200) {
                         const data = resp.data
-                        console.log(data)
                         if (data) {
                             Modal.success({
                                 content: <div>
