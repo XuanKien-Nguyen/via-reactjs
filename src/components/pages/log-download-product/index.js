@@ -2,14 +2,12 @@ import React, { useContext, useState, useEffect, Fragment } from "react";
 import Search from "./components/Search";
 import FilterItem from "../category/components/filter/FilterItem";
 import TableCommon from "../../common/table";
-import { getAllRechargeSuccess, getTypeListRechargeSuccess } from "../../../services/recharge-manager";
 import { LayoutContext } from "../../../contexts";
 import { useSelector } from "react-redux";
 import { convertCurrencyVN } from "../../../utils/helpers";
 import {Button, Icon, Tooltip, Tag, message} from "antd";
 import { useTranslation } from "react-i18next";
-import {getLogDownloadProductType} from "../../../services/user";
-import {getListLogDownloadProduct} from "../../../services/log-download-product";
+import {getListLogDownloadProduct, getLogDownloadProductTypeManager} from "../../../services/log-download-product";
 const dateFormat = 'YYYY-MM-DD';
 
 const MAP_TYPE = {};
@@ -34,9 +32,9 @@ export default () => {
     const [reload, setReload] = useState(0)
 
     useEffect(() => {
-        getLogDownloadProductType().then(resp => {
+        getLogDownloadProductTypeManager().then(resp => {
             if (resp.status === 200) {
-                const data = resp.data?.TYPE_OBJ || []
+                const data = resp.data?.TYPE_OBJ_MANAGER || []
                 const lstType = [{label: 'download-type.ALL', value: ''}]
                 for (const key of Object.keys(data)) {
                     lstType.push({

@@ -305,7 +305,9 @@
         "TYPE_DOWNLOAD_SOLD": "Đã bán",
         "TYPE_DOWNLOAD_CHECKPOINT": "Checkpoint",
         "TYPE_DOWNLOAD_REPLACE": "Đổi trả",
-        "TYPE_DOWNLOAD_ERROR": "Lỗi khác"
+        "TYPE_DOWNLOAD_ERROR": "Lỗi khác",
+        "TYPE_DOWNLOAD_BACK": "Hoàn tác",
+        "TYPE_DOWNLOAD_REQUEST": "Yêu cầu"
     },  
     "user-login-status": {
         "STATUS_SUCCESS": "Đăng nhập thành công",

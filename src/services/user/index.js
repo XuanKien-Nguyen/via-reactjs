@@ -73,7 +73,7 @@ export const getLogDownloadProduct = (params) => {
 }
 
 export const getLogDownloadProductType = () => {
-    return client.get(`/api/log-download-product/common/type-list`)
+    return client.get(`/api/log-download-product/client/type-list`)
 }
 
 export const forgotPassword = (body) => {

@@ -93,7 +93,7 @@ export default ({ loading }) => {
     useEffect(() => {
         getLogDownloadProductType().then(resp => {
             if (resp.status === 200) {
-                const data = resp.data?.TYPE_OBJ || []
+                const data = resp.data?.TYPE_OBJ_CLIENT || []
                 const lstType = [{label: 'download-type.ALL', value: ''}]
                 for (const key of Object.keys(data)) {
                     lstType.push({
