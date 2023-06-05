@@ -37,8 +37,8 @@ const Wrapper = (props) => {
     }, [props.visible])
 
     const findUid = () => {
-        // const value = props.form.getFieldValue('uid');
-        const value = '100056771291791'
+        const value = props.form.getFieldValue('uid');
+        // const value = '100056771291791'
         if (value) {
             loading(true)
             setValidateStatus('validating')
@@ -107,16 +107,16 @@ const Wrapper = (props) => {
                 loading(true)
                 createWarrantyTicket(formData).then(resp => {
                     if (resp.status === 200) {
-                        renderResult(resp.data)
+                        renderResult(resp.data, true)
                     }
-                }).catch(err => Modal.error({content: err?.response?.data?.message, width: '700px'}))
+                }).catch(err => renderResult(err?.response?.data, false))
                     .finally(() => loading(false))
             }
         });
     }
 
-    const renderResult = (data) => {
-        Modal.success({
+    const renderResult = (data, isSuccess) => {
+        const p = {
             content: <div>
                 <Row>
                     <Row><span>{data.message?.split('-')[0]}</span></Row>
@@ -151,6 +151,12 @@ const Wrapper = (props) => {
                     </Row>
                     <Row className={'m-t-10'}>
                         <Col sm={16}>Sản phẩm không nằm trong đơn hàng: {data.productNotInPurchase?.length || 0}</Col>
+                        <Col sm={8}>
+                            <a style={{textDecoration: 'underline'}}
+                               disabled={data.productNotInPurchase?.length === 0}
+                               onClick={() => textToFile('productInOtherWarrantyTicket', data.productNotInPurchase.join('\r\n'))}
+                            >Tải xuống</a>
+                        </Col>
                     </Row>
                 </Row>
             </div>,
@@ -160,7 +166,12 @@ const Wrapper = (props) => {
                 setVisible(false)
                 props.reload()
             }
-        })
+        }
+        if (isSuccess) {
+            Modal.success(p)
+        } else {
+            Modal.error(p)
+        }
     }
 
     const normFile = e => {

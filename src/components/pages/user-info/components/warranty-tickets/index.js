@@ -160,9 +160,22 @@ export default ({loading}) => {
             align: 'center'
         },
         {
+            title: t('warranty-tickets.total_product_replace'),
+            width: '300px',
+            dataIndex: 'total_product_replace',
+            align: 'center'
+        },
+        {
             title: t('warranty-tickets.total_product_reject'),
             width: '300px',
             dataIndex: 'total_product_reject',
+            align: 'center'
+        },
+        {
+            title: t('warranty-tickets.total_refund_warranty'),
+            width: '300px',
+            dataIndex: 'total_refund_warranty',
+            render: v => <b>{convertCurrencyVN(v)}</b>,
             align: 'center'
         },
         {
