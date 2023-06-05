@@ -20,7 +20,7 @@ const STATUS_COLOR = {
     deleted: '#c7dcdd',
     solving: '#ffcc00'
 }
-let DETAIL_ID = null
+let WARRANTY_DETAIL = null
 
 export default ({loading}) => {
 
@@ -35,6 +35,7 @@ export default ({loading}) => {
     const [lastestDecicedBy, setLastestDecicedBy] = useState('')
     const [lastestDecicedDate, setLastestDecicedDate] = useState([])
     const [visible, setVisible] = useState(false)
+    const [visibleDetail, setVisibleDetail] = useState(false)
 
     const [page, setPage] = useState({
         perpage: 10,
@@ -197,8 +198,8 @@ export default ({loading}) => {
                 return <div>
                     <Tooltip title={t('warranty-tickets.detail')}>
                         <Button type='primary' style={{marginRight: '8px'}} onClick={() => {
-                            setVisible(true)
-                            DETAIL_ID = row.id
+                            setVisibleDetail(true)
+                            WARRANTY_DETAIL = row
                         }}><Icon type="file-search"/></Button>
                     </Tooltip>
                 </div>
@@ -238,6 +239,6 @@ export default ({loading}) => {
             scroll={{x: true}}
         />
         <CreateWarranty t={t} visible={visible} setVisible={setVisible} reload={reloadTable}/>
-        <Detail id={DETAIL_ID} visible={visible} setVisible={setVisible} reload={reloadTable}/>
+        <Detail detail={WARRANTY_DETAIL} visible={visibleDetail} setVisible={setVisibleDetail} reload={reloadTable} mapStatus={MAP_STATUS}/>
     </Fragment>
 }

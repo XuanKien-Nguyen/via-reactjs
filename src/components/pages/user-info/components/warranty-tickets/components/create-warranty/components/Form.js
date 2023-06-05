@@ -32,7 +32,7 @@ const Wrapper = (props) => {
             setCategorySelected(null)
             setValidateStatus('')
             setHelpValidateStatus('')
-            props.form.setFieldsValue({uid: ''})
+            // props.form.setFieldsValue({uid: ''})
         }
     }, [props.visible])
 
