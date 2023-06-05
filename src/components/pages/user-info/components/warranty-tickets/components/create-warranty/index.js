@@ -2,7 +2,6 @@ import React, {Fragment, useState} from "react";
 import Modal from "antd/es/modal";
 import {Button, Icon, Spin} from "antd";
 import Form from './components/Form'
-
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin/>;
 
 export default ({visible, setVisible, t, reload}) => {
