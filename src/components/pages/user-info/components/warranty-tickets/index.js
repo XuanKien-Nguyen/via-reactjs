@@ -3,6 +3,7 @@ import Search from "./components/Search";
 import FilterItem from "../../../category/components/filter/FilterItem";
 import TableCommon from "../../../../common/table";
 import CreateWarranty from "./components/create-warranty";
+import Detail from "./components/Detail";
 import {getWarrantyTicket, getStatusList} from "../../../../../services/warranty-tickets";
 import {convertCurrencyVN} from "../../../../../utils/helpers";
 import {Button, Icon, Tooltip, Tag} from "antd";
@@ -19,7 +20,7 @@ const STATUS_COLOR = {
     deleted: '#c7dcdd',
     solving: '#ffcc00'
 }
-
+let DETAIL_ID = null
 
 export default ({loading}) => {
 
@@ -158,9 +159,9 @@ export default ({loading}) => {
             align: 'center'
         },
         {
-            title: t('warranty-tickets.total_product_request'),
+            title: t('warranty-tickets.total_product_reject'),
             width: '300px',
-            dataIndex: 'total_product_request',
+            dataIndex: 'total_product_reject',
             align: 'center'
         },
         {
@@ -197,6 +198,7 @@ export default ({loading}) => {
                     <Tooltip title={t('warranty-tickets.detail')}>
                         <Button type='primary' style={{marginRight: '8px'}} onClick={() => {
                             setVisible(true)
+                            DETAIL_ID = row.id
                         }}><Icon type="file-search"/></Button>
                     </Tooltip>
                 </div>
@@ -236,5 +238,6 @@ export default ({loading}) => {
             scroll={{x: true}}
         />
         <CreateWarranty t={t} visible={visible} setVisible={setVisible} reload={reloadTable}/>
+        <Detail id={DETAIL_ID} visible={visible} setVisible={setVisible} reload={reloadTable}/>
     </Fragment>
 }

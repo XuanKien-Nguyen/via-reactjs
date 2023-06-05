@@ -1,9 +1,12 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Button, Form, Icon, Upload, Row, Col} from "antd";
+import {Button, Col, Form, Icon, Row, Upload} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Modal from "antd/es/modal";
 import {getBase64, textToFile} from "../../../../../../../../utils/helpers";
 import Input from "antd/es/input";
+import {CKEditor} from "@ckeditor/ckeditor5-react";
+import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 import {useSelector} from "react-redux";
 import {purchaseList} from "../../../../../../../../services/purchases";
 import {createWarrantyTicket} from "../../../../../../../../services/warranty-tickets";
@@ -21,6 +24,8 @@ const Wrapper = (props) => {
 
     const [validateStatus, setValidateStatus] = useState('')
     const [helpValidateStatus, setHelpValidateStatus] = useState('')
+    const [comment, setComment] = useState('')
+    const [errorMsgComment, setErrorMsgComment] = useState('')
 
     useEffect(() => {
         if (!props.visible) {
@@ -32,7 +37,8 @@ const Wrapper = (props) => {
     }, [props.visible])
 
     const findUid = () => {
-        const value = props.form.getFieldValue('uid');
+        // const value = props.form.getFieldValue('uid');
+        const value = '100056771291791'
         if (value) {
             loading(true)
             setValidateStatus('validating')
@@ -82,11 +88,15 @@ const Wrapper = (props) => {
             return
         }
         props.form.validateFields((err, values) => {
-            if (!err) {
+            if (!comment) {
+                setErrorMsgComment('Vui lòng nhập mô tả')
+            }
+            if (!err && comment) {
                 const body = {
                     ...values,
                     warranty_ticket_comment_image: values.warranty_ticket_comment_image?.map(el => el.originFileObj) || null,
-                    purchase_id: categorySelected.id
+                    purchase_id: categorySelected.id,
+                    comment
                 }
                 const formData = new FormData()
                 Object.keys(body).forEach(k => {
@@ -208,10 +218,11 @@ const Wrapper = (props) => {
                     <Input disabled={true} value={user?.email}/>
                 </Col>
             </Row>
-            <Form.Item label={<span><span style={{color: 'red'}}>*</span>Nhập UID để tìm kiếm đơn hàng cần bảo hành</span>}
-                       hasFeedback
-                       validateStatus={validateStatus}
-                       help={helpValidateStatus}>
+            <Form.Item
+                label={<span><span style={{color: 'red'}}>*</span>Nhập UID để tìm kiếm đơn hàng cần bảo hành</span>}
+                hasFeedback
+                validateStatus={validateStatus}
+                help={helpValidateStatus}>
                 {getFieldDecorator('uid')(
                     <div>
                         <Input placeholder={'UID'}/>
@@ -230,21 +241,49 @@ const Wrapper = (props) => {
                             <Input placeholder={'Tiêu đề'}/>,
                         )}
                     </Form.Item>
-                    <Form.Item label="Danh sách đơn hàng cần bảo hành">
+                    <Form.Item label="Danh sách sản phẩm cần bảo hành">
                         {getFieldDecorator('detail', {
-                            rules: [{required: true, message: 'Vui lòng nhập danh sách đơn hàng cần bảo hành'}],
+                            rules: [{required: true, message: 'Vui lòng nhập danh sách sản phẩm cần bảo hành'}],
                         })(
-                            <TextArea placeholder={'Mô tả'} rows={5}/>,
+                            <TextArea placeholder={'Danh sách sản phẩm cần bảo hành'} rows={5}/>,
                         )}
                     </Form.Item>
-                    <i>Lưu ý: Mỗi dòng 1 sản phẩm</i>
-                    <Form.Item label="Mô tả">
-                        {getFieldDecorator('comment', {
-                            rules: [{required: true, message: 'Vui lòng nhập mô tả lỗi cho các sản phẩm cần bảo hành'}]
-                        })(
-                            <TextArea placeholder={'Ghi chú'} rows={5}/>,
-                        )}
-                    </Form.Item>
+                    <i>Lưu ý: Mỗi dòng 1 sản phẩm cần bảo hành</i>
+                    {/*<Form.Item label="Mô tả">*/}
+                    {/*    {getFieldDecorator('comment', {*/}
+                    {/*        rules: [{required: true, message: 'Vui lòng nhập mô tả lỗi cho các sản phẩm cần bảo hành'}]*/}
+                    {/*    })(*/}
+                    {/*        <TextArea placeholder={'Ghi chú'} rows={5}/>,*/}
+                    {/*    )}*/}
+                    {/*</Form.Item>*/}
+                    <p style={{color: 'rgba(0, 0, 0, 0.85)', marginTop: '10px'}}>
+                        <span style={{color: 'red'}}>*</span>
+                        Mô tả:</p>
+                    <CKEditor
+                        editor={ClassicEditor}
+                        config={{
+                            toolbar: [
+                                'undo', 'redo',
+                                '|', 'heading',
+                                '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                '|', 'link', 'blockQuote', 'codeBlock',
+                                '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent',
+                                '|', 'alignment',
+                            ],
+                        }}
+                        data={comment}
+                        onReady={editor => {
+                            editor.editing.view.change(writer => {
+                                writer.setStyle({height: '300px'}, editor.editing.view.document.getRoot())
+                            })
+                        }}
+                        onChange={(evt, editor) => {
+                            setErrorMsgComment('')
+                            setComment(editor.getData())
+                        }}
+                    />
+                    <span style={{color: 'red'}}>{errorMsgComment}</span>
                     <Form.Item label='Hình ảnh'>
                         {getFieldDecorator('warranty_ticket_comment_image', {
                             valuePropName: 'fileList',

@@ -1,95 +1,56 @@
-import React, {useEffect, useState, Fragment} from "react";
-import { getRechargePendingById, getRechargePendingByTicketId } from "../../../../services/recharge-manager";
-import {Table, Tag} from "antd";
-
-import {convertCurrencyVN} from "../../../../utils/helpers";
+import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
+import {Button, Icon, Spin} from "antd";
+import Modal from "antd/es/modal";
+import {getComments} from "../../../../../../services/warranty-tickets";
 
-export default ({id, loading, mapType, mapStatus}) => {
+const antIcon = <Icon type="loading" style={{fontSize: 24}} spin/>;
+
+export default ({id, visible, setVisible, reload}) => {
 
     const [rechargePendingDetail, setRechargePendingDetail] = useState({})
-
-    const { t } = useTranslation()
-
-    const columns = [
-        {
-            title: '',
-            render: row => <b>{row.title}</b>           
-        },
-        {
-            title: '',
-            render: row => row.value ? row.value : '-',
-            align: 'right'
-        },
-    ]
-
-    const dataSource = [
-        {
-            title: 'ID',
-            value: <b>#{rechargePendingDetail.id}</b>
-        },
-        {
-            title: 'Mã ticket nạp lỗi',
-            value: <b>{rechargePendingDetail.recharge_ticket_id ? rechargePendingDetail.recharge_ticket_id : '-'}</b>
-        },
-        {
-            title: 'Mã giao dịch',
-            value: <b>{rechargePendingDetail.transaction_id ? rechargePendingDetail.transaction_id : '-'}</b>
-        },
-        {
-            title: 'Tiền tài khoản',
-            value: <b style={{color: 'red'}}>{convertCurrencyVN(rechargePendingDetail.amount)}</b> 
-        },
-        {
-            title: 'Tiền USDT',
-            value: rechargePendingDetail.usdt_amount
-        },
-        {
-            title: 'USDT/VND',
-            value: rechargePendingDetail.rate
-        },
-        {
-            title: 'Loại',
-            value: <Tag style={{marginRight: 0}} color={rechargePendingDetail.type === 'banking' ? 'blue' : 'grey'}>{t(mapType[rechargePendingDetail.type])}</Tag>
-        },
-        {
-            title: 'Trạng thái',
-            value: <Tag style={{marginRight: 0}} color={ rechargePendingDetail.status === 'done' ? 'green' : 'grey'}>{t(mapStatus[ rechargePendingDetail.status])}</Tag>
-        },
-        {
-            title: 'Nội dung:',
-            value: rechargePendingDetail.content
-        },
-        {
-            title: 'Thời gian tạo',
-            value: rechargePendingDetail.created_time
-        },
-        {
-            title: 'Thời gian quyết định',
-            value: rechargePendingDetail.latest_decided_time
-        },
-        {
-            title: 'Người quyết định',
-            value: rechargePendingDetail.latest_decidedby
-        },
-    ]
+    const [loading, setLoading] = useState(false)
+    const {t} = useTranslation()
 
     useEffect(() => {
-        const init = async () => {
-            loading(true)
-            const resp = await getRechargePendingById(id)
-            if (resp.status === 200) {
-                const rechargeDetail = resp?.data?.pendingRechargeFound
-                setRechargePendingDetail(rechargeDetail)
-            }
-            loading(false)
-        }
-        init()
-    }, [])
+        setLoading(true)
+        getComments(id).then(resp => {
+            console.log('resp', resp);
+        }).catch(err => console.log('err', err))
+            .finally(() => setLoading(false))
+    }, [id])
 
     return <div>
-        {rechargePendingDetail.id ? <Fragment>
-            <Table showHeader={false} rowKey="title" dataSource={dataSource} columns={columns} pagination={false} locale={{emptyText: 'Không có dữ liệu'}}/>
-        </Fragment> : <p>Không tìm thấy chi tiết ticket nạp lỗi</p>}
+        <Modal
+            className={'modal-body-80vh'}
+            width={'80%'}
+            style={{maxWidth: '1140px'}}
+            centered
+            closable={false}
+            visible={visible}
+            maskClosable={false}
+            title={t('warranty-tickets.detail')}
+            onOk={() => {
+            }}
+            onCancel={() => () => {
+                setVisible(false)
+            }}
+            footer={[
+                <Button key="submit" type="danger" disabled={loading} onClick={() => setVisible(false)}>
+                    {t('common.close')}
+                </Button>,
+                <Button key="submit" type="primary" disabled={loading} onClick={() => {
+                    const submitBtn = document.getElementById('submit-warranty')
+                    if (submitBtn) {
+                        submitBtn.click()
+                    }
+                }}>
+                    {t('common.create')}
+                </Button>
+            ]}
+        >
+            <Spin spinning={loading} indicator={antIcon}>
+            </Spin>
+        </Modal>
     </div>
 }
