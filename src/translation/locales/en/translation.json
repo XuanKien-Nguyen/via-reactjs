@@ -270,9 +270,10 @@
         "note": "Note"
     },
     "user-balance-type": {
-        "MANAGER_UPDATE_BONUS": "ADMIN add money",
+        "MANAGER_UPDATE_BONUS": "Admin update bonus",
         "MANAGER_RESOLVED_RECHARGE": "Handling error recharge",
         "MANAGER_RESTORE_RECHARGE": "Refund of error recharge",
+        "MANAGER_UPDATE_AMOUNT": "Admin update amount",
         "SYSTEM_UPDATE_PURCHASE_DIRECT": "Direct purchase",
         "SYSTEM_UPDATE_PURCHASE_API": "Purchasing collaborator",
         "SYSTEM_BANKING": "Bank recharge",

@@ -26,10 +26,11 @@ function SideBarLayout(props) {
 
     return (
         <Sider
-            width={'fit-content'}
+            width={'250px'}
             collapsible
             collapsed={sideBarCollapsed}
             onCollapse={() => setCollapsed(!sideBarCollapsed)}
+            id='sidebar_admin'
         >
             <div className="logo" onClick={() => window.location.href = '/'} style={{cursor: 'pointer'}}>
                 <img src={require('../../../assets/img/favicon.png')} alt=""/>

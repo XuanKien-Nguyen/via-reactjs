@@ -270,9 +270,10 @@
         "note": "Ghi chú"
     },
     "user-balance-type": {
-        "MANAGER_UPDATE_BONUS": "QTV cộng tiền",
+        "MANAGER_UPDATE_BONUS": "QTV cập nhật khuyến mãi",
         "MANAGER_RESOLVED_RECHARGE": "Xử lý nạp lỗi",
         "MANAGER_RESTORE_RECHARGE": "Hoàn tiền nạp lỗi",
+        "MANAGER_UPDATE_AMOUNT": "QTV cập nhật số dư",
         "SYSTEM_UPDATE_PURCHASE_DIRECT": "Mua trực tiếp",
         "SYSTEM_UPDATE_PURCHASE_API": "CTV mua hàng",
         "SYSTEM_BANKING": "Nạp tiền ngân hàng",
