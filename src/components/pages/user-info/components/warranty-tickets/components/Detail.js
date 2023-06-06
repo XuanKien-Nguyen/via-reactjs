@@ -26,9 +26,9 @@ const TYPE_COLOR = {
 
 const MAP_TYPE = {}
 
-export default ({detail, visible, setVisible, reload, mapStatus}) => {
+export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => {
 
-    const [cmtList, setCmtList] = useState({})
+    const [cmtList, setCmtList] = useState([])
     const [loading, setLoading] = useState(false)
     const {t} = useTranslation()
 
@@ -46,57 +46,17 @@ export default ({detail, visible, setVisible, reload, mapStatus}) => {
     }, [])
 
     useEffect(() => {
-        setLoading(true)
-        const resp = {
-            "message": "Tìm kiếm thành công danh sách comment của ticket bảo hành #2",
-            "warrantyTicketCommentList": [
-                {
-                    "id": 2,
-                    "user_id": 11507,
-                    "warranty_ticket_id": 2,
-                    "type": "reply",
-                    "comment": "<div class='server-send-first-comment'><p>Yêu cầu bảo hành 3 Via Việt Nam 1k-5k Bạn:</p><ul><li>100056020607503|ixerufgboy6|LAHNWKAXWSIIQVBWDE6BCJ7SVKPBJKNC|widickdegrawz@outlook.com|bqQhpR51|widickdegrawz@getnada.com</li><li>100036786142635|D@!Ru9hKlN1|WFFVE3GLOM6P5LXL3AGROS5OCH657IPW|jericasunns7dq@outlook.com|a8thrnbIj|jericasunns7dq@getnada.com</li><li>100069970650699|3im88wvdr0t|GQPAU2ZYVKHREJ46LO7VHAUJOCDVZE6H|sonnesvlano@hotmail.com|Ivx4oN47|sonnesvlano@getnada.com</li></ul><p>thuộc đơn hàng #4</p>bảo hành </div>",
-                    "image_url": [
-                        "https://via2favn-hotmail.tk/public\\images\\warranty_ticket_comment_image\\warranty_ticket_comment_image_5QdmMt2mj.png",
-                        "https://via2favn-hotmail.tk/public\\images\\warranty_ticket_comment_image\\warranty_ticket_comment_image_lOoKiRnScO.png",
-                        "https://via2favn-hotmail.tk/public\\images\\warranty_ticket_comment_image\\warranty_ticket_comment_image_TgzNpWBueF.png"
-                    ],
-                    "created_time": "2023-05-31 22:18:50",
-                    "createdby": "cykme08",
-                    "created_role": "customer"
-                },
-                {
-                    "id": 7,
-                    "user_id": 1,
-                    "warranty_ticket_id": 2,
-                    "type": "replace",
-                    "comment": "<div class='server-send-product-comment'><p>Bảo hành 1 Via Việt Nam 1k-5k Bạn:</p><ul><li>100056110523346|D@!7juP8cMq|F3KU7CSUPRFXXYTJMGWR54FT7YGEHFED|lilypzsfr@hotmail.com|Oqxkv2nwrpx|lilypzsfr@getnada.com</li></ul><p>thuộc đơn hàng #4</p>bảo hành cho bạn nhé!</div>",
-                    "image_url": null,
-                    "created_time": "2023-05-31 22:27:42",
-                    "createdby": "tiencan",
-                    "created_role": "admin"
-                },
-                {
-                    "id": 8,
-                    "user_id": 1,
-                    "warranty_ticket_id": 2,
-                    "type": "finish",
-                    "comment": "<div class='server-send-closed-comment'><p>Ticket đã được đóng</p><p>Kết quả:</p><p>Tổng sản phẩm yêu cầu bảo hành: 3 sản phẩm</p><p>Đơn giá: 70,000.00 VNĐ</p><p>Tổng tiền hoàn: 0.00 VNĐ</p><p>Tổng sản phẩm từ chối bảo hành: 0 sản phẩm</p><p>Tổng sản phẩm bảo hành: 1 sản phẩm</p></div>",
-                    "image_url": null,
-                    "created_time": "2023-05-31 22:29:58",
-                    "createdby": "tiencan",
-                    "created_role": "admin"
+        if (detail) {
+            setLoading(true)
+            getComments(detail.id).then(resp => {
+                if(resp.status === 200) {
+                    setCmtList(resp.data.warrantyTicketCommentList)
                 }
-            ]
+            }).catch(err => console.log('err', err))
+                .finally(() => setLoading(false))
+        } else {
+            setCmtList([])
         }
-        console.log('detail', detail);
-        setCmtList(resp.warrantyTicketCommentList)
-        setLoading(false)
-
-        // getComments(id).then(resp => {
-        //     console.log('resp', resp);
-        // }).catch(err => console.log('err', err))
-        //     .finally(() => setLoading(false))
     }, [detail])
 
     const viewListImage = (row) => {
@@ -134,7 +94,11 @@ export default ({detail, visible, setVisible, reload, mapStatus}) => {
                 setVisible(false)
             }}
             footer={[
-                <Button key="submit" type="danger" disabled={loading} onClick={() => setVisible(false)}>
+                <Button key="submit" type="danger" disabled={loading} onClick={() => {
+                    setCmtList([])
+                    setDetail(null)
+                    setVisible(false)
+                }}>
                     {t('common.close')}
                 </Button>,
                 // <Button key="submit" type="primary" disabled={loading} onClick={() => {
