@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import Modal from "antd/es/modal";
-import {PageHeader, Card, Col, Row, Button, Icon, Spin, Tag, Tooltip, Carousel} from 'antd';
+import ReplyComment from "./create-comment";
+import {Button, Card, Carousel, Col, Icon, PageHeader, Row, Select, Spin, Tag, Tooltip} from 'antd';
 import {getComments, getListTypeComment} from "../../../../../../services/warranty-tickets";
 import {convertCurrencyVN} from "../../../../../../utils/helpers";
 
@@ -26,19 +27,23 @@ const TYPE_COLOR = {
 
 const MAP_TYPE = {}
 
+const {Option} = Select
+
 export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => {
 
     const [cmtList, setCmtList] = useState([])
     const [loading, setLoading] = useState(false)
+    const [visibleCreateComment, setVisibleCreateComment] = useState(false)
+    const [filterType, setFilterType] = useState('')
     const {t} = useTranslation()
 
     useEffect(() => {
         setLoading(true)
         getListTypeComment().then(resp => {
             if (resp.status === 200) {
-                const data = resp.data
+                const data = resp.data.TYPE_OBJ
                 for (const key of Object.keys(data)) {
-                    MAP_TYPE[data[key]] = `warranty_comment.${key}`
+                    MAP_TYPE[data[key]] = `warranty_comment_type.${key}`
                 }
             }
         }).catch(err => console.log(err?.response?.data?.message))
@@ -46,10 +51,14 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
     }, [])
 
     useEffect(() => {
+        fetchComment()
+    }, [detail])
+
+    const fetchComment = (type) => {
         if (detail) {
             setLoading(true)
-            getComments(detail.id).then(resp => {
-                if(resp.status === 200) {
+            getComments(detail.id, type).then(resp => {
+                if (resp.status === 200) {
                     setCmtList(resp.data.warrantyTicketCommentList)
                 }
             }).catch(err => console.log('err', err))
@@ -57,7 +66,7 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
         } else {
             setCmtList([])
         }
-    }, [detail])
+    }
 
     const viewListImage = (row) => {
         if (row && row.image_url) {
@@ -77,6 +86,10 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
             })
         }
     }
+
+    useEffect(() => {
+        fetchComment(filterType)
+    }, [filterType])
 
     return <div>
         <Modal
@@ -119,6 +132,7 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                     }}
                 >
                     <PageHeader
+                        style={{border: '1px solid #e8e8e8'}}
                         ghost={false}
                         title={detail.title}
                         subTitle={`#${detail.id}`}
@@ -157,7 +171,18 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                             </Col>
                         </Row>
                     </PageHeader>
-                    {cmtList.map(el => {
+                    <p style={{marginTop: '10px', textAlign: 'right'}}>
+                        <Select defaultValue={filterType} value={filterType}
+                                style={{width: 150}}
+                                onChange={v => setFilterType(v)}>
+                            {[<Option
+                                value={''}>{t('filter.all')}
+                            </Option>,
+                                Object.keys(MAP_TYPE).map(k => <Option
+                                    value={k}>{t(MAP_TYPE[k])}</Option>)]}
+                        </Select> | <Button type={'primary'} onClick={() => setVisibleCreateComment(true)}>{t('warranty_comment_type.REPLY_TYPE')}</Button>
+                    </p>
+                    {cmtList.length > 0 ? cmtList.map(el => {
                         return <Card
                             bordered
                             style={{marginTop: 16}}
@@ -193,7 +218,7 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                                         borderTopRightRadius: '0px',
                                         borderTopLeftRadius: '0px'
                                     }}
-                                         color={TYPE_COLOR[el.type]}><b>{el.type}</b></Tag>
+                                         color={TYPE_COLOR[el.type]}><b>{t(MAP_TYPE[el.type])}</b></Tag>
                                     <br/>
                                 </Col>
 
@@ -203,8 +228,9 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                                 </Col>
                             </Row>
                         </Card>
-                    })}
+                    }) : <p style={{textAlign: 'center'}}>{t('common.no-data')}</p>}
                     {viewListImage()}
+                    <ReplyComment visible={visibleCreateComment} setVisible={setVisibleCreateComment} t={t} detail={detail} />
                 </div>}
             </Spin>
         </Modal>

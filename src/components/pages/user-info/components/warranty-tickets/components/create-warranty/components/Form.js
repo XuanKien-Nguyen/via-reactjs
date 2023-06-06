@@ -104,7 +104,9 @@ const Wrapper = (props) => {
                         formData.append(k, body[k])
                     }
                 })
-                values.warranty_ticket_comment_image.map(el => formData.append('warranty_ticket_comment_image', el.originFileObj))
+                if (values.warranty_ticket_comment_image) {
+                    values.warranty_ticket_comment_image.map(el => formData.append('warranty_ticket_comment_image', el.originFileObj))
+                }
                 loading(true)
                 createWarrantyTicket(formData).then(resp => {
                     if (resp.status === 200) {

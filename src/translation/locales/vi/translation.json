@@ -220,7 +220,8 @@
         "comment": "Bình luận",
         "action": "Thao tác",
         "detail": "Chi tiết",
-        "create-warranty": "Tạo mới yêu cầu bảo hành"
+        "create-warranty": "Tạo mới yêu cầu bảo hành",
+        "create-comment-warranty": "Tạo bình luận bảo hành"
     },
     "password": {
         "button": "Đổi mật khẩu",
@@ -327,6 +328,14 @@
         "CLOSE_STATUS": "Đã đóng",
         "SOLVING_STATUS": "Đang xử lý",
         "DELETE_STATUS": "Đã từ chối"
+    },
+    "warranty_comment_type": {
+        "FINISH_TYPE": "Kết thúc",
+        "REFUND_TYPE": "Hoàn tiền",
+        "REJECT_TYPE": "Từ chối",
+        "REPLACE_TYPE": "Đổi trả",
+        "REPLY_TYPE": "Trả lời",
+        "RETAKE_TYPE": "Lấy lại"
     },
     "partner-status": {
         "ACTIVE_STATUS": "Đã đăng ký",

@@ -220,7 +220,8 @@
         "comment": "Comment",
         "action": "Action",
         "detail": "Detail",
-        "create-warranty": "Create new warranty tickets"
+        "create-warranty": "Create new warranty tickets",
+        "create-comment-warranty": "Create warranty comment"
     },
     "password": {
         "button": "Change Password",
@@ -327,6 +328,14 @@
         "CLOSE_STATUS": "Close",
         "SOLVING_STATUS": "Solving",
         "DELETE_STATUS": "Rejected"
+    },
+    "warranty_comment_type": {
+        "FINISH_TYPE": "Finish",
+        "REFUND_TYPE": "Refund",
+        "REJECT_TYPE": "Reject",
+        "REPLACE_TYPE": "Replace",
+        "REPLY_TYPE": "Reply",
+        "RETAKE_TYPE": "Retake"
     },
     "partner-status": {
         "ACTIVE_STATUS": "Active",

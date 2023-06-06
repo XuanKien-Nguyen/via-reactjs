@@ -24,6 +24,6 @@ export const getListTypeComment = () => {
 }
 
 export const createWarrantyTicketComment = (body) => {
-    return client.get(`/api/warranty-ticket-comments/common`, body)
+    return client.post(`/api/warranty-ticket-comments/common`, body)
 }
 
