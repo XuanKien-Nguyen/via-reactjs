@@ -273,17 +273,17 @@ const Wrapper = (props) => {
                         Mô tả:</p>
                     <CKEditor
                         editor={ClassicEditor}
-                        config={{
-                            toolbar: [
-                                'undo', 'redo',
-                                '|', 'heading',
-                                '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
-                                '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-                                '|', 'link', 'blockQuote', 'codeBlock',
-                                '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent',
-                                '|', 'alignment',
-                            ],
-                        }}
+                        // config={{
+                        //     toolbar: [
+                        //         'undo', 'redo',
+                        //         '|', 'heading',
+                        //         '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                        //         '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                        //         '|', 'link', 'blockQuote', 'codeBlock',
+                        //         '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent',
+                        //         '|', 'alignment',
+                        //     ],
+                        // }}
                         data={comment}
                         onReady={editor => {
                             editor.editing.view.change(writer => {
