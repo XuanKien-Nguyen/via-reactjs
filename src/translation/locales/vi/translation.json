@@ -208,10 +208,10 @@
     "warranty-tickets":  {
         "title": "Tiêu đề",
         "status": "Trạng thái",
-        "total_product_request": "Tổng sản phẩm đã mua",
-        "total_product_reject": "Tổng sản phẩm bị từ chối",
-        "total_product_replace": "Tổng sản phẩm bảo hành",
-        "total_refund_warranty": "Tổng số dư bảo hành",
+        "total_product_request": "Tổng sản phẩm yêu cầu bảo hành",
+        "total_product_reject": "Tổng sản phẩm bị từ chối bảo hành",
+        "total_product_replace": "Tổng sản phẩm đã đổi trả",
+        "total_refund_warranty": "Tổng tiền hoàn lại",
         "created_time": "Thời gian tạo",
         "latest_decidedby": "Người quyết định cuối cùng",
         "latest_decided_time": "Thời gian quyết định cuối cùng",
@@ -220,7 +220,8 @@
         "comment": "Bình luận",
         "action": "Thao tác",
         "detail": "Chi tiết",
-        "create-warranty": "Tạo mới yêu cầu bảo hành"
+        "create-warranty": "Tạo mới yêu cầu bảo hành",
+        "create-comment-warranty": "Tạo bình luận bảo hành"
     },
     "password": {
         "button": "Đổi mật khẩu",
@@ -328,6 +329,14 @@
         "CLOSE_STATUS": "Đã đóng",
         "SOLVING_STATUS": "Đang xử lý",
         "DELETE_STATUS": "Đã từ chối"
+    },
+    "warranty_comment_type": {
+        "FINISH_TYPE": "Kết thúc",
+        "REFUND_TYPE": "Hoàn tiền",
+        "REJECT_TYPE": "Từ chối",
+        "REPLACE_TYPE": "Đổi trả",
+        "REPLY_TYPE": "Trả lời",
+        "RETAKE_TYPE": "Lấy lại"
     },
     "partner-status": {
         "ACTIVE_STATUS": "Đã đăng ký",

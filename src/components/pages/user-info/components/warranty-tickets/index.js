@@ -20,7 +20,6 @@ const STATUS_COLOR = {
     deleted: '#c7dcdd',
     solving: '#ffcc00'
 }
-let WARRANTY_DETAIL = null
 
 export default ({loading}) => {
 
@@ -36,6 +35,7 @@ export default ({loading}) => {
     const [lastestDecicedDate, setLastestDecicedDate] = useState([])
     const [visible, setVisible] = useState(false)
     const [visibleDetail, setVisibleDetail] = useState(false)
+    const [warrantyDetail, setWarrantyDetail] = useState(null)
 
     const [page, setPage] = useState({
         perpage: 10,
@@ -154,9 +154,22 @@ export default ({loading}) => {
             align: 'center'
         },
         {
+            title: t('warranty-tickets.status'),
+            width: '150px',
+            dataIndex: 'status',
+            align: 'center',
+            render: status => <Tag color={STATUS_COLOR[status]}>{t(MAP_STATUS[status])}</Tag>
+        },
+        {
             title: t('warranty-tickets.total_product_request'),
             width: '300px',
             dataIndex: 'total_product_request',
+            align: 'center'
+        },
+        {
+            title: t('warranty-tickets.total_product_replace'),
+            width: '300px',
+            dataIndex: 'total_product_replace',
             align: 'center'
         },
         {
@@ -166,11 +179,11 @@ export default ({loading}) => {
             align: 'center'
         },
         {
-            title: t('warranty-tickets.status'),
-            width: '150px',
-            dataIndex: 'status',
-            align: 'center',
-            render: status => <Tag color={STATUS_COLOR[status]}>{t(MAP_STATUS[status])}</Tag>
+            title: t('warranty-tickets.total_refund_warranty'),
+            width: '300px',
+            dataIndex: 'total_refund_warranty',
+            render: v => <b>{convertCurrencyVN(v)}</b>,
+            align: 'center'
         },
         {
             title: t('warranty-tickets.created_time'),
@@ -199,7 +212,7 @@ export default ({loading}) => {
                     <Tooltip title={t('warranty-tickets.detail')}>
                         <Button type='primary' style={{marginRight: '8px'}} onClick={() => {
                             setVisibleDetail(true)
-                            WARRANTY_DETAIL = row
+                            setWarrantyDetail(row)
                         }}><Icon type="file-search"/></Button>
                     </Tooltip>
                 </div>
@@ -239,6 +252,6 @@ export default ({loading}) => {
             scroll={{x: true}}
         />
         <CreateWarranty t={t} visible={visible} setVisible={setVisible} reload={reloadTable}/>
-        <Detail detail={WARRANTY_DETAIL} visible={visibleDetail} setVisible={setVisibleDetail} reload={reloadTable} mapStatus={MAP_STATUS}/>
+        <Detail detail={warrantyDetail} setDetail={setWarrantyDetail} visible={visibleDetail} setVisible={setVisibleDetail} reload={reloadTable} mapStatus={MAP_STATUS}/>
     </Fragment>
 }

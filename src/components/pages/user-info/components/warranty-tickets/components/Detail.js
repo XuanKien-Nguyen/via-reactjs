@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import Modal from "antd/es/modal";
-import {PageHeader, Descriptions, Card, Col, Row, Button, Icon, Spin, Tag} from 'antd';
-import {getComments} from "../../../../../../services/warranty-tickets";
+import ReplyComment from "./create-comment";
+import {Button, Card, Carousel, Col, Icon, PageHeader, Row, Select, Spin, Tag, Tooltip} from 'antd';
+import {getComments, getListTypeComment} from "../../../../../../services/warranty-tickets";
 import {convertCurrencyVN} from "../../../../../../utils/helpers";
-import Meta from "antd/es/card/Meta";
-import Avatar from "antd/es/avatar";
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin/>;
 
@@ -17,44 +16,85 @@ const STATUS_COLOR = {
     solving: '#ffcc00'
 }
 
-export default ({detail, visible, setVisible, reload, mapStatus}) => {
+const TYPE_COLOR = {
+    replace: 'grey',
+    refund: '#99cc33',
+    reject: 'red',
+    retake: '#c7dcdd',
+    reply: '#ffcc00',
+    finish: 'blue'
+}
 
-    const [cmtList, setCmtList] = useState({})
+const MAP_TYPE = {}
+
+const {Option} = Select
+
+export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => {
+
+    const [cmtList, setCmtList] = useState([])
     const [loading, setLoading] = useState(false)
+    const [visibleCreateComment, setVisibleCreateComment] = useState(false)
+    const [filterType, setFilterType] = useState('')
     const {t} = useTranslation()
 
     useEffect(() => {
         setLoading(true)
-        const resp = {
-            "message": "Tìm kiếm thành công danh sách comment của ticket bảo hành #7",
-            "warrantyTicketCommentList": [
-                {
-                    "id": 14,
-                    "user_id": 11507,
-                    "warranty_ticket_id": 7,
-                    "type": "reply",
-                    "comment": "<div class='server-send-first-comment'><p>Yêu cầu bảo hành 1 Via Mẽo Hẹn Hò:</p><ul><li>100056771291791|fv5jsxyjuzv|WHUSG6MDCGVPCBJUDZ2Q2WO7ZYZ4IMOF|rosaswilkust@hotmail.com|rFenkk62|rosaswilkust@getnada.com</li></ul><p>thuộc đơn hàng #9</p><p><br>CKEditor 5 Framework logs errors and warnings to the console. The following list contains more detailed descriptions of those issues.</p><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-alignment-config-classname-already-defined\"><strong>alignment-config-classname-already-defined</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-alignment-config-classnames-are-missing\"><strong>alignment-config-classnames-are-missing</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-alignment-config-name-already-defined\"><strong>alignment-config-name-already-defined</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-alignment-config-name-not-recognized\"><strong>alignment-config-name-not-recognized</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-annotation-invalid-target\"><strong>annotation-invalid-target</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-annotationcollection-duplicated-item\"><strong>annotationcollection-duplicated-item</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-annotationcollection-not-existing-item\"><strong>annotationcollection-not-existing-item</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-annotationsuis-annotation-mismatch\"><strong>annotationsuis-annotation-mismatch</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-annotationsuis-missing-ui\"><strong>annotationsuis-missing-ui</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-annotationsuis-missing-ui\"><strong>annotationsuis-missing-ui</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-annotationsuis-missing-ui\"><strong>annotationsuis-missing-ui</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-annotationsuis-register-already-registered\"><strong>annotationsuis-register-already-registered</strong></a></h3><h3><a href=\"https://ckeditor.com/docs/ckeditor5/latest/support/error-codes.html#error-annotationsuis-register-invalid-interface\"><strong>annotationsuis-register-invalid-interface</strong></a></h3></div>",
-                    "image_url": null,
-                    "created_time": "2023-06-05 10:49:34",
-                    "createdby": "cykme08",
-                    "created_role": "customer"
+        getListTypeComment().then(resp => {
+            if (resp.status === 200) {
+                const data = resp.data.TYPE_OBJ
+                for (const key of Object.keys(data)) {
+                    MAP_TYPE[data[key]] = `warranty_comment_type.${key}`
                 }
-            ]
-        }
-        console.log('detail', detail);
-        setCmtList(resp.warrantyTicketCommentList)
-        setLoading(false)
+            }
+        }).catch(err => console.log(err?.response?.data?.message))
+            .finally(() => setLoading(false))
+    }, [])
 
-        // getComments(id).then(resp => {
-        //     console.log('resp', resp);
-        // }).catch(err => console.log('err', err))
-        //     .finally(() => setLoading(false))
+    useEffect(() => {
+        fetchComment()
     }, [detail])
+
+    const fetchComment = (type) => {
+        if (detail) {
+            setLoading(true)
+            getComments(detail.id, type).then(resp => {
+                if (resp.status === 200) {
+                    setCmtList(resp.data.warrantyTicketCommentList)
+                }
+            }).catch(err => console.log('err', err))
+                .finally(() => setLoading(false))
+        } else {
+            setCmtList([])
+        }
+    }
+
+    const viewListImage = (row) => {
+        if (row && row.image_url) {
+            Modal.info({
+                icon: null,
+                okText: t('common.close'),
+                content: <section id="slider-layout">
+                    <Carousel arrows autoplay={true}> {
+                        row.image_url.map(el =>
+                            <div className='slide-item'>
+                                <div className='slide-item-container'>
+                                    <img width={'100%'} alt='slide-item' src={el}/>
+                                </div>
+                            </div>)}
+                    </Carousel>
+                </section>
+            })
+        }
+    }
+
+    useEffect(() => {
+        fetchComment(filterType)
+    }, [filterType])
 
     return <div>
         <Modal
             className={'modal-body-80vh'}
-            width={'80%'}
+            width={'90%'}
             style={{maxWidth: '1140px'}}
             centered
             closable={false}
@@ -67,7 +107,11 @@ export default ({detail, visible, setVisible, reload, mapStatus}) => {
                 setVisible(false)
             }}
             footer={[
-                <Button key="submit" type="danger" disabled={loading} onClick={() => setVisible(false)}>
+                <Button key="submit" type="danger" disabled={loading} onClick={() => {
+                    setCmtList([])
+                    setDetail(null)
+                    setVisible(false)
+                }}>
                     {t('common.close')}
                 </Button>,
                 // <Button key="submit" type="primary" disabled={loading} onClick={() => {
@@ -84,61 +128,111 @@ export default ({detail, visible, setVisible, reload, mapStatus}) => {
                 {detail && <div
                     style={{
                         backgroundColor: '#F5F5F5',
-                        padding: 24,
+                        padding: 5,
                     }}
                 >
                     <PageHeader
+                        style={{border: '1px solid #e8e8e8'}}
                         ghost={false}
                         title={detail.title}
-                        subTitle={`#${detail.id}`}
+                        subTitle={<i>#{detail.id}</i>}
                         extra={[<Tag color={STATUS_COLOR[detail.status]}>{t(mapStatus[detail.status])}</Tag>]}
                     >
-                        <Descriptions size="small" column={3}>
-                            <Descriptions.Item label={t('order.purchase-id')}>
-                                {`#${detail.purchase_id}`}
-                            </Descriptions.Item>
-                            <Descriptions.Item label={t('warranty-tickets.category_price')}>
-                                {convertCurrencyVN(detail.category_price)}
-                            </Descriptions.Item>
-                            <Descriptions.Item/>
-                            <Descriptions.Item
-                                label={t('warranty-tickets.total_product_request')}>{detail.total_product_request}</Descriptions.Item>
-                            <Descriptions.Item
-                                label={t('warranty-tickets.total_product_reject')}>{detail.total_product_reject}</Descriptions.Item>
-                            <Descriptions.Item
-                                label={t('warranty-tickets.total_refund_warranty')}>{convertCurrencyVN(detail.total_refund_warranty)}</Descriptions.Item>
-                            <Descriptions.Item
-                                label={t('warranty-tickets.createdBy')}>{detail.createdby}</Descriptions.Item>
-                            <Descriptions.Item
-                                label={t('warranty-tickets.created_time')}>{detail.created_time}</Descriptions.Item>
-                            <br/>
-                            <Descriptions.Item
-                                label={t('warranty-tickets.latest_decidedby')}>{detail.latest_decidedby || '-'}</Descriptions.Item>
-                            <Descriptions.Item
-                                label={t('warranty-tickets.latest_decided_time')}>{detail.latest_decided_time || '-'}</Descriptions.Item>
-                        </Descriptions>
+                        <Row>
+                            <Col sm={24} lg={8} className={'m-b-10'}>
+                                <span>{t('order.purchase-id')}</span>: <b><i>{` #${detail.purchase_id}`}</i></b>
+                            </Col>
+                            <Col sm={24} lg={8} className={'m-b-10'}>
+                                <span>{t('warranty-tickets.category_price')}</span>: <b>{` ` + convertCurrencyVN(detail.category_price)}</b>
+                            </Col>
+                            <Col sm={24} lg={8} className={'m-b-10'}>
+                                <span>{t('warranty-tickets.total_refund_warranty')}</span>: <b>{convertCurrencyVN(detail.total_refund_warranty)}</b>
+                            </Col>
+                            <Col sm={24} lg={8} className={'m-b-10'}>
+                                <span>{t('warranty-tickets.total_product_request')}</span>: <b>{detail.total_product_request}</b>
+                            </Col>
+                            <Col sm={24} lg={8} className={'m-b-10'}>
+                                <span>{t('warranty-tickets.total_product_reject')}</span>: <b>{detail.total_product_reject}</b>
+                            </Col>
+                            <Col sm={24} lg={8} className={'m-b-10'}>
+                                <span>{t('warranty-tickets.total_product_replace')}</span>: <b>{detail.total_product_replace}</b>
+                            </Col>
+                            <Col sm={24} lg={8} className={'m-b-10'}>
+                                <span>{t('warranty-tickets.createdBy')}</span>: <b>{detail.createdby}</b>
+                            </Col>
+                            <Col sm={24} lg={16} className={'m-b-10'}>
+                                <span>{t('warranty-tickets.created_time')}</span>: <b>{detail.created_time}</b>
+                            </Col>
+                            <Col sm={24} lg={8} className={'m-b-10'}>
+                                <span>{t('warranty-tickets.latest_decidedby')}</span>: <b>{detail.latest_decidedby || '-'}</b>
+                            </Col>
+                            <Col sm={24} lg={16} className={'m-b-10'}>
+                                <span>{t('warranty-tickets.latest_decided_time')}</span>: <b>{detail.latest_decided_time || '-'}</b>
+                            </Col>
+                        </Row>
                     </PageHeader>
-                    {cmtList.map(el => {
+                    <p style={{marginTop: '10px', textAlign: 'right'}}>
+                        <Select defaultValue={filterType} value={filterType}
+                                style={{width: 120}}
+                                onChange={v => setFilterType(v)}>
+                            {[<Option
+                                value={''}>{t('filter.all')}
+                            </Option>,
+                                Object.keys(MAP_TYPE).map(k => <Option
+                                    value={k}>{t(MAP_TYPE[k])}</Option>)]}
+                        </Select> | <Button type={'primary'}
+                                            onClick={() => setVisibleCreateComment(true)}>{t('warranty_comment_type.REPLY_TYPE')}</Button>
+                    </p>
+                    {cmtList.length > 0 ? cmtList.map(el => {
                         return <Card
+                            bordered
                             style={{marginTop: 16}}
                             actions={[
-                                <Icon type="setting" key="setting"/>,
-                                <Icon type="edit" key="edit"/>,
-                                <Icon type="ellipsis" key="ellipsis"/>,
+                                <Tooltip title={t('recharge-tickets.image')}>
+                                    <div onClick={() => viewListImage(el)}>
+                                        <Icon type="file-image" key="setting"/> ({el.image_url?.length || 0})
+                                    </div>
+                                </Tooltip>,
+                                <Tooltip title={t('warranty-tickets.created_time')}>
+                                    <span className={'m-t-10'}>{el.created_time}</span>
+                                </Tooltip>
                             ]}
                         >
-                            <Meta
-                                avatar={
-                                    <div>
-                                        <Avatar src={require('../../../../../../assets/img/avatar.png')}/>
-                                    </div>
-                                }
-                                title="Card title"
-                                description={<div dangerouslySetInnerHTML={{__html: el.comment}}/>}
-                            />
-                        </Card>
-                    })}
+                            <Row gutter={30}>
+                                <Col sm={24} lg={4} style={{
+                                    textAlign: 'center',
+                                    border: '1px solid #eaeaea',
+                                    padding: '35px',
+                                    marginBottom: '10px'
+                                }}>
+                                    <img src={require('../../../../../../assets/img/avatar.png')} alt=""
+                                         className="src"/>
+                                    <p style={{textAlign: 'center', fontSize: '12px'}}>{`@${el.createdby}`}<i
+                                        className="id_text">{` #${el.user_id}`}</i></p>
+                                    <Tag
+                                        color={el.created_role === 'admin' ? 'red' : 'blue'}>{el.created_role}</Tag>
+                                    <Tag style={{
+                                        position: 'absolute',
+                                        top: '0px',
+                                        right: '-8px',
+                                        borderBottomRightRadius: '0px',
+                                        borderTopRightRadius: '0px',
+                                        borderTopLeftRadius: '0px'
+                                    }}
+                                         color={TYPE_COLOR[el.type]}><b>{t(MAP_TYPE[el.type])}</b></Tag>
+                                    <br/>
+                                </Col>
 
+                                <Col sm={24} lg={20} style={{overflow: 'auto'}}>
+                                    <p style={{marginBottom: '0px', textAlign: 'right'}}><i>#{el.id}</i></p>
+                                    <div dangerouslySetInnerHTML={{__html: el.comment}}/>
+                                </Col>
+                            </Row>
+                        </Card>
+                    }) : <p style={{textAlign: 'center'}}>{t('common.no-data')}</p>}
+                    {viewListImage()}
+                    <ReplyComment visible={visibleCreateComment} setVisible={setVisibleCreateComment} t={t}
+                                  detail={detail}/>
                 </div>}
             </Spin>
         </Modal>
