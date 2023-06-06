@@ -135,52 +135,53 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                         style={{border: '1px solid #e8e8e8'}}
                         ghost={false}
                         title={detail.title}
-                        subTitle={`#${detail.id}`}
+                        subTitle={<i>#{detail.id}</i>}
                         extra={[<Tag color={STATUS_COLOR[detail.status]}>{t(mapStatus[detail.status])}</Tag>]}
                     >
                         <Row>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('order.purchase-id')}</span>: {` #${detail.purchase_id}`}
+                                <span>{t('order.purchase-id')}</span>: <b><i>{` #${detail.purchase_id}`}</i></b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.category_price')}</span>: {` ` + convertCurrencyVN(detail.category_price)}
+                                <span>{t('warranty-tickets.category_price')}</span>: <b>{` ` + convertCurrencyVN(detail.category_price)}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.total_refund_warranty')}</span>: {convertCurrencyVN(detail.total_refund_warranty)}
+                                <span>{t('warranty-tickets.total_refund_warranty')}</span>: <b>{convertCurrencyVN(detail.total_refund_warranty)}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.total_product_request')}</span>: {detail.total_product_request}
+                                <span>{t('warranty-tickets.total_product_request')}</span>: <b>{detail.total_product_request}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.total_product_reject')}</span>: {detail.total_product_reject}
+                                <span>{t('warranty-tickets.total_product_reject')}</span>: <b>{detail.total_product_reject}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.total_product_replace')}</span>: {detail.total_product_replace}
+                                <span>{t('warranty-tickets.total_product_replace')}</span>: <b>{detail.total_product_replace}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.createdBy')}</span>: {detail.createdby}
+                                <span>{t('warranty-tickets.createdBy')}</span>: <b>{detail.createdby}</b>
                             </Col>
                             <Col sm={24} lg={16} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.created_time')}</span>: {detail.created_time}
+                                <span>{t('warranty-tickets.created_time')}</span>: <b>{detail.created_time}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.latest_decidedby')}</span>: {detail.latest_decidedby || '-'}
+                                <span>{t('warranty-tickets.latest_decidedby')}</span>: <b>{detail.latest_decidedby || '-'}</b>
                             </Col>
                             <Col sm={24} lg={16} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.latest_decided_time')}</span>: {detail.latest_decided_time || '-'}
+                                <span>{t('warranty-tickets.latest_decided_time')}</span>: <b>{detail.latest_decided_time || '-'}</b>
                             </Col>
                         </Row>
                     </PageHeader>
                     <p style={{marginTop: '10px', textAlign: 'right'}}>
                         <Select defaultValue={filterType} value={filterType}
-                                style={{width: 150}}
+                                style={{width: 120}}
                                 onChange={v => setFilterType(v)}>
                             {[<Option
                                 value={''}>{t('filter.all')}
                             </Option>,
                                 Object.keys(MAP_TYPE).map(k => <Option
                                     value={k}>{t(MAP_TYPE[k])}</Option>)]}
-                        </Select> | <Button type={'primary'} onClick={() => setVisibleCreateComment(true)}>{t('warranty_comment_type.REPLY_TYPE')}</Button>
+                        </Select> | <Button type={'primary'}
+                                            onClick={() => setVisibleCreateComment(true)}>{t('warranty_comment_type.REPLY_TYPE')}</Button>
                     </p>
                     {cmtList.length > 0 ? cmtList.map(el => {
                         return <Card
@@ -223,14 +224,15 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                                 </Col>
 
                                 <Col sm={24} lg={20} style={{overflow: 'auto'}}>
-                                    <p style={{marginBottom: '0px', textAlign: 'right'}}>#{el.id}</p>
+                                    <p style={{marginBottom: '0px', textAlign: 'right'}}><i>#{el.id}</i></p>
                                     <div dangerouslySetInnerHTML={{__html: el.comment}}/>
                                 </Col>
                             </Row>
                         </Card>
                     }) : <p style={{textAlign: 'center'}}>{t('common.no-data')}</p>}
                     {viewListImage()}
-                    <ReplyComment visible={visibleCreateComment} setVisible={setVisibleCreateComment} t={t} detail={detail} />
+                    <ReplyComment visible={visibleCreateComment} setVisible={setVisibleCreateComment} t={t}
+                                  detail={detail}/>
                 </div>}
             </Spin>
         </Modal>

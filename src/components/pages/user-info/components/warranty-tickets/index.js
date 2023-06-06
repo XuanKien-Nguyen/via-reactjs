@@ -154,6 +154,13 @@ export default ({loading}) => {
             align: 'center'
         },
         {
+            title: t('warranty-tickets.status'),
+            width: '150px',
+            dataIndex: 'status',
+            align: 'center',
+            render: status => <Tag color={STATUS_COLOR[status]}>{t(MAP_STATUS[status])}</Tag>
+        },
+        {
             title: t('warranty-tickets.total_product_request'),
             width: '300px',
             dataIndex: 'total_product_request',
@@ -177,13 +184,6 @@ export default ({loading}) => {
             dataIndex: 'total_refund_warranty',
             render: v => <b>{convertCurrencyVN(v)}</b>,
             align: 'center'
-        },
-        {
-            title: t('warranty-tickets.status'),
-            width: '150px',
-            dataIndex: 'status',
-            align: 'center',
-            render: status => <Tag color={STATUS_COLOR[status]}>{t(MAP_STATUS[status])}</Tag>
         },
         {
             title: t('warranty-tickets.created_time'),
