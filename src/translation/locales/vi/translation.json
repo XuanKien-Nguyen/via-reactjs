@@ -357,7 +357,7 @@
         "ABANDON_STATUS": "Tạm khóa"
     },
     "message": {
-        "error-downloading": "Có lỗi xảy ra khi tải xuống",
+        "error_downloading": "Có lỗi xảy ra khi tải xuống",
         "invalid_purchase": "Số lượng mua không họp lệ",
         "success_purchase": "Mua thành công",
         "error_get_purchase": "Có lỗi xảy ra khi lấy thông tin đơn hàng",

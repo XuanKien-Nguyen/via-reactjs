@@ -357,7 +357,7 @@
         "ABANDON_STATUS": "Ban"
     },
     "message": {
-        "error-downloading": "Something wrong when downloading",
+        "error_downloading": "Something wrong when downloading",
         "invalid_purchase": "Invalid purchase quantity",
         "success_purchase": "Purchase successfully",
         "error_get_purchase": "An error occurred while retrieving purchase information",
