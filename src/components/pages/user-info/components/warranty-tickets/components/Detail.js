@@ -181,6 +181,7 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                                 Object.keys(MAP_TYPE).map(k => <Option
                                     value={k}>{t(MAP_TYPE[k])}</Option>)]}
                         </Select> | <Button type={'primary'}
+                                            disabled={detail.status === 'closed'}
                                             onClick={() => setVisibleCreateComment(true)}>{t('warranty_comment_type.REPLY_TYPE')}</Button>
                     </p>
                     {cmtList.length > 0 ? cmtList.map(el => {
