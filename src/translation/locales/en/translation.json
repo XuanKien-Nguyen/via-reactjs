@@ -205,7 +205,7 @@
         "lastest_decided_by": "Lastest Decided By",
         "lastest_decided_time": "Lastest Decided Time"
     },
-    "warranty-tickets":  {
+    "warranty_tickets":  {
         "title": "Title",
         "status": "Status",
         "total_product_request": "Total product request",
@@ -220,8 +220,8 @@
         "comment": "Comment",
         "action": "Action",
         "detail": "Detail",
-        "create-warranty": "Create new warranty tickets",
-        "create-comment-warranty": "Create warranty comment"
+        "create_warranty": "Create new warranty tickets",
+        "create_comment_warranty": "Create warranty comment"
     },
     "password": {
         "button": "Change Password",

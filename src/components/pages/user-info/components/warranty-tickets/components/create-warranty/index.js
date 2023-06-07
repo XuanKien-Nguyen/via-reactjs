@@ -17,7 +17,7 @@ export default ({visible, setVisible, t, reload}) => {
             closable={false}
             visible={visible}
             maskClosable={false}
-            title={t('warranty-tickets.create-warranty')}
+            title={t('warranty_tickets.create_warranty')}
             onOk={() => {
             }}
             onCancel={() => () => {

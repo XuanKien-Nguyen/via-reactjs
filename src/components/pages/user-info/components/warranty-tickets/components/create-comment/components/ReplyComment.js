@@ -99,7 +99,7 @@ const Wrapper = (props) => {
     return <Fragment>
         {props.visible && <Form onSubmit={handleSubmit}>
             <div style={{border: '1px solid #eaeaea', padding: '20px'}}>
-                <h3>{t('warranty-tickets.title')}: <i>{detail.title}</i>
+                <h3>{t('warranty_tickets.title')}: <i>{detail.title}</i>
                 </h3>
                 <p style={{color: 'rgba(0, 0, 0, 0.85)', marginTop: '10px'}}>
                     <span style={{color: 'red'}}>*</span>

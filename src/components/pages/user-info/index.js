@@ -32,6 +32,7 @@ const BREAD_CRUMB = {
     'recharge-history': 'profile.recharge_history',
     'balance-history': 'profile.balance_history',
     'recharge-tickets': 'profile.recharge_tickets',
+    'warranty-tickets': 'profile.warranty_tickets',
     'download-history': 'profile.download_history'
 }
 
@@ -137,7 +138,7 @@ const UserInfo = () => {
 
     const handleRegisterPartner = () => {
         if (!domain) {
-            setErrorMessage(t('profile.enter-domain'))
+            setErrorMessage(t('profile.enter_domain'))
             return
         }
         setPending(true)

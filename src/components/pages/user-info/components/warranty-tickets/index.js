@@ -77,25 +77,25 @@ export default ({loading}) => {
             <FilterItem defaultValue={title}
                         setValue={setTitle}
                         type={'text'}
-                        title={t('warranty-tickets.title')}
+                        title={t('warranty_tickets.title')}
                         allowClear={true}/>,
             <FilterItem defaultValue={comment}
                         setValue={setComment}
                         type={'text'}
-                        title={t('warranty-tickets.comment')}
+                        title={t('warranty_tickets.comment')}
                         allowClear={true}/>,
             <FilterItem defaultValue={status} setValue={setStatus} options={getStatusListMap()} type={'select'}
-                        title={t('warranty-tickets.status')}/>,
+                        title={t('warranty_tickets.status')}/>,
             <FilterItem defaultValue={lastestDecicedBy}
                         setValue={setLastestDecicedBy}
                         type={'text'}
-                        title={t('warranty-tickets.latest_decidedby')}
+                        title={t('warranty_tickets.latest_decidedby')}
                         allowClear={true}/>,
             <FilterItem defaultValue={createdDate} setValue={setCreatedDate} type={'date'}
-                        placeholder={[t('filter.from'), t('filter.to')]} title={t('warranty-tickets.created_time')}/>,
+                        placeholder={[t('filter.from'), t('filter.to')]} title={t('warranty_tickets.created_time')}/>,
             <FilterItem defaultValue={lastestDecicedDate} setValue={setLastestDecicedDate} type={'date'}
                         placeholder={[t('filter.from'), t('filter.to')]}
-                        title={t('warranty-tickets.latest_decided_time')}/>,
+                        title={t('warranty_tickets.latest_decided_time')}/>,
         ]
     }
 
@@ -142,75 +142,75 @@ export default ({loading}) => {
             align: 'center',
         },
         {
-            title: t('warranty-tickets.title'),
+            title: t('warranty_tickets.title'),
             dataIndex: 'title',
             width: '250px',
             align: 'center'
         },
         {
-            title: t('warranty-tickets.category_price'),
+            title: t('warranty_tickets.category_price'),
             dataIndex: 'category_price',
             render: v => <b>{convertCurrencyVN(v)}</b>,
             width: '250px',
             align: 'center'
         },
         {
-            title: t('warranty-tickets.status'),
+            title: t('warranty_tickets.status'),
             width: '150px',
             dataIndex: 'status',
             align: 'center',
             render: status => <Tag color={STATUS_COLOR[status]}>{t(MAP_STATUS[status])}</Tag>
         },
         {
-            title: t('warranty-tickets.total_product_request'),
+            title: t('warranty_tickets.total_product_request'),
             width: '300px',
             dataIndex: 'total_product_request',
             align: 'center'
         },
         {
-            title: t('warranty-tickets.total_product_replace'),
+            title: t('warranty_tickets.total_product_replace'),
             width: '300px',
             dataIndex: 'total_product_replace',
             align: 'center'
         },
         {
-            title: t('warranty-tickets.total_product_reject'),
+            title: t('warranty_tickets.total_product_reject'),
             width: '300px',
             dataIndex: 'total_product_reject',
             align: 'center'
         },
         {
-            title: t('warranty-tickets.total_refund_warranty'),
+            title: t('warranty_tickets.total_refund_warranty'),
             width: '300px',
             dataIndex: 'total_refund_warranty',
             render: v => <b>{convertCurrencyVN(v)}</b>,
             align: 'center'
         },
         {
-            title: t('warranty-tickets.created_time'),
+            title: t('warranty_tickets.created_time'),
             width: '200px',
             dataIndex: 'created_time',
             align: 'center'
         },
         {
-            title: t('warranty-tickets.latest_decidedby'),
+            title: t('warranty_tickets.latest_decidedby'),
             width: '200px',
             dataIndex: 'latest_decidedby',
             align: 'center'
         },
         {
-            title: t('warranty-tickets.latest_decided_time'),
+            title: t('warranty_tickets.latest_decided_time'),
             width: '200px',
             dataIndex: 'latest_decided_time',
             align: 'center'
         },
         {
-            title: t("warranty-tickets.action"),
+            title: t("warranty_tickets.action"),
             align: 'center',
             fixed: 'right',
             render: row => {
                 return <div>
-                    <Tooltip title={t('warranty-tickets.detail')}>
+                    <Tooltip title={t('warranty_tickets.detail')}>
                         <Button type='primary' style={{marginRight: '8px'}} onClick={() => {
                             setVisibleDetail(true)
                             setWarrantyDetail(row)
@@ -240,7 +240,7 @@ export default ({loading}) => {
         <p style={{textAlign: 'right'}}>
             <Button type={"primary"} onClick={() => {
                 setVisible(true)
-            }}><Icon type={'plus'}/> {t('warranty-tickets.create-warranty')}</Button>
+            }}><Icon type={'plus'}/> {t('warranty_tickets.create_warranty')}</Button>
         </p>
         <TableCommon
             className='table-order'

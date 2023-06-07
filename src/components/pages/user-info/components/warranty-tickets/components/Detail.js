@@ -100,7 +100,7 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
             closable={false}
             visible={visible}
             maskClosable={false}
-            title={t('warranty-tickets.detail')}
+            title={t('warranty_tickets.detail')}
             onOk={() => {
             }}
             onCancel={() => () => {
@@ -143,31 +143,31 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                                 <span>{t('order.purchase_id')}</span>: <b><i>{` #${detail.purchase_id}`}</i></b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.category_price')}</span>: <b>{` ` + convertCurrencyVN(detail.category_price)}</b>
+                                <span>{t('warranty_tickets.category_price')}</span>: <b>{` ` + convertCurrencyVN(detail.category_price)}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.total_refund_warranty')}</span>: <b>{convertCurrencyVN(detail.total_refund_warranty)}</b>
+                                <span>{t('warranty_tickets.total_refund_warranty')}</span>: <b>{convertCurrencyVN(detail.total_refund_warranty)}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.total_product_request')}</span>: <b>{detail.total_product_request}</b>
+                                <span>{t('warranty_tickets.total_product_request')}</span>: <b>{detail.total_product_request}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.total_product_reject')}</span>: <b>{detail.total_product_reject}</b>
+                                <span>{t('warranty_tickets.total_product_reject')}</span>: <b>{detail.total_product_reject}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.total_product_replace')}</span>: <b>{detail.total_product_replace}</b>
+                                <span>{t('warranty_tickets.total_product_replace')}</span>: <b>{detail.total_product_replace}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.createdBy')}</span>: <b>{detail.createdby}</b>
+                                <span>{t('warranty_tickets.createdBy')}</span>: <b>{detail.createdby}</b>
                             </Col>
                             <Col sm={24} lg={16} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.created_time')}</span>: <b>{detail.created_time}</b>
+                                <span>{t('warranty_tickets.created_time')}</span>: <b>{detail.created_time}</b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.latest_decidedby')}</span>: <b>{detail.latest_decidedby || '-'}</b>
+                                <span>{t('warranty_tickets.latest_decidedby')}</span>: <b>{detail.latest_decidedby || '-'}</b>
                             </Col>
                             <Col sm={24} lg={16} className={'m-b-10'}>
-                                <span>{t('warranty-tickets.latest_decided_time')}</span>: <b>{detail.latest_decided_time || '-'}</b>
+                                <span>{t('warranty_tickets.latest_decided_time')}</span>: <b>{detail.latest_decided_time || '-'}</b>
                             </Col>
                         </Row>
                     </PageHeader>
@@ -194,7 +194,7 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                                         <Icon type="file-image" key="setting"/> ({el.image_url?.length || 0})
                                     </div>
                                 </Tooltip>,
-                                <Tooltip title={t('warranty-tickets.created_time')}>
+                                <Tooltip title={t('warranty_tickets.created_time')}>
                                     <span className={'m-t-10'}>{el.created_time}</span>
                                 </Tooltip>
                             ]}

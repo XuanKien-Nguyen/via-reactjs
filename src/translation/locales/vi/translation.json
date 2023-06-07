@@ -205,7 +205,7 @@
         "lastest_decided_by": "Người quyết định cuối cùng",
         "lastest_decided_time": "Thời gian quyết định cuối cùng"
     },
-    "warranty-tickets":  {
+    "warranty_tickets":  {
         "title": "Tiêu đề",
         "status": "Trạng thái",
         "total_product_request": "Tổng sản phẩm yêu cầu bảo hành",
@@ -220,8 +220,8 @@
         "comment": "Bình luận",
         "action": "Thao tác",
         "detail": "Chi tiết",
-        "create-warranty": "Tạo mới yêu cầu bảo hành",
-        "create-comment-warranty": "Tạo bình luận bảo hành"
+        "create_warranty": "Tạo mới yêu cầu bảo hành",
+        "create_comment_warranty": "Tạo bình luận bảo hành"
     },
     "password": {
         "button": "Đổi mật khẩu",
