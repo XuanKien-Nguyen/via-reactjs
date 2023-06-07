@@ -115,10 +115,76 @@ const Register = (props) => {
         callback();
     };
 
-    const validateCheckExistServer = async (rule, value, callback, options) => {
+    const validateCheckExistUserName = (e, options) => {
+        const value = e.target.value;
         const {setValidateStatus, setMessage, api, fieldName, title, arrFunc} = options
+        setValidateStatus("validating")
+        setMessage("")
+        if (arrFunc) {
+            let resultCheck = true
+            for (let i = 0; i < arrFunc.length; i++) {
+                const result = arrFunc[i].func(value)
+                if (!result) {
+                    ref.current[fieldName] = {
+                        isValid: false,
+                    }
+                    setValidateStatus('error')
+                    setMessage(arrFunc[i].message)
+                    resultCheck = false
+                    break
+                }
+            }
+            if (resultCheck) {
+                const body = {}
+                body[fieldName] = value
+                api(body).then(resp => {
+                    if (resp?.status === 409) {
+                        setValidateStatus("error")
+                        setMessage(`${title} đã tồn tại trên hệ thống`)
+                        ref.current[fieldName] = {
+                            isValid: false,
+                            count: ref.current[fieldName].count + 1
+                        }
+                    } else {
+                        setValidateStatus("success")
+                        setMessage("")
+                        ref.current[fieldName] = {
+                            isValid: true,
+                            count: ref.current[fieldName].count + 1
+                        }
+                    }
+                }).catch(() => {
+                    setValidateStatus("error")
+                    setMessage(`${title} đã tồn tại trên hệ thống`)
+                    ref.current[fieldName] = {
+                        isValid: false,
+                        count: ref.current[fieldName].count + 1
+                    }
+                })
+            }
+        }
+    }
+
+    const validateCheckExistServer = async (rule, value, callback, options) => {
+        const { setValidateStatus, setMessage, api, fieldName, title, arrFunc } = options
         clearTimeout(debounce[fieldName])
-        const checkExisted = (time) => { setTimeout(async () => {
+        if (arrFunc) {
+            arrFunc.forEach(el => {
+                const result = el.func(value)
+                if (!result) {
+                    ref.current[fieldName] = {
+                        isValid: false,
+                    }
+                    setValidateStatus('error')
+                    setMessage(el.message)
+                    throw Error('error')
+                }
+            })
+        }
+        if (value) {
+            setValidateStatus("validating")
+            setMessage("")
+            debounce[fieldName] = setTimeout(async () => {
                 const body = {}
                 body[fieldName] = value
                 api(body).then(resp => {
@@ -147,51 +213,7 @@ const Register = (props) => {
                     }
                     callback(`${title} đã tồn tại trên hệ thống`)
                 })
-            }, time)}
-        if (fieldName === 'username') {
-            const el = document.getElementById('username');
-            el.addEventListener('blur', () => {
-                setValidateStatus("validating")
-                setMessage("")
-                if (arrFunc) {
-                    let resultCheck = true
-                    for (let i = 0; i < arrFunc.length; i++) {
-                        const result = arrFunc[i].func(value)
-                        if (!result) {
-                            ref.current[fieldName] = {
-                                isValid: false,
-                            }
-                            setValidateStatus('error')
-                            setMessage(arrFunc[i].message)
-                            resultCheck = false
-                            break
-                        }
-                    }
-                    if (resultCheck) {
-                        checkExisted(0)
-                    }
-                }
-           
-            })
-        } else {
-            if (arrFunc) {
-                arrFunc.forEach(el => {
-                    const result = el.func(value)
-                    if (!result) {
-                        ref.current[fieldName] = {
-                            isValid: false,
-                        }
-                        setValidateStatus('error')
-                        setMessage(el.message)
-                        throw Error('error')
-                    }
-                })
-            }
-            if (value) {
-                setValidateStatus("validating")
-                setMessage("")
-                debounce[fieldName] = checkExisted(500)
-            }
+            }, 500)
         }
     }
     const handleSubmit = () => {
@@ -233,21 +255,18 @@ const Register = (props) => {
                                validateStatus={validateUserStatus}
                                help={helpValidateUser}
                     >
-                        {getFieldDecorator('username', {
-                            rules: [
-                                {
-                                    validator: (rule, value, callback) => validateCheckExistServer(rule, value, callback,
-                                        {
-                                            setValidateStatus: setValidateUserStatus,
-                                            setMessage: setHelpValidateUser,
-                                            api: checkExistUsername,
-                                            fieldName: 'username',
-                                            title: 'Tên tài khoản',
-                                            arrFunc: validUsername
-                                        }),
-                                }],
-                        })(
+                        {getFieldDecorator('username', {})(
                             <Input
+                                onBlur={(e) => {
+                                    validateCheckExistUserName(e, {
+                                        setValidateStatus: setValidateUserStatus,
+                                        setMessage: setHelpValidateUser,
+                                        api: checkExistUsername,
+                                        fieldName: 'username',
+                                        title: 'Tên tài khoản',
+                                        arrFunc: validUsername
+                                    })
+                                }}
                                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                 placeholder="Tên đăng nhập"
                             />,
