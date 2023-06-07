@@ -80,8 +80,8 @@ export default ({loading}) => {
                         currentPage: resp?.data?.currentPage === 0 ? 1 : resp?.data?.currentPage ,
                     }
                     setPage(pageInfo)
-                    setTotalRechargeAmount(resp?.data?.toltalAmountSuccessRecharge || 0);
-                    setTotalRechargeBonus(resp?.data?.toltalBonusSuccessRecharge || 0);
+                    setTotalRechargeAmount(resp?.data?.totalAmountSuccessRecharge || 0);
+                    setTotalRechargeBonus(resp?.data?.totalBonusSuccessRecharge || 0);
                 }
             }).catch(() => message.error('Có lỗi xảy ra khi lấy lịch sử nạp'))
                 .finally(() => loading(false))

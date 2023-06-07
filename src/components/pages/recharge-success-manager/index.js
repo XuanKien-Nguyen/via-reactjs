@@ -134,7 +134,7 @@ export default () => {
                         currentPage: resp.data.currentPage === 0 ? 1 : resp.data.currentPage,
                     })
                     setTotalAmount(resp.data.totalSuccessRechargeAmount)
-                    setTotalBonus(resp.data.toltalBonusSuccessRecharge)
+                    setTotalBonus(resp.data.totalBonusSuccessRecharge)
                 }
             },
             reject: (err) => console.log(err)
