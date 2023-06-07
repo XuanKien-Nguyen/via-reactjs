@@ -12,7 +12,7 @@ export default ({loading, visible, setVisible, reload, t}) => {
         closable={false}
         visible={visible}
         maskClosable={false}
-        title={t('recharge-tickets.modal-title')}
+        title={t('recharge_tickets.modal_title')}
         onCancel={() => () => {
             setVisible(false)
         }}

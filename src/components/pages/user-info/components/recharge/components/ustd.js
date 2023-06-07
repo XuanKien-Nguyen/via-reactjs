@@ -40,7 +40,7 @@ export default ({loading, copy, changTab}) => {
 
     const handleUpdateBinanceWallet = () => {
         if (!binanceWallet) {
-            setErrorMessage(t('recharge.wallet-error'))
+            setErrorMessage(t('recharge.wallet_error'))
             return
         }
         setPending(true)
@@ -67,7 +67,7 @@ export default ({loading, copy, changTab}) => {
                 }
             }}
             maskClosable={false}
-            title={t('recharge.wallet-title')}
+            title={t('recharge.wallet_title')}
             visible={visible}
             footer={[
                 <Fragment>
@@ -82,16 +82,16 @@ export default ({loading, copy, changTab}) => {
             ]}
         >
             {!isHaveWalletAddress() &&
-            <b style={{color: 'blue'}}>{t('recharge.wallet-empty')}</b>}
-            <p className={`m-t-10`}>{t('recharge.wallet-placeholder')}: </p>
-            <Input placeholder={t('recharge.wallet-placeholder')} value={binanceWallet}
+            <b style={{color: 'blue'}}>{t('recharge.wallet_empty')}</b>}
+            <p className={`m-t-10`}>{t('recharge.wallet_placeholder')}: </p>
+            <Input placeholder={t('recharge.wallet_placeholder')} value={binanceWallet}
                    onChange={e => setBinanceWallet(e.target.value)}/>
             <b style={{color: 'red'}}>{errorMessage}</b>
         </Modal>
-        <p>{t('recharge.wallet-current')}: <Tag color="#2db7f5"
+        <p>{t('recharge.wallet_current')}: <Tag color="#2db7f5"
                                              style={{color: 'white'}}>{user?.usdttrc20_wallet_address}</Tag> <a
-            onClick={() => setVisible(true)}>{t('recharge.wallet-click')}</a> {t('recharge.wallet-text')}</p>
-        {t('recharge.wallet-content')}:
+            onClick={() => setVisible(true)}>{t('recharge.wallet_click')}</a> {t('recharge.wallet_text')}</p>
+        {t('recharge.wallet_content')}:
         <Row>
             <Col className={'ustd-address'}>{ustdAddress}</Col>
             <p className={'m-t-10'} style={{textAlign: 'center'}}>

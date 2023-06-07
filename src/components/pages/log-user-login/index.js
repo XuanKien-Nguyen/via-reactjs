@@ -39,13 +39,13 @@ export default () => {
         getLogUserStatus().then(resp => {
             if (resp.status === 200) {
                 const userLoginStatus = resp.data?.STATUS_OBJ || [];
-                let loginStatus = [{label: 'download-type.ALL', value: ''}]
+                let loginStatus = [{label: 'download_type.ALL', value: ''}]
                 for (const key of Object.keys(userLoginStatus)) {
                     loginStatus.push({
-                        label: `user-login-status.${key}`,
+                        label: `user_login_status.${key}`,
                         value: userLoginStatus[key]
                     })
-                    MAP_TYPE[key] = `user-login-status.${key}`
+                    MAP_TYPE[key] = `user_login_status.${key}`
                 }
                 console.log(MAP_TYPE)
                 setLoginStatusList(loginStatus)

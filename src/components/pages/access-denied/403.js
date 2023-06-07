@@ -10,8 +10,8 @@ const AccessDenied = () => {
     return <div id='not_found'>
         <h1>403</h1>
         <h2>Oops!</h2>
-        <p>{t('access-denied.title')}</p>
-        <p>{t('access-denied.content')}</p>
+        <p>{t('access_denied.title')}</p>
+        <p>{t('access_denied.content')}</p>
     </div>
 }
 

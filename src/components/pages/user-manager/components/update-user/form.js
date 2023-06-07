@@ -23,7 +23,7 @@ const Wrapper = (props) => {
             const lstStatus = []
             for (const key of Object.keys(data)) {
                 lstStatus.push({
-                    label: t(`user-manager.${key}`),
+                    label: t(`user_manager.${key}`),
                     value: data[key]
                 })
             }

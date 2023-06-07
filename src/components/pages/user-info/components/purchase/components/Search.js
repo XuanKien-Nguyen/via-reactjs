@@ -75,7 +75,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, 
                 setPageInfo(pageInfo)
                 setPurchaseList(resp?.data?.newPurchaseList || [])
             }
-        }).catch(() => message.error('Có lỗi xảy ra khi lấy thông tin đơn hàng'))
+        }).catch(() => message.error(t('message.error_get_purchase')))
             .finally(() => loading(false))
     }
 
@@ -90,7 +90,7 @@ export default ({setPurchaseList, api, loading, setPageInfo, page, getTypeList, 
                     <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                 placeholder={[t('filter.from'), t('filter.to')]} title={t('order.date')}/>
                     <FilterItem defaultValue={purchaseType} setValue={setPurchaseType} options={getTypeList()}
-                                type={'select'} title={t('filter.payment-method')}/>
+                                type={'select'} title={t('filter.payment_method')}/>
                     <FilterItem defaultValue={status} setValue={setStatus} options={getStatusList()} type={'select'}
                                 title={t('filter.status')}/>
                 </Panel>

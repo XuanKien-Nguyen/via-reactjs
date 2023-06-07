@@ -52,7 +52,7 @@ export default ({setList, api, loading, setPageInfo, page, t, getDownloadTypeLis
                 setPageInfo(pageInfo)
                 setList(resp?.data?.logDownloadPurchaseList || [])
             }
-        }).catch(() => message.error('Có lỗi xảy ra khi lấy lịch sử tải xuống'))
+        }).catch(() => message.error(t('message.error_get_download')))
             .finally(() => loading(false))
     }
 

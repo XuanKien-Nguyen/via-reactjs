@@ -281,7 +281,7 @@ export default ({id, loading}) => {
                          datasource={getDsSP()}
                          scrollToID={'scroll-id'}
                          columns={columnSP}/>
-            {/*<Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} locale={{emptyText: t('common.no-data')}}/>*/}
+            {/*<Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} locale={{emptyText: t('common.no_data')}}/>*/}
             {/*{product && buy()}*/}
         </Fragment>}
     </div>

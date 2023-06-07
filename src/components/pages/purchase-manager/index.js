@@ -161,10 +161,10 @@ export default () => {
         getPurchaseType().then(resp => {
                 if (resp.status === 200) {
                     const data = resp.data?.TYPE_OBJ || []
-                    const lstType = [{label: 'purchase-type.ALL', value: ''}]
+                    const lstType = [{label: 'purchase_type.ALL', value: ''}]
                     for (const key of Object.keys(data)) {
                         lstType.push({
-                            label: `purchase-type.${key}`,
+                            label: `purchase_type.${key}`,
                             value: data[key]
                         })
                     }
@@ -175,10 +175,10 @@ export default () => {
         getPurchaseStatus().then(resp => {
                 if (resp.status === 200) {
                     const data = resp.data?.STATUS_OBJ || []
-                    const lstStatus = [{label: 'purchase-status.ALL', value: ''}]
+                    const lstStatus = [{label: 'purchase_status.ALL', value: ''}]
                     for (const key of Object.keys(data)) {
                         lstStatus.push({
-                            label: `purchase-status.${key}`,
+                            label: `purchase_status.${key}`,
                             value: data[key]
                         })
                     }

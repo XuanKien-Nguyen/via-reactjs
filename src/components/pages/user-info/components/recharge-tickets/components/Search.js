@@ -100,13 +100,13 @@ export default ({ setRechargeTicketList, api, loading, setPageInfo, page, getTic
                     <div><Icon type="filter" theme="filled" />&nbsp;{t('filter.title')}</div>
                 </div>}>     
                     <FilterItem defaultValue={content} setValue={setContent} type={'text'} title={t('filter.content')} />
-                    <FilterItem defaultValue={lastestDecidedBy} setValue={setLastestDecidedBy} type={'text'} title={t('filter.lastest-decided-by')} />
+                    <FilterItem defaultValue={lastestDecidedBy} setValue={setLastestDecidedBy} type={'text'} title={t('filter.lastest_decided_by')} />
                     <FilterItem defaultValue={status} setValue={setStatus} options={getTicketsStatusList()} type={'select'}
                         title={t('filter.type')} />
                     <FilterItem defaultValue={createDate} setValue={setCreateDate} type={'date'}
                         placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')} />
                     <FilterItem defaultValue={lastestDate} setValue={setLastestDate} type={'date'}
-                        placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.lastest-decided-date')} />
+                        placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.lastest_decided_date')} />
                 </Panel>
             </Collapse>
             <Button className='reset-filter-btn' type="primary" size='small' icon="reload"

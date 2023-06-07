@@ -43,7 +43,7 @@ export default ({loading}) => {
             align: 'center'
         },
         {
-            title: t('order.payment-method'),
+            title: t('order.payment_method'),
             dataIndex: 'purchase_type',
             align: 'center',
             width: '150px',
@@ -75,7 +75,7 @@ export default ({loading}) => {
                 </div>
             }
         },        {
-            title: t('order.total-refund'),
+            title: t('order.total_refund'),
             width: '200px',
             render: row => {
                 return <div>
@@ -84,7 +84,7 @@ export default ({loading}) => {
             }
         },
         {
-            title: t('order.total-product-replace'),
+            title: t('order.total_product_replace'),
             width: '150px',
             dataIndex: 'total_product_replace',
             align: 'center'
@@ -115,7 +115,7 @@ export default ({loading}) => {
             const content = data.purchaseDownloadList.join('\r\n');
             textToFile(categoryName, content)
         }).catch(err => {
-            message.error(err.response?.data?.message || t('order.download-error'))
+            message.error(err.response?.data?.message || t('message.error_downloading'))
         }).finally(() => loading(false))
     }
 
@@ -137,10 +137,10 @@ export default ({loading}) => {
         getPurchaseType().then(resp => {
                 if (resp.status === 200) {
                     const data = resp.data?.TYPE_OBJ || []
-                    const lstType = [{label: 'purchase-type.ALL', value: ''}]
+                    const lstType = [{label: 'purchase_type.ALL', value: ''}]
                     for (const key of Object.keys(data)) {
                         lstType.push({
-                            label: `purchase-type.${key}`,
+                            label: `purchase_type.${key}`,
                             value: data[key]
                         })
                     }
@@ -151,10 +151,10 @@ export default ({loading}) => {
         getPurchaseStatus().then(resp => {
             if (resp.status === 200) {
                 const data = resp.data?.STATUS_OBJ || []
-                const lstStatus = [{label: 'purchase-status.ALL', value: ''}]
+                const lstStatus = [{label: 'purchase_status.ALL', value: ''}]
                 for (const key of Object.keys(data)) {
                     lstStatus.push({
-                        label: `purchase-status.${key}`,
+                        label: `purchase_status.${key}`,
                         value: data[key]
                     })
                 }

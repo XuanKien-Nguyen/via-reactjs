@@ -25,7 +25,7 @@ export default ({detail, visible, setVisible, t, mapType}) => {
             visible={visible}
             centered
             width={800}
-            title={`${t('balance-history.modal-title')} #${detail?.id}`}
+            title={`${t('balance_history.modal_title')} #${detail?.id}`}
             onOk={() => setVisible(false)}
             onCancel={() => setVisible(false)}
             footer={[
@@ -44,59 +44,59 @@ export default ({detail, visible, setVisible, t, mapType}) => {
                     <Col sm={16}>{detail.username}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.type')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.type')}</b></Col>
                     <Col sm={16}>{t(mapType[detail.type])}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.category-name')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.category_name')}</b></Col>
                     <Col sm={16}>{getValue(detail.category_name)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.purchase-id')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.purchase_id')}</b></Col>
                     <Col sm={16}>{detail.purchase_id ? '#' + detail.purchase_id: '-'}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.transaction-id')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.transaction_id')}</b></Col>
                     <Col sm={16}>{getValue(detail.transaction_id)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.recharge-ticket-id')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.recharge_ticket_id')}</b></Col>
                     <Col sm={16}>{getValue(detail.recharge_ticket_id)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.warranty-ticket-id')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.warranty_ticket_id')}</b></Col>
                     <Col sm={16}>{getValue(detail.warranty_ticket_id)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.add-bonus')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.add_bonus')}</b></Col>
                     <Col sm={16}>{renderMoney(detail.add_bonus)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.add-amount')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.add_amount')}</b></Col>
                     <Col sm={16}>{renderMoney(detail.add_amount)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.bonus-remain')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.bonus_remain')}</b></Col>
                     <Col sm={16}>{renderMoney(detail.bonus_remain, '')}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.amount-remain')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.amount_remain')}</b></Col>
                     <Col sm={16}>{renderMoney(detail.amount_remain, '')}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.content')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.content')}</b></Col>
                     <Col sm={16}>{getValue(detail.content)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.note')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.note')}</b></Col>
                     <Col sm={16}>{getValue(detail.comment)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.created-by')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.created_by')}</b></Col>
                     <Col sm={16}>{getValue(detail.createdby)}</Col>
                 </Row>
                 <Row className={'history_detail'}>
-                    <Col sm={8}><b>{t('balance-history.created-time')}</b></Col>
+                    <Col sm={8}><b>{t('balance_history.created_time')}</b></Col>
                     <Col sm={16}>{getValue(detail.created_time)}</Col>
                 </Row>
             </div>

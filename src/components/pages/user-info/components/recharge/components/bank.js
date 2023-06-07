@@ -20,7 +20,7 @@ export default ({loading, copy}) => {
             }
         }).catch(err => {
             Modal.error({
-                content: err.response?.data?.message || `${t('recharge.msg-error')}: ` + err,
+                content: err.response?.data?.message || `${t('message.error_get_recharge_code')}: ` + err,
                 onOk: () => {}
             });
         })
@@ -32,7 +32,7 @@ export default ({loading, copy}) => {
             <h1>{t('recharge.placeholder')}: </h1>
             <Search
                 placeholder={t('recharge.placeholder')}
-                enterButton={t('recharge.top-up')}
+                enterButton={t('recharge.top_up')}
                 type={'number'}
                 size="default"
                 step={1000}
@@ -40,7 +40,7 @@ export default ({loading, copy}) => {
             />
         </div>
         {
-            rechargeInfo && <Fragment><h1 className={'m-t-10 m-b-10'}>{t('recharge.auto-top-up')}</h1>
+            rechargeInfo && <Fragment><h1 className={'m-t-10 m-b-10'}>{t('recharge.auto_top_up')}</h1>
                 <p className={'m-t-10 m-b-10'}><i style={{color: 'blue'}}>{t('recharge.content')}</i></p>
 
                 <div style={{display: "flex"}}>
@@ -54,7 +54,7 @@ export default ({loading, copy}) => {
                                     padding: '5px',
                                     fontWeight: '900'
                                 }}>
-                                    <h1 style={{fontWeight: 'bold'}}>{t('recharge.wire-transfer')}</h1></div>
+                                    <h1 style={{fontWeight: 'bold'}}>{t('recharge.wire_transfer')}</h1></div>
                                 <Row className={'recharge-bank-information'}>
                                     <Col span={8}>{t('recharge.bank')}</Col>
                                     <Col span={10}><span style={{color: "red"}}>ACB</span></Col>
@@ -68,13 +68,13 @@ export default ({loading, copy}) => {
                                          onClick={() => copy(rechargeInfo.accountNameBanking)}>{t('common.copy')}</Col>
                                 </Row>
                                 <Row className={'recharge-bank-information'}>
-                                    <Col span={8}>{t('recharge.account-number')}</Col>
+                                    <Col span={8}>{t('recharge.account_number')}</Col>
                                     <Col span={10}><span style={{color: "red"}}>{rechargeInfo.accountNumberBanking}</span></Col>
                                     <Col span={6} className={'recharge-bank-information-copy'}
                                          onClick={() => copy(rechargeInfo.accountNumberBanking)}>{t('common.copy')}</Col>
                                 </Row>
                                 <Row className={'recharge-bank-information'}>
-                                    <Col span={8}>{t('recharge.transfer-content')}</Col>
+                                    <Col span={8}>{t('recharge.transfer_content')}</Col>
                                     <Col span={10}><span style={{color: "red"}}>{rechargeInfo.systax}</span></Col>
                                     <Col span={6} className={'recharge-bank-information-copy'}
                                          onClick={() => copy(rechargeInfo.systax)}>{t('common.copy')}</Col>
@@ -91,7 +91,7 @@ export default ({loading, copy}) => {
                                     padding: '5px',
                                     fontWeight: '900'
                                 }}>
-                                    <h1 style={{fontWeight: 'bold'}}>{t('recharge.qr-scan')}</h1></div>
+                                    <h1 style={{fontWeight: 'bold'}}>{t('recharge.qr_scan')}</h1></div>
                                 <div style={{
                                     width: "100%",
                                     justifyContent: "center",
@@ -105,16 +105,16 @@ export default ({loading, copy}) => {
 
                                 <div id="payQRTutorial">
                                     <div className={'pay-item'}>
-                                        <h1 style={{fontSize: '20px', fontWeight: "bold"}}>{t('recharge.guide-qr')}</h1>
+                                        <h1 style={{fontSize: '20px', fontWeight: "bold"}}>{t('recharge.guide_qr')}</h1>
                                     </div>
                                     <div className={'pay-item'}>
-                                        <span>{t('recharge.guide-1')}</span>
+                                        <span>{t('recharge.guide_1')}</span>
                                     </div>
                                     <div className={'pay-item'}>
-                                        <span>{t('recharge.guide-2')}</span>
+                                        <span>{t('recharge.guide_2')}</span>
                                     </div>
                                     <div className={'pay-item'}>
-                                        <span>{t('recharge.guide-3')}</span>
+                                        <span>{t('recharge.guide_3')}</span>
                                     </div>
                                     <div className={'pay-item'}>
                                         <span style={{color: 'red'}}>{t('recharge.caution')}</span>

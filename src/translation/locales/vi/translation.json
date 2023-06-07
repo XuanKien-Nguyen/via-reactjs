@@ -1,7 +1,7 @@
 {
     "common" : {
-        "placeholder-search": "Bạn muốn tìm sản phẩm nào?",
-        "all-product": "Tất cả sản phẩm",
+        "placeholder_search": "Bạn muốn tìm sản phẩm nào?",
+        "all_product": "Tất cả sản phẩm",
         "guide": "Hướng dẫn ",
         "recharge": "Nạp tiền",
         "tricks": "Thủ thuật Facebook",
@@ -9,12 +9,12 @@
         "contact": "Liên hệ",
         "category": "Danh mục",
         "blog": "Bài viết",
-        "sign-in": "Đăng nhập",
-        "sign-up": "Đăng ký",
+        "sign_in": "Đăng nhập",
+        "sign_up": "Đăng ký",
         "profile": "Cá nhân",
         "admin": "Quản trị dành cho Admin",
         "status": "Trạng thái",
-        "sign-out": "Thoát",
+        "sign_out": "Thoát",
         "yes": "Có",
         "no": "Không",
         "reset": "Làm mới",
@@ -24,44 +24,42 @@
         "ok": "OK",
         "cancel": "Hủy bỏ",
         "create": "Tạo",
-        "no-data": "Không có dữ liệu"
+        "no_data": "Không có dữ liệu"
     },
-    "access-denied": {
+    "access_denied": {
         "title": "TRUY CẬP BỊ TỪ CHỐI",
         "content": "Bạn không có quyền truy cập trang này"
     },
-    "not-found": {
+    "not_found": {
         "title": "TRANG NÀY KHÔNG TỒN TẠI"
     },
     "category": {
-        "view-more": "Xem thêm",
-        "no-product": "Không tìm thấy sản phẩm"
+        "view_more": "Xem thêm",
+        "no_product": "Không tìm thấy sản phẩm"
     },
     "product": {
         "remain": "Còn",
         "sold": "Đã bán",
-        "button-buy": "Mua ngay",
-        "button-cancel": "Hủy",
-        "button-image": "Xem ảnh",
-        "enter-value": "Nhập số lượng",
-        "remain-modal": "Số lượng còn",
-        "out-of-stock": "Sản phẩm đã hết hàng",
-        "msg-invalid": "Số lượng mua không hợp lệ",
-        "msg-success": "Mua thành công",
-        "modal-title": "Mua thành công",
-        "modal-button-detail": "Xem chi tiết",
-        "modal-button-close": "Đóng",
+        "button_buy": "Mua ngay",
+        "button_cancel": "Hủy",
+        "button_image": "Xem ảnh",
+        "enter_value": "Nhập số lượng",
+        "remain_modal": "Số lượng còn",
+        "out_of_stock": "Sản phẩm đã hết hàng",
+        "modal_title": "Mua thành công",
+        "modal_button_detail": "Xem chi tiết",
+        "modal_button_close": "Đóng",
         "total": "Thành tiền",
         "location": "Quốc gia",
-        "create-time": "Ngày lập",
+        "create_time": "Ngày lập",
         "2fa" : "Xác thực 2FA",
         "friend": "Bạn bè",
-        "checkpoint-email": "Checkpoint Email",
+        "checkpoint_email": "Checkpoint Email",
         "email": "Email",
         "change": "Đổi thông tin",
-        "back-up": "Hỗ trợ Backup",
-        "modal-desc": "Mô tả",
-        "view-detail": "Xem chi tiết"
+        "back_up": "Hỗ trợ Backup",
+        "modal_desc": "Mô tả",
+        "view_detail": "Xem chi tiết"
     },
     "filter": {
         "title": "Bộ lọc",
@@ -72,36 +70,36 @@
         "date": "Chọn ngày tạo",
         "from": "Từ ngày",
         "to": "Đến ngày",
-        "payment-method": "Phương thức thanh toán",
+        "payment_method": "Phương thức thanh toán",
         "status": "Tình trạng",
         "all": "Xem tất cả",
         "type": "Loại",
-        "transaction-id": "Mã giao dịch",
-        "created-by": "Người tạo",
+        "transaction_id": "Mã giao dịch",
+        "created_by": "Người tạo",
         "content": "Nội dung",
-        "lastest-decided-by": "Người quyết định",
-        "lastest-decided-date": "Chọn thời gian quyết định"
+        "lastest_decided_by": "Người quyết định",
+        "lastest_decided_date": "Chọn thời gian quyết định"
     },
     "profile": {
         "balance" : "Số dư",
         "bonus" : "Khuyến mãi",
-        "partner-register-text": "Đăng ký",
-        "partner-main-text": "Cộng tác viên",
-        "enter-domamin": "Vui lòng nhập tên miền",
-        "partner-rejected": "Trạng thái: Đã từ chối",
-        "partner-pending": "Trạng thái: Chờ phê duyệt",
-        "partner-registered": "Trạng thái: Đã đăng ký",
-        "partner-banned": "Trạng thái: Đã cấm",
+        "partner_register_text": "Đăng ký",
+        "partner_main_text": "Cộng tác viên",
+        "enter_domamin": "Vui lòng nhập tên miền",
+        "partner_rejected": "Trạng thái: Đã từ chối",
+        "partner_pending": "Trạng thái: Chờ phê duyệt",
+        "partner_registered": "Trạng thái: Đã đăng ký",
+        "partner_banned": "Trạng thái: Đã cấm",
         "information": "THÔNG TIN CÁ NHÂN",
         "order": "ĐƠN HÀNG",
         "recharge": "NẠP TIỀN",
-        "change-password": "ĐỔI MẬT KHẨU",
+        "change_password": "ĐỔI MẬT KHẨU",
         "2fa": "BẬT XÁC THỰC 2FA",
-        "recharge-history": "LỊCH SỬ NẠP TIỀN",
-        "balance-history": "LỊCH SỬ THAY ĐỔI SỐ DƯ",
-        "recharge-tickets": "PHIẾU NẠP TIỀN LỖI",
-        "warranty-tickets": "PHIẾU BẢO HÀNH",
-        "download-history": "LỊCH SỬ TẢI XUỐNG"
+        "recharge_history": "LỊCH SỬ NẠP TIỀN",
+        "balance_history": "LỊCH SỬ THAY ĐỔI SỐ DƯ",
+        "recharge_tickets": "PHIẾU NẠP TIỀN LỖI",
+        "warranty_tickets": "PHIẾU BẢO HÀNH",
+        "download_history": "LỊCH SỬ TẢI XUỐNG"
     },
     "info": {
         "fullname": "Tên đầy đủ",
@@ -110,100 +108,102 @@
         "create": "Ngày tạo",
         "device": "Thiết bị",
         "browser": "Trình duyệt",
-        "ip-address": "Địa chỉ IP",
+        "ip_address": "Địa chỉ IP",
         "location": "Khu vực",
-        "created-time": "Thời gian",
+        "created_time": "Thời gian",
         "status": "Tình trạng",
         "success": "Đăng nhập thành công",
         "fail": "Đăng nhập thất bại",
-        "title-history": "Lịch sử đăng nhập (15 lần gần nhất):"
+        "title_history": "Lịch sử đăng nhập (15 lần gần nhất):"
     },
     "order": {
         "id": "ID",
         "date": "Thời gian mua hàng",
         "content": "Nội dung",
-        "payment-method": "Phương thức thanh toán",
+        "payment_method": "Phương thức thanh toán",
         "direct": "Trực tiếp",
         "api": "Cộng tác viên",
         "status": "Tình trạng",
         "total": "Tổng",
-        "total-refund": "Tổng tiền hoàn lại",
-        "total-product-replace": "Tổng sản phẩm bảo hành",
+        "total_refund": "Tổng tiền hoàn lại",
+        "total_product_replace": "Tổng sản phẩm bảo hành",
         "action": "Thao tác",
         "detail": "Chi tiết",
         "download": "Tải xuống",
         "valid": "Bảo hành",
         "invalid": "Hết bảo hành",
-        "download-error": "Có lỗi xảy ra khi tải xuống",
-        "detail-title": "Chi tiết đơn hàng",
+        "detail_title": "Chi tiết đơn hàng",
         "records": "bản ghi",
-        "total-records": "Tổng số",
-        "download-time": "Thời gian tải xuống",
-        "purchase-id": "Mã đơn hàng",
+        "total_records": "Tổng số",
+        "download_time": "Thời gian tải xuống",
+        "purchase_id": "Mã đơn hàng",
         "amount": "Số lượng",
-        "type": "Loại"
+        "type": "Loại",
+        "category_title": "SẢN PHẨM",
+        "product_title": "SẢN PHẨM",
+        "total_title": "TỔNG",
+        "account_title": "TÀI KHOẢN - MÃ"
     },
     "recharge": {
         "placeholder": "Nhập số tiền muốn nạp",
-        "top-up": "Nạp",
-        "auto-top-up": "Nạp tiền tự động",
+        "top_up": "Nạp",
+        "auto_top_up": "Nạp tiền tự động",
         "content": "Vui lòng chuyển khoản vào tài khoản với nội dung bên dưới",
-        "msg-error": "Có lỗi xảy ra khi lấy mã nạp",
-        "wire-transfer": "Nạp tiền qua chuyển khoản",
+        "wire_transfer": "Nạp tiền qua chuyển khoản",
         "bank": "Ngân hàng",
         "owner": "Tên chủ tài khoản",
-        "account-number": "Số tài khoản",
-        "transfer-content": "Nội dung chuyển khoản",
-        "qr-scan": "Nạp tiền qua quét mã QR",
-        "guide-qr": "Hướng dẫn nạp tiền qua mã QR",
-        "guide-1": "1. Đăng nhập ứng dụng Mobile Banking, chọn chức năng Scan QR và quét mã QR trên đây.",
-        "guide-2": "2. Nhập số tiền muốn nạp, kiểm tra thông tin đơn hàng (Ngân hàng, Chủ tài khoản, Số tài khoản, Nội dung chuyển khoản) trùng khớp với thông tin chuyển khoản bên trái",
-        "guide-3": "3. Xác nhận thanh toán và hoàn tất giao dịch",
+        "account_number": "Số tài khoản",
+        "transfer_content": "Nội dung chuyển khoản",
+        "qr_scan": "Nạp tiền qua quét mã QR",
+        "guide_qr": "Hướng dẫn nạp tiền qua mã QR",
+        "guide_1": "1. Đăng nhập ứng dụng Mobile Banking, chọn chức năng Scan QR và quét mã QR trên đây.",
+        "guide_2": "2. Nhập số tiền muốn nạp, kiểm tra thông tin đơn hàng (Ngân hàng, Chủ tài khoản, Số tài khoản, Nội dung chuyển khoản) trùng khớp với thông tin chuyển khoản bên trái",
+        "guide_3": "3. Xác nhận thanh toán và hoàn tất giao dịch",
         "caution": "*CHÚ Ý: mỗi mã QR chỉ dùng cho một giao dịch nạp tiền, không sử dụng lại",
-        "wallet-error": "Vui lòng nhập địa chỉ ví",
-        "wallet-title": "Cập nhật địa chỉ ví",
-        "wallet-empty": "Bạn chưa có địa chỉ ví USTD-TRC20, vui lòng cập nhật địa chỉ ví dùng để chuyển tiền",
-        "wallet-placeholder": "Nhập địa chỉ ví",
-        "wallet-current": "Địa chỉ ví hiện tại của bạn",
-        "wallet-click": "bấm vào đây",
-        "wallet-text": "để cập nhật địa chỉ",
-        "wallet-content": "Vui lòng chuyển tiền đến địa chỉ ví bên dưới",
-        "transaction-id":"Mã giao dịch",
-        "pending-recharge-id": "Mã ticket nạp lỗi",
+        "wallet_error": "Vui lòng nhập địa chỉ ví",
+        "wallet_title": "Cập nhật địa chỉ ví",
+        "wallet_empty": "Bạn chưa có địa chỉ ví USTD-TRC20, vui lòng cập nhật địa chỉ ví dùng để chuyển tiền",
+        "wallet_placeholder": "Nhập địa chỉ ví",
+        "wallet_current": "Địa chỉ ví hiện tại của bạn",
+        "wallet_click": "bấm vào đây",
+        "wallet_text": "để cập nhật địa chỉ",
+        "wallet_content": "Vui lòng chuyển tiền đến địa chỉ ví bên dưới",
+        "transaction_id":"Mã giao dịch",
+        "pending_recharge_id": "Mã ticket nạp lỗi",
         "bonus": "Tiền khuyễn mãi",
         "amount": "Tiền tài khoản",
-        "ustd-amount": "Tiền USTD",
+        "ustd_amount": "Tiền USTD",
         "type": "Loại",
-        "created-time": "Thời gian tạo",
-        "created-by":"Người tạo",
-        "updated-time": "Thời gian cập nhật",
-        "updated-by": "QTV cập nhật"
+        "created_time": "Thời gian tạo",
+        "created_by":"Người tạo",
+        "updated_time": "Thời gian cập nhật",
+        "updated_by": "QTV cập nhật"
     },
-    "recharge-history": {
-        "total-amount": "Tổng tiền tài khoản nạp thành công",
-        "total-bonus": "Tổng tiền khuyến mãi nạp thành công"
+    "recharge_history": {
+        "total_amount": "Tổng tiền tài khoản nạp thành công",
+        "total_bonus": "Tổng tiền khuyến mãi nạp thành công"
     },
-    "recharge-tickets": {
-        "button-create": "Tạo phiếu nạp lỗi",
-        "modal-title": "Phiếu nạp lỗi",
-        "modal-content": "Nội dung",
-        "modal-content-placeholder": "Vui lòng nhập nội dung",
-        "modal-content-required": "Vui lòng nhập lý do",
-        "modal-image": "Chọn hình ảnh (ảnh hóa đơn)",
-        "modal-image-required": "Vui lòng chọn tệp hình ảnh",
-        "modal-image-text": "Nhấp hoặc kéo tệp vào khu vực này để tải lên",
-        "modal-image-hint": "Chỉ hỗ trợ định dạng JPG, PNG",
-        "modal-image-only": "Chỉ tải lên một tệp duy nhất",
-        "modal-image-size": "Kích thước tệp tối đa 1MB",
+    "recharge_tickets": {
+        "button_create": "Tạo phiếu nạp lỗi",
+        "modal_title": "Phiếu nạp lỗi",
+        "modal_content": "Nội dung",
+        "modal_content_placeholder": "Vui lòng nhập nội dung",
+        "modal_content_required": "Vui lòng nhập lý do",
+        "modal_image": "Chọn hình ảnh (ảnh hóa đơn)",
+        "modal_image_required": "Vui lòng chọn tệp hình ảnh",
+        "modal_image_text": "Nhấp hoặc kéo tệp vào khu vực này để tải lên",
+        "modal_image_hint": "Chỉ hỗ trợ định dạng JPG, PNG",
+        "modal_image_only": "Chỉ tải lên một tệp duy nhất",
+        "modal_image_size": "Kích thước tệp tối đa 1MB",
         "id": "ID",
         "status": "Trạng thái",
         "image": "Hình ảnh",
         "content": "Nội dung",
-        "added-bonus": "Tiền khuyến mãi đã nạp",
-        "added-amount": "Tiền tài khoản đã nạp",
-        "created-time": "Thời gian tạo",
-        "lastest-decided-by": "Người quyết định cuối cùng",
-        "lastest-decided-time": "Thời gian quyết định cuối cùng"
+        "added_bonus": "Tiền khuyến mãi đã nạp",
+        "added_amount": "Tiền tài khoản đã nạp",
+        "created_time": "Thời gian tạo",
+        "lastest_decided_by": "Người quyết định cuối cùng",
+        "lastest_decided_time": "Thời gian quyết định cuối cùng"
     },
     "warranty-tickets":  {
         "title": "Tiêu đề",
@@ -230,47 +230,47 @@
         "renew": "Nhập lại mật khẩu hiện mới",
         "title": "Đổi mật khẩu",
         "content": "Bạn có chắc chắn muốn đổi mật khẩu?",
-        "required-current" : "Vui lòng nhập mật khẩu hiện tại",
-        "required-new": "Vui lòng nhập mật khẩu mới",
-        "required-renew": "Vui lòng nhập lại mật khẩu mới",
-        "error-renew": "Mật khẩu nhập lại không khớp",
+        "required_current" : "Vui lòng nhập mật khẩu hiện tại",
+        "required_new": "Vui lòng nhập mật khẩu mới",
+        "required_renew": "Vui lòng nhập lại mật khẩu mới",
+        "error_renew": "Mật khẩu nhập lại không khớp",
         "successful": "Thay đổi mật khẩu thành công, vui lòng đăng nhập lại",
         "fail": "Thay đổi mật khẩu thất bại, đã có lỗi xảy ra"
     },
-    "2fa-authen": {
+    "2fa_authen": {
         "title": "Xác thực 2FA",
-        "enable-2fa": "Bật xác thực 2FA",
-        "disable-2fa": "Tắt xác thực 2FA",
-        "get-success": "Lấy mã QR thành công",
-        "get-error": "Có lỗi xảy ra khi lấy mã QR",
-        "msg-success": "Bật xác thực 2fa thành công, vui lòng đăng nhập lại",
-        "action-success": "Thao tác thành công",
-        "msg-error": "Có lỗi xảy ra khi xác thực 2fa",
-        "enter-otp": "Vui lòng nhập mã OTP",
+        "enable_2fa": "Bật xác thực 2FA",
+        "disable_2fa": "Tắt xác thực 2FA",
+        "get_success": "Lấy mã QR thành công",
+        "get_error": "Có lỗi xảy ra khi lấy mã QR",
+        "msg_success": "Bật xác thực 2fa thành công, vui lòng đăng nhập lại",
+        "action_success": "Thao tác thành công",
+        "msg_error": "Có lỗi xảy ra khi xác thực 2fa",
+        "enter_otp": "Vui lòng nhập mã OTP",
         "otp": "Mã OTP",
-        "get-qr": "Lấy mã QR"
+        "get_qr": "Lấy mã QR"
     },
-    "balance-history": {
-        "total-amount": "Tổng tiền tài khoản thay đổi",
-        "total-bonus": "Tổng tiền khuyến mãi thay đổi",
+    "balance_history": {
+        "total_amount": "Tổng tiền tài khoản thay đổi",
+        "total_bonus": "Tổng tiền khuyến mãi thay đổi",
         "type": "Loại",
         "content": "Nội dung",
-        "amount-remain": "Số dư tài khoản",
-        "bonus-remain": "Số dư khuyến mãi",
-        "add-amount": "Số dư tài khoản thay đổi",
-        "add-bonus": "Số dư khuyến mãi thay đổi",
-        "created-by": "Người tạo",
-        "created-time": "Thời gian",
+        "amount_remain": "Số dư tài khoản",
+        "bonus_remain": "Số dư khuyến mãi",
+        "add_amount": "Số dư tài khoản thay đổi",
+        "add_bonus": "Số dư khuyến mãi thay đổi",
+        "created_by": "Người tạo",
+        "created_time": "Thời gian",
         "action":"Thao tác",
-        "modal-title": "Chi tiết lịch sử thay đổi số dư",
-        "category-name": "Tên sản phẩm",
-        "purchase-id": "Mã đơn hàng",
-        "transaction-id": "Mã giao dịch",
-        "recharge-ticket-id": "Mã ticket nạp lỗi",
-        "warranty-ticket-id": "Mã ticket bảo hành",
+        "modal_title": "Chi tiết lịch sử thay đổi số dư",
+        "category_name": "Tên sản phẩm",
+        "purchase_id": "Mã đơn hàng",
+        "transaction_id": "Mã giao dịch",
+        "recharge_ticket_id": "Mã ticket nạp lỗi",
+        "warranty_ticket_id": "Mã ticket bảo hành",
         "note": "Ghi chú"
     },
-    "user-balance-type": {
+    "user_balance_type": {
         "MANAGER_UPDATE_BONUS": "QTV cập nhật khuyến mãi",
         "MANAGER_RESOLVED_RECHARGE": "Xử lý nạp lỗi",
         "MANAGER_RESTORE_RECHARGE": "Hoàn tiền nạp lỗi",
@@ -281,27 +281,27 @@
         "SYSTEM_TRC20": "Nạp tiền ảo",
         "MANAGER_REFUND": "Hoàn tiền bảo hành"
     },
-    "category-type": {
+    "category_type": {
         "ALL": "Xem tất cả",
         "STOCK": "Còn hàng",
         "OUT_OF_STOCK": "Hết hàng"
     },
-    "purchase-type": {
+    "purchase_type": {
         "ALL": "Xem tất cả",
         "API_TYPE": "Cộng tác viên",
         "DIRECT_TYPE": "Trực tiếp"
     },
-    "purchase-status": {
+    "purchase_status": {
         "ALL": "Xem tất cả",
         "VALID_STATUS": "Bảo hành",
         "INVALID_STATUS": "Hết bảo hành"
     },
-    "recharge-type": {
+    "recharge_type": {
         "ALL": "Xem tất cả",
         "TYPE_BANKING": "Ngân hàng",
         "TYPE_USDT": "USDT-TRC20"
     },
-    "download-type": {
+    "download_type": {
         "ALL":"Xem tất cả",
         "TYPE_DOWNLOAD_NOTSOLD": "Chưa bán",
         "TYPE_DOWNLOAD_SOLD": "Đã bán",
@@ -311,11 +311,11 @@
         "TYPE_DOWNLOAD_BACK": "Hoàn tác",
         "TYPE_DOWNLOAD_REQUEST": "Yêu cầu"
     },  
-    "user-login-status": {
+    "user_login_status": {
         "STATUS_SUCCESS": "Đăng nhập thành công",
         "STATUS_FAIL": "Đăng nhập thất bại"
     },
-    "recharge-tickets-status": {
+    "recharge_tickets_status": {
         "ALL":"Xem tất cả",
         "DELETE_STATUS": "Đã xóa",
         "PENDING_STATUS": "Đang chờ phê duyệt",
@@ -323,7 +323,7 @@
         "SOLVING_STATUS": "Đang xử lý",
         "REJECT_STATUS": "Đã từ chối"
     },
-    "warranty-tickets-status": {
+    "warranty_tickets_status": {
         "ALL": "Xem tất cả",
         "PENDING_STATUS": "Chờ phê duyệt",
         "CLOSE_STATUS": "Đã đóng",
@@ -338,22 +338,30 @@
         "REPLY_TYPE": "Trả lời",
         "RETAKE_TYPE": "Lấy lại"
     },
-    "partner-status": {
+    "partner_status": {
         "ACTIVE_STATUS": "Đã đăng ký",
         "PENDING_STATUS": "Chờ phê duyệt",
         "REJECT_STATUS": "Đã từ chối",
         "ABANDON_STATUS": "Đã cấm"
     },
-    "user-manager": {
+    "user_manager": {
         "ALL": "Xem tất cả",
         "ACTIVE_STATUS": "Hoạt động",
         "ABANDON_STATUS": "Tạm khóa"
     },
-    "partner-manager": {
+    "partner_manager": {
         "ALL": "Xem tất cả",
         "ACTIVE_STATUS": "Hoạt động",
         "PENDING_STATUS": "Chờ phê duyệt",
         "REJECT_STATUS": "Từ chối",
         "ABANDON_STATUS": "Tạm khóa"
+    },
+    "message": {
+        "error-downloading": "Có lỗi xảy ra khi tải xuống",
+        "invalid_purchase": "Số lượng mua không họp lệ",
+        "success_purchase": "Mua thành công",
+        "error_get_purchase": "Có lỗi xảy ra khi lấy thông tin đơn hàng",
+        "error_get_download": "Có lỗi xảy ra khi lấy lịch sử tải xuống",
+        "error_get_recharge_code": "Có lỗi xảy ra khi lấy mã nạp"
     }
 }

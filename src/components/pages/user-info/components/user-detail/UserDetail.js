@@ -27,7 +27,7 @@ const UserDetail = ({form, user, loading}) => {
             dataIndex: 'browser'
         },
         {
-            title: t('info.ip-address'),
+            title: t('info.ip_address'),
             dataIndex: 'ip_address'
         },
         {
@@ -42,7 +42,7 @@ const UserDetail = ({form, user, loading}) => {
             }
         },
         {
-            title: t('info.created-time'),
+            title: t('info.created_time'),
             dataIndex: 'created_time'
         },
         {
@@ -66,7 +66,7 @@ const UserDetail = ({form, user, loading}) => {
                 const userLoginStatus = resp.data?.STATUS_OBJ || [];
                 const MAP_TYPE = {}
                 for (const key of Object.keys(userLoginStatus)) {
-                    MAP_TYPE[userLoginStatus[key]] = `user-login-status.${key}`
+                    MAP_TYPE[userLoginStatus[key]] = `user_login_status.${key}`
                 }
                 setLoginStatusList(MAP_TYPE)
             }
@@ -111,14 +111,14 @@ const UserDetail = ({form, user, loading}) => {
             })(<Input disabled/>)}
         </Form.Item>
     </Form>
-        <h3>{t('info.title-history')}</h3>
+        <h3>{t('info.title_history')}</h3>
         {/* <Table 
             bordered 
             columns={columns} 
             dataSource={loginList} 
             pagination={false} 
             rowKey={'id'} 
-            locale={{emptyText: t('common.no-data')}}
+            locale={{emptyText: t('common.no_data')}}
             /> */}
         <TableCommon
             className='table-order'

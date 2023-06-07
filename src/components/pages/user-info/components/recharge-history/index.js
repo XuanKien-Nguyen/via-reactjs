@@ -37,13 +37,13 @@ export default ({loading}) => {
         getRechargeType().then(resp => {
             if (resp.status === 200) {
                 const data = resp.data?.TYPE_OBJ || []
-                const lstType = [{label: 'recharge-type.ALL', value: ''}]
+                const lstType = [{label: 'recharge_type.ALL', value: ''}]
                 for (const key of Object.keys(data)) {
                     lstType.push({
-                        label: `recharge-type.${key}`,
+                        label: `recharge_type.${key}`,
                         value: data[key]
                     })
-                    MAP_TYPE[data[key]] = `recharge-type.${key}`
+                    MAP_TYPE[data[key]] = `recharge_type.${key}`
                 }
                 setRechargeTypeList(lstType)
             }
@@ -106,13 +106,13 @@ export default ({loading}) => {
             align: 'center',
         },
         {
-            title: t('recharge.transaction-id'),
+            title: t('recharge.transaction_id'),
             dataIndex: 'transaction_id',
             width: '300px',
             align: 'center',
         },
         {
-            title: t('recharge.pending-recharge-id'),
+            title: t('recharge.pending_recharge_id'),
             dataIndex: 'pending_recharge_id',
             width: '300px',
             align: 'center',
@@ -132,7 +132,7 @@ export default ({loading}) => {
             align: 'center',
         },
         {
-            title: t('recharge.ustd-amount'),
+            title: t('recharge.ustd_amount'),
             dataIndex: 'usdt_amount',
             width: '200px',
             align: 'center'
@@ -151,25 +151,25 @@ export default ({loading}) => {
             align: 'center',
         },
         {
-            title: t('recharge.created-time'),
+            title: t('recharge.created_time'),
             width: '200px',
             dataIndex: 'created_time',
             align: 'center',
         },
         {
-            title: t('recharge.created-by'),
+            title: t('recharge.created_by'),
             width: '150px',
             dataIndex: 'createdby',
             align: 'center',
         },
         {
-            title: t('recharge.updated-time'),
+            title: t('recharge.updated_time'),
             dataIndex: 'updated_time',
             width: '200px',
             align: 'center',
         },
         {
-            title: t('recharge.updated-by'),
+            title: t('recharge.updated_by'),
             dataIndex: 'updatedby',
             width: '150px',
             align: 'center',
@@ -219,12 +219,12 @@ export default ({loading}) => {
                         <div><Icon type="filter" theme="filled"/>&nbsp;{t('filter.title')}</div>
                     </div>}>
                         <FilterItem defaultValue={transactionId} setValue={setTransactionId} type={'text'}
-                                    title={t('filter.transaction-id')} allowClear={true}/>
+                                    title={t('filter.transaction_id')} allowClear={true}/>
                         <FilterItem defaultValue={date} setValue={setDate} type={'date'}
                                     placeholder={[t('filter.from'), t('filter.to')]} title={t('filter.date')}/>
                         <FilterItem defaultValue={type} setValue={setType} options={getRechargeTypeList()} type={'select'}
                                     title={t('filter.type')}/>
-                        <FilterItem defaultValue={updatedBy} setValue={setUpdatedBy} type={'text'} title={t('filter.created-by')}/>
+                        <FilterItem defaultValue={updatedBy} setValue={setUpdatedBy} type={'text'} title={t('filter.created_by')}/>
 
                     </Panel>
                 </Collapse>
@@ -233,8 +233,8 @@ export default ({loading}) => {
             </div>
         </div>
         <div className="recharge-total" style={{marginBottom: '16px', fontSize: '16px'}}>
-            <div>{t('recharge-history.total-amount')}: {renderMoney(totalRechargeAmount)}</div>
-            <div>{t('recharge-history.total-bonus')}: {renderMoney(totalRechargeBonus)}</div>
+            <div>{t('recharge_history.total_amount')}: {renderMoney(totalRechargeAmount)}</div>
+            <div>{t('recharge_history.total_bonus')}: {renderMoney(totalRechargeBonus)}</div>
         </div>
         <TableCommon 
             className='table-order'

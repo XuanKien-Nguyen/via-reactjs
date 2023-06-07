@@ -51,7 +51,7 @@ export default () => {
     useEffect(() => {
         getPartnerStatusList().then(resp => {
             const data = resp.data?.STATUS_OBJ || [];
-            const lstStatus = [{ label: 'partner-manager.ALL', value: '' }]
+            const lstStatus = [{ label: 'partner_manager.ALL', value: '' }]
             for (const key of Object.keys(data)) {
                 
                 let color
@@ -65,11 +65,11 @@ export default () => {
                     color = '#AEB6BF'
                 }
                 lstStatus.push({
-                    label: `partner-manager.${key}`,
+                    label: `partner_manager.${key}`,
                     value: data[key],
                 })
                 MAP_TYPE[data[key]] = {
-                    label: `partner-manager.${key}`,
+                    label: `partner_manager.${key}`,
                     value: data[key],
                     color
                 }

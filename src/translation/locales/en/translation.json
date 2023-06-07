@@ -1,7 +1,7 @@
 {
     "common" : {
-        "placeholder-search": "Which product are you looking for?",
-        "all-product": "All product",
+        "placeholder_search": "Which product are you looking for?",
+        "all_product": "All product",
         "guide": "Guide",
         "recharge": "Recharge",
         "tricks": "Facebook tricks",
@@ -9,12 +9,12 @@
         "contact": "Contact",
         "category": "Category",
         "blog": "Blog",
-        "sign-in": "Sign In",
-        "sign-up": "Sign Up",
+        "sign_in": "Sign In",
+        "sign_up": "Sign Up",
         "profile": "Profile",
         "admin": "Administration",
         "status": "Status",
-        "sign-out": "Sign Out",
+        "sign_out": "Sign Out",
         "yes": "Yes",
         "no": "No",
         "reset": "Reset",
@@ -24,44 +24,42 @@
         "ok": "Okay",
         "cancel": "Cancel",
         "create": "Create",
-        "no-data": "No Data"
+        "no_data": "No Data"
     },
-    "access-denied": {
+    "access_denied": {
         "title": "ACCESS DENIED",
         "content": "You don't have permission to access"
     },
-    "not-found": {
+    "not_found": {
         "title": "PAGE NOT FOUND"
     },
     "category": {
-        "view-more": "More",
-        "no-product": "No products found"
+        "view_more": "More",
+        "no_product": "No products found"
     },
     "product": {
         "remain": "Remain",
         "sold": "Sold",
-        "button-buy": "Buy Now",
-        "button-cancel": "Cancel",
-        "button-image": "View Image",
-        "enter-value": "Enter quantity",
-        "remain-modal": "Quantity remaining",
-        "out-of-stock": "Product is out of stock",
-        "msg-invalid": "Invalid purchase quantity",
-        "msg-success": "Purchase successfully",
-        "modal-title": "Purchase successfully",
-        "modal-button-detail": "View detail",
-        "modal-button-close": "Close",
+        "button_buy": "Buy Now",
+        "button_cancel": "Cancel",
+        "button_image": "View Image",
+        "enter_value": "Enter quantity",
+        "remain_modal": "Quantity remaining",
+        "out_of_stock": "Product is out of stock",
+        "modal_title": "Purchase successfully",
+        "modal_button_detail": "View detail",
+        "modal_button_close": "Close",
         "total": "Total amount",
         "location": "Location",
-        "create-time": "Date created",
+        "create_time": "Date created",
         "2fa" : "2FA authentication",
         "friend": "Friend",
-        "checkpoint-email": "Checkpoint Email",
+        "checkpoint_email": "Checkpoint Email",
         "email": "Email",
         "change": "Change Information",
-        "back-up": "Support Backup",
-        "modal-desc": "Description",
-        "view-detail": "View Detail"
+        "back_up": "Support Backup",
+        "modal_desc": "Description",
+        "view_detail": "View Detail"
     },
     "filter": {
         "title": "Filter",
@@ -72,36 +70,36 @@
         "date": "Select date",
         "from": "From",
         "to": "To",
-        "payment-method": "Payment Method",
+        "payment_method": "Payment Method",
         "status": "Status",
         "all": "All",
         "type": "Type",
-        "transaction-id": "Transaction ID",
-        "created-by": "Created by",
+        "transaction_id": "Transaction ID",
+        "created_by": "Created by",
         "content": "Content",
-        "lastest-decided-by": "Lastest decided by",
-        "lastest-decided-date": "Select lastest decided date"
+        "lastest_decided_by": "Lastest decided by",
+        "lastest_decided_date": "Select lastest decided date"
     },
     "profile": {
         "balance" : "Balance",
         "bonus" : "Bonus",
-        "partner-register-text": "Register",
-        "partner-main-text": "Partner",
-        "enter-domamin": "Please enter domain name",
-        "partner-rejected": "Status: Rejected",
-        "partner-pending": "Status: Pending",
-        "partner-registered": "Status: Registered",
-        "partner-banned": "Status: Banned",
+        "partner_register_text": "Register",
+        "partner_main_text": "Partner",
+        "enter_domamin": "Please enter domain name",
+        "partner_rejected": "Status: Rejected",
+        "partner_pending": "Status: Pending",
+        "partner_registered": "Status: Registered",
+        "partner_banned": "Status: Banned",
         "information": "PERSONAL INFORMATION",
         "order": "ORDER",
         "recharge": "RECHARGE",
-        "change-password": "CHANGE PASSWORD",
+        "change_password": "CHANGE PASSWORD",
         "2fa": "2FA AUTHENTICATION",
-        "recharge-history": "RECHARGE HISTORY",
-        "balance-history": "BALANCE HISTORY",
-        "recharge-tickets": "RECHARGE TICKETS",
-        "warranty-tickets": "WARRANTY TICKETS",
-        "download-history": "DOWNLOAD HISTORY"
+        "recharge_history": "RECHARGE HISTORY",
+        "balance_history": "BALANCE HISTORY",
+        "recharge_tickets": "RECHARGE TICKETS",
+        "warranty_tickets": "WARRANTY TICKETS",
+        "download_history": "DOWNLOAD HISTORY"
     },
     "info": {
         "fullname": "Full name",
@@ -110,100 +108,102 @@
         "create": "Create date",
         "device": "Device",
         "browser": "Browser",
-        "ip-address": "IP Address",
+        "ip_address": "IP Address",
         "location": "Location",
-        "created-time": "Created time",
+        "created_time": "Created time",
         "status": "Status",
         "success": "Login successfully",
         "fail": "Login failed",
-        "title-history": "Login history (The last 15 times):"
+        "title_history": "Login history (The last 15 times):"
     },
     "order": {
         "id": "ID",
         "date": "Purchase time",
         "content": "Content",
-        "payment-method": "Payment method",
+        "payment_method": "Payment method",
         "direct": "Direct",
         "api": "API",
         "status": "Status",
         "total": "Total amount",
-        "total-refund": "Total Refund",
-        "total-product-replace": "Total Product Replace",
+        "total_refund": "Total Refund",
+        "total_product_replace": "Total Product Replace",
         "action": "Action",
         "detail": "Detail",
         "download": "Download",
         "valid": "Valid",
         "invalid": "Invalid",
-        "download-error": "Something wrong when downloading",
-        "detail-title": "Order detail",
+        "detail_title": "Purchase detail",
         "records": "records",
-        "total-records": "Total",
-        "download-time": "Download Time",
-        "purchase-id": "Purchase ID",
+        "total_records": "Total",
+        "download_time": "Download Time",
+        "purchase_id": "Purchase ID",
         "amount": "Amount",
-        "type": "Type"
+        "type": "Type",
+        "category_title": "CATEGORY",
+        "product_title": "PRODUCT",
+        "total_title": "TOTAL",
+        "account_title": "ACCOUNT - CODE"
     },
     "recharge": {
         "placeholder": "Enter top-up amount",
-        "top-up": "Top-up",
-        "auto-top-up": "Top-up Automatically",
+        "top_up": "Top-up",
+        "auto_top_up": "Top-up Automatically",
         "content": "Please transfer to the account with the content below",
-        "msg-error": "Something wrong when retrieving the code",
-        "wire-transfer": "Top up via wire transfer",
+        "wire_transfer": "Top up via wire transfer",
         "bank": "Bank",
         "owner": "Account Holder",
-        "account-number": "Account Number",
-        "transfer-content": "Transfer Content",
-        "qr-scan": "Top up via QR scanning",
-        "guide-qr": "Instructions to Top up via QR scanning",
-        "guide-1": "1. Log in to Mobile Banking application, select Scan QR and scan the QR code above.",
-        "guide-2": "2. Enter the amount you want to top up, check that the order information (Bank, Account Holder, Account Number, Transfer Content) matches the transfer information on the left",
-        "guide-3": "3. Confirm payment and complete the transaction",
+        "account_number": "Account Number",
+        "transfer_content": "Transfer Content",
+        "qr_scan": "Top up via QR scanning",
+        "guide_qr": "Instructions to Top up via QR scanning",
+        "guide_1": "1. Log in to Mobile Banking application, select Scan QR and scan the QR code above.",
+        "guide_2": "2. Enter the amount you want to top up, check that the order information (Bank, Account Holder, Account Number, Transfer Content) matches the transfer information on the left",
+        "guide_3": "3. Confirm payment and complete the transaction",
         "caution": "*CAUTION: each QR code is only used for one recharge transaction, can not be reused",
-        "wallet-error": "Please enter wallet address",
-        "wallet-title": "Update wallet address",
-        "wallet-empty": "You do not have a wallet address USTD-TRC20, please update the wallet address used to transfer money",
-        "wallet-placeholder": "Enter wallet adress",
-        "wallet-current": "Your current wallet address",
-        "wallet-click": "click here",
-        "wallet-text": "to update your wallet address",
-        "wallet-content": "Please transfer funds to the wallet address below",
-        "transaction-id":"Transaction ID",
-        "pending-recharge-id": "Pending Recharge ID",
+        "wallet_error": "Please enter wallet address",
+        "wallet_title": "Update wallet address",
+        "wallet_empty": "You do not have a wallet address USTD-TRC20, please update the wallet address used to transfer money",
+        "wallet_placeholder": "Enter wallet adress",
+        "wallet_current": "Your current wallet address",
+        "wallet_click": "click here",
+        "wallet_text": "to update your wallet address",
+        "wallet_content": "Please transfer funds to the wallet address below",
+        "transaction_id":"Transaction ID",
+        "pending_recharge_id": "Pending Recharge ID",
         "bonus": "Bonus",
         "amount": "Amount",
-        "ustd-amount": "USTD Amount",
+        "ustd_amount": "USTD Amount",
         "type": "Type",
-        "created-time": "Created time",
-        "created-by":"Created by",
-        "updated-time": "Updated time",
-        "updated-by": "Updated by"
+        "created_time": "Created time",
+        "created_by":"Created by",
+        "updated_time": "Updated time",
+        "updated_by": "Updated by"
     },
-    "recharge-history": {
-        "total-amount": "Total Amount Successfully Recharge",
-        "total-bonus": "Total Bonus Successfully Recharge"
+    "recharge_history": {
+        "total_amount": "Total Amount Successfully Recharge",
+        "total_bonus": "Total Bonus Successfully Recharge"
     },
-    "recharge-tickets": {
-        "button-create": "Create new ticket",
-        "modal-title": "Recharge Ticket",
-        "modal-content": "Content",
-        "modal-content-placeholder": "Please enter content",
-        "modal-content-required": "Please enter reason",
-        "modal-image": "Choose image (image of transaction)",
-        "modal-image-required": "Please choose a file image",
-        "modal-image-text": "Click or drag file to this area to upload",
-        "modal-image-hint": "Only JPG and PNG are supported",
-        "modal-image-only": "Upload only 1 file",
-        "modal-image-size": "Maximum file size is 1MB",
+    "recharge_tickets": {
+        "button_create": "Create new ticket",
+        "modal_title": "Recharge Ticket",
+        "modal_content": "Content",
+        "modal_content_placeholder": "Please enter content",
+        "modal_content_required": "Please enter reason",
+        "modal_image": "Choose image (image of transaction)",
+        "modal_image_required": "Please choose a file image",
+        "modal_image_text": "Click or drag file to this area to upload",
+        "modal_image_hint": "Only JPG and PNG are supported",
+        "modal_image_only": "Upload only 1 file",
+        "modal_image_size": "Maximum file size is 1MB",
         "id": "ID",
         "status": "Status",
         "image": "Image",
         "content": "Content",
-        "added-bonus": "Added Bonus",
-        "added-amount": "Added Amount",
-        "created-time": "Created Time",
-        "lastest-decided-by": "Lastest Decided By",
-        "lastest-decided-time": "Lastest Decided Time"
+        "added_bonus": "Added Bonus",
+        "added_amount": "Added Amount",
+        "created_time": "Created Time",
+        "lastest_decided_by": "Lastest Decided By",
+        "lastest_decided_time": "Lastest Decided Time"
     },
     "warranty-tickets":  {
         "title": "Title",
@@ -230,47 +230,47 @@
         "renew": "Re-enter new password",
         "title": "Change Password",
         "content": "Are you sure you want to change your password?",
-        "required-current" : "Please enter your current password",
-        "required-new": "Please enter new password",
-        "required-renew": "Please re-enter new password",
-        "error-renew": "New password doesn't match",
+        "required_current" : "Please enter your current password",
+        "required_new": "Please enter new password",
+        "required_renew": "Please re-enter new password",
+        "error_renew": "New password doesn't match",
         "successful": "Changed password successfully, please login again",
         "fail": "Password change failed, an error occurred"
     },
-    "2fa-authen": {
+    "2fa_authen": {
         "title": "2FA Authentication",
-        "enable-2fa": "Enabled 2FA Authentication",
-        "disable-2fa": "Disable 2FA Authentication",
-        "get-success": "Get QR code successfully",
-        "get-error": "Something wrong when retrieving the QR code",
-        "msg-success": "Successfully enabled 2fa authentication, please login again",
-        "action-success": "Successful operation",
-        "msg-error": "An error occurred while authenticating 2fa",
-        "enter-otp": "Please enter OTP code",
+        "enable_2fa": "Enabled 2FA Authentication",
+        "disable_2fa": "Disable 2FA Authentication",
+        "get_success": "Get QR code successfully",
+        "get_error": "Something wrong when retrieving the QR code",
+        "msg_success": "Successfully enabled 2fa authentication, please login again",
+        "action_success": "Successful operation",
+        "msg_error": "An error occurred while authenticating 2fa",
+        "enter_otp": "Please enter OTP code",
         "otp": "OPT code",
-        "get-qr": "Get QR code"
+        "get_qr": "Get QR code"
     },
-    "balance-history": {
-        "total-amount": "Total Added Amount",
-        "total-bonus": "Total Added Bonus",
+    "balance_history": {
+        "total_amount": "Total Added Amount",
+        "total_bonus": "Total Added Bonus",
         "type": "Type",
         "content": "Content",
-        "amount-remain": "Amount Remain",
-        "bonus-remain": "Bonus Remain",
-        "add-amount": "Add Amount",
-        "add-bonus": "Add Bonus",
-        "created-by": "Created By",
-        "created-time": "Created Time",
+        "amount_remain": "Amount Remain",
+        "bonus_remain": "Bonus Remain",
+        "add_amount": "Add Amount",
+        "add_bonus": "Add Bonus",
+        "created_by": "Created By",
+        "created_time": "Created Time",
         "action":"Action",
-        "modal-title": "Balance History Detail",
-        "category-name": "Category Name",
-        "purchase-id": "Purchase ID",
-        "transaction-id": "Transaction ID",
-        "recharge-ticket-id": "Recharge Ticket ID",
-        "warranty-ticket-id": "Warranty Ticket ID",
+        "modal_title": "Balance History Detail",
+        "category_name": "Category Name",
+        "purchase_id": "Purchase ID",
+        "transaction_id": "Transaction ID",
+        "recharge_ticket_id": "Recharge Ticket ID",
+        "warranty_ticket_id": "Warranty Ticket ID",
         "note": "Note"
     },
-    "user-balance-type": {
+    "user_balance_type": {
         "MANAGER_UPDATE_BONUS": "Admin update bonus",
         "MANAGER_RESOLVED_RECHARGE": "Handling error recharge",
         "MANAGER_RESTORE_RECHARGE": "Refund of error recharge",
@@ -281,27 +281,27 @@
         "SYSTEM_TRC20": "Top up virtual money",
         "MANAGER_REFUND": "Warranty refund"
     },
-    "category-type": {
+    "category_type": {
         "ALL": "All",
         "STOCK": "Stock",
         "OUT_OF_STOCK": "Out of stock"
     },
-    "purchase-type": {
+    "purchase_type": {
         "ALL": "All",
         "API_TYPE": "API",
         "DIRECT_TYPE": "Direct"
     },
-    "purchase-status": {
+    "purchase_status": {
         "ALL": "All",
         "VALID_STATUS": "Valid",
         "INVALID_STATUS": "Invalid"
     },
-    "recharge-type": {
+    "recharge_type": {
         "ALL": "All",
         "TYPE_BANKING": "Banking",
         "TYPE_USDT": "USDT-TRC20"
     },
-    "download-type": {
+    "download_type": {
         "ALL": "All",
         "TYPE_DOWNLOAD_NOTSOLD": "Not sold",
         "TYPE_DOWNLOAD_SOLD": "Sold",
@@ -311,11 +311,11 @@
         "TYPE_DOWNLOAD_BACK": "Back",
         "TYPE_DOWNLOAD_REQUEST": "Request"
     },
-    "user-login-status": {
+    "user_login_status": {
         "STATUS_SUCCESS": "Successed",
         "STATUS_FAIL": "Failed"
     },
-    "recharge-tickets-status": {
+    "recharge_tickets_status": {
         "ALL": "All",
         "DELETE_STATUS": "Deleted",
         "PENDING_STATUS": "Pending",
@@ -323,7 +323,7 @@
         "SOLVING_STATUS": "Solving",
         "REJECT_STATUS": "Rejected"
     },
-    "warranty-tickets-status": {
+    "warranty_tickets_status": {
         "ALL": "All",
         "PENDING_STATUS": "Pending",
         "CLOSE_STATUS": "Close",
@@ -338,22 +338,30 @@
         "REPLY_TYPE": "Reply",
         "RETAKE_TYPE": "Retake"
     },
-    "partner-status": {
+    "partner_status": {
         "ACTIVE_STATUS": "Active",
         "PENDING_STATUS": "Pending",
         "REJECT_STATUS": "Rejected",
         "ABANDON_STATUS": "Abandon"
     },
-    "user-manager": {
+    "user_manager": {
         "ALL": "All",
         "ACTIVE_STATUS": "Active",
         "ABANDON_STATUS": "Ban"
     },
-    "partner-manager": {
+    "partner_manager": {
         "ALL": "All",
         "ACTIVE_STATUS": "Active",
         "PENDING_STATUS": "Pending",
         "REJECT_STATUS": "Rejected",
         "ABANDON_STATUS": "Ban"
+    },
+    "message": {
+        "error-downloading": "Something wrong when downloading",
+        "invalid_purchase": "Invalid purchase quantity",
+        "success_purchase": "Purchase successfully",
+        "error_get_purchase": "An error occurred while retrieving purchase information",
+        "error_get_download": "An error occurred while retrieving download history",
+        "error_get_recharge_code": "Something wrong when retrieving the recharge code"
     }
 }

@@ -38,7 +38,7 @@ export default ({id, loading}) => {
 
     const columns = [
         {
-            title: 'SẢN PHẨM',
+            title: t('order.category_title'),
             render: row => {
                 if (row.key === 'category_name') {
                     return <span>{productDetail?.content} <Badge count={`x${productDetail.quantity}`}></Badge></span>
@@ -48,7 +48,7 @@ export default ({id, loading}) => {
             }
         },
         {
-            title: 'TỔNG',
+            title: t('order.total_title'),
             // dataIndex: 'value',
             render: row => <b>{row.value}</b>,
             align: 'right'
@@ -61,13 +61,13 @@ export default ({id, loading}) => {
 
     const columnSP = [
         {
-            title: 'SẢN PHẨM',
+            title: t('order.product_title'),
             dataIndex: 'name',
             width: '30%',
             key: 'name'
         },
         {
-            title: 'TÀI KHOẢN - MÃ',
+            title: t('order.account_title'),
             dataIndex: 'account',
             width: '70%',
             key: 'account'
@@ -297,7 +297,7 @@ export default ({id, loading}) => {
             <b>Đơn hàng <span style={{color: 'red'}}>#{productDetail.id}</span> đã được đặt lúc {productDetail.created_time} và hiện tại là
                 <Tag color={productDetail.status === 'valid' ? '#87d068' : '#f50'}>{productDetail.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'}</Tag>
             </b>
-            <Table rowKey="title" dataSource={dataSource} columns={columns} pagination={false} locale={{emptyText: t('common.no-data')}}/>
+            <Table rowKey="title" dataSource={dataSource} columns={columns} pagination={false} locale={{emptyText: t('common.no_data')}}/>
             <div id={'scroll-id'}></div>
             <p align={'center'} style={{marginTop: '10px'}}>
                 <Button type='primary' className={'m-r-5'} onClick={beforeOpenModal}>Đặt lại hàng</Button>
@@ -314,7 +314,7 @@ export default ({id, loading}) => {
                          datasource={getDsSP()}
                          scrollToID={'scroll-id'}
                          columns={columnSP}/>
-            {/*<Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} locale={{emptyText: t('common.no-data')}}/>*/}
+            {/*<Table rowKey="account" bordered dataSource={getDsSP()} columns={columnSP} pagination={false} locale={{emptyText: t('common.no_data')}}/>*/}
             {product && buy()}
         </Fragment> : <p>Không tìm thấy chi tiết đơn hàng</p>}
     </div>

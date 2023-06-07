@@ -73,13 +73,13 @@ const Wrapper = (props) => {
             const isJpgOrPng = extension[extension.length - 1] === 'jpg' || extension[extension.length - 1] === 'png';
             if (!isJpgOrPng) {
                 Modal.error({
-                    content: t('recharge-tickets.modal-image-hint'),
+                    content: t('recharge_tickets.modal_image_hint'),
                     onOk: errorFn
                 });
             }
             if (file.size / 1024 / 1024 > 1) {
                 Modal.error({
-                    content: t('recharge-tickets.modal-image-size'),
+                    content: t('recharge_tickets.modal_image_size'),
                     onOk: errorFn
                 });
             }
@@ -90,18 +90,18 @@ const Wrapper = (props) => {
     return <Fragment>
         {props.visible && <Form onSubmit={handleSubmit}>
                 
-                <Form.Item label={t('recharge-tickets.modal-content')}>
+                <Form.Item label={t('recharge_tickets.modal_content')}>
                     {getFieldDecorator('content', {
-                        rules: [{required: true, message: t('recharge-tickets.modal-content-required')}],
+                        rules: [{required: true, message: t('recharge_tickets.modal_content_required')}],
                     })(
-                        <TextArea placeholder={t('recharge-tickets.modal-content-placeholder')} rows={4}/>,
+                        <TextArea placeholder={t('recharge_tickets.modal_content_placeholder')} rows={4}/>,
                     )}
                 </Form.Item>
-                <Form.Item label={t('recharge-tickets.modal-image')}>
+                <Form.Item label={t('recharge_tickets.modal_image')}>
                     {getFieldDecorator('recharge_tickets_image', {
                         valuePropName: 'fileList',
                         getValueFromEvent: normFile,
-                        rules: [{required: true, message: t('recharge-tickets.modal-image-required')}],
+                        rules: [{required: true, message: t('recharge_tickets.modal_image_required')}],
                     })(
                         <Upload.Dragger
                             name="files"
@@ -115,9 +115,9 @@ const Wrapper = (props) => {
                             <p className="ant-upload-drag-icon">
                                 <Icon type="inbox"/>
                             </p>
-                            <p className="ant-upload-text">{t('recharge-tickets.modal-image-text')}</p>
-                            <p className="ant-upload-hint">{t('recharge-tickets.modal-image-hint')}</p>
-                            <p className="ant-upload-hint">{t('recharge-tickets.modal-image-only')} - {t('recharge-tickets.modal-image-size')}</p>
+                            <p className="ant-upload-text">{t('recharge_tickets.modal_image_text')}</p>
+                            <p className="ant-upload-hint">{t('recharge_tickets.modal_image_hint')}</p>
+                            <p className="ant-upload-hint">{t('recharge_tickets.modal_image_only')} - {t('recharge_tickets.modal_image_size')}</p>
                         </Upload.Dragger>,
                     )}
                     <Modal visible={previewVisible} footer={null} onCancel={() => setPreviewVisible(false)}>

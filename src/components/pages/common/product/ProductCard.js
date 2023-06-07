@@ -59,9 +59,9 @@ const ProductCard = ({ productDetail }) => {
 
     const buySuccess = (purchaseId) => {
         return Modal.confirm({
-            title: t('product.modal-title'),
-            okText: t('product.modal-button-detail'),
-            cancelText: t('product.modal-button-close'),
+            title: t('product.modal_title'),
+            okText: t('product.modal_button_detail'),
+            cancelText: t('product.modal_button_close'),
             icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
             centered: true,
             onOk() {
@@ -74,7 +74,7 @@ const ProductCard = ({ productDetail }) => {
     const handlePurchase = () => {
         setErrorText('')
         if (quantity < 1 && quantity > productDetail.sum_via) {
-            message.error(t('product.msg-invalid'))
+            message.error(t('message.invalid_purchase'))
             return
         }
         setPending(true)
@@ -83,7 +83,7 @@ const ProductCard = ({ productDetail }) => {
             amount: quantity
         }).then(resp => {
             if (resp.status === 200) {
-                message.success(resp?.data?.message || t('product.msg-success'))
+                message.success(resp?.data?.message || t('message.success_purchase'))
                 productDetail.sum_via-=quantity
                 buySuccess(resp.data.purchaseId)
                 forceRender()
@@ -148,17 +148,17 @@ const ProductCard = ({ productDetail }) => {
                         <div className='product-sold'>{t('product.sold')}: <span>{productDetail.sold_via}</span></div>
                         <div className='toggle_product-more-info' style={{cursor: 'pointer'}} onClick={() => {
                             onCollapseDetail(productDetail.id)
-                        }}><a style={{textDecoration: 'underline'}}>{t('product.view-detail')}</a> <Icon type="caret-down" style={{color: "#1b74e4"}} className="toggle-icon" /></div>
+                        }}><a style={{textDecoration: 'underline'}}>{t('product.view_detail')}</a> <Icon type="caret-down" style={{color: "#1b74e4"}} className="toggle-icon" /></div>
                         <div className='product-more-info expand'>
                             <div className='info location'><div className='field-title'><Icon type="check" />{t('product.location')}</div><div className='field-value' style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
                                 <img width={'25px'} height={'25px'} src={productDetail.location_img_url} alt="" className="src"/><span>{productDetail.location}</span></div></div>
-                            <div className='info create-time'><div className='field-title'><Icon type="check" />{t('product.create-time')}</div><div className='field-value'>{productDetail.time}</div></div>
+                            <div className='info create-time'><div className='field-title'><Icon type="check" />{t('product.create_time')}</div><div className='field-value'>{productDetail.time}</div></div>
                             <div className='info 2fa'><div className='field-title'><Icon type="check" />{t('product.2fa')}</div><div className='field-value'>{productDetail.has_2fa === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
                             <div className='info friend-number'><div className='field-title'><Icon type="check" />{t('product.friend')}</div><div className='field-value'>{productDetail.number_friend}</div></div>
-                            <div className='info checkpoint-email'><div className='field-title'><Icon type="check" />{t('product.checkpoint-email')}</div><div className='field-value'>{productDetail.checkpoint_email === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
+                            <div className='info checkpoint-email'><div className='field-title'><Icon type="check" />{t('product.checkpoint_email')}</div><div className='field-value'>{productDetail.checkpoint_email === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
                             <div className='info email'><div className='field-title'><Icon type="check" />{t('product.email')}</div><div className='field-value'>{productDetail.has_email === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
                             <div className='info change-info'><div className='field-title'><Icon type="check" />{t('product.change')}</div><div className='field-value'>{productDetail.has_change === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
-                            <div className='info back-up'><div className='field-title'><Icon type="check" />{t('product.back-up')}</div><div className='field-value'>{productDetail.has_backup === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
+                            <div className='info back-up'><div className='field-title'><Icon type="check" />{t('product.back_up')}</div><div className='field-value'>{productDetail.has_backup === true ? `${t('common.yes')}` : `${t('common.no')}`}</div></div>
                         </div>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px'}}>
@@ -168,7 +168,7 @@ const ProductCard = ({ productDetail }) => {
                         </div>
                         <Button type="primary" style={{fontSize: '13px'}} className='shopping-button' onClick={showPurchaseModal}>
                         <Icon type="shopping-cart" style={{fontSize: '16px'}} />
-                            {t('product.button-buy')}
+                            {t('product.button_buy')}
                         </Button>
                     </div>
                 </div>
@@ -187,16 +187,16 @@ const ProductCard = ({ productDetail }) => {
                     <Button key="back" disabled={pending} onClick={() => {
                         setVisible(false)
                     }}>
-                        {t('product.button-cancel')}
+                        {t('product.button_cancel')}
                     </Button>,
                     <Button disabled={productDetail.sum_via === 0} key="submit" type="primary" loading={pending} onClick={handlePurchase}>
-                        {t('product.button-buy')}
+                        {t('product.button_buy')}
                     </Button>
                 ]}
             >
                 {productDetail.sum_via ?
                 <div style={{fontSize: '15px'}}>
-                        <p>{t('product.remain-modal')}: <span style={{
+                        <p>{t('product.remain_modal')}: <span style={{
                             backgroundColor: 'rgb(82, 196, 26)',
                             color: 'white',
                             padding: '6px',
@@ -204,9 +204,9 @@ const ProductCard = ({ productDetail }) => {
                             fontSize: '15px',
                             borderRadius: '25px'
                         }}>{productDetail.sum_via}</span></p>
-                        <Input autoFocus addonBefore={t('product.enter-value')} max={productDetail.sum_via} min={1} addonAfter={`x${productDetail?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
+                        <Input autoFocus addonBefore={t('product.enter_value')} max={productDetail.sum_via} min={1} addonAfter={`x${productDetail?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
                         <p style={{ marginTop: '10px' }}>{t('product.total')}: <b style={{ color: 'red' }}>{(productDetail?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
-                    </div> : <b style={{ color: 'red' }}>{t('product.out-of-stock')}</b>}
+                    </div> : <b style={{ color: 'red' }}>{t('product.out_of_stock')}</b>}
                 <b style={{ color: 'red' }}>{errorText}</b>
             </Modal>
             <Modal
@@ -228,7 +228,7 @@ const ProductCard = ({ productDetail }) => {
                 onCancel={() => setShowDescProduct(false)}
                 visible={showDescProduct}
                 footer={null}
-                title={t('product.modal-desc')}
+                title={t('product.modal_desc')}
             >
                 <div><span>{productDetail.description}</span></div>
             </Modal>

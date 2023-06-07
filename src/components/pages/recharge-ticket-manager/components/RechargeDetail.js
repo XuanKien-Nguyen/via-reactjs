@@ -8,7 +8,7 @@ export default ({rechargePendingDetail}) => {
         getTypeListRechargePending().then(resp => {
             const data = resp.data?.TYPE_OBJ || [];
             for (const key of Object.keys(data)) {
-                MAP_TYPE[data[key]] = `recharge-type.${key}`
+                MAP_TYPE[data[key]] = `recharge_type.${key}`
             }
         })
     }, [])

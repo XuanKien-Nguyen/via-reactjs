@@ -57,7 +57,7 @@ export default ({ loading }) => {
 
     const columns = [
         {
-            title: t('order.purchase-id'),
+            title: t('order.purchase_id'),
             dataIndex: 'purchase_id',
             align: 'center',
             width: '150px',
@@ -83,7 +83,7 @@ export default ({ loading }) => {
             width: '500px'
         },
         {
-            title: t('order.download-time'),
+            title: t('order.download_time'),
             dataIndex: 'created_time',
             align: 'center',
             width: '300px',
@@ -94,13 +94,13 @@ export default ({ loading }) => {
         getLogDownloadProductType().then(resp => {
             if (resp.status === 200) {
                 const data = resp.data?.TYPE_OBJ_CLIENT || []
-                const lstType = [{label: 'download-type.ALL', value: ''}]
+                const lstType = [{label: 'download_type.ALL', value: ''}]
                 for (const key of Object.keys(data)) {
                     lstType.push({
-                        label: `download-type.${key}`,
+                        label: `download_type.${key}`,
                         value: data[key]
                     })
-                    MAP_TYPE[data[key]] = `download-type.${key}`
+                    MAP_TYPE[data[key]] = `download_type.${key}`
                 }
                 setDownloadTypeList(lstType)
             }

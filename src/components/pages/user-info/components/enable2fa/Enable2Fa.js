@@ -33,11 +33,11 @@ const Enable2Fa = ({loading}) => {
         loading(true)
         getQrImage().then(resp => {
             if (resp.status === 200) {
-                message.success(t('2fa-authen.get-success'))
+                message.success(t('2fa_authen.get_success'))
                 setImgSrc(resp?.data?.QRCodeImage || '')
             }
         }).catch(err => {
-            message.error(t('2fa-authen.get-error'))
+            message.error(t('2fa_authen.get_error'))
         }).finally(() => loading(false))
     }
 
@@ -57,27 +57,27 @@ const Enable2Fa = ({loading}) => {
                 // }
                 if (user?.is_enable_2fa === false) {
                     Modal.success({
-                        content: t('2fa-authen.msg-success'),
+                        content: t('2fa_authen.msg_success'),
                         onOk: () => window.location.href = '/login'
                     });
                 } else {
-                    message.success(resp?.data?.message || t('2fa-authen.action-success'))
+                    message.success(resp?.data?.message || t('2fa_authen.action_success'))
                     const payload = {...user, is_enable_2fa: false}
                     dispatch({type: 'SET_USER_INFO', payload})
                 }
             }).catch(err => {
                 const response = err.response
-                setErrorText(response?.data?.message || `${t('2fa-authen.msg-error')}: ` + err)
+                setErrorText(response?.data?.message || `${t('2fa_authen.msg_error')}: ` + err)
             }).finally(() => setVerifying(false))
         } else {
-            setErrorText(t('2fa-authen.enter-otp'))
+            setErrorText(t('2fa_authen.enter_otp'))
         }
     }
 
     const onChangeOtp = (e) => {
         setOtp(e.target.value)
         if (!e.target.value) {
-            setErrorText(t('2fa-authen.enter-otp'))
+            setErrorText(t('2fa_authen.enter_otp'))
         } else {
             setErrorText('')
         }
@@ -89,10 +89,10 @@ const Enable2Fa = ({loading}) => {
             {/*{(imgSrc && user?.is_enable_2fa === false) && */}
             <Fragment>
                     <div>
-                        <Button onClick={_getQrImage}>{imgSrc ? t('common.refresh') : t('2fa-authen.get-qr')}</Button>
+                        <Button onClick={_getQrImage}>{imgSrc ? t('common.refresh') : t('2fa_authen.get_qr')}</Button>
                     </div>
                     <Button style={{marginTop: '10px'}} type={'primary'} onClick={() => setVisible(true)}>
-                        {user?.is_enable_2fa === false ? t('2fa-authen.enable-2fa') : t('2fa-authen.disable-2fa')}
+                        {user?.is_enable_2fa === false ? t('2fa_authen.enable_2fa') : t('2fa_authen.disable_2fa')}
                     </Button>
                 </Fragment>
             {/*}*/}
@@ -102,7 +102,7 @@ const Enable2Fa = ({loading}) => {
                 closable={false}
                 visible={visible}
                 maskClosable={false}
-                title={t('2fa-authen.title')}
+                title={t('2fa_authen.title')}
                 onOk={handleVerify2Fa}
                 onCancel={() => setVisible(false)}
                 footer={[
@@ -110,11 +110,11 @@ const Enable2Fa = ({loading}) => {
                         {t('common.cancel')}
                     </Button>,
                     <Button key="submit" type="primary" loading={verifying} onClick={handleVerify2Fa}>
-                        {user?.is_enable_2fa === false ? t('2fa-authen.enable-2fa') : t('2fa-authen.disable-2fa')}
+                        {user?.is_enable_2fa === false ? t('2fa_authen.enable_2fa') : t('2fa_authen.disable_2fa')}
                     </Button>
                 ]}
             >
-                <Input addonBefore={t('2fa-authen.otp')} value={otp} onChange={onChangeOtp}/>
+                <Input addonBefore={t('2fa_authen.otp')} value={otp} onChange={onChangeOtp}/>
                 <p style={{margin: '5px', color: 'red'}}>{errorText}</p>
             </Modal>
         </div>

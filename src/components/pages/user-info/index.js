@@ -27,12 +27,12 @@ import Modal from "antd/es/modal";
 const BREAD_CRUMB = {
     'info': 'profile.information',
     'purchase': 'profile.order',
-    'change-password': 'profile.change-password',
+    'change-password': 'profile.change_password',
     recharge: 'profile.recharge',
-    'recharge-history': 'profile.recharge-history',
-    'balance-history': 'profile.balance-history',
-    'recharge-tickets': 'profile.recharge-tickets',
-    'download-history': 'profile.download-history'
+    'recharge-history': 'profile.recharge_history',
+    'balance-history': 'profile.balance_history',
+    'recharge-tickets': 'profile.recharge_tickets',
+    'download-history': 'profile.download_history'
 }
 
 let fn
@@ -266,27 +266,27 @@ const UserInfo = () => {
                     </Menu.Item>
                     <Menu.Item key="change-password">
                         <Icon type="lock" />
-                        {t('profile.change-password')}
+                        {t('profile.change_password')}
                     </Menu.Item>
                     <Menu.Item key="recharge-history">
                         <Icon type="dollar" />
-                        {t('profile.recharge-history')}
+                        {t('profile.recharge_history')}
                     </Menu.Item>
                     <Menu.Item key="balance-history">
                         <Icon type="file-sync" />
-                        {t('profile.balance-history')}
+                        {t('profile.balance_history')}
                     </Menu.Item>
                     <Menu.Item key="recharge-tickets">
                         <Icon type="credit-card" />
-                        {t('profile.recharge-tickets')}
+                        {t('profile.recharge_tickets')}
                     </Menu.Item>
                     <Menu.Item key="warranty-tickets">
                         <Icon type="safety-certificate" />
-                        {t('profile.warranty-tickets')}
+                        {t('profile.warranty_tickets')}
                     </Menu.Item>
                     <Menu.Item key="download-history">
                         <Icon type="download" />
-                        {t('profile.download-history')}
+                        {t('profile.download_history')}
                     </Menu.Item>
                     { (user?.role === 'admin' || user?.role === 'staff') &&<Menu.Item key="auth-2fa">
                         <Icon type="qrcode" />

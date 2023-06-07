@@ -10,7 +10,7 @@ const ProductLayout = ({categoryParent, hiddenShowMore = false}) => {
 
     return (
     <section id='product-layout'>
-      <ListLayout titleCategory={categoryParent.name} hiddenShowMore={hiddenShowMore} contentSeeMore={t('category.view-more')} categoryId={categoryParent.id}>
+      <ListLayout titleCategory={categoryParent.name} hiddenShowMore={hiddenShowMore} contentSeeMore={t('category.view_more')} categoryId={categoryParent.id}>
         {categoryParent.childCategoryList.map(product => <ProductCard key={product.id} productDetail={product}/>)}
       </ListLayout>
     </section>

@@ -24,7 +24,7 @@ const ChangePassword = (props) => {
     const compareToFirstPassword = (rule, value, callback) => {
         const {form} = props;
         if (value && value !== form.getFieldValue('password')) {
-            callback(t('password.error-renew'));
+            callback(t('password.error_renew'));
         } else {
             callback();
         }
@@ -89,7 +89,7 @@ const ChangePassword = (props) => {
                     rules: [
                         {
                             required: true,
-                            message: t('password.required-current'),
+                            message: t('password.required_current'),
                         }
                     ],
                 })(<Input.Password
@@ -102,7 +102,7 @@ const ChangePassword = (props) => {
                     rules: [
                         {
                             required: true,
-                            message: t('password.required-new'),
+                            message: t('password.required_new'),
                         },
                         {
                             validator: validateToNextPassword,
@@ -118,7 +118,7 @@ const ChangePassword = (props) => {
                     rules: [
                         {
                             required: true,
-                            message: t('password.required-renew'),
+                            message: t('password.required_renew'),
                         },
                         {
                             validator: compareToFirstPassword,

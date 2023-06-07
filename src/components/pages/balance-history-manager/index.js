@@ -40,10 +40,10 @@ export default () => {
                     const lstType = []
                     for (const key of Object.keys(data)) {
                         lstType.push({
-                            label: `user-balance-type.${key}`,
+                            label: `user_balance_type.${key}`,
                             value: data[key]
                         })
-                        MAP_TYPE[data[key]] = `user-balance-type.${key}`
+                        MAP_TYPE[data[key]] = `user_balance_type.${key}`
                     }
                     setLstBalanceType(lstType)
                 }
@@ -103,33 +103,33 @@ export default () => {
             render: row => <b>#{row.user_id} - {row.username}</b>
         },
         {
-            title: t('balance-history.type'),
+            title: t('balance_history.type'),
             dataIndex: 'type',
             align: 'center',
             width: '150px',
             render: type => <b>{t(MAP_TYPE[type])}</b>
         },
         {
-            title: t('balance-history.content'),
+            title: t('balance_history.content'),
             dataIndex: 'content',
             width: '350px',
         },
         {
-            title: t('balance-history.add-bonus'),
+            title: t('balance_history.add_bonus'),
             dataIndex: 'add_bonus',
             align: 'center',
             width: '150px',
             render: el => renderMoney(el)
         },
         {
-            title: t('balance-history.add-amount'),
+            title: t('balance_history.add_amount'),
             dataIndex: 'add_amount',
             width: '150px',
             align: 'center',
             render: el => renderMoney(el)
         },
         {
-            title: t('balance-history.bonus-remain'),
+            title: t('balance_history.bonus_remain'),
             dataIndex: 'bonus_remain',
             width: '150px',
             align: 'center',
@@ -138,7 +138,7 @@ export default () => {
             }
         },
         {
-            title: t('balance-history.amount-remain'),
+            title: t('balance_history.amount_remain'),
             dataIndex: 'amount_remain',
             width: '150px',
             align: 'center',
@@ -147,19 +147,19 @@ export default () => {
             }
         },
         {
-            title: t('balance-history.created-by'),
+            title: t('balance_history.created_by'),
             dataIndex: 'createdby',
             width: '150px',
             align: 'center',
         },
         {
-            title: t('balance-history.created-time'),
+            title: t('balance_history.created_time'),
             dataIndex: 'created_time',
             width: '150px',
             align: 'center',
         },
         {
-            title: t('balance-history.action'),
+            title: t('balance_history.action'),
             align: 'center',
             width: '80px',
             fixed: 'right',
@@ -188,8 +188,8 @@ export default () => {
                 setTotalAddedBonus={setTotalAddedBonus}
         />
         {type && <div className="balance-total" style={{marginBottom: '16px', fontSize: '16px'}}>
-            <div>{t('balance-history.total-amount')}: {renderMoney(totalAddedAmount)}</div>
-            <div>{t('balance-history.total-bonus')}: {renderMoney(totalAddedBonus)}</div>
+            <div>{t('balance_history.total_amount')}: {renderMoney(totalAddedAmount)}</div>
+            <div>{t('balance_history.total_bonus')}: {renderMoney(totalAddedBonus)}</div>
         </div>}
         <TableCommon
             className='table-order'

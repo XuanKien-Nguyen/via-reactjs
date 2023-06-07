@@ -112,7 +112,7 @@ export default (props) => {
                expandedRowRender={expandedRowRender ? expandedRowRender : null}
                pagination={false}
                locale={{
-                   emptyText: t('common.no-data')
+                   emptyText: t('common.no_data')
                }}
                {...props}
         />
@@ -126,7 +126,7 @@ export default (props) => {
                         onChange={whenPageChanged()}
                         pageSizeOptions={PAGE_SIZE_OPTION}
                         onShowSizeChange={whenSizeChanged()}
-                        showTotal={(total) => `${t('order.total-records')} ${total}`}/>
+                        showTotal={(total) => `${t('order.total_records')} ${total}`}/>
         </div>
     </Fragment>
 }

@@ -49,13 +49,13 @@ export default () => {
     useEffect(() => {
         getUserStatusList().then(resp => {
             const data = resp.data?.STATUS_OBJ || [];
-            const lstStatus = [{ label: 'user-manager.ALL', value: '' }]
+            const lstStatus = [{ label: 'user_manager.ALL', value: '' }]
             for (const key of Object.keys(data)) {
                 lstStatus.push({
-                    label: `user-manager.${key}`,
+                    label: `user_manager.${key}`,
                     value: data[key]
                 })
-                MAP_STATUS[data[key]] = `user-manager.${key}`
+                MAP_STATUS[data[key]] = `user_manager.${key}`
             }
             setStatusList(lstStatus)
         })

@@ -47,13 +47,13 @@ export default () => {
     useEffect(() => {
         getTypeListRechargeSuccess().then(resp => {
             const data = resp.data?.TYPE_OBJ || [];
-            const lstStatus = [{ label: 'recharge-type.ALL', value: '' }]
+            const lstStatus = [{ label: 'recharge_type.ALL', value: '' }]
             for (const key of Object.keys(data)) {
                 lstStatus.push({
-                    label: `recharge-type.${key}`,
+                    label: `recharge_type.${key}`,
                     value: data[key],
                 })
-                MAP_TYPE[data[key]] = `recharge-type.${key}`
+                MAP_TYPE[data[key]] = `recharge_type.${key}`
             }
             setTypeList(lstStatus)
         })

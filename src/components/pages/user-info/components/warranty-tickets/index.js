@@ -52,13 +52,13 @@ export default ({loading}) => {
     useEffect(() => {
         getStatusList().then(resp => {
             const data = resp.data?.STATUS_OBJ || []
-            const lstStatus = [{label: 'warranty-tickets-status.ALL', value: ''}]
+            const lstStatus = [{label: 'warranty_tickets_status.ALL', value: ''}]
             for (const key of Object.keys(data)) {
                 lstStatus.push({
-                    label: `warranty-tickets-status.${key}`,
+                    label: `warranty_tickets_status.${key}`,
                     value: data[key]
                 })
-                MAP_STATUS[data[key]] = `warranty-tickets-status.${key}`
+                MAP_STATUS[data[key]] = `warranty_tickets_status.${key}`
             }
             setStatusList(lstStatus)
         })

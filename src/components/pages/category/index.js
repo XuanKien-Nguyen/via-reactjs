@@ -81,7 +81,7 @@ export default () => {
 
   const getTypeStockList = () => {
     return typeList.map(el => ({
-      label: t(`category-type.${el.label}`),
+      label: t(`category_type.${el.label}`),
       value: el.value
     }))
   }
@@ -98,7 +98,7 @@ export default () => {
       {/* <FilterLayout setResultSearch={setResultSearch} parentId={parentId} /> */}
       <Search setResultSearch={setResultSearch} parentId={parentId} getParentCategory={getParentCategory} getTypeStockList={getTypeStockList} getLocationStockingList={getLocationStockingList} />
       <div className='product-page_category'>
-        {resultSearch.length === 0 ? <h1 style={{ marginTop: '40px' }} align={'center'}>{t('category.no-product')}</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} hiddenShowMore={true} categoryParent={el} />)}
+        {resultSearch.length === 0 ? <h1 style={{ marginTop: '40px' }} align={'center'}>{t('category.no_product')}</h1> : resultSearch.map((el, idx) => <ProductLayout key={idx} hiddenShowMore={true} categoryParent={el} />)}
       </div>
     </div>
   );

@@ -47,58 +47,58 @@ export default ({ loading }) => {
     
     const columns = [
         {
-            title: t('recharge-tickets.id'),
+            title: t('recharge_tickets.id'),
             dataIndex: 'id',
             align: 'center',
             width: '100px',
             render: id => <b>#{id}</b>
         },
         {
-            title: t('recharge-tickets.status'),
+            title: t('recharge_tickets.status'),
             width: '150px',
             dataIndex: 'status',
             render: s => <Tag color={'grey'}>{t(MAP_TYPE[s])}</Tag>,
             align: 'center',
         },
         {
-            title: t('recharge-tickets.image'),
+            title: t('recharge_tickets.image'),
             dataIndex: 'image_url',
             align: 'center',
             width: '200px',
             render: image_url => <div className="recharge-tickets_image"><img alt="recharge-tickets" src={image_url} /><Icon type='eye' style={{color: 'white', fontSize: '24px'}} onClick={() => {onShowImage(image_url)}}/></div>
         },
         {
-            title: t('recharge-tickets.content'),
+            title: t('recharge_tickets.content'),
             dataIndex: 'content',
             align: 'center',
             width: '300px'
         },
         {
-            title: t('recharge-tickets.added-bonus'),
+            title: t('recharge_tickets.added_bonus'),
             dataIndex: 'added_bonus',
             align: 'center',
             width: '150px',
         },
         {
-            title: t('recharge-tickets.added-amount'),
+            title: t('recharge_tickets.added_amount'),
             dataIndex: 'added_amount',
             align: 'center',
             width: '150px',
         },
         {
-            title: t('recharge-tickets.created-time'),
+            title: t('recharge_tickets.created_time'),
             dataIndex: 'created_time',
             align: 'center',
             width: '200px',
         },
         {
-            title: t('recharge-tickets.lastest-decided-by'),
+            title: t('recharge_tickets.lastest_decided_by'),
             dataIndex: 'lastest_decidedby',
             align: 'center',
             width: '200px',
         },
         {
-            title: t('recharge-tickets.lastest-decided-time'),
+            title: t('recharge_tickets.lastest_decided_time'),
             dataIndex: 'lastest_decided_time',
             align: 'center',
             width: '200px',
@@ -152,7 +152,7 @@ export default ({ loading }) => {
             reload={reload}
         />
         <div style={{marginBottom: '16px', textAlign: 'end'}}>
-            <Button type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button-create')}</Button>
+            <Button type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button_create')}</Button>
         </div>
         <TableCommon 
             className='table-order'

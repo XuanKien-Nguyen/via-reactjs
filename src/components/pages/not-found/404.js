@@ -10,7 +10,7 @@ const NotFound = () => {
     return <div id='not_found'>
         <h1>404</h1>
         <h2>Oops!</h2>
-        <p>{t('not-found.title')}</p>
+        <p>{t('not_found.title')}</p>
     </div>
 }
 

@@ -140,7 +140,7 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                     >
                         <Row>
                             <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('order.purchase-id')}</span>: <b><i>{` #${detail.purchase_id}`}</i></b>
+                                <span>{t('order.purchase_id')}</span>: <b><i>{` #${detail.purchase_id}`}</i></b>
                             </Col>
                             <Col sm={24} lg={8} className={'m-b-10'}>
                                 <span>{t('warranty-tickets.category_price')}</span>: <b>{` ` + convertCurrencyVN(detail.category_price)}</b>
@@ -188,7 +188,7 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                             bordered
                             style={{marginTop: 16}}
                             actions={[
-                                <Tooltip title={t('recharge-tickets.image')}>
+                                <Tooltip title={t('recharge_tickets.image')}>
                                     <div onClick={() => viewListImage(el)}>
                                         <Icon type="file-image" key="setting"/> ({el.image_url?.length || 0})
                                     </div>
@@ -229,7 +229,7 @@ export default ({detail, setDetail, visible, setVisible, reload, mapStatus}) => 
                                 </Col>
                             </Row>
                         </Card>
-                    }) : <p style={{textAlign: 'center'}}>{t('common.no-data')}</p>}
+                    }) : <p style={{textAlign: 'center'}}>{t('common.no_data')}</p>}
                     {viewListImage()}
                     <ReplyComment visible={visibleCreateComment} setVisible={setVisibleCreateComment} t={t}
                                   detail={detail}/>

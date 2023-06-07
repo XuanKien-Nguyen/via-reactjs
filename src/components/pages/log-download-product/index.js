@@ -35,13 +35,13 @@ export default () => {
         getLogDownloadProductTypeManager().then(resp => {
             if (resp.status === 200) {
                 const data = resp.data?.TYPE_OBJ_MANAGER || []
-                const lstType = [{label: 'download-type.ALL', value: ''}]
+                const lstType = [{label: 'download_type.ALL', value: ''}]
                 for (const key of Object.keys(data)) {
                     lstType.push({
-                        label: `download-type.${key}`,
+                        label: `download_type.${key}`,
                         value: data[key]
                     })
-                    MAP_TYPE[data[key]] = `download-type.${key}`
+                    MAP_TYPE[data[key]] = `download_type.${key}`
                 }
                 setTypeList(lstType)
             }
