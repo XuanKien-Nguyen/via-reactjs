@@ -114,6 +114,7 @@ export default ({loading}) => {
             latest_decidedby: lastestDecicedBy,
             latest_decided_time,
             created_time,
+            comment,
             perpage: page.perpage,
             page: page.currentPage,
         }

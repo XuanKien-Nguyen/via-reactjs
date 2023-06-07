@@ -222,7 +222,7 @@ const UserInfo = () => {
                         title="Đăng ký cộng tác viên"
                         visible={visible}
                         footer={[
-                            <Button type="danger" loading={pending} onClick={() => {
+                            <Button type="danger" disabled={pending} onClick={() => {
                                 setVisible(false)
                                 setErrorMessage('')
                             }}>
