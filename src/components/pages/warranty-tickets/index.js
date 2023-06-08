@@ -36,7 +36,6 @@ export default () => {
     const [createdDate, setCreatedDate] = useState([])
     const [lastestDecicedBy, setLastestDecicedBy] = useState('')
     const [lastestDecicedDate, setLastestDecicedDate] = useState([])
-    const [visible, setVisible] = useState(false)
     const [visibleDetail, setVisibleDetail] = useState(false)
     const [warrantyDetail, setWarrantyDetail] = useState(null)
 
@@ -47,10 +46,6 @@ export default () => {
     })
 
     const [reload, setReload] = useState(0)
-
-    const reloadTable = () => {
-        setReload(reload + 1)
-    }
 
     useEffect(() => {
         getStatusList().then(resp => {

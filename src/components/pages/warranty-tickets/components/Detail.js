@@ -331,7 +331,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                         <Spin spinning={pending} indicator={antIcon}>
                             {CURRENT_FUNC === 'REFUND_TYPE' && <Refund func={FUNC}/>}
                             {CURRENT_FUNC === 'REJECT_TYPE' && <Reject func={FUNC} detail={detail}/>}
-                            {CURRENT_FUNC === 'REPLACE_TYPE' && <Replace func={FUNC} detail={detail}/>}
+                            {CURRENT_FUNC === 'REPLACE_TYPE' && <Replace func={FUNC} detail={detail} loading={setPending}/>}
                         </Spin>
                     </Modal>
                 </div>}

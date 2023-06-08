@@ -1,12 +1,17 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Form, Icon, Upload} from "antd";
+import {Drawer, Form, Icon, Spin, Upload, Table} from "antd";
 import Modal from "antd/es/modal";
 import {getBase64} from "../../../../../utils/helpers";
 import {CKEditor} from "@ckeditor/ckeditor5-react";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import {sendProductToReplace} from "../../../../../services/warranty-tickets-manager";
+import {
+    sendProductToReplace,
+    getProductCheckingList,
+    getProductRequestList
+} from "../../../../../services/warranty-tickets-manager";
 import TextArea from "antd/es/input/TextArea";
+import Button from "antd/es/button";
 
 const Wrapper = (props) => {
 
@@ -14,8 +19,11 @@ const Wrapper = (props) => {
     const [previewVisible, setPreviewVisible] = useState(false)
     const [previewImage, setPreviewImage] = useState(null)
 
+    const [productReplaceList, setProductReplaceList] = useState([])
     const [comment, setComment] = useState('')
     const [errorMsgComment, setErrorMsgComment] = useState('')
+
+    const [open, setOpen] = useState(false)
 
     useEffect(() => {
         if (!props.visible) {
@@ -104,7 +112,104 @@ const Wrapper = (props) => {
         return false
     }
 
+    const getProductReplace = () => {
+        setOpen(true)
+        // props.loading(true)
+        // getProductRequestList(props.detail.id).then(resp => {
+        //     if (resp.status === 200) {
+        //         console.log(resp);
+        //         Modal.success({
+        //             content: resp.data.message
+        //         })
+        //         setProductReplaceList(resp.data.productRequestList)
+        //     }
+        // }).catch((err) => Modal.error({
+        //     content: err.response.data.message
+        // })).finally(() => props.loading(false))
+    }
+
+    useEffect(() => {
+        props.loading(true)
+        getProductRequestList(props.detail.id).then(resp => {
+            if (resp.status === 200) {
+                console.log(resp);
+                // Modal.success({
+                //     content: resp.data.message
+                // })
+                const data = resp.data.productRequestList
+                data.shift()
+                data.shift()
+                setProductReplaceList(data)
+
+            }
+        }).catch((err) => Modal.error({
+            content: err.response.data.message
+        })).finally(() => props.loading(false))
+    }, [])
+
+    const onClose = () => {
+        setOpen(false)
+    }
+
+    const columns = [
+        {
+            title: 'Sản phẩm',
+            width: '400px',
+            render: (el, idx) => <b>{idx + 1}</b>
+        },
+        {
+            title: 'Thao tác',
+            width: '200px',
+            render: row => {
+                return <div>
+                    <Button type={'primary'} style={{marginRight: '5px'}}
+                            onClick={() => {
+                                props.form.setFieldsValue({
+                                    productSuccessDetail: props.form.getFieldValue('productSuccessDetail') + `\r\n${row}`
+                                })
+                            }}>Chọn</Button>
+                    <Button type={'danger'}>Báo lỗi</Button>
+                </div>
+            }
+        }
+    ]
+
+
     return <Fragment>
+        <Drawer
+            title="Danh sách sản phẩm đổi trả"
+            placement="right"
+            closable={false}
+            onClose={onClose}
+            visible={open}
+            width={'700px'}
+        >
+            {productReplaceList.length > 0 ? <div>
+                <Table dataSource={productReplaceList}
+                       pagination={false}
+                       columns={columns}/>
+            </div> : 'Không có sản phẩm nào'}
+
+            <div
+                style={{
+                    position: 'absolute',
+                    right: 0,
+                    bottom: 0,
+                    width: '100%',
+                    borderTop: '1px solid #e9e9e9',
+                    padding: '10px 16px',
+                    background: '#fff',
+                    textAlign: 'right',
+                }}
+            >
+                <Button onClick={() => setOpen(false)} type="primary">
+                    Đóng
+                </Button>
+            </div>
+        </Drawer>
+        <p style={{textAlign: 'right'}}>
+            <Button type={'primary'} onClick={getProductReplace}>Lấy sản phẩm trong kho</Button>
+        </p>
         <Form>
             <div style={{border: '1px solid #eaeaea', padding: '20px'}}>
                 {/*<h3>{'Tiêu đề'}: <i>{detail.title}</i>*/}
@@ -113,7 +218,7 @@ const Wrapper = (props) => {
                     {getFieldDecorator('productSuccessDetail', {
                         rules: [{required: true, message: 'Vui lòng nhập danh sách sản phẩm bảo hành'}],
                     })(
-                        <TextArea placeholder={'Danh sách sản phẩm bảo hành'} rows={8}/>,
+                        <TextArea placeholder={'Danh sách sản phẩm bảo hành'} defaultValue={''} rows={8}/>,
                     )}
                 </Form.Item>
                 <p style={{color: 'rgba(0, 0, 0, 0.85)', marginTop: '10px'}}>
