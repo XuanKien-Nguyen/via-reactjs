@@ -142,7 +142,9 @@
         "category_title": "SẢN PHẨM",
         "product_title": "SẢN PHẨM",
         "total_title": "TỔNG",
-        "account_title": "TÀI KHOẢN - MÃ"
+        "account_title": "TÀI KHOẢN - MÃ",
+        "amount_spend": "Tiền tài khoản đã sử dụng",
+        "bonus_spend": "Tiền khuyến mãi đã sử dụng"
     },
     "recharge": {
         "placeholder": "Nhập số tiền muốn nạp",
@@ -253,6 +255,7 @@
     "balance_history": {
         "total_amount": "Tổng tiền tài khoản thay đổi",
         "total_bonus": "Tổng tiền khuyến mãi thay đổi",
+        "username": "Tên người dùng",
         "type": "Loại",
         "content": "Nội dung",
         "amount_remain": "Số dư tài khoản",
@@ -362,6 +365,11 @@
         "success_purchase": "Mua thành công",
         "error_get_purchase": "Có lỗi xảy ra khi lấy thông tin đơn hàng",
         "error_get_download": "Có lỗi xảy ra khi lấy lịch sử tải xuống",
-        "error_get_recharge_code": "Có lỗi xảy ra khi lấy mã nạp"
+        "error_get_recharge_code": "Có lỗi xảy ra khi lấy mã nạp",
+        "error_get_recharge_history": "Có lỗi xảy ra khi lấy lịch sử nạp",
+        "error_get_recharge_tickets": "Có lỗi xảy ra khi lấy thông tin phiếu nạp lỗi", 
+        "error_invalid_purchase": "Số lượng mua không hợp lệ",
+        "error_out_of_stock": "Sản phẩm đã hết hàng",
+        "copy_success": "Sao chép thành công"
     }
 }

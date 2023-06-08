@@ -142,7 +142,9 @@
         "category_title": "CATEGORY",
         "product_title": "PRODUCT",
         "total_title": "TOTAL",
-        "account_title": "ACCOUNT - CODE"
+        "account_title": "ACCOUNT - CODE",
+        "amount_spend": "Amount of buyer spend",
+        "bonus_spend": "Bonus of buyer spend"
     },
     "recharge": {
         "placeholder": "Enter top-up amount",
@@ -253,6 +255,7 @@
     "balance_history": {
         "total_amount": "Total Added Amount",
         "total_bonus": "Total Added Bonus",
+        "username": "Username",
         "type": "Type",
         "content": "Content",
         "amount_remain": "Amount Remain",
@@ -362,6 +365,11 @@
         "success_purchase": "Purchase successfully",
         "error_get_purchase": "An error occurred while retrieving purchase information",
         "error_get_download": "An error occurred while retrieving download history",
-        "error_get_recharge_code": "Something wrong when retrieving the recharge code"
+        "error_get_recharge_code": "Something wrong when retrieving the recharge code",
+        "error_get_recharge_history": "Something wrong when retrieving the recharge history",
+        "error_get_recharge_tickets": "Something wrong when retrieving the recharge tickets", 
+        "error_invalid_purchase": "Invalid purchase quantity",
+        "error_out_of_stock": "Product is out of stock",
+        "copy_success": "Copied to clipboard"
     }
 }

@@ -89,7 +89,7 @@ export default ({ setRechargeTicketList, api, loading, setPageInfo, page, getTic
                 setPageInfo(pageInfo)
                 setRechargeTicketList(resp?.data?.rechargeTicketList || [])
             }
-        }).catch(() => message.error('Có lỗi xảy ra khi lấy thông tin phiếu nạp lỗi'))
+        }).catch(() => message.error(t('message.error_get_recharge_tickets')))
             .finally(() => loading(false))
     }
 

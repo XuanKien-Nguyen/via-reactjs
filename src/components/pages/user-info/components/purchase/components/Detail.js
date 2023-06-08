@@ -95,28 +95,28 @@ export default ({id, loading}) => {
             value: convertCurrencyVN(productDetail.total_amount)
         },
         {
-            title: 'Nội dung:',
+            title: `${t('order.content')}:`,
             value: convertCurrencyVN(productDetail.content)
         },
         {
-            title: 'Tiền tài khoản đã sử dụng:',
+            title: `${t('order.amount_spend')}:`,
             value: convertCurrencyVN(productDetail.amount_of_buyer_spend)
         },
         {
-            title: 'Tiền khuyến mãi đã sử dụng:',
+            title: `${t('order.bonus_spend')}:`,
             value: convertCurrencyVN(productDetail.bonus_of_buyer_spend)
         },
         {
-            title: 'Tổng tiền hoàn lại:',
+            title: `${t('order.total_refund')}:`,
             value: convertCurrencyVN(productDetail.total_refund)
         },
         {
-            title: 'Tổng sản phẩm bảo hành:',
+            title: `${t('order.total_product_replace')}:`,
             value: productDetail.total_product_replace
         },
         {
-            title: 'Phương thức thanh toán: ',
-            value: productDetail.purchase_type === 'direct' ? 'Trực tiếp' : 'Cộng tác viên'
+            title: `${t('order.payment_method')}:`,
+            value: productDetail.purchase_type === 'direct' ? t('order.direct') : t('order.api')
         }
     ]
 
@@ -162,7 +162,7 @@ export default ({id, loading}) => {
     const handlePurchase = () => {
         setErrorText('')
         if (quantity < 1 && quantity > product.sum_via) {
-            message.error("Số lượng mua không hợp lệ")
+            message.error(t('message.error_invalid_purchase'))
             return
         }
         setPending(true)
@@ -171,7 +171,7 @@ export default ({id, loading}) => {
             amount: quantity
         }).then(resp => {
             if (resp.status === 200) {
-                message.success(resp?.data?.message || 'Mua hàng thành công')
+                message.success(resp?.data?.message || t('message.success_purchase'))
                 product.sum_via-=quantity
                 forceRender()
                 buySuccess(resp.data.purchaseId)
@@ -190,7 +190,7 @@ export default ({id, loading}) => {
             const content = data.purchaseDownloadList.join('\r\n');
             textToFile(categoryName, content)
         }).catch(err => {
-            message.error(err.response?.data?.message || 'Có lỗi xảy ra khi tải xuống')
+            message.error(err.response?.data?.message || t('message.error_downloading'))
         }).finally(() => loading(false))
     }
 
@@ -231,7 +231,7 @@ export default ({id, loading}) => {
                 setProduct(resp.data.childCategoryList[0])
                 setVisible(true)
             } else if (data.sum_via === 0) {
-                message.error('Sản phẩm đã hết hàng')
+                message.error(t('message.error_out_of_stock'))
             }
         }).catch(err => message.error(err)).finally(() => loading(false))
     }
@@ -251,16 +251,16 @@ export default ({id, loading}) => {
                 <Button key="back" disabled={pending} onClick={() => {
                     setVisible(false)
                 }}>
-                    Hủy
+                    {t('common.cancel')}
                 </Button>,
                 <Button disabled={product.sum_via === 0} key="submit" type="primary" loading={pending} onClick={handlePurchase}>
-                    Mua ngay
+                    {t('product.button_buy')}
                 </Button>
             ]}
         >
             {product.sum_via ?
                 <div style={{fontSize: '15px'}}>
-                    <p>Số lượng còn: <span style={{
+                    <p>{t('product.remain_modal')}: <span style={{
                         backgroundColor: 'rgb(82, 196, 26)',
                         color: 'white',
                         padding: '6px',
@@ -268,18 +268,18 @@ export default ({id, loading}) => {
                         fontSize: '15px',
                         borderRadius: '25px'
                     }}>{product.sum_via}</span></p>
-                    <Input autoFocus addonBefore="Nhập số lượng mua" max={product.sum_via} min={1} addonAfter={`x${product?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
-                    <p style={{ marginTop: '10px' }}>Thành tiền: <b style={{ color: 'red' }}>{(product?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
-                </div> : <b style={{ color: 'red' }}>Sản phẩm đã hết hàng</b>}
+                    <Input autoFocus addonBefore={t('product.enter_value')} max={product.sum_via} min={1} addonAfter={`x${product?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
+                    <p style={{ marginTop: '10px' }}>{t('product.total')}: <b style={{ color: 'red' }}>{(product?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
+                </div> : <b style={{ color: 'red' }}>{t('message.error_out_of_stock')}</b>}
             <b style={{ color: 'red' }}>{errorText}</b>
         </Modal>
     }
 
     const buySuccess = (purchaseId) => {
         return confirm({
-            title: 'Mua hàng thành công',
-            okText: 'Xem chi tiết',
-            cancelText: 'Đóng',
+            title: t('product.modal_title'),
+            okText: t('product.modal_button_detail'),
+            cancelText: t('product.modal_button_close'),
             icon: <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />,
             centered: true,
             onOk() {

@@ -83,7 +83,7 @@ export default ({loading}) => {
                     setTotalRechargeAmount(resp?.data?.totalAmountSuccessRecharge || 0);
                     setTotalRechargeBonus(resp?.data?.totalBonusSuccessRecharge || 0);
                 }
-            }).catch(() => message.error('Có lỗi xảy ra khi lấy lịch sử nạp'))
+            }).catch(() => message.error(t('message.error_get_recharge_history')))
                 .finally(() => loading(false))
         }, 500)
     }, [date, type, page.currentPage, page.perpage, updatedBy, transactionId])

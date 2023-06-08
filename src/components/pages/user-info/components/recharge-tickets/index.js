@@ -109,13 +109,13 @@ export default ({ loading }) => {
         getRechargeTicketsStatusList().then(resp => {
             if (resp.status === 200) {
                 const data = resp.data?.STATUS_OBJ || []
-                const lstStatus = [{label: 'recharge-tickets-status.ALL', value: ''}]
+                const lstStatus = [{label: 'recharge_tickets_status.ALL', value: ''}]
                 for (const key of Object.keys(data)) {
                     lstStatus.push({
-                        label: `recharge-tickets-status.${key}`,
+                        label: `recharge_tickets_status.${key}`,
                         value: data[key]
                     })
-                    MAP_TYPE[data[key]] = `recharge-tickets-status.${key}`
+                    MAP_TYPE[data[key]] = `recharge_tickets_status.${key}`
                 }
                 setTicketsStatusList(lstStatus)
             }
@@ -152,7 +152,7 @@ export default ({ loading }) => {
             reload={reload}
         />
         <div style={{marginBottom: '16px', textAlign: 'end'}}>
-            <Button type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge-tickets.button_create')}</Button>
+            <Button type="primary" icon="plus" onClick={onCreateTickets}>{t('recharge_tickets.button_create')}</Button>
         </div>
         <TableCommon 
             className='table-order'

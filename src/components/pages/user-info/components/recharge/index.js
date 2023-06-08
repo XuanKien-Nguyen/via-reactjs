@@ -1,16 +1,19 @@
 import React, {useState} from 'react'
 import {Tabs, message} from 'antd';
-import './style.scss'
-import Bank from './components/bank'
-import USTD from './components/ustd'
+import './style.scss';
+import Bank from './components/bank';
+import USTD from './components/ustd';
+import { useTranslation } from 'react-i18next';
 const {TabPane} = Tabs;
 
 export default ({loading}) => {
 
+    const {t} = useTranslation();
+
     const [currentTab, setCurrentTab] = useState('bank')
 
     const copy = val => {
-        message.success('Sao chép thành công')
+        message.success(t('message.copy_success'))
         navigator.clipboard.writeText(val);
     }
 

@@ -56,7 +56,7 @@ export default ({setList, api, loading, setPageInfo, page, t, type, setType, get
                 setTotalAddedAmount(resp?.data?.totalAddedAmount || 0)
 
             }
-        }).catch(() => message.error('Có lỗi xảy ra khi lấy thông tin đơn hàng'))
+        }).catch(() => message.error(t('message.error_get_purchase')))
             .finally(() => loading(false))
     }
 
