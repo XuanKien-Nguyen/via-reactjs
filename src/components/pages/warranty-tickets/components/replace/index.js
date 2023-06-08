@@ -1,15 +1,16 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Button, Form, Icon, Upload} from "antd";
+import {Form, Icon, Upload} from "antd";
 import Modal from "antd/es/modal";
-import {getBase64} from "../../../../../../../../utils/helpers";
+import {getBase64} from "../../../../../utils/helpers";
 import {CKEditor} from "@ckeditor/ckeditor5-react";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import {createWarrantyTicketComment} from "../../../../../../../../services/warranty-tickets";
+
+import {sendProductToReplace} from "../../../../../services/warranty-tickets-manager";
+import TextArea from "antd/es/input/TextArea";
 
 const Wrapper = (props) => {
 
     const {getFieldDecorator} = props.form;
-    const {detail, t, loading, setVisible, rerender} = props
     const [previewVisible, setPreviewVisible] = useState(false)
     const [previewImage, setPreviewImage] = useState(null)
 
@@ -23,23 +24,27 @@ const Wrapper = (props) => {
         }
     }, [props.visible])
 
+    useEffect(() => {
+        // setTimeout(() => {
+        props.func.execute = handleSubmit
+        // }, 500)
+    })
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (detail, loading, setVisible, rerender) => {
         props.form.validateFields((err, values) => {
             if (!comment) {
-                setErrorMsgComment('Vui lòng nhập mô tả')
+                setErrorMsgComment('Vui lòng nhập nội dung')
             }
             if (!err && comment) {
                 const formData = new FormData()
-                formData.append('warranty_ticket_id', detail.id)
                 formData.append('comment', comment)
+                formData.append('productSuccessDetail', values.productSuccessDetail)
                 if (values.warranty_ticket_comment_image) {
                     values.warranty_ticket_comment_image.map(el => formData.append('warranty_ticket_comment_image', el.originFileObj))
                 }
                 loading(true)
-                createWarrantyTicketComment(formData).then(resp => {
-                    if (resp.status === 201) {
+                sendProductToReplace(detail.id, formData).then(resp => {
+                    if (resp.status === 200) {
                         Modal.success({
                             content: resp.data.message,
                             onOk: () => {
@@ -100,26 +105,33 @@ const Wrapper = (props) => {
     }
 
     return <Fragment>
-        {props.visible && <Form onSubmit={handleSubmit}>
+        <Form>
             <div style={{border: '1px solid #eaeaea', padding: '20px'}}>
-                <h3>{t('warranty_tickets.title')}: <i>{detail.title}</i>
-                </h3>
+                {/*<h3>{'Tiêu đề'}: <i>{detail.title}</i>*/}
+                {/*</h3>*/}
+                <Form.Item label="Danh sách sản phẩm bảo hành">
+                    {getFieldDecorator('productSuccessDetail', {
+                        rules: [{required: true, message: 'Vui lòng nhập danh sách sản phẩm bảo hành'}],
+                    })(
+                        <TextArea placeholder={'Danh sách sản phẩm bảo hành'} rows={8}/>,
+                    )}
+                </Form.Item>
                 <p style={{color: 'rgba(0, 0, 0, 0.85)', marginTop: '10px'}}>
                     <span style={{color: 'red'}}>*</span>
                     Nội dung:</p>
                 <CKEditor
                     editor={ClassicEditor}
-                    // config={{
-                    //     toolbar: [
-                    //         'undo', 'redo',
-                    //         '|', 'heading',
-                    //         '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
-                    //         '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-                    //         '|', 'link', 'blockQuote', 'codeBlock',
-                    //         '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent',
-                    //         '|', 'alignment',
-                    //     ],
-                    // }}
+                    config={{
+                        toolbar: [
+                            'undo', 'redo',
+                            '|', 'heading',
+                            '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                            '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                            '|', 'link', 'blockQuote', 'codeBlock',
+                            '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent',
+                            '|', 'alignment',
+                        ],
+                    }}
                     data={comment}
                     onReady={editor => {
                         editor.editing.view.change(writer => {
@@ -163,8 +175,7 @@ const Wrapper = (props) => {
                     </Modal>
                 </Form.Item>
             </div>
-            <Button id={'submit-create-comment-warranty'} type="primary" htmlType="submit" hidden></Button>
-        </Form>}
+        </Form>
     </Fragment>
 }
 

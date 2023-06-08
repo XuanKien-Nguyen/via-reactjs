@@ -12,7 +12,7 @@ export default ({visible, setVisible, t, rerender, detail}) => {
     return <Fragment>
         <Modal
             className={'modal-body-80vh'}
-            width={'80%'}
+            width={'90%'}
             style={{maxWidth: '1140px'}}
             centered
             closable={false}

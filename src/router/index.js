@@ -13,6 +13,7 @@ import LogDownLoadProduct from '../components/pages/log-download-product';
 import BalanceHistoryManager from '../components/pages/balance-history-manager'
 import RechargePendingManager from '../components/pages/recharge-pending-manager';
 import RechargeTicketManager from '../components/pages/recharge-ticket-manager'
+import WarrantyTickerManager from '../components/pages/warranty-tickets'
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
@@ -30,6 +31,16 @@ export const dashboardRoutes = [
         component: CategoryManager,
         name: "Quản lý danh mục",
         icon: "folder",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/warranty-tickets-manager',
+        component: WarrantyTickerManager,
+        name: "Quản lý yêu cầu bảo hành",
+        icon: "safety-certificate",
         exact: true,
         showAlways: true,
         layout: admin,
