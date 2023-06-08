@@ -37,6 +37,10 @@ function HeaderLayout({ history }) {
         window.location.href = `/categories?id=${key}`
     };
 
+    const onClickSupport = ({ key }) => {
+        window.location.href = `/user-info?menu=${key}`
+    };
+
     const handleLogout = async () => {
         setLoading(true)
         await logout();
@@ -68,6 +72,13 @@ function HeaderLayout({ history }) {
             {categories?.list?.map((category) => <Menu.Item key={category.value}>{category.label}</Menu.Item>)}
         </Menu>
     );
+
+    const menuSupport = (
+        <Menu onClick={onClickSupport}>
+            <Menu.Item key={'recharge-tickets'}>{t('profile.recharge_tickets')}</Menu.Item>
+            <Menu.Item key={'warranty-tickets'}>{t('profile.warranty_tickets')}</Menu.Item>
+        </Menu>
+    )
 
     const dropDownUser = () => {
         const menu = (
@@ -151,6 +162,7 @@ function HeaderLayout({ history }) {
                         <ul>
                             <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()} className='uppercase'>{t('common.category')}<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>
                             <li className='item'><a href='#' className='uppercase'>{t('common.blog')}</a></li>
+                            {user && <li className='item'><Dropdown overlay={menuSupport}><a href='#' onClick={e => e.preventDefault()} className='uppercase'>{t('common.support')}<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>}
                         </ul>
                     </div>
                     <div className="header-main_right">
@@ -161,7 +173,7 @@ function HeaderLayout({ history }) {
                                     <Option value="en">English</Option>
                                 </Select>
                             </li>
-                            {user && <li className='item header_user-balance'><b>{t('profile.balance')}:&nbsp;{convertCurrencyVN(user?.amount_available + user?.bonus)}</b></li>}
+                            {user && <li className='item header_user-balance'><b>{t('profile.balance')}:&nbsp;{convertCurrencyVN(user?.totalBalance)}</b></li>}
                             <li className='header-devider'></li>
                             <li className='item' style={user?.role !== 'admin' ? { display: 'none' } : {}} onClick={() => {setVisibleNoti(true)}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                             <li style={{
@@ -230,6 +242,19 @@ function HeaderLayout({ history }) {
                                 <Menu.Item key="blog" className='sub-menu-blog'>
                                     <span className='uppercase'>{t('common.blog')}</span>
                                 </Menu.Item>
+                                {user && <SubMenu
+                                    key="support"
+                                    title={
+                                        <span className='uppercase'>
+                                            {t('common.support')}
+                                        </span>
+                                    }
+                                    className='sub-menu-support'
+                                    onClick={onClickSupport}
+                                >
+                                    <Menu.Item key={'recharge-tickets'}>{t('profile.recharge_tickets')}</Menu.Item>
+                                    <Menu.Item key={'warranty-tickets'}>{t('profile.warranty_tickets')}</Menu.Item>
+                                </SubMenu>}
                             </Menu>
                         </TabPane>
                     </Tabs>

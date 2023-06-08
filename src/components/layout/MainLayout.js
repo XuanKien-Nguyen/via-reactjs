@@ -33,7 +33,8 @@ function MainLayout() {
             getUserInfo().then(resp => {
                 if (resp.status === 200) {
                     const userFound = resp?.data?.userFound || null
-                    dispatch({type: "SET_USER_INFO", payload: userFound})
+                    const totalBalance = resp?.data?.totalBalance || 0
+                    dispatch({type: "SET_USER_INFO", payload: {...userFound, totalBalance}})
                     localStorage.setItem('user_info', JSON.stringify(userFound))
                     accessRoutes = [...dashboardRoutes.filter(el => el.role.some(r => r === userFound?.role)), ...baseRoutes]
                     setForceRender(forceRender + 1)
