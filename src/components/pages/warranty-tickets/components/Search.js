@@ -21,7 +21,7 @@ export default ({items, onReset, search, loading, setPage, page, state = [], rel
             if (init > 0) {
                 getList()
             }
-        }, 300)
+        }, 500)
         setInit(init + 1)
     }, [...state, page.perpage, page.currentPage])
 

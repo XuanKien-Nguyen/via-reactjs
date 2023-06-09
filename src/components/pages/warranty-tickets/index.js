@@ -252,6 +252,10 @@ export default () => {
         },
     ]
 
+    const reloadList = () => {
+        setReload(reload + 1)
+    }
+
     return <Fragment>
         <Search items={getItems()}
                 search={setupSearch()}
@@ -285,7 +289,11 @@ export default () => {
             setPage={setPage}
             scroll={{x: true}}
         />
-        <Detail detail={warrantyDetail} setDetail={setWarrantyDetail} visible={visibleDetail}
-                setVisible={setVisibleDetail} mapStatus={MAP_STATUS}/>
+        <Detail detail={warrantyDetail}
+                setDetail={setWarrantyDetail}
+                visible={visibleDetail}
+                reloadList={reloadList}
+                setVisible={setVisibleDetail}
+                mapStatus={MAP_STATUS}/>
     </Fragment>
 }

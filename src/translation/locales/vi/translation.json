@@ -331,7 +331,7 @@
         "DELETE_STATUS": "Đã từ chối"
     },
     "warranty_comment_type": {
-        "FINISH_TYPE": "Kết thúc",
+        "FINISH_TYPE": "Đóng yêu cầu",
         "REFUND_TYPE": "Hoàn tiền",
         "REJECT_TYPE": "Từ chối",
         "REPLACE_TYPE": "Đổi trả",

@@ -7,7 +7,7 @@ import Refund from './refund'
 import Replace from './replace'
 import Reject from './reject'
 import {getListTypeComment} from "../../../../services/warranty-tickets";
-import {getComments} from "../../../../services/warranty-tickets-manager";
+import {closeWarrantyTicket, getComments} from "../../../../services/warranty-tickets-manager";
 import {convertCurrencyVN} from "../../../../utils/helpers";
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin/>;
@@ -36,7 +36,7 @@ const {Option} = Select
 let CURRENT_FUNC = ''
 let FUNC = {}
 
-export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
+export default ({detail, setDetail, visible, setVisible, mapStatus, reloadList}) => {
 
     const [cmtList, setCmtList] = useState([])
     const [loading, setLoading] = useState(false)
@@ -123,6 +123,32 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
         } else if (CURRENT_FUNC === 'REPLACE_TYPE') {
             return 'Đổi trả sản phẩm '
         }
+    }
+
+    const closeRequest = () => {
+        Modal.confirm({
+            cancelText: 'Huỷ bỏ',
+            content: <b>Bạn có chắc chắn muốn đóng yêu cầu #{detail.id} không?</b>,
+            onOk: () => {
+                setLoading(true)
+                closeWarrantyTicket(detail.id).then(resp => {
+                    if (resp.status === 200) {
+                        Modal.success({
+                            content: resp.data.message,
+                            onOk: () => {
+                                setCmtList([])
+                                setDetail(null)
+                                setVisible(false)
+                                reloadList()
+                            }
+                        })
+                    }
+                }).catch(err => Modal.error({
+                    content: err.response.data.message
+                }))
+                    .finally(() => setLoading(false))
+            }
+        })
     }
 
     useEffect(() => {
@@ -245,6 +271,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                                     backgroundColor: TYPE_COLOR['reject']
                                 }}>{t('warranty_comment_type.REJECT_TYPE')}</Button>
                             <Button
+                                onClick={closeRequest}
                                 style={{
                                     marginRight: '5px',
                                     color: 'white',
@@ -310,6 +337,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                         // style={{maxWidth: '1140px'}}
                         className={'modal-body-80vh'}
                         width={'90%'}
+                        style={{maxWidth: '1140px'}}
                         centered
                         closable={false}
                         visible={visibleFunc}
