@@ -221,7 +221,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                                 Object.keys(MAP_TYPE).map(k => <Option
                                     value={k}>{t(MAP_TYPE[k])}</Option>)]}
                         </Select>
-                        {!['closed', 'rejected'].includes(detail.status)
+                        {!['closed', 'rejected', 'deleted'].includes(detail.status)
                         && <Fragment>
                             <Button
                                 onClick={() => openFunc('REFUND_TYPE')}
