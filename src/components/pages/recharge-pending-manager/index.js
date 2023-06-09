@@ -77,13 +77,13 @@ export default () => {
         })
         getStatusListRechargePending().then(resp => {
             const data = resp.data?.STATUS_OBJ || []
-            const lstStatus = [{label: 'recharge-tickets-status.ALL', value: ''}]
+            const lstStatus = [{label: 'recharge_tickets_status.ALL', value: ''}]
             for (const key of Object.keys(data)) {
                 lstStatus.push({
-                    label: `recharge-tickets-status.${key}`,
+                    label: `recharge_tickets_status.${key}`,
                     value: data[key]
                 })
-                MAP_STATUS[data[key]] = `recharge-tickets-status.${key}`
+                MAP_STATUS[data[key]] = `recharge_tickets_status.${key}`
             }
             setStatusList(lstStatus)
         })

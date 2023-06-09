@@ -1,6 +1,6 @@
 // GeneralViews
 import Login from '../components/pages/login';
-import Register from '../components/pages/register'
+import Register from '../components/pages/register';
 import HomePage from '../components/pages/homepage/HomePage';
 import Category from '../components/pages/category';
 import CategoryManager from '../components/pages/category-manager'
@@ -8,20 +8,21 @@ import ProductManager from '../components/pages/product-manager';
 import UserManager from '../components/pages/user-manager';
 import PartnerManager from '../components/pages/partner-manager';
 import RechargeSuccessManager from '../components/pages/recharge-success-manager';
-import PurchaseManager from '../components/pages/purchase-manager'
+import PurchaseManager from '../components/pages/purchase-manager';
 import LogDownLoadProduct from '../components/pages/log-download-product';
-import BalanceHistoryManager from '../components/pages/balance-history-manager'
+import BalanceHistoryManager from '../components/pages/balance-history-manager';
 import RechargePendingManager from '../components/pages/recharge-pending-manager';
-import RechargeTicketManager from '../components/pages/recharge-ticket-manager'
+import RechargeTicketManager from '../components/pages/recharge-ticket-manager';
+import ProductRecycleBinManager from '../components/pages/product-recycle-bin-manager';
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
-import {Fragment as blank} from 'react'
+import {Fragment as blank} from 'react';
 import NotFound from "../components/pages/not-found/404";
 import UserInfo from "../components/pages/user-info";
 import AccessDenied from "../components/pages/access-denied/403";
 
-import ResetPassword from '../components/pages/reset-password'
+import ResetPassword from '../components/pages/reset-password';
 import LogUserLogin from "../components/pages/log-user-login";
 
 export const dashboardRoutes = [
@@ -130,6 +131,16 @@ export const dashboardRoutes = [
         component: BalanceHistoryManager,
         name: "Quản lý thay đổi số dư",
         icon: "file-sync",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/product-recycle-bin-manager',
+        component: ProductRecycleBinManager,
+        name: "Quản lý sản phẩm đã xử lý",
+        icon: "issues-close",
         exact: true,
         showAlways: true,
         layout: admin,

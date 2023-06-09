@@ -47,7 +47,6 @@ export default () => {
                     })
                     MAP_TYPE[key] = `user_login_status.${key}`
                 }
-                console.log(MAP_TYPE)
                 setLoginStatusList(loginStatus)
             }
         }).catch(e => {message.error("Có lỗi xảy ra khi lấy danh sánh kiểu tải về")})
@@ -84,7 +83,6 @@ export default () => {
             api: () => getLogUserLogin(params),
             resolve: (resp, setPage) => {
                 if (resp.status === 200) {
-                    console.log(resp)
                     setDs(resp?.data?.logUserLoginList || [])
                     setPage({
                         total: resp.data.totalLogUserLogins,

@@ -342,6 +342,15 @@
         "REPLY_TYPE": "Trả lời",
         "RETAKE_TYPE": "Lấy lại"
     },
+    "product_recycle_bin_type": {
+        "ALL": "Xem tất cả",
+        "CHECKING": "Đang kiểm tra",
+        "ERROR": "Lỗi",
+        "REPLACE": "Đền bù",
+        "CHECKPOINT": "Checkpoint",
+        "SOLD_DIRECT": "Bán trực tiếp",
+        "SOLD_API": "Bán qua cộng tác viên"
+    },
     "partner_status": {
         "ACTIVE_STATUS": "Đã đăng ký",
         "PENDING_STATUS": "Chờ phê duyệt",

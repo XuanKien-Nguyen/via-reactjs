@@ -32,7 +32,6 @@ export default ({items, onReset, search, loading, setPage, page, state = [], rel
     const getList = () => {
         loading(true)
         api().then(resp => {
-            console.log(resp)
             resolve(resp, setPage)
         }).catch(err => reject(err))
             .finally(() => loading(false))

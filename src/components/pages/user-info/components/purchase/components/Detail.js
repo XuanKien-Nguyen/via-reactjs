@@ -139,7 +139,6 @@ export default ({id, loading}) => {
     useEffect(() => {
         const run = async () => {
             loading(true)
-            console.log('page',page);
             const resp1 = await purchaseDetail(id, {
                 page: page.currentPage,
                 perpage: page.perpage

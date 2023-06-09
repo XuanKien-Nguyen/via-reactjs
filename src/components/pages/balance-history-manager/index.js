@@ -97,7 +97,7 @@ export default () => {
             render: id => <b>#{id}</b>
         },
         {
-            title: `ID - ${t('balance_history.usernames')}`,
+            title: `ID - ${t('balance_history.username')}`,
             align: 'center',
             width: '200px',
             render: row => <b>#{row.user_id} - {row.username}</b>

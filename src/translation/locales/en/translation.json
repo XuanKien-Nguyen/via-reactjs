@@ -342,6 +342,15 @@
         "REPLY_TYPE": "Reply",
         "RETAKE_TYPE": "Retake"
     },
+    "product_recycle_bin_type": {
+        "ALL": "All",
+        "CHECKING": "Checking",
+        "ERROR": "Error",
+        "REPLACE": "Replace",
+        "CHECKPOINT": "Checkpoint",
+        "SOLD_DIRECT": "Sold Direct",
+        "SOLD_API": "Sold API"
+    },
     "partner_status": {
         "ACTIVE_STATUS": "Active",
         "PENDING_STATUS": "Pending",
