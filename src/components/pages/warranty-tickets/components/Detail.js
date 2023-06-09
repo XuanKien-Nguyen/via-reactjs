@@ -1,10 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import Modal from "antd/es/modal";
+import {Button, Card, Carousel, Col, Icon, PageHeader, Row, Select, Spin, Tag, Tooltip} from 'antd'
 import ReplyComment from "./create-comment";
-import {Button, Card, Carousel, Col, Icon, PageHeader, Row, Select, Spin, Tag, Tooltip} from 'antd';
-import {getComments, getListTypeComment} from "../../../../../../services/warranty-tickets";
-import {convertCurrencyVN} from "../../../../../../utils/helpers";
+import Refund from './refund'
+import Replace from './replace'
+import Reject from './reject'
+import {getListTypeComment} from "../../../../services/warranty-tickets";
+import {getComments} from "../../../../services/warranty-tickets-manager";
+import {convertCurrencyVN} from "../../../../utils/helpers";
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin/>;
 
@@ -17,17 +21,20 @@ const STATUS_COLOR = {
 }
 
 const TYPE_COLOR = {
-    replace: 'grey',
+    replace: 'green',
     refund: '#99cc33',
     reject: 'red',
     retake: '#c7dcdd',
     reply: '#ffcc00',
-    finish: 'blue'
+    finish: 'grey'
 }
 
 const MAP_TYPE = {}
 
 const {Option} = Select
+
+let CURRENT_FUNC = ''
+let FUNC = {}
 
 export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
 
@@ -38,7 +45,8 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
     const {t} = useTranslation()
     const [reload, setReload] = useState(0)
 
-    const rerender = () => setReload(reload + 1)
+    const [pending, setPending] = useState(false)
+    const [visibleFunc, setVisibleFunc] = useState(false)
 
     useEffect(() => {
         setLoading(true)
@@ -90,9 +98,41 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
         }
     }
 
+    const execute = () => {
+        if (FUNC) {
+            FUNC.execute(detail, setPending, setVisibleFunc, rerender)
+        }
+    }
+
     useEffect(() => {
         fetchComment(filterType)
     }, [filterType])
+
+    const rerender = () => setReload(reload + 1)
+
+    const openFunc = (func) => {
+        CURRENT_FUNC = func
+        setVisibleFunc(true)
+    }
+
+    const getTitleFunc = () => {
+        if (CURRENT_FUNC === 'REFUND_TYPE') {
+            return 'Hoàn tiền cho yêu cầu '
+        } else if (CURRENT_FUNC === 'REJECT_TYPE') {
+            return 'Từ chối yêu cầu '
+        }  else if (CURRENT_FUNC === 'REPLACE_TYPE') {
+            return 'Đổi trả sản phẩm '
+        }
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (!visibleFunc) {
+                CURRENT_FUNC = ''
+                FUNC = {}
+            }
+        }, 200)
+    }, [visibleFunc])
 
     return <div>
         <Modal
@@ -116,15 +156,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                     setVisible(false)
                 }}>
                     {t('common.close')}
-                </Button>,
-                // <Button key="submit" type="primary" disabled={loading} onClick={() => {
-                //     const submitBtn = document.getElementById('submit-warranty')
-                //     if (submitBtn) {
-                //         submitBtn.click()
-                //     }
-                // }}>
-                //     {t('common.create')}
-                // </Button>
+                </Button>
             ]}
         >
             <Spin spinning={loading} indicator={antIcon}>
@@ -174,18 +206,52 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                             </Col>
                         </Row>
                     </PageHeader>
-                    <p style={{marginTop: '10px', textAlign: 'right'}}>
+                    <p style={{marginTop: '10px',
+                        height: '27px',
+                        textAlign: 'left',
+                        position: 'relative'}}>
                         <Select defaultValue={filterType} value={filterType}
-                                style={{width: 120}}
+                                style={{position: 'absolute', right: '5px', width: '120px'}}
                                 onChange={v => setFilterType(v)}>
                             {[<Option
                                 value={''}>{t('filter.all')}
                             </Option>,
                                 Object.keys(MAP_TYPE).map(k => <Option
                                     value={k}>{t(MAP_TYPE[k])}</Option>)]}
-                        </Select> | <Button type={'primary'}
-                                            disabled={detail.status === 'closed'}
-                                            onClick={() => setVisibleCreateComment(true)}>{t('warranty_comment_type.REPLY_TYPE')}</Button>
+                        </Select>
+                        {!['closed', 'rejected'].includes(detail.status)
+                        && <Fragment>
+                            <Button
+                                onClick={() => openFunc('REFUND_TYPE')}
+                                style={{
+                                    marginRight: '5px',
+                                    color: 'white',
+                                    backgroundColor: TYPE_COLOR['refund']
+                                }}>{t('warranty_comment_type.REFUND_TYPE')}</Button>
+                            <Button
+                                onClick={() => openFunc('REPLACE_TYPE')}
+                                style={{
+                                marginRight: '5px',
+                                color: 'white',
+                                backgroundColor: TYPE_COLOR['replace']
+                            }}>{t('warranty_comment_type.REPLACE_TYPE')}</Button>
+                            <Button
+                                onClick={() => openFunc('REJECT_TYPE')}
+                                style={{
+                                    marginRight: '5px',
+                                    color: 'white',
+                                    backgroundColor: TYPE_COLOR['reject']
+                                }}>{t('warranty_comment_type.REJECT_TYPE')}</Button>
+                            <Button
+                                style={{
+                                    marginRight: '5px',
+                                    color: 'white',
+                                    backgroundColor: TYPE_COLOR['finish']
+                                }}>{t('warranty_comment_type.FINISH_TYPE')}</Button>
+                            <Button type={'primary'}
+                                    disabled={detail.status === 'closed'}
+                                    onClick={() => setVisibleCreateComment(true)}>{t('warranty_comment_type.REPLY_TYPE')}</Button>
+                        </Fragment>}
                     </p>
                     {cmtList.length > 0 ? cmtList.map(el => {
                         return <Card
@@ -193,9 +259,9 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                             style={{marginTop: 16}}
                             actions={[
                                 <div onClick={() => viewListImage(el)}>
-                                    {t('recharge_tickets.image')} ({el.image_url?.length || 0})
+                                    Hình ảnh ({el.image_url?.length || 0})
                                 </div>,
-                                <Tooltip title={t('warranty_tickets.created_time')}>
+                                <Tooltip title={'Thời gian tạo'}>
                                     <span className={'m-t-10'}>{el.created_time}</span>
                                 </Tooltip>
                             ]}
@@ -207,7 +273,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                                     padding: '35px',
                                     marginBottom: '10px'
                                 }}>
-                                    <img src={require('../../../../../../assets/img/avatar.png')} alt=""
+                                    <img src={require('../../../../assets/img/avatar.png')} alt=""
                                          className="src"/>
                                     <p style={{textAlign: 'center', fontSize: '12px'}}>{`@${el.createdby}`}<i
                                         className="id_text">{` #${el.user_id}`}</i></p>
@@ -234,10 +300,40 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                     }) : <p style={{textAlign: 'center'}}>{t('common.no_data')}</p>}
                     {viewListImage()}
                     <ReplyComment visible={visibleCreateComment}
-                                  rerender={rerender}
                                   setVisible={setVisibleCreateComment}
+                                  rerender={rerender}
                                   t={t}
                                   detail={detail}/>
+                    <Modal
+                        // style={{maxWidth: '1140px'}}
+                        className={'modal-body-80vh'}
+                        width={'90%'}
+                        centered
+                        closable={false}
+                        visible={visibleFunc}
+                        maskClosable={false}
+                        title={`${getTitleFunc()} #${detail.id}`}
+                        onOk={() => {
+                        }}
+                        onCancel={() => () => {
+                            setVisible(false)
+                        }}
+                        footer={[
+                            <Button key="submit" type="danger" disabled={pending}
+                                    onClick={() => setVisibleFunc(false)}>
+                                {t('common.close')}
+                            </Button>,
+                            <Button key="submit" type="primary" disabled={pending} onClick={execute}>
+                                {t(`warranty_comment_type.${CURRENT_FUNC}`)}
+                            </Button>
+                        ]}
+                    >
+                        <Spin spinning={pending} indicator={antIcon}>
+                            {CURRENT_FUNC === 'REFUND_TYPE' && <Refund func={FUNC}/>}
+                            {CURRENT_FUNC === 'REJECT_TYPE' && <Reject func={FUNC} detail={detail}/>}
+                            {CURRENT_FUNC === 'REPLACE_TYPE' && <Replace func={FUNC} detail={detail} loading={setPending}/>}
+                        </Spin>
+                    </Modal>
                 </div>}
             </Spin>
         </Modal>

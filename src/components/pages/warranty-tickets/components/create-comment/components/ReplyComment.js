@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {Button, Form, Icon, Upload} from "antd";
 import Modal from "antd/es/modal";
-import {getBase64} from "../../../../../../../../utils/helpers";
+import {getBase64} from "../../../../../../utils/helpers";
 import {CKEditor} from "@ckeditor/ckeditor5-react";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import {createWarrantyTicketComment} from "../../../../../../../../services/warranty-tickets";
+import {createWarrantyTicketComment} from "../../../../../../services/warranty-tickets-manager";
 
 const Wrapper = (props) => {
 
@@ -109,17 +109,17 @@ const Wrapper = (props) => {
                     Nội dung:</p>
                 <CKEditor
                     editor={ClassicEditor}
-                    // config={{
-                    //     toolbar: [
-                    //         'undo', 'redo',
-                    //         '|', 'heading',
-                    //         '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
-                    //         '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-                    //         '|', 'link', 'blockQuote', 'codeBlock',
-                    //         '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent',
-                    //         '|', 'alignment',
-                    //     ],
-                    // }}
+                    config={{
+                        toolbar: [
+                            'undo', 'redo',
+                            '|', 'heading',
+                            '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                            '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                            '|', 'link', 'blockQuote', 'codeBlock',
+                            '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent',
+                            '|', 'alignment',
+                        ],
+                    }}
                     data={comment}
                     onReady={editor => {
                         editor.editing.view.change(writer => {
