@@ -38,7 +38,7 @@ export default ({visible, setVisible, t, reload}) => {
             ]}
         >
             <Spin spinning={initDetail} indicator={antIcon}>
-                <Form visible={visible} loading={setInitDetail} setVisible={setVisible} reload={reload}/>
+                {visible && <Form visible={visible} loading={setInitDetail} setVisible={setVisible} reload={reload}/>}
             </Spin>
         </Modal>
     </Fragment>

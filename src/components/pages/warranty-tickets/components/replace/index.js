@@ -1,29 +1,40 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Drawer, Form, Icon, Spin, Upload, Table} from "antd";
+import {Drawer, Form, Icon, InputNumber, message, Spin, Table, Upload} from "antd";
 import Modal from "antd/es/modal";
 import {getBase64} from "../../../../../utils/helpers";
 import {CKEditor} from "@ckeditor/ckeditor5-react";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import {
-    sendProductToReplace,
+    downloadProductToReplace,
     getProductCheckingList,
-    getProductRequestList
+    getProductRequestList,
+    sendProductToReplace
 } from "../../../../../services/warranty-tickets-manager";
 import TextArea from "antd/es/input/TextArea";
 import Button from "antd/es/button";
+import ReportError from "./components/ReportError";
+
+const antIcon = <Icon type="loading" style={{fontSize: 24}} spin/>;
 
 const Wrapper = (props) => {
 
     const {getFieldDecorator} = props.form;
     const [previewVisible, setPreviewVisible] = useState(false)
     const [previewImage, setPreviewImage] = useState(null)
-
     const [productReplaceList, setProductReplaceList] = useState([])
     const [comment, setComment] = useState('')
     const [errorMsgComment, setErrorMsgComment] = useState('')
-
+    const [showReport, setShowReport] = useState(false)
     const [open, setOpen] = useState(false)
+    const [drawerLoading, setDrawerLoading] = useState(false)
+    const [msg, setMsg] = useState('')
+
+    const [quantity, setQuantity] = useState(0)
+    const [msgQuantity, setMsgQuantity] = useState('')
+    const [visibleDownload, setVisibleDownload] = useState(false)
+    const [pendingDownload, setPendingDownload] = useState(false)
+
 
     useEffect(() => {
         if (!props.visible) {
@@ -33,9 +44,7 @@ const Wrapper = (props) => {
     }, [props.visible])
 
     useEffect(() => {
-        // setTimeout(() => {
         props.func.execute = handleSubmit
-        // }, 500)
     })
 
     const handleSubmit = (detail, loading, setVisible, rerender) => {
@@ -57,6 +66,7 @@ const Wrapper = (props) => {
                             content: resp.data.message,
                             onOk: () => {
                                 setVisible(false)
+
                                 rerender()
                             }
                         })
@@ -112,68 +122,128 @@ const Wrapper = (props) => {
         return false
     }
 
-    const getProductReplace = () => {
+    const openDrawer = () => {
         setOpen(true)
-        // props.loading(true)
-        // getProductRequestList(props.detail.id).then(resp => {
-        //     if (resp.status === 200) {
-        //         console.log(resp);
-        //         Modal.success({
-        //             content: resp.data.message
-        //         })
-        //         setProductReplaceList(resp.data.productRequestList)
-        //     }
-        // }).catch((err) => Modal.error({
-        //     content: err.response.data.message
-        // })).finally(() => props.loading(false))
     }
 
     useEffect(() => {
-        props.loading(true)
+        // fetchProductRequest()
+        fetchProductRequestChecking()
+    }, [])
+
+    const fetchProductRequestChecking = () => {
+        setDrawerLoading(true)
+        getProductCheckingList(props.detail.id).then(resp => {
+            if (resp.status === 200) {
+                const data = resp.data.productToReplace
+                if (data.length > 0) {
+                    const arr = data
+                    arr.shift()
+                    arr.shift()
+                    setProductReplaceList(arr)
+                } else {
+                    setMsg(resp.data.message)
+                }
+            }
+        }).catch((err) => Modal.error({
+            content: err.response.data.message
+        })).finally(() => setDrawerLoading(false))
+    }
+
+    const fetchProductRequest = () => {
+        setDrawerLoading(true)
         getProductRequestList(props.detail.id).then(resp => {
             if (resp.status === 200) {
                 console.log(resp);
-                // Modal.success({
-                //     content: resp.data.message
-                // })
                 const data = resp.data.productRequestList
                 data.shift()
                 data.shift()
                 setProductReplaceList(data)
-
             }
         }).catch((err) => Modal.error({
             content: err.response.data.message
-        })).finally(() => props.loading(false))
-    }, [])
+        })).finally(() => setDrawerLoading(false))
+    }
+
+    const fetchDownloadProductToReplace = () => {
+        if (!quantity) {
+            setMsgQuantity('Vui lòng nhập số lượng')
+            return
+        }
+        setPendingDownload(true)
+        downloadProductToReplace(props.detail.id, quantity).then(resp => {
+            if (resp.status === 200) {
+                Modal.success({
+                    content: resp.data.message
+                })
+            }
+        }).catch((err) => Modal.error({
+            content: err.response.data.message
+        })).finally(() => setPendingDownload(false))
+    }
 
     const onClose = () => {
         setOpen(false)
     }
 
+    const copy = val => {
+        message.success('Sao chép thành công')
+        navigator.clipboard.writeText(val);
+    }
+
+    const getTextBtnSelect = (row) => {
+        let v = props.form.getFieldValue('productSuccessDetail') || ''
+        console.log('productSuccessDetail', v.split('\r\n'));
+        if (v) {
+            const arr = v.split('\r\n')
+            if (arr.find(el => el === row)) {
+                return 'Xoá'
+            }
+        }
+        return "Chọn"
+    }
+
+    const getLengthSelected = () => {
+        let v = props.form.getFieldValue('productSuccessDetail') || ''
+        if (v) {
+            return v.split('\r\n').length
+        }
+        return 0
+    }
+
     const columns = [
         {
             title: 'Sản phẩm',
-            width: '400px',
+            width: '600px',
             render: (el, idx) => <b>{idx + 1}</b>
         },
         {
             title: 'Thao tác',
-            width: '200px',
+            width: '150px',
+            align: 'center',
             render: row => {
+                const text = getTextBtnSelect(row)
                 return <div>
-                    <Button type={'primary'} style={{marginRight: '5px'}}
+                    <Button type={text === 'Chọn' ? 'primary' : 'danger'}
+                            style={{width: '100px'}}
                             onClick={() => {
+                                let v = props.form.getFieldValue('productSuccessDetail') || ''
+                                const arr = v.split('\r\n')
+                                if (arr.find(el => el === row)) {
+                                    const idx = arr.indexOf(row)
+                                    arr.splice(idx, 1)
+                                } else {
+                                    arr.push(row)
+                                }
                                 props.form.setFieldsValue({
-                                    productSuccessDetail: props.form.getFieldValue('productSuccessDetail') + `\r\n${row}`
+                                    productSuccessDetail: arr.filter(el => el).join('\r\n')
                                 })
-                            }}>Chọn</Button>
-                    <Button type={'danger'}>Báo lỗi</Button>
+                            }}>{text}</Button>
+                    <Button style={{width: '100px', marginTop: '10px'}} onClick={() => copy(row)}>Sao chép</Button>
                 </div>
             }
         }
     ]
-
 
     return <Fragment>
         <Drawer
@@ -182,14 +252,25 @@ const Wrapper = (props) => {
             closable={false}
             onClose={onClose}
             visible={open}
-            width={'700px'}
+            width={'50%'}
         >
-            {productReplaceList.length > 0 ? <div>
-                <Table dataSource={productReplaceList}
-                       pagination={false}
-                       columns={columns}/>
-            </div> : 'Không có sản phẩm nào'}
-
+            <Spin spinning={drawerLoading} indicator={antIcon}>
+                <p style={{textAlign: 'right'}}>
+                    <Button type={'primary'} onClick={() => setVisibleDownload(true)}>Lấy sản phẩm trong kho</Button>
+                </p>
+                {productReplaceList.length > 0 ? <div>
+                    <p style={{textAlign: 'right'}}>
+                        <Button type={'danger'} onClick={() => setShowReport(true)}>Báo lỗi sản phẩm</Button>
+                    </p>
+                    <b>Tổng số sản phẩm: {productReplaceList.length}</b>
+                    <br/>
+                    <b>Tổng số sản đã chọn: {getLengthSelected()}</b>
+                    <Table
+                        dataSource={productReplaceList}
+                        pagination={false}
+                        columns={columns}/>
+                </div> : <p style={{textAlign: 'center'}}><b>{msg}</b></p>}
+            </Spin>
             <div
                 style={{
                     position: 'absolute',
@@ -208,17 +289,16 @@ const Wrapper = (props) => {
             </div>
         </Drawer>
         <p style={{textAlign: 'right'}}>
-            <Button type={'primary'} onClick={getProductReplace}>Lấy sản phẩm trong kho</Button>
+            <Button type={'primary'} onClick={openDrawer}>Sản phẩm trong kho</Button>
         </p>
         <Form>
             <div style={{border: '1px solid #eaeaea', padding: '20px'}}>
-                {/*<h3>{'Tiêu đề'}: <i>{detail.title}</i>*/}
-                {/*</h3>*/}
                 <Form.Item label="Danh sách sản phẩm bảo hành">
                     {getFieldDecorator('productSuccessDetail', {
+                        initialValue: '',
                         rules: [{required: true, message: 'Vui lòng nhập danh sách sản phẩm bảo hành'}],
                     })(
-                        <TextArea placeholder={'Danh sách sản phẩm bảo hành'} defaultValue={''} rows={8}/>,
+                        <TextArea disabled={true} placeholder={'Danh sách sản phẩm bảo hành'} rows={8}/>,
                     )}
                 </Form.Item>
                 <p style={{color: 'rgba(0, 0, 0, 0.85)', marginTop: '10px'}}>
@@ -281,6 +361,35 @@ const Wrapper = (props) => {
                 </Form.Item>
             </div>
         </Form>
+        <ReportError visible={showReport}
+                     setVisible={setShowReport}
+                     detail={props.detail}
+        />
+        <Modal
+            maskClosable={false}
+            title="Lấy sản phẩm trong kho"
+            visible={visibleDownload}
+            closable={false}
+            footer={[
+                <Button type="danger" disabled={pendingDownload} onClick={() => {
+                    setVisibleDownload(false)
+                    setMsgQuantity('')
+                    setQuantity(0)
+                }}>
+                    Đóng
+                </Button>,
+                <Button type="primary" loading={pendingDownload} onClick={fetchDownloadProductToReplace}>
+                    Lấy
+                </Button>
+            ]}
+        >
+            <p>Số lượng: </p>
+            <InputNumber autoFocus={true} style={{width: '100%'}} value={quantity} onChange={e => {
+                setQuantity(e)
+                setMsgQuantity('')
+            }}/>
+            {<p style={{color: 'red'}}>{msgQuantity}</p>}
+        </Modal>
     </Fragment>
 }
 
