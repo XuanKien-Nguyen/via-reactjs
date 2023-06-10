@@ -61,7 +61,7 @@ export default ({items}) => {
                     borderType="replace"
                 />
             </Col>
-            <Col key={'6'} lg={6} md={12}>
+            <Col key={'7'} lg={6} md={12}>
                 <NumberCard 
                     icon={'issues-close'}
                     title={'Total Amount Refund'}
@@ -69,7 +69,7 @@ export default ({items}) => {
                     borderType="refund"
                 />
             </Col>
-            <Col key={'6'} lg={6} md={12}>
+            <Col key={'8'} lg={6} md={12}>
                 <NumberCard 
                     icon={'issues-close'}
                     title={'Total Bonus Refund'}

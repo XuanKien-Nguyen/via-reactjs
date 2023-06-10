@@ -1,12 +1,21 @@
 import React, { useContext, useState, useEffect, Fragment } from "react";
-import Overview from './components/OverviewComponent';
+import StatisticCard from './components/StatisticCard';
+import StatisticTable from "./components/StatisticTable";
+import Search from "./components/Search";
+import FilterItem from "../category/components/filter/FilterItem";
+import TableCommon from "../../common/table";
 import { LayoutContext } from "../../../contexts";
 import { useSelector } from "react-redux";
 import { convertCurrencyVN } from "../../../utils/helpers";
-import {Button, Icon, Tooltip, Tag, message, Modal, DatePicker, Card, Col, Row, Typography} from "antd";
+import { Button, Icon, Tooltip, Tag, message, Modal, DatePicker, Card, Col, Row, Typography } from "antd";
 import { useTranslation } from "react-i18next";
-import {getAllStatistics} from '../../../services/statistics-manager';
+import { getAllStatistics } from '../../../services/statistics-manager';
+import { getAllRechargeSuccess, getTypeListRechargeSuccess } from "../../../services/recharge-manager";
 import "./index.scss";
+
+const dateFormat = 'YYYY-MM-DD';
+
+const MAP_TYPE = {};
 
 export default () => {
 
@@ -16,18 +25,279 @@ export default () => {
 
     const [ds, setDs] = useState(null)
 
-    useEffect(() => {
-        getAllStatistics().then(resp => {
-            if (resp.status === 200) {
-                console.log(resp.data);
-                setDs(resp?.data || {});
-            }
-        }).catch(err => message.error(err?.data?.message))
-    }, [])
+    const [id, setId] = useState('')
+    const [categoryId, setCategoryId] = useState('')
+    const [purchaseId, setPurchaseId] = useState('')
+    const [purchaseType, setPurchaseType] = useState('')
+    const [createdBy, setCreatedBy] = useState('')
+    const [lastestUpdatedBy, setLastestUpdatedBy] = useState('')
+    const [createdTime, setCreatedTime] = useState([])
+    const [lastestUpdatedTime, setLastestUpdatedTime] = useState([])
+
+    const [reload, setReload] = useState(0)
+
+    const [page, setPage] = useState({
+        perpage: 10,
+        currentPage: 1,
+        total: 0
+    })
+
+
+    const onChangePage = (currentPage, perPage) => {
+        setPage({
+            perpage: perPage,
+            currentPage: currentPage
+        })
+    }
+
+    const onChangeSize = (currentPage, perPage) => {
+        setPage({
+            perpage: perPage,
+            currentPage: 1
+        })
+    }
+
+    const getItems = () => {
+        return [
+            <FilterItem defaultValue={categoryId}
+                setValue={setCategoryId}
+                type={'text'}
+                title={'Mã danh mục'}
+                allowClear={true} />,
+            <FilterItem defaultValue={purchaseId}
+                setValue={setPurchaseId}
+                type={'text'}
+                title={'Mã đơn hàng'}
+                allowClear={true} />,
+            <FilterItem defaultValue={purchaseType}
+                setValue={setPurchaseType}
+                type={'text'}
+                title={'Loại đơn hàng'}
+                allowClear={true} />,
+            <FilterItem defaultValue={createdBy}
+                setValue={setCreatedBy}
+                type={'text'}
+                title={'Người tạo'}
+                allowClear={true} />,
+            <FilterItem defaultValue={lastestUpdatedBy}
+                setValue={setLastestUpdatedBy}
+                type={'text'}
+                title={'Người quyết định'}
+                allowClear={true} />,
+            <FilterItem defaultValue={createdTime} setValue={setCreatedTime} type={'date'}
+                placeholder={['Từ ngày', 'Đến ngày']} title={'Chọn ngày tạo'} />,
+                <FilterItem defaultValue={lastestUpdatedTime} setValue={setLastestUpdatedTime} type={'date'}
+                placeholder={['Từ ngày', 'Đến ngày']} title={'Chọn ngày cập nhật'} />,
+        ]
+    }
+
+    const columns = [
+        // {
+        //     title: 'ID',
+        //     dataIndex: 'id',
+        //     width: '150px',
+        //     render: id => <b>#{id}</b>,
+        //     align: 'center',
+        // },
+        {
+            title: 'Category Name',
+            width: '200px',
+            dataIndex: 'category_name',
+            fixed: 'left',
+            align: 'center'
+        },
+        {
+            title: 'Category ID',
+            dataIndex: 'category_id',
+            width: '150px',
+            align: 'center'
+        },
+        {
+            title: 'Category Price',
+            width: '150px',
+            dataIndex: 'category_price',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Purchase ID',
+            width: '100px',
+            dataIndex: 'purchase_id',
+            align: 'center'
+        },
+        {
+            title: 'Purchase Type',
+            width: '150px',
+            dataIndex: 'purchase_type',
+            align: 'center'
+        },
+        {
+            title: 'Tiền khuyến mãi đã sử dụng',
+            width: '200px',
+            dataIndex: 'bonus_of_buyer_spend',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Tiền tài khoản đã sử dụng',
+            width: '200px',
+            dataIndex: 'amount_of_buyer_spend',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Tổng sản phẩm',
+            width: '100px',
+            dataIndex: 'total_product',
+            align: 'center'
+        },
+        {
+            title: 'Tổng sản phẩm hoàn trả',
+            width: '100px',
+            dataIndex: 'total_product_replace',
+            align: 'center'
+        },
+        {
+            title: 'Tổng chi phí',
+            width: '150px',
+            dataIndex: 'total_cost',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Tổng số dư hoàn trả bảo hành',
+            width: '150px',
+            dataIndex: 'total_amount_refund_warranty',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Tổng khuyến mãi hoàn trả bảo hành',
+            width: '150px',
+            dataIndex: 'total_bonus_refund_warranty',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Tổng chi phí hoàn trả bảo hành',
+            width: '150px',
+            dataIndex: 'total_cost_replace_warranty',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Tổng giá',
+            width: '150px',
+            dataIndex: 'total_price',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Tổng doanh thu',
+            width: '150px',
+            dataIndex: 'total_profit',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Tổng doanh thu sau cùng',
+            width: '150px',
+            dataIndex: 'final_profit',
+            align: 'center',
+            render: v => <b>{convertCurrencyVN(v)}</b>
+        },
+        {
+            title: 'Thời gian tạo',
+            width: '200px',
+            dataIndex: 'created_time',
+            align: 'center'
+        },
+        {
+            title: 'Người cập nhật',
+            width: '200px',
+            dataIndex: 'latest_updatedby',
+            align: 'center'
+        },
+        {
+            title: 'Thời gian cập nhật',
+            width: '200px',
+            dataIndex: 'latest_update_time',
+            align: 'center'
+        },
+    ]
+
+    const setupSearch = () => {
+        let created_time = ''
+        let latest_update_time = ''
+        if (createdTime.length > 0) {
+            created_time = JSON.stringify(createdTime?.map(el => el?.format(dateFormat)))
+        }
+        if (lastestUpdatedTime.length > 0) {
+            latest_update_time = JSON.stringify(lastestUpdatedTime?.map(el => el?.format(dateFormat)))
+        }
+        const params = {
+            category_name: categoryId,
+            purchase_id: purchaseId,
+            purchase_type: purchaseType,
+            createdby: createdBy,
+            created_time,
+            lastest_updatedby: lastestUpdatedBy,
+            latest_update_time,
+            perpage: page.perpage,
+            page: page.currentPage,
+        }
+        return {
+            api: () => getAllStatistics(params),
+            resolve: (resp, setPage) => {
+                if (resp.status === 200) {
+                    setDs(resp?.data || [])
+                    setPage({
+                        total: resp.data.totalStatistic,
+                        perpage: resp.data.perPage,
+                        totalPages: resp.data.totalPages,
+                        currentPage: resp.data.currentPage === 0 ? 1 : resp.data.currentPage,
+                    })
+                }
+            },
+            reject: (err) => console.log(err)
+        }
+    }
 
     return <div>
         {user && <Fragment>
-            <Overview items={ds}/>
+            <Search items={getItems()}
+                search={setupSearch()}
+                loading={setLoading}
+                setPage={setPage}
+                reload={reload}
+                state={[categoryId, purchaseId, purchaseType, createdBy, createdTime, lastestUpdatedBy, lastestUpdatedTime]}
+                onReset={() => {
+                    setCategoryId('')
+                    setPurchaseId('')
+                    setPurchaseType('')
+                    setCreatedBy('')
+                    setCreatedTime([])
+                    setLastestUpdatedBy('')
+                    setLastestUpdatedTime([])
+                }}
+                page={page} />
+            <StatisticCard items={ds} />
+            {/* <StatisticTable items={ds?.statisticList || []}/> */}
+            <Row gutter={[12, 12]}>
+                <Col key={'1'} lg={24} md={12}>
+                    <TableCommon
+                        className='table-order'
+                        bordered={true}
+                        page={page}
+                        datasource={ds?.statisticList || []}
+                        columns={columns}
+                        rowKey="id"
+                        onChangePage={onChangePage}
+                        onChangeSize={onChangeSize}
+                        scroll={{ x: true }}
+                    />
+                </Col>
+            </Row> 
         </Fragment>}
     </div>
 }

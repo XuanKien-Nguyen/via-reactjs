@@ -4,7 +4,7 @@
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     &.sale {
-        border-color: #48C9B0;
+        border-color: #5D6D7E;
         // background-color: rgba(255, 0, 0, 0.3);
     }
     &.refund {
@@ -12,8 +12,8 @@
         background-color: #FEF5E7;
     }
     &.replace {
-        border-color: #626567;
-        background-color: #F8F9F9;
+        border-color: #E74C3C;
+        background-color: #FADBD8;
     }
     cursor: pointer;
     .ant-card-body {
