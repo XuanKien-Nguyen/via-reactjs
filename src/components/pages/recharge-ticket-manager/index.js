@@ -263,9 +263,12 @@ export default () => {
 
     const onDeleteTickets = (lstSelected) => {
         let body;
-        body = {
+        const raw = {
             recharge_ticket_ids: lstSelected
         }
+        const formData = new FormData()
+        Object.keys(raw).forEach(k => formData.append(k, raw[k]))
+        body = formData
         Modal.confirm({
             content: 'Bạn có chắc chắn muốn xóa phiếu nạp tiền?',
             okText: 'Xóa',

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, Fragment } from "react";
 import NumberCard from "./NumberCard";
-import { Button, Icon, Tooltip, Tag, message, Modal, DatePicker, Card, Col, Row, Typography } from "antd";
+import { Col, Row } from "antd";
 import { useTranslation } from "react-i18next";
 
 export default ({items}) => {
@@ -61,7 +61,7 @@ export default ({items}) => {
                     borderType="replace"
                 />
             </Col>
-            <Col key={'6'} lg={6} md={12}>
+            <Col key={'7'} lg={6} md={12}>
                 <NumberCard 
                     icon={'issues-close'}
                     title={'Total Amount Refund'}
@@ -69,7 +69,7 @@ export default ({items}) => {
                     borderType="refund"
                 />
             </Col>
-            <Col key={'6'} lg={6} md={12}>
+            <Col key={'8'} lg={6} md={12}>
                 <NumberCard 
                     icon={'issues-close'}
                     title={'Total Bonus Refund'}
