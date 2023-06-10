@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect, Fragment } from "react";
 import StatisticCard from './components/StatisticCard';
-import StatisticTable from "./components/StatisticTable";
 import Search from "./components/Search";
 import FilterItem from "../category/components/filter/FilterItem";
 import TableCommon from "../../common/table";
@@ -10,7 +9,6 @@ import { convertCurrencyVN } from "../../../utils/helpers";
 import { Button, Icon, Tooltip, Tag, message, Modal, DatePicker, Card, Col, Row, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 import { getAllStatistics } from '../../../services/statistics-manager';
-import { getAllRechargeSuccess, getTypeListRechargeSuccess } from "../../../services/recharge-manager";
 import "./index.scss";
 
 const dateFormat = 'YYYY-MM-DD';
@@ -282,7 +280,6 @@ export default () => {
                 }}
                 page={page} />
             <StatisticCard items={ds} />
-            {/* <StatisticTable items={ds?.statisticList || []}/> */}
             <Row gutter={[12, 12]}>
                 <Col key={'1'} lg={24} md={12}>
                     <TableCommon

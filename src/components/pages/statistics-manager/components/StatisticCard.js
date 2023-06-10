@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, Fragment } from "react";
 import NumberCard from "./NumberCard";
-import { Button, Icon, Tooltip, Tag, message, Modal, DatePicker, Card, Col, Row, Typography } from "antd";
+import { Col, Row } from "antd";
 import { useTranslation } from "react-i18next";
 
 export default ({items}) => {
