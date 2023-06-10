@@ -26,7 +26,19 @@ import AccessDenied from "../components/pages/access-denied/403";
 import ResetPassword from '../components/pages/reset-password';
 import LogUserLogin from "../components/pages/log-user-login";
 
+import DashBoard from '../components/pages/statistics-manager';
+
 export const dashboardRoutes = [
+    {
+        path: '/admin/dashboard',
+        component: DashBoard,
+        name: "Dashboard",
+        icon: "bar-chart",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
     {
         path: '/admin/category-manager',
         component: CategoryManager,

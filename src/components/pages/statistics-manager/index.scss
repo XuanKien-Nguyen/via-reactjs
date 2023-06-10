@@ -1,0 +1,38 @@
+.overview-card {
+    padding: 24px 12px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    &.sale {
+        border-color: #48C9B0;
+        // background-color: rgba(255, 0, 0, 0.3);
+    }
+    &.refund {
+        border-color: #F5B041;
+        background-color: #FEF5E7;
+    }
+    &.replace {
+        border-color: #626567;
+        background-color: #F8F9F9;
+    }
+    cursor: pointer;
+    .ant-card-body {
+        display: flex;
+        align-items: center;
+        .overview-card-icon {
+            padding: 8px 16px;
+        }
+        .overview-card-body {
+            .overview-card-title {
+                font-size: 20px;
+                margin-bottom: 6px;
+                font-weight: bold;
+            }
+            .overview-card-number {
+                font-size: 20px;
+                margin-bottom: 24px;
+                font-weight: bold;
+            }
+        }
+    }
+}
