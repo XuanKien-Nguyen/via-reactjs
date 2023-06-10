@@ -7,7 +7,7 @@ import Refund from './refund'
 import Replace from './replace'
 import Reject from './reject'
 import {getListTypeComment} from "../../../../services/warranty-tickets";
-import {getComments} from "../../../../services/warranty-tickets-manager";
+import {closeWarrantyTicket, getComments} from "../../../../services/warranty-tickets-manager";
 import {convertCurrencyVN} from "../../../../utils/helpers";
 
 const antIcon = <Icon type="loading" style={{fontSize: 24}} spin/>;
@@ -21,7 +21,7 @@ const STATUS_COLOR = {
 }
 
 const TYPE_COLOR = {
-    replace: 'green',
+    replace: '#02cd83',
     refund: '#99cc33',
     reject: 'red',
     retake: '#c7dcdd',
@@ -36,7 +36,7 @@ const {Option} = Select
 let CURRENT_FUNC = ''
 let FUNC = {}
 
-export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
+export default ({detail, setDetail, visible, setVisible, mapStatus, reloadList}) => {
 
     const [cmtList, setCmtList] = useState([])
     const [loading, setLoading] = useState(false)
@@ -120,9 +120,35 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
             return 'Hoàn tiền cho yêu cầu '
         } else if (CURRENT_FUNC === 'REJECT_TYPE') {
             return 'Từ chối yêu cầu '
-        }  else if (CURRENT_FUNC === 'REPLACE_TYPE') {
+        } else if (CURRENT_FUNC === 'REPLACE_TYPE') {
             return 'Đổi trả sản phẩm '
         }
+    }
+
+    const closeRequest = () => {
+        Modal.confirm({
+            cancelText: 'Huỷ bỏ',
+            content: <b>Bạn có chắc chắn muốn đóng yêu cầu #{detail.id} không?</b>,
+            onOk: () => {
+                setLoading(true)
+                closeWarrantyTicket(detail.id).then(resp => {
+                    if (resp.status === 200) {
+                        Modal.success({
+                            content: resp.data.message,
+                            onOk: () => {
+                                setCmtList([])
+                                setDetail(null)
+                                setVisible(false)
+                                reloadList()
+                            }
+                        })
+                    }
+                }).catch(err => Modal.error({
+                    content: err.response.data.message
+                }))
+                    .finally(() => setLoading(false))
+            }
+        })
     }
 
     useEffect(() => {
@@ -174,42 +200,44 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                         extra={[<Tag color={STATUS_COLOR[detail.status]}>{t(mapStatus[detail.status])}</Tag>]}
                     >
                         <Row>
-                            <Col sm={24} lg={8} className={'m-b-10'}>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
                                 <span>{t('order.purchase_id')}</span>: <b><i>{` #${detail.purchase_id}`}</i></b>
                             </Col>
-                            <Col sm={24} lg={8} className={'m-b-10'}>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
                                 <span>{t('warranty_tickets.category_price')}</span>: <b>{` ` + convertCurrencyVN(detail.category_price)}</b>
                             </Col>
-                            <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty_tickets.total_refund_warranty')}</span>: <b>{convertCurrencyVN(detail.total_refund_warranty)}</b>
-                            </Col>
-                            <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty_tickets.total_product_request')}</span>: <b>{detail.total_product_request}</b>
-                            </Col>
-                            <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty_tickets.total_product_reject')}</span>: <b>{detail.total_product_reject}</b>
-                            </Col>
-                            <Col sm={24} lg={8} className={'m-b-10'}>
-                                <span>{t('warranty_tickets.total_product_replace')}</span>: <b>{detail.total_product_replace}</b>
-                            </Col>
-                            <Col sm={24} lg={8} className={'m-b-10'}>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
                                 <span>{t('warranty_tickets.createdBy')}</span>: <b>{detail.createdby}</b>
                             </Col>
-                            <Col sm={24} lg={16} className={'m-b-10'}>
-                                <span>{t('warranty_tickets.created_time')}</span>: <b>{detail.created_time}</b>
-                            </Col>
-                            <Col sm={24} lg={8} className={'m-b-10'}>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
                                 <span>{t('warranty_tickets.latest_decidedby')}</span>: <b>{detail.latest_decidedby || '-'}</b>
                             </Col>
-                            <Col sm={24} lg={16} className={'m-b-10'}>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
+                                <span>{t('warranty_tickets.total_product_request')}</span>: <b>{detail.total_product_request}</b>
+                            </Col>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
+                                <span>{t('warranty_tickets.total_product_reject')}</span>: <b>{detail.total_product_reject}</b>
+                            </Col>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
+                                <span>{t('warranty_tickets.total_product_replace')}</span>: <b>{detail.total_product_replace}</b>
+                            </Col>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
+                                <span>{t('warranty_tickets.total_refund_warranty')}</span>: <b>{convertCurrencyVN(detail.total_refund_warranty)}</b>
+                            </Col>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
+                                <span>{t('warranty_tickets.created_time')}</span>: <b>{detail.created_time}</b>
+                            </Col>
+                            <Col sm={24} lg={6} className={'m-b-10'}>
                                 <span>{t('warranty_tickets.latest_decided_time')}</span>: <b>{detail.latest_decided_time || '-'}</b>
                             </Col>
                         </Row>
                     </PageHeader>
-                    <p style={{marginTop: '10px',
+                    <p style={{
+                        marginTop: '10px',
                         height: '27px',
                         textAlign: 'left',
-                        position: 'relative'}}>
+                        position: 'relative'
+                    }}>
                         <Select defaultValue={filterType} value={filterType}
                                 style={{position: 'absolute', right: '5px', width: '120px'}}
                                 onChange={v => setFilterType(v)}>
@@ -219,7 +247,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                                 Object.keys(MAP_TYPE).map(k => <Option
                                     value={k}>{t(MAP_TYPE[k])}</Option>)]}
                         </Select>
-                        {!['closed', 'rejected'].includes(detail.status)
+                        {!['closed', 'rejected', 'deleted'].includes(detail.status)
                         && <Fragment>
                             <Button
                                 onClick={() => openFunc('REFUND_TYPE')}
@@ -231,10 +259,10 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                             <Button
                                 onClick={() => openFunc('REPLACE_TYPE')}
                                 style={{
-                                marginRight: '5px',
-                                color: 'white',
-                                backgroundColor: TYPE_COLOR['replace']
-                            }}>{t('warranty_comment_type.REPLACE_TYPE')}</Button>
+                                    marginRight: '5px',
+                                    color: 'white',
+                                    backgroundColor: TYPE_COLOR['replace']
+                                }}>{t('warranty_comment_type.REPLACE_TYPE')}</Button>
                             <Button
                                 onClick={() => openFunc('REJECT_TYPE')}
                                 style={{
@@ -243,6 +271,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                                     backgroundColor: TYPE_COLOR['reject']
                                 }}>{t('warranty_comment_type.REJECT_TYPE')}</Button>
                             <Button
+                                onClick={closeRequest}
                                 style={{
                                     marginRight: '5px',
                                     color: 'white',
@@ -308,6 +337,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                         // style={{maxWidth: '1140px'}}
                         className={'modal-body-80vh'}
                         width={'90%'}
+                        style={{maxWidth: '1140px'}}
                         centered
                         closable={false}
                         visible={visibleFunc}
@@ -328,11 +358,12 @@ export default ({detail, setDetail, visible, setVisible, mapStatus}) => {
                             </Button>
                         ]}
                     >
-                        <Spin spinning={pending} indicator={antIcon}>
+                        {visibleFunc && <Spin spinning={pending} indicator={antIcon}>
                             {CURRENT_FUNC === 'REFUND_TYPE' && <Refund func={FUNC}/>}
                             {CURRENT_FUNC === 'REJECT_TYPE' && <Reject func={FUNC} detail={detail}/>}
-                            {CURRENT_FUNC === 'REPLACE_TYPE' && <Replace func={FUNC} detail={detail} loading={setPending}/>}
-                        </Spin>
+                            {CURRENT_FUNC === 'REPLACE_TYPE' &&
+                            <Replace func={FUNC} detail={detail} loading={setPending}/>}
+                        </Spin>}
                     </Modal>
                 </div>}
             </Spin>

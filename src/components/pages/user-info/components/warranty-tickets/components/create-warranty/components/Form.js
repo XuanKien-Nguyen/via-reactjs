@@ -167,6 +167,7 @@ const Wrapper = (props) => {
             onOk: () => {
                 setCategorySelected(null)
                 setVisible(false)
+                setComment('')
                 props.reload()
             }
         }

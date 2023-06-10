@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment, useContext} from "react";
+import React, {Fragment, useContext, useEffect, useState} from "react";
 import Search from "./components/Search";
 import FilterItem from "../category/components/filter/FilterItem";
 import TableCommon from "../../common/table";
@@ -6,7 +6,7 @@ import Detail from "./components/Detail";
 import {getStatusList} from "../../../services/warranty-tickets";
 import {getWarrantyTicket} from "../../../services/warranty-tickets-manager";
 import {convertCurrencyVN} from "../../../utils/helpers";
-import {Button, Icon, Tooltip, Tag} from "antd";
+import {Button, Icon, Tag, Tooltip} from "antd";
 import {useTranslation} from "react-i18next";
 import {LayoutContext} from "../../../contexts";
 
@@ -34,6 +34,8 @@ export default () => {
     const [status, setStatus] = useState('')
     const [statusList, setStatusList] = useState([])
     const [createdDate, setCreatedDate] = useState([])
+    const [user_id, setUserID] = useState('')
+    const [createdBy, setCreatedBy] = useState('')
     const [lastestDecicedBy, setLastestDecicedBy] = useState('')
     const [lastestDecicedDate, setLastestDecicedDate] = useState([])
     const [visibleDetail, setVisibleDetail] = useState(false)
@@ -72,6 +74,11 @@ export default () => {
 
     const getItems = () => {
         return [
+            <FilterItem defaultValue={user_id}
+                        setValue={setUserID}
+                        type={'text'}
+                        title={'User ID'}
+                        allowClear={true}/>,
             <FilterItem defaultValue={title}
                         setValue={setTitle}
                         type={'text'}
@@ -84,6 +91,11 @@ export default () => {
                         allowClear={true}/>,
             <FilterItem defaultValue={status} setValue={setStatus} options={getStatusListMap()} type={'select'}
                         title={t('warranty_tickets.status')}/>,
+            <FilterItem defaultValue={createdBy}
+                        setValue={setCreatedBy}
+                        type={'text'}
+                        title={'Người tạo'}
+                        allowClear={true}/>,
             <FilterItem defaultValue={lastestDecicedBy}
                         setValue={setLastestDecicedBy}
                         type={'text'}
@@ -109,6 +121,8 @@ export default () => {
         const params = {
             status,
             title,
+            user_id,
+            createdby: createdBy,
             latest_decidedby: lastestDecicedBy,
             latest_decided_time,
             created_time,
@@ -137,6 +151,12 @@ export default () => {
             dataIndex: 'id',
             width: '150px',
             render: id => <b>#{id}</b>,
+            align: 'center',
+        },
+        {
+            title: 'User ID',
+            width: '200px',
+            render: row => <b>#{row.user_id}</b>,
             align: 'center',
         },
         {
@@ -185,6 +205,19 @@ export default () => {
             align: 'center'
         },
         {
+            title: 'Tổng chi phí bảo hành',
+            width: '300px',
+            dataIndex: 'total_cost_replace_warranty',
+            render: v => <b>{convertCurrencyVN(v)}</b>,
+            align: 'center'
+        },
+        {
+            title: 'Người tạo',
+            width: '200px',
+            dataIndex: 'createdby',
+            align: 'center'
+        },
+        {
             title: t('warranty_tickets.created_time'),
             width: '200px',
             dataIndex: 'created_time',
@@ -219,13 +252,17 @@ export default () => {
         },
     ]
 
+    const reloadList = () => {
+        setReload(reload + 1)
+    }
+
     return <Fragment>
         <Search items={getItems()}
                 search={setupSearch()}
                 loading={setLoading}
                 setPage={setPage}
                 reload={reload}
-                state={[comment, title, status, lastestDecicedBy, createdDate, lastestDecicedDate]}
+                state={[comment, title, status, lastestDecicedBy, createdDate, lastestDecicedDate, user_id, createdBy]}
                 onReset={() => {
                     setComment('')
                     setStatus('')
@@ -233,6 +270,8 @@ export default () => {
                     setLastestDecicedBy('')
                     setCreatedDate([])
                     setLastestDecicedDate([])
+                    setUserID('')
+                    setCreatedBy('')
                 }}
                 page={page}/>
         {/*<p style={{textAlign: 'right'}}>*/}
@@ -250,6 +289,11 @@ export default () => {
             setPage={setPage}
             scroll={{x: true}}
         />
-        <Detail detail={warrantyDetail} setDetail={setWarrantyDetail} visible={visibleDetail} setVisible={setVisibleDetail} mapStatus={MAP_STATUS}/>
+        <Detail detail={warrantyDetail}
+                setDetail={setWarrantyDetail}
+                visible={visibleDetail}
+                reloadList={reloadList}
+                setVisible={setVisibleDetail}
+                mapStatus={MAP_STATUS}/>
     </Fragment>
 }
