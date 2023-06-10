@@ -227,7 +227,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus, reloadList})
                             <Col sm={24} lg={6} className={'m-b-10'}>
                                 <span>{t('warranty_tickets.created_time')}</span>: <b>{detail.created_time}</b>
                             </Col>
-                            <Col sm={24} lg={6} className={'m-b-10'}>
+                            <Col sm={24} lg={10} className={'m-b-10'}>
                                 <span>{t('warranty_tickets.latest_decided_time')}</span>: <b>{detail.latest_decided_time || '-'}</b>
                             </Col>
                         </Row>

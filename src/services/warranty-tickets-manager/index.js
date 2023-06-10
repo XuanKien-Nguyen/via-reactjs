@@ -24,7 +24,7 @@ export const rejectProductRequest = (id, body) => {
 }
 
 export const downloadProductToReplace = (id, quantity) => {
-    return client.get(`${ENDPOINT}/download-product-to-replace/${id}`, {data: {quantity}})
+    return client.post(`${ENDPOINT}/download-product-to-replace/${id}`, {quantity})
 }
 
 export const markErrorProductToReplace = (id, body) => {

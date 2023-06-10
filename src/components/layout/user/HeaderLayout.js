@@ -87,7 +87,7 @@ function HeaderLayout({ history }) {
                     <a onClick={() => goto('/user-info')}>{t('common.profile')}</a>
                 </Menu.Item>
                 {(user?.role === 'admin' || user?.role === 'staff') && <Menu.Item >
-                    <a onClick={() => goto('/admin/category-manager')}>{t('common.admin')}</a>
+                    <a onClick={() => goto('/admin')}>{t('common.admin')}</a>
                 </Menu.Item>}
                 <Menu.Item>
                     <a onClick={handleLogout}>{t('common.sign_out')}</a>

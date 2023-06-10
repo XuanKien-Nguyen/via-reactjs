@@ -3,7 +3,7 @@ import {Button, Input} from "antd";
 import React, {useState} from "react";
 import {markErrorProductToReplace} from "../../../../../../services/warranty-tickets-manager";
 
-export default ({detail, visible, setVisible}) => {
+export default ({detail, visible, setVisible, refresh}) => {
 
     const [productErrorDetail, setProductErrorDetail] = useState('')
     const [errorDetail, setErrorDetail] = useState('')
@@ -24,7 +24,6 @@ export default ({detail, visible, setVisible}) => {
                 cancelText: 'Huỷ bỏ',
                 onOk: () => {
                     setPending(true)
-                    const form = new FormData()
                     markErrorProductToReplace(detail.id, {productErrorDetail, errorDetail}).then(resp => {
                         if (resp.status === 200) {
                             console.log(resp);
@@ -32,7 +31,8 @@ export default ({detail, visible, setVisible}) => {
                                 content: resp.data.message,
                                 onOk: () => {
                                     // console.log(e);
-                                    // fetchProductRequest()
+                                    refresh()
+                                    setVisible(false)
                                 }
                             })
                         }
