@@ -154,7 +154,6 @@ const Wrapper = (props) => {
         setDrawerLoading(true)
         getProductRequestList(props.detail.id).then(resp => {
             if (resp.status === 200) {
-                console.log(resp);
                 const data = resp.data.productRequestList
                 data.shift()
                 data.shift()
@@ -174,7 +173,11 @@ const Wrapper = (props) => {
         downloadProductToReplace(props.detail.id, quantity).then(resp => {
             if (resp.status === 200) {
                 Modal.success({
-                    content: resp.data.message
+                    content: resp.data.message,
+                    onOk: () => {
+                        setVisibleDownload(false)
+                        fetchProductRequestChecking()
+                    }
                 })
             }
         }).catch((err) => Modal.error({
@@ -193,7 +196,6 @@ const Wrapper = (props) => {
 
     const getTextBtnSelect = (row) => {
         let v = props.form.getFieldValue('productSuccessDetail') || ''
-        console.log('productSuccessDetail', v.split('\r\n'));
         if (v) {
             const arr = v.split('\r\n')
             if (arr.find(el => el === row)) {
@@ -247,7 +249,9 @@ const Wrapper = (props) => {
 
     return <Fragment>
         <Drawer
-            title="Danh sách sản phẩm đổi trả"
+            title={<div>
+
+            </div>}
             placement="right"
             closable={false}
             onClose={onClose}
@@ -257,11 +261,12 @@ const Wrapper = (props) => {
             <Spin spinning={drawerLoading} indicator={antIcon}>
                 <p style={{textAlign: 'right'}}>
                     <Button type={'primary'} onClick={() => setVisibleDownload(true)}>Lấy sản phẩm trong kho</Button>
+                    {productReplaceList.length > 0 &&
+                    <Button style={{marginLeft: '5px'}} type={'danger'} onClick={() => setShowReport(true)}>
+                        Báo lỗi sản phẩm
+                    </Button>}
                 </p>
                 {productReplaceList.length > 0 ? <div>
-                    <p style={{textAlign: 'right'}}>
-                        <Button type={'danger'} onClick={() => setShowReport(true)}>Báo lỗi sản phẩm</Button>
-                    </p>
                     <b>Tổng số sản phẩm: {productReplaceList.length}</b>
                     <br/>
                     <b>Tổng số sản đã chọn: {getLengthSelected()}</b>
@@ -270,23 +275,24 @@ const Wrapper = (props) => {
                         pagination={false}
                         columns={columns}/>
                 </div> : <p style={{textAlign: 'center'}}><b>{msg}</b></p>}
+                {/*<div*/}
+                {/*    style={{*/}
+                {/*        position: 'absolute',*/}
+                {/*        right: 0,*/}
+                {/*        bottom: 0,*/}
+                {/*        width: '100%',*/}
+                {/*        borderTop: '1px solid #e9e9e9',*/}
+                {/*        padding: '10px 16px',*/}
+                {/*        background: '#fff',*/}
+                {/*        textAlign: 'right',*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    <Button onClick={() => setOpen(false)} type="primary">*/}
+                {/*        Đóng*/}
+                {/*    </Button>*/}
+                {/*</div>*/}
             </Spin>
-            <div
-                style={{
-                    position: 'absolute',
-                    right: 0,
-                    bottom: 0,
-                    width: '100%',
-                    borderTop: '1px solid #e9e9e9',
-                    padding: '10px 16px',
-                    background: '#fff',
-                    textAlign: 'right',
-                }}
-            >
-                <Button onClick={() => setOpen(false)} type="primary">
-                    Đóng
-                </Button>
-            </div>
+
         </Drawer>
         <p style={{textAlign: 'right'}}>
             <Button type={'primary'} onClick={openDrawer}>Sản phẩm trong kho</Button>
@@ -364,10 +370,11 @@ const Wrapper = (props) => {
         <ReportError visible={showReport}
                      setVisible={setShowReport}
                      detail={props.detail}
+                     refresh={fetchProductRequestChecking}
         />
         <Modal
             maskClosable={false}
-            title="Lấy sản phẩm trong kho"
+            title="Sản phẩm trong kho"
             visible={visibleDownload}
             closable={false}
             footer={[

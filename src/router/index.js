@@ -30,7 +30,7 @@ import DashBoard from '../components/pages/statistics-manager';
 
 export const dashboardRoutes = [
     {
-        path: '/admin/dashboard',
+        path: '/admin',
         component: DashBoard,
         name: "Dashboard",
         icon: "bar-chart",
