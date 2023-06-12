@@ -25,7 +25,8 @@
         "ok": "Okay",
         "cancel": "Cancel",
         "create": "Create",
-        "no_data": "No Data"
+        "no_data": "No Data",
+        "total_balance": "Total balance"
     },
     "access_denied": {
         "title": "ACCESS DENIED",

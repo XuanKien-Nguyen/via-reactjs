@@ -26,13 +26,13 @@ import AccessDenied from "../components/pages/access-denied/403";
 import ResetPassword from '../components/pages/reset-password';
 import LogUserLogin from "../components/pages/log-user-login";
 
-import DashBoard from '../components/pages/statistics-manager';
+import Statistics from '../components/pages/statistics-manager';
 
 export const dashboardRoutes = [
     {
         path: '/admin',
-        component: DashBoard,
-        name: "Dashboard",
+        component: Statistics,
+        name: "Thống kê",
         icon: "bar-chart",
         exact: true,
         showAlways: true,

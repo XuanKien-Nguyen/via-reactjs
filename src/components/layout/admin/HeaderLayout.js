@@ -27,7 +27,7 @@ function HeaderLayout() {
     }
 
   return (
-    <Header>
+    <Header id='header_admin' style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
       {/*<div className="header-wrapper">*/}
       {/*  <div className="page-header">{headerComponent}</div>*/}
       {/*  <Icon type="logout" onClick={() => setLogoutModalOpen(true)} className="logout-icon" />  */}
@@ -40,6 +40,7 @@ function HeaderLayout() {
       {/*>*/}
       {/*  Bạn có thực sự muốn thoát?*/}
       {/*</Modal>*/}
+      <div style={{display: 'flex'}}><Icon type="bell" theme="filled" style={{fontSize: '24px'}} /></div>
     </Header>
   );
 }

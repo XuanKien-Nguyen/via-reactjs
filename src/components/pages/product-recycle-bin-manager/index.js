@@ -4,10 +4,10 @@ import FilterItem from "../category/components/filter/FilterItem";
 import TableCommon from "../../common/table";
 import { LayoutContext } from "../../../contexts";
 import { useSelector } from "react-redux";
-import { convertCurrencyVN } from "../../../utils/helpers";
-import {Button, Icon, Tooltip, Tag, message, Modal, DatePicker} from "antd";
+import {Button, Icon, message, Modal, DatePicker, Tag} from "antd";
 import { useTranslation } from "react-i18next";
 import {getProductRecycleBinList, getProductRecycleBinTypeList, downloadProductCheckpoint, downloadProductError, downloadProductRequest, downloadProductSold} from "../../../services/product-recycle-bin-manager";
+import {textToZip} from "../../../utils/helpers";
 
 const dateFormat = 'YYYY-MM-DD';
 
@@ -70,14 +70,17 @@ export default () => {
             api = () => downloadProductRequest()
         }
         api().then(resp => {
-            Modal.success({
-                content: <div>{resp.data.message}</div>,
-                onOk: () => {}
-            })
-        }).catch(err => {
-            Modal.error({
-                content: err.response?.data?.message
-        })})
+            if (resp?.data) {
+                if (!resp?.data?.categorizedProducts) {
+                    Modal.error({
+                        content: resp?.data?.message
+                    })
+                } else {
+                    const objData = resp.data.categorizedProducts;
+                    textToZip(objData, resp.data.message);
+                }
+            }
+        }).catch(() => message.error('Có lỗi xảy ra'))
     }
 
     const onDownloadProductSold = () => {
@@ -86,16 +89,17 @@ export default () => {
             created_time = JSON.stringify(downloadTime.format(dateFormat))
         }
         downloadProductSold({created_time}).then(resp => {
-            if (resp.status === 200) {
-                Modal.success({
-                    content: <div>{resp.data.message}</div>,
-                    onOk: () => {}
-                })
+            if (resp?.data) {
+                if (!resp?.data?.categorizedProducts) {
+                    Modal.error({
+                        content: resp?.data?.message
+                    })
+                } else {
+                    const objData = resp.data.categorizedProducts;
+                    textToZip(objData, resp.data.message);
+                }
             }
-        }).catch(err => {
-            Modal.error({
-                content: err.response?.data?.message
-        })})
+        }).catch(() => message.error('Có lỗi xảy ra'))
     }
 
     const getItems = () => {
@@ -162,15 +166,6 @@ export default () => {
         })
     }
 
-    const renderMoney = (el, prefix = '+') => {
-        if (el && (el + '').startsWith('-')) {
-            return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
-        } else if (el === 0) {
-            return <b>0 VND</b>
-        }
-        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
-    }
-
     const columns = [
         {
             title: 'ID',
@@ -187,11 +182,17 @@ export default () => {
             render: type => <b>{t(MAP_TYPE[type])}</b>
         },
         {
+            title: 'Trạng thái',
+            dataIndex: 'log_download_product_id',
+            align: 'center',
+            width: '150px',
+            render: v => <Tag color={v ? 'grey' : 'green'}>{v ? 'Đã tải' :  'Chưa tải'}</Tag>
+        },
+        {
             title: 'Giá',
             dataIndex: 'cost',
             align: 'center',
             width: '150px',
-            render: el => renderMoney(el)
         },
         {
             title: 'Danh mục',
@@ -218,7 +219,7 @@ export default () => {
             width: '200px',
         },
         {
-            title: 'Two 2FA',
+            title: '2FA',
             align: 'center',
             dataIndex: 'twofa',
             width: '200px',
@@ -236,42 +237,42 @@ export default () => {
             width: '200px',
         },
         {
-            title: 'Email Address',
+            title: 'Địa chỉ Email',
             align: 'center',
             dataIndex: 'email_address',
             width: '200px',
         },
         {
-            title: 'Password Email',
+            title: 'Mật khẩu Email',
             align: 'center',
             dataIndex: 'password_email',
             width: '200px',
         },
         {
-            title: 'Recovery Email',
+            title: 'Email khôi phục',
             align: 'center',
             dataIndex: 'recovery_email',
             width: '200px',
         },
         {
-            title: 'Facebook Name',
+            title: 'Tên Facebook',
             align: 'center',
             dataIndex: 'fb_name',
             width: '200px',
         },       {
-            title: 'Birthday',
+            title: 'Sinh nhật Facebook',
             align: 'center',
             dataIndex: 'birthday',
             width: '200px',
         },
         {
-            title: 'Created By',
+            title: 'Người tạo',
             dataIndex: 'createdby',
             width: '150px',
             align: 'center',
         },
         {
-            title: 'Created Time',
+            title: 'Thời gian tạo',
             dataIndex: 'created_time',
             width: '150px',
             align: 'center',

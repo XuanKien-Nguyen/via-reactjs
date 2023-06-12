@@ -25,7 +25,8 @@
         "ok": "OK",
         "cancel": "Hủy bỏ",
         "create": "Tạo",
-        "no_data": "Không có dữ liệu"
+        "no_data": "Không có dữ liệu",
+        "total_balance": "Tổng số dư"
     },
     "access_denied": {
         "title": "TRUY CẬP BỊ TỪ CHỐI",

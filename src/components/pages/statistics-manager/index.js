@@ -98,33 +98,33 @@ export default () => {
         //     align: 'center',
         // },
         {
-            title: 'Category Name',
+            title: 'Tên danh mục',
             width: '200px',
             dataIndex: 'category_name',
             fixed: 'left',
             align: 'center'
         },
         {
-            title: 'Category ID',
+            title: 'Mã danh mục',
             dataIndex: 'category_id',
             width: '150px',
             align: 'center'
         },
         {
-            title: 'Category Price',
-            width: '150px',
+            title: 'Giá danh mục',
+            width: '200px',
             dataIndex: 'category_price',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
-            title: 'Purchase ID',
-            width: '100px',
+            title: 'Mã đơn hàng',
+            width: '150px',
             dataIndex: 'purchase_id',
             align: 'center'
         },
         {
-            title: 'Purchase Type',
+            title: 'Loại đơn hàng',
             width: '150px',
             dataIndex: 'purchase_type',
             align: 'center'
@@ -150,7 +150,7 @@ export default () => {
             align: 'center'
         },
         {
-            title: 'Tổng sản phẩm hoàn trả',
+            title: 'Tổng sản phẩm đổi trả',
             width: '100px',
             dataIndex: 'total_product_replace',
             align: 'center'
@@ -177,7 +177,7 @@ export default () => {
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
-            title: 'Tổng chi phí hoàn trả bảo hành',
+            title: 'Tổng chi phí đổi trả bảo hành',
             width: '150px',
             dataIndex: 'total_cost_replace_warranty',
             align: 'center',
