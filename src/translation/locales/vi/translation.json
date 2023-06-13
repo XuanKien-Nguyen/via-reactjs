@@ -35,6 +35,10 @@
     "not_found": {
         "title": "TRANG NÀY KHÔNG TỒN TẠI"
     },
+    "maintenance": {
+        "title": "BẢO TRÌ",
+        "content": "Website đang trong quá trình nâng cấp và bảo trì"
+    },
     "category": {
         "view_more": "Xem thêm",
         "no_product": "Không tìm thấy sản phẩm"

@@ -325,11 +325,11 @@ export default () => {
                     <Button key="back" onClick={() => setVisible((false))}>
                         Huỷ bỏ
                     </Button>,
-                    <Button key="submit" type="primary" onClick={onDownloadProductSold}>
-                        Tải xống
+                    <Button key="submit" type="primary" onClick={onDownloadProductSold} disabled={downloadTime ? false : true}>
+                        Tải xuống
                     </Button>
                 ]}>
-                <p>Chọn ngày muốn tải:</p>
+                <p>Chọn ngày muốn tải:<b style={{color: 'red'}}>*</b></p>
                 <DatePicker 
                     onChange={v => {
                         setDownloadTime(v)

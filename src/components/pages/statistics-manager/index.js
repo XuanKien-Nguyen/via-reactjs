@@ -55,6 +55,15 @@ export default () => {
         })
     }
 
+    const renderMoney = (el, prefix = '+') => {
+        if (el && (el + '').startsWith('-')) {
+            return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
+        } else if (el === 0) {
+            return <b>0 VND</b>
+        }
+        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
+    }
+
     const getItems = () => {
         return [
             <FilterItem defaultValue={categoryId}
@@ -157,52 +166,52 @@ export default () => {
         },
         {
             title: 'Tổng chi phí',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_cost',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
             title: 'Tổng số dư hoàn trả bảo hành',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_amount_refund_warranty',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
             title: 'Tổng khuyến mãi hoàn trả bảo hành',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_bonus_refund_warranty',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
             title: 'Tổng chi phí đổi trả bảo hành',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_cost_replace_warranty',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
             title: 'Tổng giá',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_price',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
             title: 'Tổng doanh thu',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_profit',
             align: 'center',
-            render: v => <b>{convertCurrencyVN(v)}</b>
+            render: v => <b>{renderMoney(v)}</b>
         },
         {
             title: 'Tổng doanh thu sau cùng',
-            width: '150px',
+            width: '200px',
             dataIndex: 'final_profit',
             align: 'center',
-            render: v => <b>{convertCurrencyVN(v)}</b>
+            render: v => <b>{renderMoney(v)}</b>
         },
         {
             title: 'Thời gian tạo',

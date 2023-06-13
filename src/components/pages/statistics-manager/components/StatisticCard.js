@@ -14,7 +14,6 @@ export default ({items}) => {
                     icon={'dollar'}
                     title={'Tổng giá'}
                     totalValue={items?.totalPrice || 0}
-                    type="sale"
                     borderType="sale"
                 />
             </Col>
@@ -23,7 +22,7 @@ export default ({items}) => {
                     icon={'stock'}
                     title={'Tổng doanh thu'}
                     totalValue={items?.totalProfit || 0}
-                    type="sale"
+                    type="profit"
                     borderType="sale"
                 />
             </Col>
@@ -32,7 +31,7 @@ export default ({items}) => {
                     icon={'stock'}
                     title={'Tổng doanh thu sau cùng'}
                     totalValue={items?.finalProfit || 0}
-                    type="sale"
+                    type="profit"
                     borderType="sale"
                 />
             </Col>
@@ -49,7 +48,6 @@ export default ({items}) => {
                     icon={'dropbox'}
                     title={'Tổng sản phẩm đổi trả'}
                     totalValue={items?.totalProductToReplace || 0}
-                    type="product"
                     borderType="replace"
                 />
             </Col>
