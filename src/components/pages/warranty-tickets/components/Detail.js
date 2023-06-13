@@ -199,7 +199,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus, reloadList})
                         subTitle={<i>#{detail.id}</i>}
                         extra={[<Tag color={STATUS_COLOR[detail.status]}>{t(mapStatus[detail.status])}</Tag>]}
                     >
-                        <Row>
+                        {/* <Row>
                             <Col sm={24} lg={6} className={'m-b-10'}>
                                 <span>{t('order.purchase_id')}</span>: <b><i>{` #${detail.purchase_id}`}</i></b>
                             </Col>
@@ -230,7 +230,19 @@ export default ({detail, setDetail, visible, setVisible, mapStatus, reloadList})
                             <Col sm={24} lg={10} className={'m-b-10'}>
                                 <span>{t('warranty_tickets.latest_decided_time')}</span>: <b>{detail.latest_decided_time || '-'}</b>
                             </Col>
-                        </Row>
+                        </Row> */}
+                        <div style={{display: 'grid', gridAutoFlow: 'column', gridTemplateRows: 'repeat(4, 1fr)', gap: '8px 8px'}}>
+                            <div><span>{t('order.purchase_id')}</span>: <b><i>{` #${detail.purchase_id}`}</i></b></div>
+                            <div><span>{t('warranty_tickets.category_price')}</span>: <b>{` ` + convertCurrencyVN(detail.category_price)}</b></div>
+                            <div><span>{t('warranty_tickets.createdBy')}</span>: <b>{detail.createdby}</b></div>
+                            <div><span>{t('warranty_tickets.latest_decidedby')}</span>: <b>{detail.latest_decidedby || '-'}</b></div>
+                            <div><span>{t('warranty_tickets.total_product_request')}</span>: <b>{detail.total_product_request}</b></div>
+                            <div><span>{t('warranty_tickets.total_product_reject')}</span>: <b>{detail.total_product_reject}</b></div>
+                            <div><span>{t('warranty_tickets.total_product_replace')}</span>: <b>{detail.total_product_replace}</b></div>
+                            <div><span>{t('warranty_tickets.total_refund_warranty')}</span>: <b>{convertCurrencyVN(detail.total_refund_warranty)}</b></div>
+                            <div><span>{t('warranty_tickets.created_time')}</span>: <b>{detail.created_time}</b></div>
+                            <div><span>{t('warranty_tickets.latest_decided_time')}</span>: <b>{detail.latest_decided_time || '-'}</b></div>
+                        </div>
                     </PageHeader>
                     <p style={{
                         marginTop: '10px',
