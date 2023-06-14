@@ -174,15 +174,24 @@ const Wrapper = (props) => {
         if (isSuccess) {
             Modal.success(p)
         } else {
-            Modal.error(p)
+            Modal.error({
+                content: data.message,
+                width: '700px',
+                // onOk: () => {
+                // setCategorySelected(null)
+                // setVisible(false)
+                // setComment('')
+                // props.reload()
+                // }
+            })
         }
     }
 
     const normFile = e => {
         e.fileList.forEach(el => el.name = '')
-        if (e.fileList.length > 3) {
-            e.fileList.shift();
-        }
+        // if (e.fileList.length > 3) {
+        //     e.fileList.shift();
+        // }
         return e && e.fileList;
     }
 
