@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Button, Col, Form, Icon, Row, Upload} from "antd";
+import {Button, Col, Form, Icon, Row, Upload, Radio, Select, message} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import Modal from "antd/es/modal";
 import {getBase64, textToFile} from "../../../../../../../../utils/helpers";
@@ -10,6 +10,8 @@ import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import {useSelector} from "react-redux";
 import {purchaseList} from "../../../../../../../../services/purchases";
 import {createWarrantyTicket} from "../../../../../../../../services/warranty-tickets";
+import '../style.scss';
+const {Option} = Select;
 
 const Wrapper = (props) => {
 
@@ -27,6 +29,9 @@ const Wrapper = (props) => {
     const [comment, setComment] = useState('')
     const [errorMsgComment, setErrorMsgComment] = useState('')
 
+    const [radioValue, setRadioValue] = useState(1)
+    const [purchaseListData, setPurchaseListData] = useState([])
+
     useEffect(() => {
         if (!props.visible) {
             setCategorySelected(null)
@@ -35,6 +40,18 @@ const Wrapper = (props) => {
             // props.form.setFieldsValue({uid: ''})
         }
     }, [props.visible])
+
+    useEffect(() => {
+        loading(true)
+        purchaseList({status: 'valid'}).then(resp => {
+            if (resp.status === 200) {
+                const lst = resp?.data?.newPurchaseList || []
+                setPurchaseListData(lst)
+            }
+        }).catch((err) => {
+            message.error(err?.data?.message)
+        }).finally(() => loading(false))
+    }, [])
 
     const findUid = () => {
         const value = props.form.getFieldValue('uid');
@@ -48,9 +65,9 @@ const Wrapper = (props) => {
                     if (lst.length === 1) {
                         if (lst[0].status === 'invalid') {
                             setValidateStatus('error');
-                            setHelpValidateStatus(`Đơn hàng ${lst[0].category_name} đã hết thời gian bảo hành`)
+                            setHelpValidateStatus(`Đơn hàng #${lst[0].id} ${lst[0].category_name} đã hết thời gian bảo hành`)
                             Modal.error({
-                                content: `Đơn hàng ${lst[0].category_name} đã hết thời gian bảo hành, vui lòng nhập UID của đơn hàng còn trong thời gian bảo hành`,
+                                content: `Đơn hàng #${lst[0].id} ${lst[0].category_name} đã hết thời gian bảo hành, vui lòng nhập UID của đơn hàng còn trong thời gian bảo hành`,
                                 width: '700px'
                             })
                         } else {
@@ -58,7 +75,7 @@ const Wrapper = (props) => {
                             setCategorySelected(lst[0])
                             setHelpValidateStatus('')
                             Modal.success({
-                                content: 'Đơn hàng đã chọn: ' + lst[0].category_name
+                                content: `Đơn hàng đã chọn: #${lst[0].id} ${lst[0].category_name}`
                             })
                         }
 
@@ -81,11 +98,27 @@ const Wrapper = (props) => {
 
     }
 
+    const selectPurchase = (v) => {
+        purchaseListData.filter(el => {
+            if (el.id === v) {
+                setCategorySelected(el)
+                Modal.success({
+                    content: `Đơn hàng đã chọn: #${el.id} ${el.category_name}`
+                })
+            }
+        })
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!categorySelected) {
-            findUid()
-            return
+            if (radioValue === 1) {
+                findUid()
+                return
+            } else {
+                props.form.validateFields(['purchase_valid'], {force: true})
+                return
+            }
         }
         props.form.validateFields((err, values) => {
             if (!comment) {
@@ -118,6 +151,13 @@ const Wrapper = (props) => {
         });
     }
 
+    const onChangeRadio = (e) => {
+        setRadioValue(e.target.value)
+        props.form.resetFields(['purchase_valid'])
+        props.form.resetFields(['uid'])
+        setCategorySelected(null)
+    }
+
     const renderResult = (data, isSuccess) => {
         const p = {
             content: <div>
@@ -125,7 +165,7 @@ const Wrapper = (props) => {
                     <Row><span>{data.message?.split('-')[0]}</span></Row>
                     <Row className={'m-t-10'}>
                         <Col sm={16} style={{color: 'red'}}>Sản phẩm
-                            lỗi: {data.productErrorRequestList?.length || 0}</Col>
+                            lỗi (do sai định dạng): {data.productErrorRequestList?.length || 0}</Col>
                         <Col sm={8}>
                             <a style={{textDecoration: 'underline'}}
                                disabled={data.productErrorRequestList?.length === 0}
@@ -134,7 +174,7 @@ const Wrapper = (props) => {
                         </Col>
                     </Row>
                     <Row className={'m-t-10'}>
-                        <Col sm={16}>Sản phẩm trùng: {data.productDuplicateRequestList?.length || 0}</Col>
+                        <Col sm={16}>Sản phẩm trùng UID trong danh sách tải lên: {data.productDuplicateRequestList?.length || 0}</Col>
                         <Col sm={8}>
                             <a style={{textDecoration: 'underline'}}
                                disabled={data.productDuplicateRequestList?.length === 0}
@@ -222,7 +262,7 @@ const Wrapper = (props) => {
             }
             if (file.size / 1024 / 1024 > 1) {
                 Modal.error({
-                    content: 'Kích thước ảnh tối đa là 1Mb',
+                    content: 'Kích thước ảnh tối đa là 1MB',
                     onOk: errorFn
                 });
             }
@@ -242,18 +282,68 @@ const Wrapper = (props) => {
                     <Input disabled={true} value={user?.email}/>
                 </Col>
             </Row>
-            <Form.Item
-                label={<span><span style={{color: 'red'}}>*</span>Nhập UID để tìm kiếm đơn hàng cần bảo hành</span>}
-                hasFeedback
-                validateStatus={validateStatus}
-                help={helpValidateStatus}>
-                {getFieldDecorator('uid')(
-                    <div>
-                        <Input placeholder={'UID'}/>
-                    </div>,
-                )}
-            </Form.Item>
-            <p style={{textAlign: 'center'}}><Button type={'primary'} onClick={findUid}>Tìm kiếm</Button></p>
+            {/* <Row gutter={[10, 10]} style={{marginTop: '12px'}}>
+                <Col sm={21}>
+                    <Form.Item
+                        label={<span><span style={{color: 'red'}}>*</span>Nhập UID để tìm kiếm đơn hàng cần bảo hành</span>}
+                        hasFeedback
+                        validateStatus={validateStatus}
+                        help={helpValidateStatus}>
+                        {getFieldDecorator('uid')(
+                            <div>
+                                <Input placeholder={'UID'}/>
+                            </div>,
+                        )}
+                    </Form.Item>
+                </Col>
+                <Col sm={3}><p style={{textAlign: 'end', marginTop: '44px'}}><Button type={'primary'} onClick={findUid}>Tìm kiếm</Button></p></Col>
+            </Row> */}
+            <Row gutter={10} marginTop={'24px'}>
+                <Col sm={24}>
+                    <Radio.Group onChange={onChangeRadio} value={radioValue} style={{width: '100%'}}>
+                        <Radio value={1} className="radio-select-purchase">
+                            <Row>
+                                <Col sm={21}>
+                                    <Form.Item
+                                        label={<span><span style={{ color: 'red' }}>*</span> Nhập UID để tìm kiếm đơn hàng cần bảo hành</span>}
+                                        hasFeedback
+                                        validateStatus={validateStatus}
+                                        help={helpValidateStatus}
+                                        >
+                                        {getFieldDecorator('uid')(
+                                            <div>
+                                                <Input placeholder={'UID'} disabled={radioValue !== 1}/>
+                                            </div>,
+                                        )}
+                                    </Form.Item>
+                                </Col>
+                                <Col sm={3}><p style={{textAlign: 'center', marginTop: '43px'}}><Button type={'primary'} onClick={findUid} disabled={radioValue !== 1}>Tìm kiếm</Button></p></Col>
+                            </Row>
+                        </Radio>
+                        <Radio value={2} className="radio-select-purchase">
+                            <Row>
+                                <Col sm={21}>
+                                    <Form.Item
+                                        label={<span>Chọn đơn hàng khả dụng</span>}
+                                    >
+                                        {getFieldDecorator('purchase_valid', {
+                                            rules: [{required: true, message: 'Vui lòng chọn danh mục'}],
+                                        },)(
+                                                <Select
+                                                    disabled={radioValue !== 2}
+                                                    placeholder="Chọn đơn hàng"
+                                                    onChange={selectPurchase}
+                                                >
+                                                    {purchaseListData.map(el => <Option value={el.id}>#{el.id} - {el.category_name}</Option>)}
+                                                </Select>,
+                                        )}
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Radio>
+                    </Radio.Group>
+                </Col>    
+            </Row>
             {categorySelected && <Fragment>
                 <div style={{border: '1px solid #eaeaea', padding: '20px'}}>
                     <h3>Thông tin bảo hành cho đơn hàng <i>#{categorySelected.id} {categorySelected.category_name}</i>

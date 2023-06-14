@@ -22,17 +22,18 @@ import {Fragment as blank} from 'react'
 import NotFound from "../components/pages/not-found/404";
 import UserInfo from "../components/pages/user-info";
 import AccessDenied from "../components/pages/access-denied/403";
+import Maintenance from "../components/pages/maintenance/503";
 
 import ResetPassword from '../components/pages/reset-password';
 import LogUserLogin from "../components/pages/log-user-login";
 
-import DashBoard from '../components/pages/statistics-manager';
+import Statistics from '../components/pages/statistics-manager';
 
 export const dashboardRoutes = [
     {
         path: '/admin',
-        component: DashBoard,
-        name: "Dashboard",
+        component: Statistics,
+        name: "Thống kê",
         icon: "bar-chart",
         exact: true,
         showAlways: true,
@@ -217,6 +218,13 @@ export const baseRoutes = [
         path: '/access-denied',
         component: AccessDenied,
         name: "Từ chối truy cập",
+        noAuth: true,
+        layout: user
+    },
+    {
+        path: '/mainenance',
+        component: Maintenance,
+        name: "Bảo trì",
         noAuth: true,
         layout: user
     },

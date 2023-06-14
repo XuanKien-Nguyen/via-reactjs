@@ -27,7 +27,7 @@ export default ({ icon, title, totalValue, type = '', borderType = ''}) => {
             <div className='overview-card-body'>
                 <p className='overview-card-title'>{title || 'No Title'}</p>
                 <p className='overview-card-number'>
-                    {type === 'sale' ?  renderMoney(totalValue) : totalValue}
+                    {type === 'profit' ?  renderMoney(totalValue) : totalValue}
                 </p>
             </div>
         </Card>

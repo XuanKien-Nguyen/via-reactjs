@@ -87,7 +87,10 @@ function HeaderLayout({ history }) {
                     <a onClick={() => goto('/user-info')}>{t('common.profile')}</a>
                 </Menu.Item>
                 {(user?.role === 'admin' || user?.role === 'staff') && <Menu.Item >
-                    <a onClick={() => goto('/admin')}>{t('common.admin')}</a>
+                    <a onClick={() => {
+                        changeLanguage('vi');
+                        goto('/admin');
+                    }}>{t('common.admin')}</a>
                 </Menu.Item>}
                 <Menu.Item>
                     <a onClick={handleLogout}>{t('common.sign_out')}</a>
@@ -140,7 +143,7 @@ function HeaderLayout({ history }) {
                     /></div>
                     <div className='header-top_right'>
                         <ul>
-                            <li className='item'><a href='' onClick={() => {searchProduct('')}}>{t('common.all_product')}</a></li>
+                            <li className='item'><a href='' onClick={() => {goto('/categories')}}>{t('common.all_product')}</a></li>
                             <li className='item'><a href=''>{t('common.guide')}</a></li>
                             <li className='item'><a href='' onClick={goToRecharge}>{t('common.recharge')}</a></li>
                             <li className='item'><a href=''>{t('common.tricks')}</a></li>
@@ -173,7 +176,7 @@ function HeaderLayout({ history }) {
                                     <Option value="en">English</Option>
                                 </Select>
                             </li>
-                            {user && <li className='item header_user-balance'><b>{t('profile.balance')}:&nbsp;{convertCurrencyVN(user?.totalBalance)}</b></li>}
+                            {user && <li className='item header_user-balance'><b>{t('common.total_balance')}:&nbsp;{convertCurrencyVN(user?.totalBalance)}</b></li>}
                             <li className='header-devider'></li>
                             <li className='item' style={user?.role !== 'admin' ? { display: 'none' } : {}} onClick={() => {setVisibleNoti(true)}}><div className='notify'><Icon type="bell" theme="filled" style={{ fontSize: '20px', width: '20px', height: '20px' }} /></div></li>
                             <li style={{
@@ -202,7 +205,7 @@ function HeaderLayout({ history }) {
                                 style={{ width: '100%' }}
                                 mode="inline"
                             >
-                                <Menu.Item key="all-category" className='sub-menu__item'  onClick={() => {searchProduct('')}}>
+                                <Menu.Item key="all-category" className='sub-menu__item'  onClick={() => {goto('/categories')}}>
                                     <span className='uppercase'>{t('common.all_product')}</span>
                                 </Menu.Item>
                                 <Menu.Item key="guide" className='sub-menu__item'>

@@ -25,7 +25,8 @@
         "ok": "Okay",
         "cancel": "Cancel",
         "create": "Create",
-        "no_data": "No Data"
+        "no_data": "No Data",
+        "total_balance": "Total balance"
     },
     "access_denied": {
         "title": "ACCESS DENIED",
@@ -33,6 +34,10 @@
     },
     "not_found": {
         "title": "PAGE NOT FOUND"
+    },
+    "maintenance": {
+        "title": "MAINTENANCE",
+        "content": "Website is in the process of being upgraded and maintained"
     },
     "category": {
         "view_more": "More",

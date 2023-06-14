@@ -6,7 +6,7 @@ import TableCommon from "../../common/table";
 import { LayoutContext } from "../../../contexts";
 import { useSelector } from "react-redux";
 import { convertCurrencyVN } from "../../../utils/helpers";
-import { Button, Icon, Tooltip, Tag, message, Modal, DatePicker, Card, Col, Row, Typography } from "antd";
+import { Col, Row } from "antd";
 import { useTranslation } from "react-i18next";
 import { getAllStatistics } from '../../../services/statistics-manager';
 import "./index.scss";
@@ -55,6 +55,15 @@ export default () => {
         })
     }
 
+    const renderMoney = (el, prefix = '+') => {
+        if (el && (el + '').startsWith('-')) {
+            return <b style={{color: 'red'}}>{convertCurrencyVN(el)}</b>
+        } else if (el === 0) {
+            return <b>0 VND</b>
+        }
+        return <b style={{color: 'green'}}>{`${prefix}${convertCurrencyVN(el)}`}</b>
+    }
+
     const getItems = () => {
         return [
             <FilterItem defaultValue={categoryId}
@@ -98,33 +107,34 @@ export default () => {
         //     align: 'center',
         // },
         {
-            title: 'Category Name',
+            title: 'Tên sản phẩm',
             width: '200px',
             dataIndex: 'category_name',
             fixed: 'left',
             align: 'center'
         },
         {
-            title: 'Category ID',
+            title: 'Mã sản phẩm',
             dataIndex: 'category_id',
             width: '150px',
-            align: 'center'
+            align: 'center',
+            render: v => <b>#{v}</b>
         },
         {
-            title: 'Category Price',
-            width: '150px',
+            title: 'Giá sản phẩm',
+            width: '200px',
             dataIndex: 'category_price',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
-            title: 'Purchase ID',
-            width: '100px',
+            title: 'Mã đơn hàng',
+            width: '150px',
             dataIndex: 'purchase_id',
             align: 'center'
         },
         {
-            title: 'Purchase Type',
+            title: 'Loại đơn hàng',
             width: '150px',
             dataIndex: 'purchase_type',
             align: 'center'
@@ -150,59 +160,59 @@ export default () => {
             align: 'center'
         },
         {
-            title: 'Tổng sản phẩm hoàn trả',
+            title: 'Tổng sản phẩm đổi trả',
             width: '100px',
             dataIndex: 'total_product_replace',
             align: 'center'
         },
         {
             title: 'Tổng chi phí',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_cost',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
             title: 'Tổng số dư hoàn trả bảo hành',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_amount_refund_warranty',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
             title: 'Tổng khuyến mãi hoàn trả bảo hành',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_bonus_refund_warranty',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
-            title: 'Tổng chi phí hoàn trả bảo hành',
-            width: '150px',
+            title: 'Tổng chi phí đổi trả bảo hành',
+            width: '200px',
             dataIndex: 'total_cost_replace_warranty',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
             title: 'Tổng giá',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_price',
             align: 'center',
             render: v => <b>{convertCurrencyVN(v)}</b>
         },
         {
             title: 'Tổng doanh thu',
-            width: '150px',
+            width: '200px',
             dataIndex: 'total_profit',
             align: 'center',
-            render: v => <b>{convertCurrencyVN(v)}</b>
+            render: v => <b>{renderMoney(v)}</b>
         },
         {
             title: 'Tổng doanh thu sau cùng',
-            width: '150px',
+            width: '200px',
             dataIndex: 'final_profit',
             align: 'center',
-            render: v => <b>{convertCurrencyVN(v)}</b>
+            render: v => <b>{renderMoney(v)}</b>
         },
         {
             title: 'Thời gian tạo',

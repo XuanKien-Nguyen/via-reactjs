@@ -998,6 +998,7 @@ li .item-button {
                         .register-home {
                             padding: 0 12px !important;
                             width: auto !important;
+                            // font-size: 11px !important;
                         }
                     }
                 }
@@ -1039,17 +1040,25 @@ li .item-button {
     .product-card {
         .product-container {
             .product-detail {
-                // .product-more-info{
-                //     &.collapse {
-                //         height: 0px;
-                //         visibility: hidden;
-                //         transition: height .5s;
-                //     }
-                // }
                 .toggle_product-more-info {
                     display: block !important;
                 }
             }
         }
     }
+
+    .header-main_right {
+        .ant-select {
+            width: 90px !important;
+            font-size: 11px !important;
+        }
+
+        .login-home,
+        .register-home {
+            font-size: 11px !important;
+            word-wrap: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    } 
 }

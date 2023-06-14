@@ -1,3 +1,5 @@
+import JSZip from 'jszip';
+
 export const checkValue = (value, key) => {
   value = key
     ? key
@@ -114,6 +116,24 @@ export const textToFile = (filename, text) => {
 
   document.body.removeChild(element);
 }
+
+export const textToZip = (files, zipName) => {
+  let currentTime = new Date().toLocaleString();
+  let zip = new JSZip();
+  let filesObj = Object.keys(files);
+  filesObj.forEach((file) => {
+    zip.file(`${file}.txt`, files[file].join('\r\n'))
+  });
+  zip.generateAsync({type:"base64"}).then(function (content) {
+    var element = document.createElement('a');
+    element.href = "data:application/zip;base64," + content;
+    element.setAttribute('download', `${zipName}-${currentTime}`);
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+});
+
+};
 
 export const getWindowDimensions = () => {
   const { innerWidth: width, innerHeight: height } = window;
