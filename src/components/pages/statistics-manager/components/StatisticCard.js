@@ -1,11 +1,8 @@
-import React, { useContext, useState, useEffect, Fragment } from "react";
+import React from "react";
 import NumberCard from "./NumberCard";
 import { Col, Row } from "antd";
-import { useTranslation } from "react-i18next";
 
 export default ({items}) => {
-
-    const {t} = useTranslation();
 
     return (
         <Row gutter={[12, 12]}>
@@ -38,7 +35,7 @@ export default ({items}) => {
             <Col key={'4'} lg={6} md={12}>
                 <NumberCard 
                     icon={'inbox'}
-                    title={'Tổng sản phẩm bán'}
+                    title={'Số lượng sản phẩm bán'}
                     totalValue={items?.totalProductToSale || 0}
                     borderType="sale"
                 />
@@ -46,7 +43,7 @@ export default ({items}) => {
             <Col key={'5'} lg={6} md={12}>
                 <NumberCard 
                     icon={'dropbox'}
-                    title={'Tổng sản phẩm đổi trả'}
+                    title={'Số lượng sản phẩm đổi trả'}
                     totalValue={items?.totalProductToReplace || 0}
                     borderType="replace"
                 />
@@ -70,7 +67,7 @@ export default ({items}) => {
             <Col key={'8'} lg={6} md={12}>
                 <NumberCard 
                     icon={'issues-close'}
-                    title={'Tổng khuyến mãi hoản trả'}
+                    title={'Tổng khuyến mãi hoàn trả'}
                     totalValue={items?.totalBonusRefund || 0}
                     borderType="refund"
                 />

@@ -6,7 +6,7 @@ import TableCommon from "../../common/table";
 import { LayoutContext } from "../../../contexts";
 import { useSelector } from "react-redux";
 import { convertCurrencyVN } from "../../../utils/helpers";
-import { Button, Icon, Tooltip, Tag, message, Modal, DatePicker, Card, Col, Row, Typography } from "antd";
+import { Col, Row } from "antd";
 import { useTranslation } from "react-i18next";
 import { getAllStatistics } from '../../../services/statistics-manager';
 import "./index.scss";
@@ -107,20 +107,21 @@ export default () => {
         //     align: 'center',
         // },
         {
-            title: 'Tên danh mục',
+            title: 'Tên sản phẩm',
             width: '200px',
             dataIndex: 'category_name',
             fixed: 'left',
             align: 'center'
         },
         {
-            title: 'Mã danh mục',
+            title: 'Mã sản phẩm',
             dataIndex: 'category_id',
             width: '150px',
-            align: 'center'
+            align: 'center',
+            render: v => <b>#{v}</b>
         },
         {
-            title: 'Giá danh mục',
+            title: 'Giá sản phẩm',
             width: '200px',
             dataIndex: 'category_price',
             align: 'center',
