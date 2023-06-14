@@ -122,9 +122,10 @@ export default ({id, loading}) => {
 
     const onChangeQuantity = (e) => {
         const value = e.target.value
-        if (value < 1) {
-            setQuantity(1)
-        }else if (value > productDetail.sum_via) {
+        // if (value < 1) {
+        //     setQuantity(1)
+        // }else
+            if (value > productDetail.sum_via) {
             setQuantity(productDetail.sum_via)
         } else {
             setQuantity(value)
@@ -267,7 +268,7 @@ export default ({id, loading}) => {
                         fontSize: '15px',
                         borderRadius: '25px'
                     }}>{product.sum_via}</span></p>
-                    <Input autoFocus addonBefore={t('product.enter_value')} max={product.sum_via} min={1} addonAfter={`x${product?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
+                    <Input autoFocus addonBefore={t('product.enter_value')} max={product.sum_via} addonAfter={`x${product?.price || 0}`} type={'number'} value={quantity} onChange={onChangeQuantity} onPressEnter={() => { }} />
                     <p style={{ marginTop: '10px' }}>{t('product.total')}: <b style={{ color: 'red' }}>{(product?.price * quantity).toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</b></p>
                 </div> : <b style={{ color: 'red' }}>{t('message.error_out_of_stock')}</b>}
             <b style={{ color: 'red' }}>{errorText}</b>

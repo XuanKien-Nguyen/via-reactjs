@@ -1,6 +1,5 @@
 import Axios from "axios";
 import {API_WHITE_LIST} from "../utils/constants";
-import {message} from "antd";
 
 const client = Axios.create({
     withCredentials: true
@@ -66,12 +65,13 @@ client.interceptors.response.use(
                         isRefreshing = false;
                     });
             });
-        } else if (err.response?.data?.error === 'refresh_token is invalid' && err.config.url !== '/api/users/client/me') {
-            message.error('Phiên đăng nhập đã hết hạn')
-            localStorage.removeItem('is_logged')
-            localStorage.removeItem('user_info')
-            window.location.href = '/'
         }
+        // else if (err.response?.data?.error === 'refresh_token is invalid' && err.config.url !== '/api/users/client/me') {
+        //     message.error('Phiên đăng nhập đã hết hạn')
+        //     localStorage.removeItem('is_logged')
+        //     localStorage.removeItem('user_info')
+        //     window.location.href = '/'
+        // }
         return Promise.reject(err);
     }
 );

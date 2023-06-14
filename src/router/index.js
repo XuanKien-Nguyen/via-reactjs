@@ -51,16 +51,6 @@ export const dashboardRoutes = [
         role: ['admin', 'staff']
     },
     {
-        path: '/admin/warranty-tickets-manager',
-        component: WarrantyTickerManager,
-        name: "Quản lý yêu cầu bảo hành",
-        icon: "safety-certificate",
-        exact: true,
-        showAlways: true,
-        layout: admin,
-        role: ['admin', 'staff']
-    },
-    {
         path: '/admin/product-manager',
         component: ProductManager,
         name: "Quản lý sản phẩm",
@@ -125,6 +115,16 @@ export const dashboardRoutes = [
         component: RechargeTicketManager,
         name: "Phê duyệt phiếu nạp tiền",
         icon: "wallet",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/warranty-tickets-manager',
+        component: WarrantyTickerManager,
+        name: "Quản lý yêu cầu bảo hành",
+        icon: "safety-certificate",
         exact: true,
         showAlways: true,
         layout: admin,
