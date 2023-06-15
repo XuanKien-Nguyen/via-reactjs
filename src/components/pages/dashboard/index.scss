@@ -1,0 +1,43 @@
+.overview-card {
+    padding: 24px 16px 0px 16px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    min-height: 190px !important;
+    color: white !important;
+    &.user {
+        border-color: #21618C;
+        background-color: #6699FF;
+    }
+    &.recharge-success {
+        border-color: #148F77;
+        background-color: #00CCCC;
+    }
+    &.total-profit {
+        border-color: #CC33FF;
+        background-color: #CC99FF;
+    }
+    &.final-profit {
+        border-color: #FF0066;
+        background-color: #FF6699;
+    }
+    cursor: pointer;
+    .ant-card-body {
+        display: flex;
+        .overview-card-icon {
+            padding: 8px 16px;
+        }
+        .overview-card-body {
+            .overview-card-title {
+                font-size: 20px;
+                margin-bottom: 6px;
+                font-weight: bold;
+            }
+            .overview-card-number {
+                font-size: 20px;
+                margin-bottom: 24px;
+                font-weight: bold;
+            }
+        }
+    }
+}

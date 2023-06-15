@@ -28,10 +28,21 @@ import ResetPassword from '../components/pages/reset-password';
 import LogUserLogin from "../components/pages/log-user-login";
 
 import Statistics from '../components/pages/statistics-manager';
+import Dashboard from '../components/pages/dashboard';
 
 export const dashboardRoutes = [
     {
         path: '/admin',
+        component: Dashboard,
+        name: "Dashboard",
+        icon: "appstore",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/statistics',
         component: Statistics,
         name: "Thống kê",
         icon: "bar-chart",
