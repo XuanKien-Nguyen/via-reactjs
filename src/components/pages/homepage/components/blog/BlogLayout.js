@@ -2,12 +2,11 @@ import React from 'react';
 import ListLayout from '../../../common/list-layout/ListLayout';
 import BlogCard from './BlogCard';
 
-const BlogLayout = () => {
-  const blogListTest = new Array(7).fill('test');
+const BlogLayout = ({blogList}) => {
   return (
     <section id='blog-layout'>
       <ListLayout titleCategory={'THỦ THUẬT FACEBOOK'} contentSeeMore={'Xem tất cả bài viết'}>
-        {blogListTest.map((blog, i) => <BlogCard key={i} />)}
+        {blogList?.map((blog) => <BlogCard key={blog.id} blogDetail={blog}/>)}
       </ListLayout>
     </section>
   );

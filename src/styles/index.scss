@@ -898,8 +898,10 @@ li .item-button {
     }
 
     .blog-title {
-        height: 64px;
+        height: 48px;
         font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .blog-image {
@@ -941,7 +943,7 @@ li .item-button {
         .badge-container {
             background-color: rgb(27, 116, 228);
             color: rgb(255, 255, 255);
-            border-radius: 0px;
+            border-radius: 5px;
             padding: 8px 14px;
 
             .post-date {
@@ -950,7 +952,7 @@ li .item-button {
             }
 
             .post-month {
-                font-size: 11px;
+                font-size: 13px;
                 font-weight: 700;
             }
         }

@@ -6,10 +6,12 @@ import BlogLayout from './components/blog/BlogLayout';
 import QandALayout from './components/QandA/QandALayout';
 
 import { getCategoryList } from '../../../services/category/category';
+import {getPostListCommon} from "../../../services/post";
 
 const HomePage = () => { 
 
   const [categoryList, setCategoryList] = useState([]);
+  const [blogList, setBlogList] = useState([])
 
   useEffect(() => {
     getCategoryList().then(res => {
@@ -17,16 +19,20 @@ const HomePage = () => {
         setCategoryList(res.data.categoryListFound);
       }
     });
+    getPostListCommon().then(resp => {
+      if (resp?.data) {
+        setBlogList(resp?.data?.postList || [])
+      }
+    }).catch(err => console.log(err))
   }, []);
 
   return (
     <div>
-        <SlideLayout />
+        <SlideLayout sliderList={blogList}/>
         <FeatureLayout />
           {categoryList.map(category => <ProductLayout key={category.id} categoryParent={category} />)}
-        {/* <ProductLayout /> */}
         <QandALayout />
-        <BlogLayout />
+        <BlogLayout blogList={blogList}/>
     </div>
   );
 };
