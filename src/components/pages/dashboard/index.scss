@@ -1,43 +1,52 @@
-.overview-card {
-    padding: 24px 16px 0px 16px;
-    margin-bottom: 8px;
-    border-radius: 8px;
+.dashboard-card {
+    border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    min-height: 190px !important;
-    color: white !important;
     &.user {
-        border-color: #21618C;
-        background-color: #6699FF;
+        .ant-card-head {
+            background-color: #467fff;
+            background-image: linear-gradient(to right, #467fff, #7599ecf6);
+        }
     }
     &.recharge-success {
-        border-color: #148F77;
-        background-color: #00CCCC;
+        .ant-card-head {
+            background-color: #11c15c;
+            background-image: linear-gradient(to right, #11c15c, #45da86 );
+        }
     }
     &.total-profit {
-        border-color: #CC33FF;
-        background-color: #CC99FF;
+        .ant-card-head {
+            background-color: #ffa21e;
+            background-image: linear-gradient(to right, #ffa21e,  #fdb95b);
+        }
     }
     &.final-profit {
-        border-color: #FF0066;
-        background-color: #FF6699;
-    }
-    cursor: pointer;
-    .ant-card-body {
-        display: flex;
-        .overview-card-icon {
-            padding: 8px 16px;
+        .ant-card-head {
+            background-color: #ff5253;
+            background-image: linear-gradient(to right, #ff5253,  #fd5d5d);
         }
-        .overview-card-body {
-            .overview-card-title {
+    }
+    .ant-card-head {
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        border-radius: 4px 4px 0px 0px;
+    }
+    .ant-card-body {
+        padding: 36px 24px 16px 24px;
+        .dashboard-card-body {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            .dashboard-card-number {
                 font-size: 20px;
-                margin-bottom: 6px;
                 font-weight: bold;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
-            .overview-card-number {
-                font-size: 20px;
-                margin-bottom: 24px;
-                font-weight: bold;
-            }
+        }
+        .dashboard-card-update-time {
+            font-weight: 600;
         }
     }
 }

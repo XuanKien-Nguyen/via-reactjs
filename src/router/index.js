@@ -3,6 +3,7 @@ import Login from '../components/pages/login';
 import Register from '../components/pages/register';
 import HomePage from '../components/pages/homepage/HomePage';
 import Category from '../components/pages/category';
+import ContactPage from '../components/pages/contact';
 import CategoryManager from '../components/pages/category-manager'
 import ProductManager from '../components/pages/product-manager';
 import UserManager from '../components/pages/user-manager';
@@ -233,7 +234,7 @@ export const baseRoutes = [
         layout: user
     },
     {
-        path: '/mainenance',
+        path: '/maintenance',
         component: Maintenance,
         name: "Bảo trì",
         noAuth: true,
@@ -243,6 +244,13 @@ export const baseRoutes = [
         path: '/categories',
         component: Category,
         name: "Sản phẩm",
+        noAuth: true,
+        layout: user,
+    },
+    {
+        path: '/contact-us',
+        component: ContactPage,
+        name: "Liên hệ",
         noAuth: true,
         layout: user,
     },

@@ -11,6 +11,8 @@ import "./index.scss";
 
 const dateFormat = 'YYYY-MM-DD';
 
+const timeFormat = 'DD-MM-YYYY hh:mm:ss'
+
 export default () => {
 
     const user = useSelector(store => store.user)
@@ -55,13 +57,14 @@ export default () => {
 
     return <div>
         {user && <Fragment>
-            <Row gutter={[12, 6]}>
+            <Row gutter={[16, 6]}>
                 <Col key={'1'} xxl={6} xl={12} sm={24}>
                   <NumberCard
                       icon={'user'}
                       title={'Tổng người dùng đăng ký'}
                       totalValue={dsUser?.totalUsers || 0}
                       borderType="user"
+                      updateTime={moment().format(timeFormat)}
                   />
                 </Col>
                 <Col key={'2'} xxl={6} xl={12} sm={24}>
@@ -70,6 +73,7 @@ export default () => {
                         title={'Tổng lượt nạp tiền thành công'}
                         totalValue={dsRechargeSuccess?.totalSuccessRecharge || 0}
                         borderType="recharge-success"
+                        updateTime={moment().format(timeFormat)}
                     />
                 </Col>
                 <Col key={'3'} xxl={6} xl={12} sm={24}>
@@ -79,6 +83,7 @@ export default () => {
                         totalValue={dsProfit?.totalProfit || 0}
                         borderType="total-profit"
                         type="profit"
+                        updateTime={moment().format(timeFormat)}
                     />
                 </Col>
                 <Col key={'4'} xxl={6} xl={12} sm={24}>
@@ -88,6 +93,7 @@ export default () => {
                         totalValue={dsProfit?.finalProfit || 0}
                         borderType="final-profit"
                         type="profit"
+                        updateTime={moment().format(timeFormat)}
                     />
                 </Col>
             </Row>

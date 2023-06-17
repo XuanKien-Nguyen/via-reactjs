@@ -1,7 +1,11 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import { Button, Icon } from 'antd';
 
 const SliderItem = ({sliderDetail}) => {
+
+  const history = useHistory();
+
   return (
         <div className='slide-item'>
           <div className='slide-item-container'>
@@ -10,8 +14,8 @@ const SliderItem = ({sliderDetail}) => {
                 <h1 className='slide-title'>{sliderDetail.title.toUpperCase()}</h1>
                 <span className='slide-content'>{sliderDetail.sub_title}</span>
               </div>
-              {sliderDetail.slug && <Button type="primary" size='large' onClick={(e) => {
-                console.log('click button')
+              {sliderDetail.slug && <Button type="primary" size='large' onClick={() => {
+                history.push(`/${sliderDetail.slug}`)
               }}>
                 XEM CHI TIẾT
                 <Icon type="right" style={{ fontSize: '12px' }} />

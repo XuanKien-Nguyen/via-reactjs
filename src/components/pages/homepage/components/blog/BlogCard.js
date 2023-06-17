@@ -1,8 +1,11 @@
 import React from 'react';
 import { Card, Badge, Tooltip } from 'antd';
+import {useHistory} from "react-router-dom";
 import moment from 'moment';
 
 const BlogCard = ({blogDetail}) => {
+
+    const history = useHistory()
 
     const convertDate = (date) => {
         let dateString = date.substring(0, 10).split("-");
@@ -17,7 +20,7 @@ const BlogCard = ({blogDetail}) => {
     }
 
     return (
-        <Card className='blog-card' bordered={false}>
+        <Card className='blog-card' bordered={false} onClick={() => {history.push(`/${blogDetail.slug}`)}}>
             <a href={`${blogDetail.slug}`}>
                 <div className='blog-image'>
                     <img alt="blog" src={blogDetail.post_img}/>

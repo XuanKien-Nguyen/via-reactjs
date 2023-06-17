@@ -81,9 +81,9 @@ export default ({id, loading}) => {
     })
 
     const getDsSP = () => {
-        const content = productDetail.content
+        const category = productDetail.category_name
         return productList.map(el => ({
-            name: content,
+            name: category,
             account: el.productDetail
         }))
     }
@@ -294,7 +294,7 @@ export default ({id, loading}) => {
         <Button style={{marginBottom: '10px'}} onClick={() => history.push({search: `menu=purchase`})}>Quay lại</Button>
         {productDetail.id ? <Fragment>
             <br/>
-            <b>Đơn hàng <span style={{color: 'red'}}>#{productDetail.id}</span> đã được đặt lúc {productDetail.created_time} và hiện tại là
+            <b>Đơn hàng <span style={{color: 'red'}}>#{productDetail.id}</span> đã được đặt lúc {productDetail.created_time} và hiện tại là &nbsp;
                 <Tag color={productDetail.status === 'valid' ? '#87d068' : '#f50'}>{productDetail.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'}</Tag>
             </b>
             <Table rowKey="title" dataSource={dataSource} columns={columns} pagination={false} locale={{emptyText: t('common.no_data')}}/>

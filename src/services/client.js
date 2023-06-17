@@ -65,6 +65,10 @@ client.interceptors.response.use(
                         isRefreshing = false;
                     });
             });
+        } else if (err.response.status === 503) {
+            localStorage.removeItem('is_logged')
+            localStorage.removeItem('user_info')
+            window.location.href = '/maintenance'
         }
         // else if (err.response?.data?.error === 'refresh_token is invalid' && err.config.url !== '/api/users/client/me') {
         //     message.error('Phiên đăng nhập đã hết hạn')

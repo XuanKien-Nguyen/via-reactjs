@@ -17,19 +17,16 @@ export default ({ icon, title, totalValue, type = '', borderType = ''}) => {
     }
 
     return (
-        <Card
-            className={`overview-card ${borderType}`}
-            bodyStyle={{ padding: 10 }}
-        >
-            <span className={'overview-card-icon'}>
-                <Icon type={icon} style={{fontSize: '52px'}}></Icon>
-            </span>
-            <div className='overview-card-body'>
-                <p className='overview-card-title'>{title || 'No Title'}</p>
-                <p className='overview-card-number'>
-                    {type === 'profit' ?  renderMoney(totalValue) : totalValue}
-                </p>
+        <Card title={title} className={`statistics-card ${borderType}`}>
+            <div className='statistics-card-body'>
+                <span className={'statistics-card-icon'}>
+                    <Icon type={icon} style={{ fontSize: '52px', minWidth: '52px', minHeight: '52px' }}></Icon>
+                </span>
+                <span className='statistics-card-number'>
+                    {type === 'profit' ? renderMoney(totalValue) : totalValue}
+                </span>
             </div>
+            {/* <div className='statistics-card-update-time'>Cập nhật: {updateTime}</div> */}
         </Card>
     )
 }

@@ -1,38 +1,46 @@
-.overview-card {
-    padding: 24px 16px 0px 16px;
-    margin-bottom: 8px;
-    border-radius: 8px;
+.statistics-card {
+    border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    min-height: 190px !important;
     &.sale {
-        border-color: #5D6D7E;
-        // background-color: rgba(255, 0, 0, 0.3);
-    }
-    &.refund {
-        border-color: #F5B041;
-        background-color: #FEF5E7;
+        .ant-card-head {
+            background-color: #00a88f;
+            background-image: linear-gradient(to right, #00a88f, #33b8a5);
+        }
     }
     &.replace {
-        border-color: #E74C3C;
-        background-color: #FADBD8;
-    }
-    cursor: pointer;
-    .ant-card-body {
-        display: flex;
-        .overview-card-icon {
-            padding: 8px 16px;
+        .ant-card-head {
+            background-color: #a64499;
+            background-image: linear-gradient(to right, #a64499, #b868ad );
         }
-        .overview-card-body {
-            .overview-card-title {
+    }
+    &.refund {
+        .ant-card-head {
+            background-color: #f68f1e;
+            background-image: linear-gradient(to right, #f68f1e,  #f9a54b);
+        }
+    }
+    .ant-card-head {
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        border-radius: 4px 4px 0px 0px;
+    }
+    .ant-card-body {
+        padding: 36px 24px 16px 24px;
+        .statistics-card-body {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            .statistics-card-number {
                 font-size: 20px;
-                margin-bottom: 6px;
                 font-weight: bold;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
-            .overview-card-number {
-                font-size: 20px;
-                margin-bottom: 24px;
-                font-weight: bold;
-            }
+        }
+        .statistics-card-update-time {
+            font-weight: 600;
         }
     }
 }

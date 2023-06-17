@@ -65,9 +65,9 @@ const Wrapper = (props) => {
                     if (lst.length === 1) {
                         if (lst[0].status === 'invalid') {
                             setValidateStatus('error');
-                            setHelpValidateStatus(`Đơn hàng #${lst[0].id} ${lst[0].category_name} đã hết thời gian bảo hành`)
+                            setHelpValidateStatus(`Đơn hàng #${lst[0].id} ${lst[0].content} đã hết thời gian bảo hành`)
                             Modal.error({
-                                content: `Đơn hàng #${lst[0].id} ${lst[0].category_name} đã hết thời gian bảo hành, vui lòng nhập UID của đơn hàng còn trong thời gian bảo hành`,
+                                content: `Đơn hàng #${lst[0].id} ${lst[0].content} đã hết thời gian bảo hành, vui lòng nhập UID của đơn hàng còn trong thời gian bảo hành`,
                                 width: '700px'
                             })
                         } else {
@@ -75,7 +75,7 @@ const Wrapper = (props) => {
                             setCategorySelected(lst[0])
                             setHelpValidateStatus('')
                             Modal.success({
-                                content: `Đơn hàng đã chọn: #${lst[0].id} ${lst[0].category_name}`
+                                content: `Đơn hàng đã chọn: #${lst[0].id} ${lst[0].content}`
                             })
                         }
 
@@ -103,7 +103,7 @@ const Wrapper = (props) => {
             if (el.id === v) {
                 setCategorySelected(el)
                 Modal.success({
-                    content: `Đơn hàng đã chọn: #${el.id} ${el.category_name}`
+                    content: `Đơn hàng đã chọn: #${el.id} ${el.content}`
                 })
             }
         })
@@ -163,6 +163,15 @@ const Wrapper = (props) => {
             content: <div>
                 <Row>
                     <Row><span>{data.message?.split('-')[0]}</span></Row>
+                    <Row className={'m-t-10'}>
+                        <Col sm={16} style={{color: 'red'}}>Danh sách yêu cầu thành công: {data.productRequestDetail?.length || 0}</Col>
+                        <Col sm={8}>
+                            <a style={{textDecoration: 'underline'}}
+                               disabled={data.productRequestDetail?.length === 0}
+                               onClick={() => textToFile('productRequestDetail', data.productRequestDetail.join('\r\n'))}
+                            >Tải xuống</a>
+                        </Col>
+                    </Row>
                     <Row className={'m-t-10'}>
                         <Col sm={16} style={{color: 'red'}}>Sản phẩm
                             lỗi (do sai định dạng): {data.productErrorRequestList?.length || 0}</Col>
@@ -334,7 +343,7 @@ const Wrapper = (props) => {
                                                     placeholder="Chọn đơn hàng"
                                                     onChange={selectPurchase}
                                                 >
-                                                    {purchaseListData.map(el => <Option value={el.id}>#{el.id} - {el.category_name}</Option>)}
+                                                    {purchaseListData.map(el => <Option value={el.id}>#{el.id} - {el.content} - Tình trạng: {el.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'} - Phương thức thanh toán: {el.purchase_type === 'direct' ? 'Trực tiếp' : 'Cộng tác viên'}</Option>)}
                                                 </Select>,
                                         )}
                                     </Form.Item>
@@ -346,7 +355,7 @@ const Wrapper = (props) => {
             </Row>
             {categorySelected && <Fragment>
                 <div style={{border: '1px solid #eaeaea', padding: '20px'}}>
-                    <h3>Thông tin bảo hành cho đơn hàng <i>#{categorySelected.id} {categorySelected.category_name}</i>
+                    <h3>Thông tin bảo hành cho đơn hàng <i>#{categorySelected.id} {categorySelected.content}</i>
                     </h3>
                     <Form.Item label="Tiêu đề">
                         {getFieldDecorator('title', {
