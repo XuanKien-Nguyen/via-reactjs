@@ -307,51 +307,53 @@ const Wrapper = (props) => {
                 </Col>
                 <Col sm={3}><p style={{textAlign: 'end', marginTop: '44px'}}><Button type={'primary'} onClick={findUid}>Tìm kiếm</Button></p></Col>
             </Row> */}
-            <Row gutter={10} marginTop={'24px'}>
-                <Col sm={24}>
-                    <Radio.Group onChange={onChangeRadio} value={radioValue} style={{width: '100%'}}>
-                        <Radio value={1} className="radio-select-purchase">
-                            <Row>
-                                <Col sm={21}>
-                                    <Form.Item
-                                        label={<span><span style={{ color: 'red' }}>*</span> Nhập UID để tìm kiếm đơn hàng cần bảo hành</span>}
-                                        hasFeedback
-                                        validateStatus={validateStatus}
-                                        help={helpValidateStatus}
-                                        >
-                                        {getFieldDecorator('uid')(
-                                            <div>
-                                                <Input placeholder={'UID'} disabled={radioValue !== 1}/>
-                                            </div>,
-                                        )}
-                                    </Form.Item>
-                                </Col>
-                                <Col sm={3}><p style={{textAlign: 'center', marginTop: '43px'}}><Button type={'primary'} onClick={findUid} disabled={radioValue !== 1}>Tìm kiếm</Button></p></Col>
-                            </Row>
+            <Row gutter={10}>
+                <Col sm={1}>
+                    <Radio.Group onChange={onChangeRadio} value={radioValue} style={{ width: '100%' }}>
+                        <Radio value={1} className="radio-select-uid">
                         </Radio>
                         <Radio value={2} className="radio-select-purchase">
-                            <Row>
-                                <Col sm={21}>
-                                    <Form.Item
-                                        label={<span>Chọn đơn hàng khả dụng</span>}
-                                    >
-                                        {getFieldDecorator('purchase_valid', {
-                                            rules: [{required: true, message: 'Vui lòng chọn danh mục'}],
-                                        },)(
-                                                <Select
-                                                    disabled={radioValue !== 2}
-                                                    placeholder="Chọn đơn hàng"
-                                                    onChange={selectPurchase}
-                                                >
-                                                    {purchaseListData.map(el => <Option value={el.id}>#{el.id} - {el.content} - Tình trạng: {el.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'} - Phương thức thanh toán: {el.purchase_type === 'direct' ? 'Trực tiếp' : 'Cộng tác viên'}</Option>)}
-                                                </Select>,
-                                        )}
-                                    </Form.Item>
-                                </Col>
-                            </Row>
                         </Radio>
                     </Radio.Group>
-                </Col>    
+                </Col>
+                <Col sm={20}>
+                    <Row>
+                        <Col sm={21}>
+                            <Form.Item
+                                label={<span><span style={{ color: 'red' }}>*</span> Nhập UID để tìm kiếm đơn hàng cần bảo hành</span>}
+                                hasFeedback
+                                validateStatus={validateStatus}
+                                help={helpValidateStatus}
+                            >
+                                {getFieldDecorator('uid')(
+                                    <div>
+                                        <Input placeholder={'UID'} disabled={radioValue !== 1} />
+                                    </div>,
+                                )}
+                            </Form.Item>
+                        </Col>
+                        <Col sm={3}><p style={{ textAlign: 'center', marginTop: '43px' }}><Button type={'primary'} onClick={findUid} disabled={radioValue !== 1}>Tìm kiếm</Button></p></Col>
+                    </Row>
+                    <Row>
+                        <Col sm={21}>
+                            <Form.Item
+                                label={<span>Chọn đơn hàng khả dụng</span>}
+                            >
+                                {getFieldDecorator('purchase_valid', {
+                                    rules: [{ required: true, message: 'Vui lòng chọn danh mục' }],
+                                },)(
+                                    <Select
+                                        disabled={radioValue !== 2}
+                                        placeholder="Chọn đơn hàng"
+                                        onChange={selectPurchase}
+                                    >
+                                        {purchaseListData.map(el => <Option value={el.id}>#{el.id} - {el.content} - Tình trạng: {el.status === 'valid' ? 'Bảo hành' : 'Hết bảo hành'} - Phương thức thanh toán: {el.purchase_type === 'direct' ? 'Trực tiếp' : 'Cộng tác viên'}</Option>)}
+                                    </Select>,
+                                )}
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Col>
             </Row>
             {categorySelected && <Fragment>
                 <div style={{border: '1px solid #eaeaea', padding: '20px'}}>
