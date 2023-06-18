@@ -134,10 +134,11 @@ export default () => {
             align: 'center'
         },
         {
-            title: 'Loại đơn hàng',
+            title: 'Phương thức mua hàng',
             width: '150px',
             dataIndex: 'purchase_type',
-            align: 'center'
+            align: 'center',
+            render: v => <b>{v === 'direct' ? 'Trực tiếp' : 'Cộng tác viên'}</b>
         },
         {
             title: 'Tiền khuyến mãi đã sử dụng',
@@ -208,7 +209,7 @@ export default () => {
             render: v => <b>{renderMoney(v)}</b>
         },
         {
-            title: 'Tổng doanh thu sau cùng',
+            title: 'Tổng lợi nhuận',
             width: '200px',
             dataIndex: 'final_profit',
             align: 'center',
@@ -291,7 +292,7 @@ export default () => {
                 page={page} />
             <StatisticCard items={ds} />
             <Row gutter={[12, 12]}>
-                <Col key={'1'} lg={24} md={12}>
+                <Col key={'1'} lg={24}>
                     <TableCommon
                         className='table-order'
                         bordered={true}

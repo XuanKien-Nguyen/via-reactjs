@@ -4,7 +4,7 @@
         "all_product": "All product",
         "guide": "Guide",
         "recharge": "Recharge",
-        "tricks": "Facebook tricks",
+        "tricks": "Facebook Tips",
         "about-us": "About Us",
         "contact": "Contact",
         "category": "Category",
@@ -26,7 +26,8 @@
         "cancel": "Cancel",
         "create": "Create",
         "no_data": "No Data",
-        "total_balance": "Total balance"
+        "total_balance": "Total balance",
+        "view_all_blogs": "View all blogs"
     },
     "access_denied": {
         "title": "ACCESS DENIED",

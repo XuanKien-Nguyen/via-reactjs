@@ -1,13 +1,29 @@
 import React from 'react';
-import ListLayout from '../../../common/list-layout/ListLayout';
 import BlogCard from './BlogCard';
+import {useHistory} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-const BlogLayout = ({blogList}) => {
+const BlogLayout = ({ blogList }) => {
+
+  const history = useHistory();
+
+  const {t} = useTranslation();
+
   return (
     <section id='blog-layout'>
-      <ListLayout titleCategory={'THỦ THUẬT FACEBOOK'} contentSeeMore={'Xem tất cả bài viết'}>
-        {blogList?.map((blog) => <BlogCard key={blog.id} blogDetail={blog}/>)}
-      </ListLayout>
+      <div className='category-container'>
+        <div className='category-title'>
+          <h3 className='title-content'>
+            <b>
+              <div>{t('common.tricks').toUpperCase()}</div>
+            </b>
+            <a onClick={() => history.push(`/`)}>{t('common.view_all_blogs')}</a>
+          </h3>
+        </div>
+        <div className='category-grid'>
+          {blogList?.map((blog) => <BlogCard key={blog.id} blogDetail={blog} />)}
+        </div>
+      </div>
     </section>
   );
 };

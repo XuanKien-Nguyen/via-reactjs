@@ -1,11 +1,8 @@
 import React from 'react';
 import { Icon, Card } from "antd";
-import { useTranslation } from "react-i18next";
 import { convertCurrencyVN } from "../../../../utils/helpers";
 
 export default ({ icon, title, totalValue, type = '', borderType = ''}) => {
-
-    const { t } = useTranslation();
 
     const renderMoney = (el, prefix = '+') => {
         if (el && (el + '').startsWith('-')) {
@@ -26,7 +23,6 @@ export default ({ icon, title, totalValue, type = '', borderType = ''}) => {
                     {type === 'profit' ? renderMoney(totalValue) : totalValue}
                 </span>
             </div>
-            {/* <div className='statistics-card-update-time'>Cập nhật: {updateTime}</div> */}
         </Card>
     )
 }

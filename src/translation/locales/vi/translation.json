@@ -26,7 +26,8 @@
         "cancel": "Hủy bỏ",
         "create": "Tạo",
         "no_data": "Không có dữ liệu",
-        "total_balance": "Tổng số dư"
+        "total_balance": "Tổng số dư",
+        "view_all_blogs": "Xem tất cả bài viết"
     },
     "access_denied": {
         "title": "TRUY CẬP BỊ TỪ CHỐI",

@@ -3,7 +3,6 @@ import NumberCard from "./NumberCard";
 import { Col, Row } from "antd";
 
 export default ({items}) => {
-
     return (
         <Row gutter={[12, 12]}>
             <Col key={'1'} lg={6} md={12}>
@@ -26,7 +25,7 @@ export default ({items}) => {
             <Col key={'3'} lg={6} md={12}>
                 <NumberCard 
                     icon={'stock'}
-                    title={'Tổng doanh thu sau cùng'}
+                    title={'Tổng lợi nhuận'}
                     totalValue={items?.finalProfit || 0}
                     type="profit"
                     borderType="sale"
@@ -35,7 +34,7 @@ export default ({items}) => {
             <Col key={'4'} lg={6} md={12}>
                 <NumberCard 
                     icon={'inbox'}
-                    title={'Số lượng sản phẩm bán'}
+                    title={'Tổng sản phẩm bán'}
                     totalValue={items?.totalProductToSale || 0}
                     borderType="sale"
                 />
@@ -43,7 +42,7 @@ export default ({items}) => {
             <Col key={'5'} lg={6} md={12}>
                 <NumberCard 
                     icon={'dropbox'}
-                    title={'Số lượng sản phẩm đổi trả'}
+                    title={'Tổng sản phẩm đổi trả'}
                     totalValue={items?.totalProductToReplace || 0}
                     borderType="replace"
                 />
@@ -51,7 +50,7 @@ export default ({items}) => {
             <Col key={'6'} lg={6} md={12}>
                 <NumberCard 
                     icon={'sync'}
-                    title={'Tổng tiền đổi trả'}
+                    title={'Tổng chi phí đổi trả'}
                     totalValue={items?.totalCostReplace || 0}
                     borderType="replace"
                 />
