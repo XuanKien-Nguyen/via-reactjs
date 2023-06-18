@@ -85,7 +85,8 @@
         "created_by": "Người tạo",
         "content": "Nội dung",
         "lastest_decided_by": "Người quyết định",
-        "lastest_decided_date": "Chọn thời gian quyết định"
+        "lastest_decided_date": "Chọn thời gian quyết định",
+        "slug": "Slug"
     },
     "profile": {
         "balance" : "Số dư",
@@ -375,6 +376,11 @@
         "REJECT_STATUS": "Từ chối",
         "ABANDON_STATUS": "Tạm khóa"
     },
+    "blog_type": {
+        "ALL":"Xem tất cả",
+        "GUIDE": "Hướng dẫn",
+        "TIP": "Thủ thuật"
+    },
     "message": {
         "error_downloading": "Có lỗi xảy ra khi tải xuống",
         "invalid_purchase": "Số lượng mua không họp lệ",
@@ -386,6 +392,7 @@
         "error_get_recharge_tickets": "Có lỗi xảy ra khi lấy thông tin phiếu nạp lỗi", 
         "error_invalid_purchase": "Số lượng mua không hợp lệ",
         "error_out_of_stock": "Sản phẩm đã hết hàng",
-        "copy_success": "Sao chép thành công"
+        "copy_success": "Sao chép thành công",
+        "error_get_blog": "Có lỗi xảy ra khi lấy bài viết"
     }
 }

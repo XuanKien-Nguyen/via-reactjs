@@ -20,8 +20,10 @@ const BlogCard = ({blogDetail}) => {
     }
 
     return (
-        <Card className='blog-card' bordered={false} onClick={() => {history.push(`/${blogDetail.slug}`)}}>
-            <a href={`${blogDetail.slug}`}>
+        <Card className='blog-card' bordered={false} onClick={() => {
+                if (blogDetail.slug) history.push(`/${blogDetail.slug}`)
+            }}>
+            <a href='#'>
                 <div className='blog-image'>
                     <img alt="blog" src={blogDetail.post_img}/>
                 </div>

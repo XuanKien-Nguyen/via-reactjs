@@ -1,0 +1,19 @@
+#blog-search, #blog-content, #blog-pagination {
+    max-width: 1400px !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 15px;
+}
+
+#blog-search {
+    margin-top: 24px;
+}
+
+#blog-content {
+    text-align: center;
+}
+
+#blog-pagination {
+    margin-bottom: 48px;
+    text-align: end;
+}

@@ -3,7 +3,7 @@ import BlogCard from './BlogCard';
 import {useHistory} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const BlogLayout = ({ blogList }) => {
+const BlogLayout = ({ blogList, hiddenShowMore = false }) => {
 
   const history = useHistory();
 
@@ -17,7 +17,7 @@ const BlogLayout = ({ blogList }) => {
             <b>
               <div>{t('common.tricks').toUpperCase()}</div>
             </b>
-            <a onClick={() => history.push(`/`)}>{t('common.view_all_blogs')}</a>
+            {!hiddenShowMore && <a onClick={() => history.push(`/blog`)}>{t('common.view_all_blogs')}</a>}
           </h3>
         </div>
         <div className='category-grid'>

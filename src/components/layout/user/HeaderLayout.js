@@ -146,7 +146,7 @@ function HeaderLayout({ history }) {
                             <li className='item'><a href='' onClick={() => {goto('/categories')}}>{t('common.all_product')}</a></li>
                             <li className='item'><a href=''>{t('common.guide')}</a></li>
                             <li className='item'><a href='' onClick={goToRecharge}>{t('common.recharge')}</a></li>
-                            <li className='item'><a href=''>{t('common.tricks')}</a></li>
+                            <li className='item'><a href='' onClick={() => {goto('/blog')}}>{t('common.tricks')}</a></li>
                             <li className='item'><a href=''>{t('common.about-us')}</a></li>
                             <li className='item'><a href=''>{t('common.contact')}</a></li>
                         </ul>
@@ -164,7 +164,7 @@ function HeaderLayout({ history }) {
                     <div className="header-main_left">
                         <ul>
                             <li className='item'><Dropdown overlay={menu}><a href='#' onClick={e => e.preventDefault()} className='uppercase'>{t('common.category')}<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>
-                            <li className='item'><a href='#' className='uppercase'>{t('common.blog')}</a></li>
+                            <li className='item'><a href='#' className='uppercase' onClick={() => {goto('/blog')}}>{t('common.blog')}</a></li>
                             {user && <li className='item'><Dropdown overlay={menuSupport}><a href='#' onClick={e => e.preventDefault()} className='uppercase'>{t('common.support')}<Icon type="down" style={{ marginLeft: '4px' }} /></a></Dropdown></li>}
                         </ul>
                     </div>
@@ -214,7 +214,7 @@ function HeaderLayout({ history }) {
                                 <Menu.Item key="recharge" className='sub-menu__item' onClick={goToRecharge}>
                                     <span className='uppercase'>{t('common.recharge')}</span>
                                 </Menu.Item>
-                                <Menu.Item key="facebook" className='sub-menu__item'>
+                                <Menu.Item key="facebook" className='sub-menu__item' onClick={() => {goto('/blog')}}>
                                     <span className='uppercase'>{t('common.tricks')}</span>
                                 </Menu.Item>
                                 <Menu.Item key="about-us" className='sub-menu__item'>
@@ -242,7 +242,7 @@ function HeaderLayout({ history }) {
                                 >
                                     {categories?.list?.map((category) => <Menu.Item key={category.value}>{category.label}</Menu.Item>)}
                                 </SubMenu>
-                                <Menu.Item key="blog" className='sub-menu-blog'>
+                                <Menu.Item key="blog" className='sub-menu-blog' onClick={() => {goto('/blog')}}>
                                     <span className='uppercase'>{t('common.blog')}</span>
                                 </Menu.Item>
                                 {user && <SubMenu

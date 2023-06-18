@@ -2,6 +2,7 @@
 import Login from '../components/pages/login';
 import Register from '../components/pages/register';
 import HomePage from '../components/pages/homepage/HomePage';
+import BlogPage from '../components/pages/blog-page';
 import Category from '../components/pages/category';
 import ContactPage from '../components/pages/contact';
 import CategoryManager from '../components/pages/category-manager'
@@ -251,6 +252,13 @@ export const baseRoutes = [
         path: '/contact-us',
         component: ContactPage,
         name: "Liên hệ",
+        noAuth: true,
+        layout: user,
+    },
+    {
+        path: '/blog',
+        component: BlogPage,
+        name: "Bài viết",
         noAuth: true,
         layout: user,
     },

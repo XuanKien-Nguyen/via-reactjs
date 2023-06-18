@@ -85,7 +85,8 @@
         "created_by": "Created by",
         "content": "Content",
         "lastest_decided_by": "Lastest decided by",
-        "lastest_decided_date": "Select lastest decided date"
+        "lastest_decided_date": "Select lastest decided date",
+        "slug": "Slug"
     },
     "profile": {
         "balance" : "Balance",
@@ -375,6 +376,11 @@
         "REJECT_STATUS": "Rejected",
         "ABANDON_STATUS": "Ban"
     },
+    "blog_type": {
+        "ALL":"All",
+        "GUIDE": "Guide",
+        "TIP": "Tip"
+    },
     "message": {
         "error_downloading": "Something wrong when downloading",
         "invalid_purchase": "Invalid purchase quantity",
@@ -386,6 +392,7 @@
         "error_get_recharge_tickets": "Something wrong when retrieving the recharge tickets", 
         "error_invalid_purchase": "Invalid purchase quantity",
         "error_out_of_stock": "Product is out of stock",
-        "copy_success": "Copied to clipboard"
+        "copy_success": "Copied to clipboard",
+        "error_get_blog": "An error occurred while retrieving blogs"
     }
 }

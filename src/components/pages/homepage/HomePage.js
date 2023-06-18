@@ -32,7 +32,7 @@ const HomePage = () => {
         <FeatureLayout />
           {categoryList.map(category => <ProductLayout key={category.id} categoryParent={category} />)}
         <QandALayout />
-        <BlogLayout blogList={blogList}/>
+        <BlogLayout blogList={blogList?.slice(0, 8)}/>
     </div>
   );
 };
