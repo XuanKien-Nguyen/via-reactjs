@@ -259,8 +259,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus, reloadList})
                                 Object.keys(MAP_TYPE).map(k => <Option
                                     value={k}>{t(MAP_TYPE[k])}</Option>)]}
                         </Select>
-                        {!['closed', 'rejected', 'deleted'].includes(detail.status)
-                        && <Fragment>
+                        <Fragment>
                             <Button
                                 onClick={() => openFunc('REFUND_TYPE')}
                                 style={{
@@ -292,7 +291,7 @@ export default ({detail, setDetail, visible, setVisible, mapStatus, reloadList})
                             <Button type={'primary'}
                                     disabled={detail.status === 'closed'}
                                     onClick={() => setVisibleCreateComment(true)}>{t('warranty_comment_type.REPLY_TYPE')}</Button>
-                        </Fragment>}
+                        </Fragment>
                     </p>
                     {cmtList.length > 0 ? cmtList.map(el => {
                         return <Card

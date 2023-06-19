@@ -164,7 +164,7 @@ const Wrapper = (props) => {
                 <Row>
                     <Row><span>{data.message?.split('-')[0]}</span></Row>
                     <Row className={'m-t-10'}>
-                        <Col sm={16} style={{color: 'red'}}>Danh sách yêu cầu thành công: {data.productRequestDetail?.length || 0}</Col>
+                        <Col sm={16} style={{color: 'green'}}>Danh sách yêu cầu thành công: {data.productRequestDetail?.length || 0}</Col>
                         <Col sm={8}>
                             <a style={{textDecoration: 'underline'}}
                                disabled={data.productRequestDetail?.length === 0}
