@@ -21,9 +21,9 @@ const BlogCard = ({blogDetail}) => {
 
     return (
         <Card className='blog-card' bordered={false} onClick={() => {
-                if (blogDetail.slug) history.push(`/${blogDetail.slug}`)
+                if (blogDetail.slug) history.push(`/blog/${blogDetail.slug}`)
             }}>
-            <a href='#'>
+            <a>
                 <div className='blog-image'>
                     <img alt="blog" src={blogDetail.post_img}/>
                 </div>

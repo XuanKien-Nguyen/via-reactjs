@@ -3,6 +3,7 @@ import Login from '../components/pages/login';
 import Register from '../components/pages/register';
 import HomePage from '../components/pages/homepage/HomePage';
 import BlogPage from '../components/pages/blog-page';
+import BlogDetail from '../components/pages/blog-detail'
 import Category from '../components/pages/category';
 import ContactPage from '../components/pages/contact';
 import CategoryManager from '../components/pages/category-manager'
@@ -259,6 +260,15 @@ export const baseRoutes = [
         path: '/blog',
         component: BlogPage,
         name: "Bài viết",
+        exact: true,
+        noAuth: true,
+        layout: user,
+    },
+    {
+        path: '/blog/:slug',
+        component: BlogDetail,
+        name: "Chi tiết bài viết",
+        exact: false,
         noAuth: true,
         layout: user,
     },

@@ -53,21 +53,32 @@ function MainLayout() {
     }, [])
 
     useEffect(() => {
-        const {pathname} = location
+        let {pathname} = location
 
-        if (!routes.some(el => el.path === pathname)) {
-            history.push('/not-found')
-            return
+        if (pathname === '/blog/') {
+            pathname = '/blog'
         }
-        const isAccess = accessRoutes.some(el => el.path === pathname.split('?')[0])
-        if (!isAccess && window.location.href !== pathname) {
-            history.push('/access-denied')
-            return
+
+        if (!pathname.startsWith('/blog/')) {
+            if (!routes.some(el => el.path === pathname)) {
+                history.push('/not-found')
+                return
+            }
+            const isAccess = accessRoutes.some(el => el.path === pathname.split('?')[0])
+            if (!isAccess && window.location.href !== pathname) {
+                history.push('/access-denied')
+                return
+            }
+            const currentRoute = routes.find(el => el.path === pathname)
+            document.title = `${currentRoute.name}`
+            dispatch({type: "SET_BREADCRUMB", payload: {name: currentRoute.name, path: currentRoute.path}
+            })
+        } else {
+            const currentRoute = routes.find(el => el.path === '/blog/:slug')
+            document.title = `${currentRoute.name}`
+            dispatch({type: "SET_BREADCRUMB", payload: {name: currentRoute.name, path: currentRoute.path}
+            })
         }
-        const currentRoute = routes.find(el => el.path === pathname)
-        document.title = `${currentRoute.name}`
-        dispatch({type: "SET_BREADCRUMB", payload: {name: currentRoute.name, path: currentRoute.path}
-        })
     }, [location, forceRender])
 
 
