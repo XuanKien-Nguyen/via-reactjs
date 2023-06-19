@@ -15,7 +15,7 @@ const SliderItem = ({sliderDetail}) => {
                 <span className='slide-content'>{sliderDetail.sub_title}</span>
               </div>
               {sliderDetail.slug && <Button type="primary" size='large' onClick={() => {
-                history.push(`/${sliderDetail.slug}`)
+                history.push(`/blog/${sliderDetail.slug}`)
               }}>
                 XEM CHI TIẾT
                 <Icon type="right" style={{ fontSize: '12px' }} />
