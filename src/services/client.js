@@ -1,5 +1,6 @@
 import Axios from "axios";
 import {API_WHITE_LIST} from "../utils/constants";
+import {getCookie} from "../utils/helpers";
 
 const client = Axios.create({
     withCredentials: true
@@ -20,9 +21,10 @@ const processQueue = (error) => {
     failedQueue = [];
 };
 
-
 client.interceptors.response.use(
     response => {
+        // const token = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        console.log('token', getCookie('access_token'));
         return response;
     },
     err => {
@@ -52,6 +54,8 @@ client.interceptors.response.use(
                         resolve(client(originalRequest));
                     })
                     .catch(err => {
+                        console.log('refresh token err: ', err.response);
+                        // if (err.response.status === 401) {
                         localStorage.removeItem('is_logged')
                         localStorage.removeItem('user_info')
                         // if (['refresh_token must be provide', 'token has been conflict'].includes(err.response?.data?.error)) {
@@ -60,6 +64,8 @@ client.interceptors.response.use(
                         window.location.href = '/login'
                         processQueue(err);
                         reject(err);
+                        // }
+
                     })
                     .then(() => {
                         isRefreshing = false;

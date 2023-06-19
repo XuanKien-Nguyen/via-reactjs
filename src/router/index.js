@@ -18,6 +18,8 @@ import RechargePendingManager from '../components/pages/recharge-pending-manager
 import RechargeTicketManager from '../components/pages/recharge-ticket-manager';
 import WarrantyTickerManager from '../components/pages/warranty-tickets';
 import ProductRecycleBinManager from '../components/pages/product-recycle-bin-manager';
+import CheckLifeUID from '../components/pages/check-life-uid'
+import TwoFaAuth from '../components/pages/2fa-auth'
 
 import admin from "../components/layout/admin";
 import user from "../components/layout/user";
@@ -179,6 +181,26 @@ export const dashboardRoutes = [
         component: ProductRecycleBinManager,
         name: "Quản lý sản phẩm đã xử lý",
         icon: "issues-close",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/check-life-uid',
+        component: CheckLifeUID,
+        name: "Kiểm tra trạng thái UID",
+        icon: "check",
+        exact: true,
+        showAlways: true,
+        layout: admin,
+        role: ['admin', 'staff']
+    },
+    {
+        path: '/admin/2fa-auth',
+        component: TwoFaAuth,
+        name: "2FA Auth",
+        icon: "key",
         exact: true,
         showAlways: true,
         layout: admin,
