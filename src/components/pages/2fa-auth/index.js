@@ -30,7 +30,7 @@ export default () => {
             2FA Secret
         </b><i>-Get code for 2 factor authentication easiest - Please store your 2FA secret safely</i></span>
         <TextArea rows={10}
-                  placeholder={"HDGC HSY3 IVYS..."}
+                  placeholder={"IE4TEOYTIY3RWQIPFVORQMBCIA..."}
                   value={secret}
                   onChange={e => {
             setSecret(e.target.value)
