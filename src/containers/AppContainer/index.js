@@ -53,6 +53,26 @@ export default function AppContainer() {
                     })
                 }
             })
+
+            socket.on('disconnect', () => {
+                console.log('disconnect');
+                clearTimeout(debounce)
+                // reconnect
+                debounce = setTimeout(() => {
+                    resetToken(() => {
+                        const newToken = getCookie('access_token')
+                        console.log('newToken', newToken);
+                        socket = io("/", {
+                            extraHeaders: {
+                                Authorization: getCookie('access_token'),
+                                ['X-CSRF-Token']: getCookie('refresh_token')
+                            }
+                        })
+                        socket.connect()
+                    })
+                }, 1000)
+
+            })
         }
     }, [user, getCookie('access_token')])
 
