@@ -24,7 +24,6 @@ const processQueue = (error) => {
 client.interceptors.response.use(
     response => {
         // const token = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        console.log('token', getCookie('access_token'));
         return response;
     },
     err => {

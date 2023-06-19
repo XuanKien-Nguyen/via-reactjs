@@ -20,7 +20,6 @@ export default () => {
         let totalLife = 0
         let totalDie = 0
         for (let i = 0; i < responses.length; i++) {
-            console.log('responses', responses[i]);
             if (responses[i].status === 'fulfilled' && responses[i].value.data.data.url.includes('static')) {
                 totalDie++
             } else {
